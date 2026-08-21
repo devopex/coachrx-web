@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPost, getRelated } from "@/lib/posts";
+import { getPostBody } from "@/lib/body";
 import { getAuthor } from "@/data/authors";
 import { topicByTag } from "@/data/topics";
 import { PostCard } from "@/components/PostCard";
@@ -86,7 +87,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         ) : null}
 
         <div className="crx-col prose-crx mx-auto mt-2 max-w-[680px] px-8">
-          <MDXRemote source={post.body} components={{ YouTube }} />
+          <MDXRemote source={getPostBody(post.slug)} components={{ YouTube }} />
         </div>
 
         <div className="crx-col mx-auto mt-16 max-w-[680px] px-8">

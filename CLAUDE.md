@@ -102,3 +102,40 @@ does not run after it.
 Harmless noise: `cf:build` prints a wall of `ERROR Failed to copy node_modules/...`
 lines for MDX packages and still completes with "Worker saved in `.open-next/worker.js`".
 Check for that line rather than trusting the absence of the word ERROR.
+
+## The Worker has no filesystem
+
+This bit the first two deploys. `next build` and `npm run dev` both have a real
+filesystem, so code that reads content off disk works perfectly right up until it
+is running in a Worker, where it throws:
+
+```
+ENOENT: no such file or directory, readdir '/bundle/content/posts'
+```
+
+The rules that keep this fixed:
+
+- **Post metadata comes from a generated JSON module**, `src/data/posts.json`,
+  written by `scripts/generate-posts.mjs` via the `prebuild` npm script. It is
+  gitignored — it is build output, not source. `src/lib/posts.ts` imports it and
+  must never use `fs`.
+- **Post bodies stay on disk** and are read by `src/lib/body.ts`, which is only
+  called while prerendering `/articles/[slug]`. Inlining all 340 bodies into the
+  JSON pushed the Worker to **3.03 MB gzipped**, over the 3 MB limit, to carry text
+  the Worker never reads. Frontmatter-only is 263 KB.
+- If you add a route that lists posts, use `@/lib/posts`. If you add one that needs
+  a body, it must be statically generated.
+
+## Prerendered pages come from the incremental cache
+
+`open-next.config.ts` sets `incrementalCache: staticAssetsIncrementalCache`. Without
+it, OpenNext tries to render pages on demand in the Worker and everything 500s.
+
+The prerendered output lands in `.open-next/cache/`, which the assets binding cannot
+see. `populateCache` copies it to `.open-next/assets/cdn-cgi/_next_cache/`.
+
+- `opennextjs-cloudflare deploy` runs `populateCache` with `target: "remote"` first,
+  so **deploys handle this automatically**.
+- Bare `wrangler dev` does **not**. Testing that way returns 404 on every SSG route
+  and looks like a routing bug. Use `npm run cf:preview`, or run
+  `npx opennextjs-cloudflare populateCache local` before `wrangler dev`.
