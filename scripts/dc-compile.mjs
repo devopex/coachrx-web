@@ -217,12 +217,131 @@ function applyLeaf($, node, scope, ctx) {
   walk(node.get(0));
 }
 
+
+/**
+ * Design files link to each other by filename, and use href="#" for pages that did not
+ * exist when the design was made. Both are dead links on the live site, so they are
+ * rewritten here. Anything that cannot be resolved is reported rather than shipped
+ * silently.
+ */
+const DESIGN_ROUTES = {
+  "CoachRx Home v7.dc.html": "/",
+  "CoachRx Home.dc.html": "/",
+  "CoachRx Features.dc.html": "/features",
+  "CoachRx Blog Index.dc.html": "/articles",
+  "CoachRx Tag Archive.dc.html": "/articles",
+  "CoachRx Blog Post.dc.html": "/articles",
+  "CoachRx 404.dc.html": "/",
+};
+
+/**
+ * href="#" resolved by the link's own text, which is the only signal available.
+ * Ordered: first match wins, so put specific patterns before general ones.
+ */
+const TEXT_ROUTES = [
+  // pillar deep links on the Features and Home pages
+  [/assessments?, metrics/, "/features#assess"],
+  [/messaging, check-ins/, "/features#consult"],
+  [/program design, librar/, "/features#design"],
+  [/payments, team/, "/features#operate"],
+  [/the client app/, "/features#client-experience"],
+  [/see all features/, "/features"],
+  // commerce
+  [/plans and pricing|^pricing$|full pricing/, "/pricing"],
+  [/start (for )?free|start your (free )?trial|get started/, "/pricing"],
+  // content
+  [/^changelog$|what's new|view the changelog/, "/changelog"],
+  [/^compare$|why coachrx|how coachrx compares/, "/why-coachrx"],
+  [/^about$/, "/about"],
+  [/coaching guides|^resources$|^articles$|read the articles|the coaching library|^all$/, "/articles"],
+  // We cut every video-only page in the migration, so these point at the library.
+  [/^videos$|^podcasts$/, "/articles"],
+  [/^features$/, "/features"],
+  // No dedicated pages for these, so route to the people who can answer.
+  [/^contact$|transition team|talk to (the )?(sales|support)/, "mailto:support@coachrx.app"],
+  // Legal lives on the OPEX site; taken from the old Squarespace footer.
+  [/^privacy( policy)?$/, "https://www.opexfit.com/privacy-policy/"],
+  [/^terms( (and conditions|of service))?$/, "https://www.opexfit.com/terms-and-conditions/"],
+  // The referral programme has no landing page, but the article survived the migration.
+  [/^referral program$/, "/articles/coachrx-referral-program"],
+];
+
+function fixLinks($, root, ctx) {
+  $(root).find("a[href]").each((_, el) => {
+    const $a = $(el);
+    const href = $a.attr("href") || "";
+    const text = ($a.text() || "").replace(/\s+/g, " ").trim().toLowerCase();
+
+    const base = href.split(/[#?]/)[0];
+    if (base.endsWith(".dc.html")) {
+      const file = base.split("/").pop();
+      const to = DESIGN_ROUTES[file];
+      if (to) { $a.attr("href", to + (href.includes("#") ? href.slice(href.indexOf("#")) : "")); }
+      else { ctx.deadLinks.push(`unmapped design file: ${file}`); }
+      return;
+    }
+    if (href === "#" || href === "") {
+      const hit = TEXT_ROUTES.find(([re]) => re.test(text));
+      if (hit) $a.attr("href", hit[1]);
+      else ctx.deadLinks.push(`href="#" text: "${text.slice(0, 44) || "(no text)"}"`);
+    }
+  });
+}
+
+/* ------------------------------------------------------------------- public API */
+
+/**
+ * Compile one design file.
+ *
+ * @param {string} full           absolute path to the .dc.html
+ * @param {object|Function} [override]  data to use instead of the design's own
+ *        renderVals() output. A function receives the design data and returns the
+ *        replacement, which is how the blog pages swap sample posts for real ones.
+ * @returns {{html:string, css:string, script:string, data:object, hoverRules:string[], unresolved:string[]}}
+ */
+export function compileDesign(full, override) {
+  const $ = cheerio.load(fs.readFileSync(full, "utf8"), { xmlMode: false });
+  const css = $("helmet style").map((_, s2) => $(s2).html()).get().join("\n");
+  const scriptSrc = $('script[type="text/x-dc"]').html() || "";
+  let data = extractData(scriptSrc, defaultProps($));
+  if (typeof override === "function") data = override(data);
+  else if (override) data = { ...data, ...override };
+
+  $("helmet").remove();
+  $('script[type="text/x-dc"]').remove();
+
+  const root = $("x-dc").length ? $("x-dc") : $("body");
+  const ctx = { hoverRules: [], unresolved: new Set(), deadLinks: [] };
+  compileNode($, root, data, ctx);
+  applyLeaf($, root, data, ctx);
+  fixLinks($, root, ctx);
+
+  return {
+    html: (root.html() || "").trim(),
+    css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules].join("\n"),
+    script: scriptSrc,
+    data,
+    hoverRules: ctx.hoverRules,
+    unresolved: [...ctx.unresolved],
+    deadLinks: [...new Set(ctx.deadLinks)],
+  };
+}
+
+export { SRC as DESIGN_SRC, OUT as GENERATED_OUT };
+
 /* --------------------------------------------------------------------- driver */
 
+// The three blog templates are compiled by scripts/build-blog.mjs instead, because
+// they need real post data injected. Compiling them here too would just produce
+// sample-content versions that nothing imports.
+const CLI_SKIP = new Set(["blogPost", "blogIndex", "tagArchive"]);
+
+if (process.argv[1] && process.argv[1].endsWith("dc-compile.mjs")) {
 fs.mkdirSync(OUT, { recursive: true });
 const report = [];
 
 for (const page of PAGES) {
+  if (CLI_SKIP.has(page.name)) continue;
   const full = path.join(SRC, page.file);
   if (!fs.existsSync(full)) { console.log(`  skip ${page.file} (not found)`); continue; }
 
@@ -236,9 +355,10 @@ for (const page of PAGES) {
   $('script[type="text/x-dc"]').remove();
 
   const root = $("x-dc").length ? $("x-dc") : $("body");
-  const ctx = { hoverRules: [], unresolved: new Set() };
+  const ctx = { hoverRules: [], unresolved: new Set(), deadLinks: [] };
   compileNode($, root, data, ctx);
   applyLeaf($, root, data, ctx);
+  fixLinks($, root, ctx);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules].join("\n");
@@ -264,6 +384,7 @@ for (const page of PAGES) {
     leftover: (html.match(/\{\{/g) || []).length,
     scFor: (html.match(/<sc-for/g) || []).length + (html.match(/<sc-if/g) || []).length,
     unresolved: [...ctx.unresolved],
+    deadLinks: [...new Set(ctx.deadLinks)],
   });
 }
 
@@ -273,10 +394,12 @@ for (const r of report) {
   console.log(
     `  ${bad ? "FAIL" : "ok  "} ${r.name.padEnd(11)} html ${String(r.htmlKB).padStart(3)}KB  css ${String(r.cssKB).padStart(2)}KB  ` +
     `hover ${String(r.hover).padStart(2)}  data ${r.dataKeys}  leftover{{ }} ${r.leftover}  directives ${r.scFor}` +
-    (r.unresolved.length ? `\n       unresolved: ${r.unresolved.slice(0, 8).join(" | ")}` : "")
+    (r.unresolved.length ? `\n       unresolved: ${r.unresolved.slice(0, 8).join(" | ")}` : "") +
+    (r.deadLinks && r.deadLinks.length ? `\n       dead links: ${r.deadLinks.slice(0, 6).join(" | ")}` : "")
   );
 }
 if (report.some((r) => r.leftover || r.scFor)) {
   console.error("\ndc-compile: uncompiled template syntax remains — fix before shipping");
   process.exit(1);
+}
 }

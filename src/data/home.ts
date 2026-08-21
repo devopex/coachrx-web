@@ -3,9 +3,11 @@
  * v7 is the visual source of truth for the whole site — if this and a design file
  * disagree, the design file wins.
  *
- * NOTE FOR CARL: Home says "8,000+ coaching practices", the Features page says
- * "10,000+". One of them is stale. Both are left exactly as designed rather than
- * silently reconciled.
+ * Practice count is "10,000+" everywhere, per Carl 2026-08-21. The Home design
+ * originally said 8,000+; that was stale.
+ *
+ * NOTE: `/` is now an exact port compiled from the design file, so this module is no
+ * longer what renders the home page. It is kept for the pricing blurbs the port reuses.
  */
 
 export const HERO = {
@@ -18,7 +20,7 @@ export const HERO = {
 
 export const WORKS_WITH = ["Strava", "Cronometer", "MyFitnessPal", "Loom", "FullScript"];
 
-export const PROOF_BAR = "Powering 8,000+ coaching practices";
+export const PROOF_BAR = "Powering 10,000+ coaching practices";
 
 export const PROBLEM = {
   overline: "01 · The problem",

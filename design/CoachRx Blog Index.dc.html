@@ -16,22 +16,30 @@
     a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
     @keyframes crxRise{from{opacity:.15;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-    .crx-clamp3{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+    .crx-clamp1{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}
     .crx-clamp2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
     .crx-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.12);box-shadow:0 20px 48px rgba(0,0,0,.45)}
-    .crx-card:hover .crx-shot{transform:scale(1.025)}
+    .crx-row{border-top:1px solid rgba(255,255,255,.08);transition:background .2s cubic-bezier(.22,1,.36,1),border-color .2s,transform .2s cubic-bezier(.22,1,.36,1)}
+    .crx-row:hover{background:rgba(255,255,255,.022);border-top-color:rgba(255,255,255,.12);transform:translateX(3px)}
+    .crx-row .crx-arrow{display:none}
+    .crx-row:hover .crx-date{display:none}
+    .crx-row:hover .crx-arrow{display:inline}
+    .crx-row:hover .crx-sq{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
     .crx-chips::-webkit-scrollbar{display:none}
     .crx-chip{display:inline-flex;align-items:center;gap:8px;flex:none;font-size:13px;font-weight:500;padding:8px 14px;border-radius:999px;border-width:1px;border-style:solid;border-color:rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s,background .2s}
     .crx-chip .crx-dot{width:6px;height:6px;border-radius:99px;flex:none;background:#58FF7A;display:none}
     .crx-chip.is-active{color:#F8FCFF;font-weight:600;border-color:rgba(88,255,122,.35);background:rgba(88,255,122,.07)}
     .crx-chip.is-active .crx-dot{display:block}
-    @media (max-width:1000px){ .crx-grid{grid-template-columns:1fr 1fr!important} .crx-feat{grid-template-columns:1fr!important} }
+    @media (max-width:860px){ .crx-two{grid-template-columns:1fr!important} }
     @media (max-width:700px){
-      .crx-grid{grid-template-columns:1fr!important}
       .crx-pad{padding-left:20px!important;padding-right:20px!important}
       .crx-chips{margin-left:-20px;margin-right:-20px;padding-left:20px!important;padding-right:20px!important}
       .crx-nav-links{display:none!important}
       .crx-more{width:100%}
+      .crx-row{grid-template-columns:1fr auto!important;gap:8px 12px!important;align-items:center!important}
+      .crx-rail{grid-area:1/1!important;width:auto!important}
+      .crx-right{grid-area:1/2!important}
+      .crx-mid{grid-area:2/1/3/3!important}
     }
   </style>
 </helmet>
@@ -52,8 +60,8 @@
   <!-- HEADER -->
   <header data-screen-label="Header" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:118px 32px 0">
     <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Articles</span>
-    <h1 data-reveal="60" style="margin:16px 0 0;font-size:clamp(32px,4.4vw,52px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;text-wrap:balance"><span style="color:#F8FCFF">Coaching, written down.</span> <span style="color:rgba(255,255,255,.55)">343 articles and counting.</span></h1>
-    <p data-reveal="110" style="margin:16px 0 0;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.65);max-width:600px">Program design, assessment, retention, and the business of running a practice — written by coaches who carry a roster.</p>
+    <h1 data-reveal="60" style="margin:16px 0 0;font-size:clamp(32px,4.4vw,52px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#F8FCFF;text-wrap:balance">The coaching library.</h1>
+    <p data-reveal="110" style="margin:16px 0 0;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.65);max-width:600px">Program design, assessment, retention, and the business of running a practice. Written by coaches who carry a roster.</p>
   </header>
 
   <!-- TAG FILTER -->
@@ -63,46 +71,44 @@
     </sc-for>
   </div>
 
-  <!-- FEATURED -->
+  <!-- START HERE: TWO-UP -->
   <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
-    <div class="crx-pad" style="max-width:1200px;margin:40px auto 0;padding:0 32px">
-      <a data-reveal="0" href="CoachRx Blog Post.dc.html" class="crx-card crx-feat" style="display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));color:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s">
-        <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:#101118">
-          <div class="crx-shot" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px);transition:transform .4s cubic-bezier(.22,1,.36,1)">
-            <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">Featured image slot</span>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:14px;justify-content:center;padding:44px 40px">
-          <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5)">Start here · Client Relationships</span>
-          <span style="font-size:28px;font-weight:700;line-height:1.18;letter-spacing:-0.02em;color:#F8FCFF">Touchpoints and communication tools for stronger relationships</span>
-          <span style="font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.65)">Retention is rarely lost in a program. It's lost in the weeks a client went quiet and nobody noticed.</span>
-          <span style="font-size:13px;color:rgba(255,255,255,.45)">August 12, 2026</span>
-        </div>
-      </a>
+    <div data-reveal="0" class="crx-pad" style="max-width:1200px;margin:40px auto 0;padding:0 32px">
+      <div class="crx-two" style="display:grid;grid-template-columns:1fr 1fr;gap:22px">
+        <sc-for list="{{ featured }}" as="feat" hint-placeholder-count="2">
+          <a href="{{ feat.href }}" class="crx-card" style="display:flex;flex-direction:column;gap:14px;padding:32px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));color:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s">
+            <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5)">Start here · {{ feat.tag }}</span>
+            <span style="font-size:26px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:#F8FCFF">{{ feat.title }}</span>
+            <span class="crx-clamp2" style="font-size:15.5px;line-height:1.55;color:rgba(255,255,255,.65)">{{ feat.desc }}</span>
+            <span style="margin-top:auto;padding-top:12px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ feat.date }}</span>
+          </a>
+        </sc-for>
+      </div>
     </div>
   </sc-if>
 
-  <!-- GRID -->
-  <div class="crx-pad" style="max-width:1200px;margin:44px auto 0;padding:0 32px">
-    <div class="crx-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
-      <sc-for list="{{ visible }}" as="post" hint-placeholder-count="6">
-        <a href="CoachRx Blog Post.dc.html" class="crx-card" style="display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));color:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s">
-          <div style="position:relative;aspect-ratio:16/9;overflow:hidden;background:#101118;border-bottom:1px solid rgba(255,255,255,.07)">
-            <div class="crx-shot" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px);transition:transform .4s cubic-bezier(.22,1,.36,1)">
-              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35)">Image slot</span>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:10px;padding:20px">
-            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ post.tag }}</span>
-            <span class="crx-clamp3" style="font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-0.012em;color:#F8FCFF">{{ post.title }}</span>
-            <span class="crx-clamp2" style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.6)">{{ post.desc }}</span>
-            <span style="margin-top:2px;font-size:13px;color:rgba(255,255,255,.45)">{{ post.date }}</span>
-          </div>
+  <!-- EDITORIAL LIST -->
+  <div class="crx-pad" style="max-width:1200px;margin:52px auto 0;padding:0 32px">
+    <div data-reveal="0" style="border-bottom:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ visible }}" as="post" hint-placeholder-count="8">
+        <a href="{{ post.href }}" class="crx-row" style="display:grid;grid-template-columns:150px 1fr auto;gap:24px;align-items:start;padding:26px 14px;margin:0 -14px;color:inherit">
+          <span class="crx-rail" style="display:flex;align-items:center;gap:12px;width:150px">
+            <span class="crx-sq" style="flex:none;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid rgba(255,255,255,.08);border-radius:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.35);transition:border-color .2s,color .2s">{{ post.initials }}</span>
+            <span style="font-family:var(--font-mono);font-size:10.5px;line-height:1.35;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ post.tag }}</span>
+          </span>
+          <span class="crx-mid" style="display:flex;flex-direction:column;gap:7px;min-width:0">
+            <span class="crx-clamp2" style="font-size:20px;font-weight:600;line-height:1.35;letter-spacing:-0.012em;color:#F8FCFF">{{ post.title }}</span>
+            <span class="crx-clamp1" style="font-size:15px;line-height:1.55;color:rgba(255,255,255,.6)">{{ post.desc }}</span>
+          </span>
+          <span class="crx-right" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;text-align:right;white-space:nowrap;padding-top:4px">
+            <span class="crx-date" style="color:rgba(255,255,255,.4)">{{ post.date }}</span>
+            <span class="crx-arrow" style="color:#58FF7A;font-size:14px;letter-spacing:0">&#8594;</span>
+          </span>
         </a>
       </sc-for>
     </div>
 
-    <!-- SPARSE / EMPTY STATE -->
+    <!-- EMPTY STATE -->
     <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
       <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:64px 40px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))">
         <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)">Nothing here yet</span>
@@ -113,9 +119,9 @@
     </sc-if>
 
     <sc-if value="{{ isSparse }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:22px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <div style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
         <span style="font-size:14.5px;color:rgba(255,255,255,.6)">That's every article in <strong style="font-weight:600;color:#F8FCFF">{{ activeTag }}</strong> so far.</span>
-        <span onClick="{{ clearTag }}" style="font-size:13.5px;font-weight:600;color:#58FF7A;cursor:pointer">Browse all articles ›</span>
+        <span onClick="{{ clearTag }}" style="font-size:13.5px;font-weight:600;color:#58FF7A;cursor:pointer">Browse all articles &#8250;</span>
       </div>
     </sc-if>
 
@@ -185,6 +191,26 @@ const POSTS = [
 
 const BATCH = 12;
 
+const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+
+const initials = t => {
+  const w = t.trim().split(/\s+/);
+  return (w.length > 1 ? w[0][0] + w[1][0] : t.slice(0, 2)).toUpperCase();
+};
+
+const shape = p => ({
+  tag: p[0], title: p[1], desc: p[2], date: p[3],
+  initials: initials(p[0]),
+  href: "/articles/" + slug(p[1]),
+  img: "assets/screens/dashboard.png",
+  alt: ""
+});
+
+const FEATURED = [
+  ["Client Relationships","Touchpoints and communication tools for stronger relationships","Retention is rarely lost in a program. It's lost in the weeks a client went quiet and nobody noticed.","August 12, 2026"],
+  ["Program Design","Start with the assessment, not the template","The first four weeks of a practice are decided before you write a single session.","August 10, 2026"]
+].map(shape);
+
 class Component extends DCLogic {
   state = { tag: null, shown: 0 };
 
@@ -207,7 +233,8 @@ class Component extends DCLogic {
     }));
     return {
       chips,
-      visible: list.slice(0, shown).map(p => ({ tag: p[0], title: p[1], desc: p[2], date: p[3] })),
+      visible: list.slice(0, shown).map(shape),
+      featured: FEATURED,
       showFeatured: !active,
       isEmpty: list.length === 0,
       isSparse: list.length > 0 && list.length <= 3 && !!active,
@@ -233,6 +260,7 @@ class Component extends DCLogic {
     }, 50);
   }
 }
+
 </script>
 </body>
 </html>

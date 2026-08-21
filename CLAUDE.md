@@ -231,3 +231,76 @@ route group. Pages still awaiting an exact port live inside it and get `SiteNav`
 
 Design assets live in `public/design/` (`assets/`, `_ds/colors_and_type.css`,
 `_ds/fonts/*.ttf`) and are referenced by the compiled markup as `/design/…`.
+
+## Authors: decided, do not re-litigate
+
+All 340 posts are company-authored, so **per-post bylines are not being built.** Every
+post carries `author: "CoachRx Team"` and that is the intended end state, not a
+placeholder. `src/data/authors.ts` holds the org entity with a real bio; the post
+template's author card renders that.
+
+The exception worth doing later is a named expert byline on the 20 or so highest-value
+posts (coach spotlights, the framework explainers), because models weight named
+credentialed humans when deciding who to cite. That is Carl's call and needs real names
+and headshots. Nobody should invent bylines to fill the card.
+
+## Divergence to reconcile
+
+`design/CoachRx Home v7.dc.html` in this repo has `8,000+` changed to `10,000+`
+(Carl, 2026-08-21: always 10,000+). **The copy in Claude Design still says 8,000+.**
+Make the same edit there, or the next export will reintroduce it. This is the only known
+divergence between the repo's design files and Claude Design, and it should stay that
+way — the design app is the source of truth.
+
+## The blog is compiled too, with real data injected
+
+`/articles`, `/topics/[topic]`, `/articles/[slug]` and the 404 are exact ports, not
+hand-written pages. `scripts/build-blog.mjs` compiles the three blog design templates
+with the real 340 posts in place of the design's sample articles:
+
+| Route | Generated module | Approach |
+|---|---|---|
+| `/articles` | `blog-index.ts` | one page, all 340 posts as rows |
+| `/topics/[topic]` | `topic-<slug>.ts` ×9 + `topic-pages.ts` | one compiled page per topic |
+| `/articles/[slug]` | `blog-post.ts` | compiled once with `@@token@@` placeholders, filled per post |
+| 404 | `notFound.ts` | article count substituted at render |
+
+Post detail uses tokens rather than 340 compiled pages, which would bloat the bundle for
+no gain. `src/lib/dc.ts` does the substitution and escaping, and renders the MDX body to
+HTML with `marked`. The body lands inside the design's `.crx-body` container, so the
+design's own prose CSS styles it — do not add prose styling anywhere else.
+
+**Cards carry no images, deliberately.** Measured across the library: 340 posts share
+only 121 distinct pieces of artwork, 256 posts (75%) reuse artwork that appears on
+another post, and 32 posts carry the same "Behind the Design" banner. An image grid
+showed the same banner thirty times on one topic page. The featured image is still used
+for the social share preview and the post-detail hero.
+
+The index is ~1.4 MB of HTML because the design uses per-row inline styles. It gzips to
+135 KB. If that becomes a problem, the fix is to hoist repeated inline styles into
+classes in the compiler, not to trim the row count — every article link being in the HTML
+is what makes the library crawlable without JavaScript.
+
+## Design files link to each other, so the compiler rewrites links
+
+A design file's nav points at `CoachRx Features.dc.html`, and pages that did not exist
+when it was designed use `href="#"`. Both are dead links live. `fixLinks()` in the
+compiler maps design filenames to routes and resolves `href="#"` by the link's own text.
+**Anything it cannot resolve is reported in the build output, never shipped silently** —
+check that report after every design change.
+
+Resolved this way: privacy and terms point at opexfit.com (taken from the old Squarespace
+footer), "referral program" points at the surviving article, contact and transition-team
+links go to `mailto:support@coachrx.app`, and Videos/Podcasts point at the library since
+every video-only page was cut in the migration.
+
+Still unresolved and needing Carl: **"Book a demo"** and **"watch the 3-minute demo"** on
+the home page. There is no demo page or video.
+
+## Route groups
+
+Design-ported pages carry their own nav and footer, so they live at the app root:
+`/`, `/features`, `/articles`, `/topics`, 404. Pages still hand-built live in
+`(chrome)/` and get `SiteNav` / `SiteFooter` from its layout: `/pricing`,
+`/why-coachrx`, `/about`, `/changelog`. **Putting a ported page inside `(chrome)` renders
+two navs** — that already happened once with `/articles`.
