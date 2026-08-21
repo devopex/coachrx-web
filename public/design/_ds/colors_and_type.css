@@ -1,0 +1,209 @@
+/* ============================================================
+   OPEX & CoachRx Design System — Colors & Type
+   Clean, modern, minimal, sharp. Professional brand feel.
+   ============================================================ */
+
+/* ---------- FONT FACES ---------- */
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; font-display: swap; }
+
+:root {
+  /* ---------- BRAND COLORS (from Color Palette.png) ---------- */
+  --opex-blue:            #004892; /* Primary brand blue — OPEX/CoachRx logo blue */
+  --opex-blue-light:      #1F94EA; /* Accent — bright sky blue */
+  --opex-navy:            #061636; /* Deep ink / dark backgrounds */
+  --opex-slate:           #282E36; /* Near-black surface */
+  --opex-green:           #58FF7A; /* Highlight / success / conversion */
+
+  /* Neutrals (from palette + derived) */
+  --opex-white:           #F8FCFF;
+  --opex-gray-100:        #D8E1EA;
+  --opex-gray-300:        #98A9B9;
+  --opex-gray-500:        #5A6977;
+  --opex-gray-700:        #3A434E;
+  --opex-black:           #000000;
+
+  /* ---------- SEMANTIC COLORS ---------- */
+  --color-bg:             var(--opex-white);
+  --color-bg-subtle:      #F1F5F9;
+  --color-bg-inverse:     var(--opex-navy);
+  --color-surface:        #FFFFFF;
+  --color-surface-2:      #F8FCFF;
+  --color-surface-inverse:var(--opex-slate);
+
+  --color-fg:             var(--opex-navy);       /* body text on light */
+  --color-fg-2:           #3A434E;                /* muted body */
+  --color-fg-3:           var(--opex-gray-500);   /* captions / metadata */
+  --color-fg-inverse:     var(--opex-white);      /* text on dark */
+  --color-fg-inverse-2:   var(--opex-gray-100);
+
+  --color-border:         #E2E8F0;
+  --color-border-strong:  #CBD5E0;
+  --color-border-inverse: #1E2A3D;
+
+  --color-accent:         var(--opex-blue);
+  --color-accent-hover:   #003A77;
+  --color-accent-active:  #002C5C;
+  --color-accent-bright:  var(--opex-blue-light);
+
+  --color-success:        #16A34A;
+  --color-success-bright: var(--opex-green);
+  --color-warning:        #D97706;
+  --color-danger:         #DC2626;
+  --color-info:           var(--opex-blue-light);
+
+  /* ---------- GRADIENTS ---------- */
+  --gradient-blue:        linear-gradient(135deg, #004892 0%, #1F94EA 100%); /* @kind color */
+  --gradient-blue-dark:   linear-gradient(135deg, #061636 0%, #004892 100%); /* @kind color */
+  --gradient-blue-wash:   linear-gradient(180deg, rgba(6,22,54,0) 0%, rgba(6,22,54,0.85) 100%); /* @kind color */
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Weights */
+  --fw-thin: 100; /* @kind font */
+  --fw-extralight: 200; /* @kind font */
+  --fw-light: 300; /* @kind font */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium: 500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold: 700; /* @kind font */
+  --fw-extrabold: 800; /* @kind font */
+  --fw-black: 900; /* @kind font */
+
+  /* Type scale — sharp, modern, display-driven */
+  --fs-display-2xl: clamp(56px, 7.5vw, 96px); /* @kind font */
+  --fs-display-xl:  clamp(44px, 5.5vw, 72px); /* @kind font */
+  --fs-display-lg:  clamp(36px, 4.5vw, 56px); /* @kind font */
+  --fs-h1:          clamp(32px, 3.6vw, 44px); /* @kind font */
+  --fs-h2:          clamp(26px, 2.6vw, 32px); /* @kind font */
+  --fs-h3:          22px;
+  --fs-h4:          18px;
+  --fs-body-lg:     18px;
+  --fs-body:        16px;
+  --fs-body-sm:     14px;
+  --fs-caption:     13px;
+  --fs-overline:    12px;
+
+  --lh-tight: 1.05; /* @kind font */
+  --lh-snug: 1.15; /* @kind font */
+  --lh-normal: 1.35; /* @kind font */
+  --lh-relaxed: 1.55; /* @kind font */
+  --lh-loose: 1.7; /* @kind font */
+
+  --ls-tighter: -0.03em; /* @kind font */
+  --ls-tight: -0.02em; /* @kind font */
+  --ls-snug: -0.01em; /* @kind font */
+  --ls-normal: 0; /* @kind font */
+  --ls-wide: 0.02em; /* @kind font */
+  --ls-wider: 0.08em; /* @kind font */
+  --ls-widest: 0.16em; /* @kind font */
+
+  /* ---------- SPACING ---------- */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ---------- RADII ---------- */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 20px;
+  --radius-pill: 999px;
+
+  /* ---------- SHADOWS ---------- */
+  --shadow-xs: 0 1px 2px rgba(6, 22, 54, 0.05);
+  --shadow-sm: 0 1px 3px rgba(6, 22, 54, 0.08), 0 1px 2px rgba(6, 22, 54, 0.04);
+  --shadow-md: 0 4px 8px -2px rgba(6, 22, 54, 0.10), 0 2px 4px -2px rgba(6, 22, 54, 0.06);
+  --shadow-lg: 0 12px 24px -6px rgba(6, 22, 54, 0.12), 0 4px 8px -4px rgba(6, 22, 54, 0.06);
+  --shadow-xl: 0 24px 48px -12px rgba(6, 22, 54, 0.18);
+  --shadow-focus: 0 0 0 3px rgba(31, 148, 234, 0.35);
+
+  /* ---------- MOTION ---------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast: 120ms; /* @kind other */
+  --dur-base: 180ms; /* @kind other */
+  --dur-slow: 280ms; /* @kind other */
+}
+
+/* ---------- SEMANTIC BASE ---------- */
+body {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--color-fg);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-fg);
+  margin: 0;
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  margin: 0;
+}
+h3, .h3 {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
+  margin: 0;
+}
+h4, .h4 {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-normal);
+  margin: 0;
+}
+p { margin: 0; line-height: var(--lh-relaxed); }
+
+.display-2xl { font-size: var(--fs-display-2xl); font-weight: var(--fw-black);    line-height: var(--lh-tight); letter-spacing: var(--ls-tighter); }
+.display-xl  { font-size: var(--fs-display-xl);  font-weight: var(--fw-extrabold);line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+.display-lg  { font-size: var(--fs-display-lg);  font-weight: var(--fw-bold);     line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+
+.eyebrow {
+  font-size: var(--fs-overline);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.caption { font-size: var(--fs-caption); color: var(--color-fg-3); }
+.mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }

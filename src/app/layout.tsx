@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { SiteNav } from "@/components/SiteNav";
-import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.coachrx.app"),
@@ -11,14 +9,14 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+/**
+ * Deliberately bare. Site chrome lives in the `(chrome)` route group, because the
+ * exact-ported design pages bring their own nav and footer.
+ */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-base font-sans text-ink antialiased">
-        <SiteNav />
-        {children}
-        <SiteFooter />
-      </body>
+      <body className="bg-base font-sans text-ink antialiased">{children}</body>
     </html>
   );
 }

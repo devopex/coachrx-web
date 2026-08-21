@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    a{color:#58FF7A;text-decoration:none}
+    a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .crx-clamp3{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+    .crx-clamp2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+    .crx-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.12);box-shadow:0 20px 48px rgba(0,0,0,.45)}
+    .crx-card:hover .crx-shot{transform:scale(1.025)}
+    .crx-chips::-webkit-scrollbar{display:none}
+    .crx-chip{display:inline-flex;align-items:center;gap:8px;flex:none;font-size:13px;font-weight:500;padding:8px 14px;border-radius:999px;border-width:1px;border-style:solid;border-color:rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s,background .2s}
+    .crx-chip .crx-dot{width:6px;height:6px;border-radius:99px;flex:none;background:#58FF7A;display:none}
+    .crx-chip.is-active{color:#F8FCFF;font-weight:600;border-color:rgba(88,255,122,.35);background:rgba(88,255,122,.07)}
+    .crx-chip.is-active .crx-dot{display:block}
+    @media (max-width:1000px){ .crx-grid{grid-template-columns:1fr 1fr!important} .crx-feat{grid-template-columns:1fr!important} }
+    @media (max-width:700px){
+      .crx-grid{grid-template-columns:1fr!important}
+      .crx-pad{padding-left:20px!important;padding-right:20px!important}
+      .crx-chips{margin-left:-20px;margin-right:-20px;padding-left:20px!important;padding-right:20px!important}
+      .crx-nav-links{display:none!important}
+      .crx-more{width:100%}
+    }
+  </style>
+</helmet>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div class="crx-nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="CoachRx Features.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Features</a>
+      <a href="#" style="color:#F8FCFF;font-size:14px;font-weight:600">Resources</a>
+      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Changelog</a>
+      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+    </div>
+    <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header data-screen-label="Header" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:118px 32px 0">
+    <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Articles</span>
+    <h1 data-reveal="60" style="margin:16px 0 0;font-size:clamp(32px,4.4vw,52px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;text-wrap:balance"><span style="color:#F8FCFF">Coaching, written down.</span> <span style="color:rgba(255,255,255,.55)">343 articles and counting.</span></h1>
+    <p data-reveal="110" style="margin:16px 0 0;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.65);max-width:600px">Program design, assessment, retention, and the business of running a practice — written by coaches who carry a roster.</p>
+  </header>
+
+  <!-- TAG FILTER -->
+  <div data-reveal="150" class="crx-pad crx-chips" style="max-width:1200px;margin:36px auto 0;padding:0 32px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none">
+    <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="8">
+      <span onClick="{{ chip.onClick }}" class="crx-chip {{ chip.cls }}"><span class="crx-dot"></span>{{ chip.label }}</span>
+    </sc-for>
+  </div>
+
+  <!-- FEATURED -->
+  <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+    <div class="crx-pad" style="max-width:1200px;margin:40px auto 0;padding:0 32px">
+      <a data-reveal="0" href="CoachRx Blog Post.dc.html" class="crx-card crx-feat" style="display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));color:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s">
+        <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:#101118">
+          <div class="crx-shot" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px);transition:transform .4s cubic-bezier(.22,1,.36,1)">
+            <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">Featured image slot</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;justify-content:center;padding:44px 40px">
+          <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5)">Start here · Client Relationships</span>
+          <span style="font-size:28px;font-weight:700;line-height:1.18;letter-spacing:-0.02em;color:#F8FCFF">Touchpoints and communication tools for stronger relationships</span>
+          <span style="font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.65)">Retention is rarely lost in a program. It's lost in the weeks a client went quiet and nobody noticed.</span>
+          <span style="font-size:13px;color:rgba(255,255,255,.45)">August 12, 2026</span>
+        </div>
+      </a>
+    </div>
+  </sc-if>
+
+  <!-- GRID -->
+  <div class="crx-pad" style="max-width:1200px;margin:44px auto 0;padding:0 32px">
+    <div class="crx-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+      <sc-for list="{{ visible }}" as="post" hint-placeholder-count="6">
+        <a href="CoachRx Blog Post.dc.html" class="crx-card" style="display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));color:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s">
+          <div style="position:relative;aspect-ratio:16/9;overflow:hidden;background:#101118;border-bottom:1px solid rgba(255,255,255,.07)">
+            <div class="crx-shot" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px);transition:transform .4s cubic-bezier(.22,1,.36,1)">
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35)">Image slot</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:20px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ post.tag }}</span>
+            <span class="crx-clamp3" style="font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-0.012em;color:#F8FCFF">{{ post.title }}</span>
+            <span class="crx-clamp2" style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.6)">{{ post.desc }}</span>
+            <span style="margin-top:2px;font-size:13px;color:rgba(255,255,255,.45)">{{ post.date }}</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+
+    <!-- SPARSE / EMPTY STATE -->
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:64px 40px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)">Nothing here yet</span>
+        <p style="margin:14px auto 0;font-size:18px;line-height:1.55;color:rgba(255,255,255,.78);max-width:420px">No articles are filed under <strong style="font-weight:600;color:#F8FCFF">{{ activeTag }}</strong> right now.</p>
+        <p style="margin:10px auto 0;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.55);max-width:420px">New pieces go up weekly. In the meantime, the full library is one click away.</p>
+        <span onClick="{{ clearTag }}" style="display:inline-block;margin-top:24px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#58FF7A;border:1px solid rgba(88,255,122,.32);border-radius:10px;padding:12px 24px;cursor:pointer">Browse all articles</span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isSparse }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:22px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <span style="font-size:14.5px;color:rgba(255,255,255,.6)">That's every article in <strong style="font-weight:600;color:#F8FCFF">{{ activeTag }}</strong> so far.</span>
+        <span onClick="{{ clearTag }}" style="font-size:13.5px;font-weight:600;color:#58FF7A;cursor:pointer">Browse all articles ›</span>
+      </div>
+    </sc-if>
+
+    <!-- LOAD MORE -->
+    <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:44px">
+        <span onClick="{{ loadMore }}" class="crx-more" style="text-align:center;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#58FF7A;border:1px solid rgba(88,255,122,.32);border-radius:10px;padding:15px 34px;cursor:pointer;transition:background .2s,border-color .2s,transform .18s cubic-bezier(.22,1,.36,1)" style-hover="background:rgba(88,255,122,.08);border-color:rgba(88,255,122,.5);transform:translateY(-1px)">Load more articles</span>
+        <span style="font-size:12.5px;color:rgba(255,255,255,.42)">{{ countLabel }}</span>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- CLOSING CTA -->
+  <section data-screen-label="Closing CTA" style="position:relative;margin-top:104px;padding:96px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 45%,#0A0B0F 100%)">
+    <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:900px;height:460px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:720px;margin:0 auto;text-align:center">
+      <h2 data-reveal="0" style="margin:0;font-size:clamp(28px,3.6vw,42px);font-weight:700;line-height:1.1;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Deliver the coaching</span> <span style="color:rgba(255,255,255,.55)">you're capable of.</span></h2>
+      <div data-reveal="80" style="margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. No credit card required. Free onboarding and transition support included.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:#08090E">
+    <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+      <img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:20px;width:auto">
+      <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;perBatch&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:12,&quot;min&quot;:6,&quot;max&quot;:18,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+const TAGS = ["AI Coaching","Program Design","Case Study","Coach Spotlight","Frameworks","Podcasts","Press","Education","Career Development","Feature Highlight","Marketing For Fitness Coaches","Community Call","AMA Challenge","Program Design Pro Tip"];
+
+const POSTS = [
+  ["Program Design","What a week of individual design actually looks like","Five clients, five different weeks, and the reasoning behind each one.","August 8, 2026"],
+  ["Frameworks","Body, Move, Work: reading an assessment in order","The sequence matters more than the scores. Start at the bottom.","August 5, 2026"],
+  ["Case Study","From $2,400 to $8,500 a month without adding clients","How one coach restructured pricing around consultation depth.","August 1, 2026"],
+  ["Coach Spotlight","Back room talk: Attila Kortvelyessy on coaching through injury","A long conversation about patience, load, and telling a client no.","July 28, 2026"],
+  ["Feature Highlight","The new CoachRx dashboard","Everything that changed, and why the roster now opens on what needs you.","July 25, 2026"],
+  ["Career Development","The first ten clients are a business model, not a milestone","Why most coaches price the hardest year of their practice wrong.","July 22, 2026"],
+  ["AI Coaching","What we won't automate","Where the software stops and the coach starts, stated plainly.","July 18, 2026"],
+  ["Education","Assessment and tracking made easy","A walkthrough of building a metric set you'll actually keep using.","July 15, 2026"],
+  ["Program Design Pro Tip","Stop writing four-week blocks by default","Block length should follow the client's rate of adaptation, not the calendar.","July 11, 2026"],
+  ["Marketing For Fitness Coaches","You don't need a million followers","What actually fills a remote roster, measured across sixty practices.","July 8, 2026"],
+  ["Podcasts","Frameworks: the 23 hours nobody coaches","On sleep, stress, and why lifestyle work outperforms another session.","July 4, 2026"],
+  ["Community Call","Q2 community call recap","Everything shipped, everything asked, and what's next on the roadmap.","June 30, 2026"],
+  ["Case Study","Running a 90-client roster with two coaches","The systems, the standards, and the week that broke and got fixed.","June 26, 2026"],
+  ["Frameworks","Macro, meso, micro: planning before programming","Place the phases, deloads, and re-tests before you write a session.","June 23, 2026"],
+  ["Coach Spotlight","Back room talk: Sherif Nassar on building a practice abroad","Twelve years, three countries, and one methodology that travelled.","June 19, 2026"],
+  ["Program Design","Conditioning without wrecking the week","Placing energy system work so it supports the strength you're chasing.","June 16, 2026"],
+  ["Press","CoachRx named a top coaching platform for 2026","Coverage from the industry press, and what the reviewers flagged.","June 12, 2026"],
+  ["Education","Writing a consultation that changes behaviour","The question order that gets past what a client thinks you want to hear.","June 9, 2026"],
+  ["Feature Highlight","Custom theming for your client app","Your brand on the app your clients open every day.","June 5, 2026"],
+  ["Career Development","When to hire your second coach","The three numbers that say you're ready, and the one that says wait.","June 2, 2026"],
+  ["AI Coaching","Using RxBot as a second reader, not a first draft","Where an assistant genuinely saves time in program review.","May 29, 2026"],
+  ["Program Design Pro Tip","Tempo is the cheapest progression you have","Before you add load, spend the eccentric.","May 26, 2026"],
+  ["Frameworks","Structural balance, and what to do with the result","Reading ratios without turning a client into a correction project.","May 22, 2026"],
+  ["Marketing For Fitness Coaches","The referral conversation nobody has","Asking well, at the right moment, without making it weird.","May 19, 2026"],
+  ["Podcasts","Frameworks: pricing premium coaching","James FitzGerald on charging for judgement rather than time.","May 15, 2026"],
+  ["Case Study","Moving 60 clients off spreadsheets in a weekend","What the migration actually took, hour by hour.","May 12, 2026"],
+  ["Education","Reading wearable data without over-reacting to it","HRV is a trend, not a verdict. How to coach the trend.","May 8, 2026"],
+  ["Program Design","Designing for the client who trains twice a week","Two sessions, real progress, and the compromises worth making.","May 5, 2026"]
+];
+
+const BATCH = 12;
+
+class Component extends DCLogic {
+  state = { tag: null, shown: 0 };
+
+  batch() { return this.props.perBatch ?? BATCH; }
+
+  filtered() {
+    const t = this.state.tag;
+    return POSTS.filter(p => !t || p[0] === t);
+  }
+
+  renderVals() {
+    const list = this.filtered();
+    const b = this.batch();
+    const shown = Math.min(this.state.shown || b, list.length);
+    const active = this.state.tag;
+    const chips = [{ label: "All", tag: null }].concat(TAGS.map(t => ({ label: t, tag: t }))).map(c => ({
+      label: c.label,
+      onClick: () => this.setState({ tag: c.tag, shown: b }),
+      cls: c.tag === active ? "is-active" : ""
+    }));
+    return {
+      chips,
+      visible: list.slice(0, shown).map(p => ({ tag: p[0], title: p[1], desc: p[2], date: p[3] })),
+      showFeatured: !active,
+      isEmpty: list.length === 0,
+      isSparse: list.length > 0 && list.length <= 3 && !!active,
+      hasMore: shown < list.length,
+      activeTag: active || "",
+      countLabel: "Showing " + shown + " of " + list.length + (active ? " in " + active : " articles"),
+      loadMore: () => this.setState(s => ({ shown: (s.shown || b) + b })),
+      clearTag: () => this.setState({ tag: null, shown: b })
+    };
+  }
+
+  componentDidMount() {
+    this.rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    if (this.rm) return;
+    setTimeout(() => {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const d = parseInt(e.target.getAttribute("data-reveal") || "0", 10);
+        e.target.style.animation = `crxRise .5s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+        io.unobserve(e.target);
+      }), { threshold: 0.15 });
+      document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>

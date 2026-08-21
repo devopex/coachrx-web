@@ -193,3 +193,41 @@ present, and JSON-LD parses.
 Note: this sandbox is ARM and cannot run headless Chrome, so **visual and mobile QA has
 to happen in a real browser against the deployed preview.** Do not claim a layout is
 correct from markup alone.
+
+## Exact ports: the .dc.html compiler
+
+`/` and `/features` are **not** hand-written React. They are compiled from the Claude
+Design files, which are the visual source of truth.
+
+```
+design/CoachRx Home v7.dc.html  ──scripts/dc-compile.mjs──▶  src/generated/home.ts
+                                                             { html, css, script, data }
+```
+
+`src/app/page.tsx` is a four-line wrapper around `<DcPage />`. **To change these pages,
+edit the design file and re-run `npm run dc`** — never patch the generated output, and
+never re-implement a design in JSX. Rebuilding by hand produces something that matches
+the design system but is not the design, which is the exact failure mode that made us
+abandon Framer.
+
+The compiler handles `<sc-for>`, `<sc-if>`, `{{ }}`, `style-hover` (turned into real
+CSS rules) and `onClick`/`onMouseEnter`/`onMouseLeave` (turned into `data-dc-on-*` that
+`DcRuntime` binds). It gets the page data by *executing* the file's own `renderVals()`
+against a `DCLogic` stub, so data can never drift from the design.
+
+It fails the build if any `{{ }}` or `<sc-*>` survives compilation.
+
+Gotchas that already bit once:
+- **cheerio lowercases attribute names**, so match `onclick`, not `onClick`. Matching
+  camelCase silently dropped every handler.
+- **jsdom cannot parse these files** — it eagerly parses inline `style` and throws on
+  some gradient shorthands. Use cheerio.
+- Per-item handlers inside `sc-for` compile to a concrete path (`tabs.3.onSelect`) so
+  the runtime can resolve them.
+
+Design pages carry their own nav and footer, so they sit **outside** the `(chrome)`
+route group. Pages still awaiting an exact port live inside it and get `SiteNav` /
+`SiteFooter` from `(chrome)/layout.tsx`.
+
+Design assets live in `public/design/` (`assets/`, `_ds/colors_and_type.css`,
+`_ds/fonts/*.ttf`) and are referenced by the compiled markup as `/design/…`.

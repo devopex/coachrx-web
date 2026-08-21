@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxTyping{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-3px);opacity:1}}
+    @keyframes crxPop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}
+    @keyframes crxPulse{0%{box-shadow:0 0 0 0 rgba(88,255,122,.45)}100%{box-shadow:0 0 0 12px rgba(88,255,122,0)}}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes crxFrameRise{from{opacity:.2;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</helmet>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <!-- NAV -->
+  <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div style="display:flex;align-items:center;gap:28px">
+      <a href="#" style="color:#F8FCFF;font-size:14px;font-weight:600">Features</a>
+      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Resources</a>
+      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Changelog</a>
+      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+    </div>
+    <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+  </nav>
+
+  <!-- STICKY PILLAR BAR -->
+  <div id="pillarBar" style="position:fixed;top:60px;left:0;right:0;z-index:90;transform:translateY(-120%);transition:transform .35s cubic-bezier(.22,1,.36,1);background:rgba(10,11,15,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1200px;margin:0 auto;display:flex;gap:8px;overflow-x:auto;padding:0 32px">
+      <span data-pnav="0" onClick="{{ goAssess }}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .25s"><span data-pdot="" style="width:6px;height:6px;border-radius:99px;background:#58FF7A;opacity:0;transition:opacity .25s"></span>Assess</span>
+      <span data-pnav="1" onClick="{{ goConsult }}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .25s"><span data-pdot="" style="width:6px;height:6px;border-radius:99px;background:#58FF7A;opacity:0;transition:opacity .25s"></span>Consult</span>
+      <span data-pnav="2" onClick="{{ goDesign }}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .25s"><span data-pdot="" style="width:6px;height:6px;border-radius:99px;background:#58FF7A;opacity:0;transition:opacity .25s"></span>Design</span>
+      <span data-pnav="3" onClick="{{ goOperate }}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .25s"><span data-pdot="" style="width:6px;height:6px;border-radius:99px;background:#58FF7A;opacity:0;transition:opacity .25s"></span>Operate</span>
+      <span data-pnav="4" onClick="{{ goClient }}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;transition:color .25s"><span data-pdot="" style="width:6px;height:6px;border-radius:99px;background:#58FF7A;opacity:0;transition:opacity .25s"></span>Client Experience</span>
+    </div>
+  </div>
+
+  <!-- 01 HERO -->
+  <section data-screen-label="01 Hero" style="position:relative;padding:126px 32px 0;overflow:hidden;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
+    <div style="position:absolute;top:220px;left:50%;transform:translateX(-50%);width:1200px;height:700px;background:radial-gradient(ellipse at center, rgba(31,148,234,.12) 0%, rgba(0,72,146,.06) 35%, rgba(31,148,234,0) 62%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center">
+      <span data-hcta="0" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">Features</span>
+      <h1 data-hcta="1" style="margin:22px 0 0;font-size:clamp(36px,4.8vw,66px);font-weight:700;line-height:1.06;letter-spacing:-0.03em;max-width:900px;text-wrap:balance"><span style="color:#F8FCFF">One system</span> <span style="color:rgba(255,255,255,.55)">for the way you actually coach.</span></h1>
+      <p data-hcta="2" style="margin:22px 0 0;font-size:18px;line-height:1.6;color:rgba(255,255,255,.66);max-width:640px;text-wrap:pretty">Assess, consult, design, operate, and deliver. Every part of your practice in one place, so nothing gets missed and nothing slows you down.</p>
+      <div data-hcta="3" style="margin:32px 0 0;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. No credit card required. Free onboarding and transition support included.</span>
+      </div>
+      <div data-hframe="1" style="position:relative;width:100%;max-width:1100px;margin-top:60px;height:480px">
+        <div style="position:absolute;top:44px;left:-24px;width:44%;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#0E0F15;box-shadow:0 24px 80px rgba(0,0,0,.5);overflow:hidden;opacity:.55">
+          <div style="position:relative;height:340px;overflow:hidden">
+            <img data-slot="" src="assets/screens/insights.png" alt="Trends view" style="width:130%;display:block;margin:-4% 0 0 -6%;filter:brightness(.7)">
+          </div>
+        </div>
+        <div style="position:absolute;top:0;left:7%;right:15%;border:1px solid rgba(255,255,255,.11);border-radius:16px 16px 0 0;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.34),0 32px 100px rgba(0,0,0,.6);overflow:hidden;z-index:2">
+          <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))">
+            <span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span>
+            <span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 40px;font-size:11px;color:rgba(255,255,255,.4)">app.coachrx.app</span>
+            <span style="width:38px"></span>
+          </div>
+          <div style="position:relative;height:436px;overflow:hidden">
+            <img data-slot="" src="assets/screens/calendar.png" alt="Program design calendar" style="width:100%;display:block">
+          </div>
+        </div>
+        <div style="position:absolute;right:2%;top:52px;bottom:0;width:206px;padding:8px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:38px 38px 0 0;border-bottom:none;box-shadow:0 28px 80px rgba(0,0,0,.7);z-index:3">
+          <div style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:100%;background:#0A0B0F">
+            <img data-slot="" src="assets/screens/phone-home.png" alt="CoachRx client app" style="width:100%;display:block">
+            <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:66px;height:16px;border-radius:99px;background:#0A0B0F"></span>
+          </div>
+        </div>
+        <div style="position:absolute;left:-40px;right:-40px;bottom:0;height:180px;background:linear-gradient(180deg,rgba(10,11,15,0),#0A0B0F 92%);pointer-events:none;z-index:4"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 PILLAR NAVIGATOR -->
+  <section id="pillar-nav" data-screen-label="02 Pillar navigator" style="position:relative;padding:96px 32px 80px">
+    <div style="max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;text-align:center;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">02 · The pillars</span>
+      <h2 data-reveal="60" style="margin:18px 0 0;text-align:center;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF">Five parts of a coaching practice.</h2>
+      <p data-reveal="120" style="margin:14px auto 0;text-align:center;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.6);max-width:520px">Every one of them, connected to the others.</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:48px">
+        <div data-reveal="0" onClick="{{ goAssess }}" style="border:1px solid rgba(255,255,255,.08);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:22px 20px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 20px 48px rgba(0,0,0,.45)">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.4)">05</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Assess</span>
+          <span style="font-size:13px;line-height:1.5;color:rgba(255,255,255,.58)">Know where every client actually stands.</span>
+          <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45)">↓</span>
+        </div>
+        <div data-reveal="60" onClick="{{ goConsult }}" style="border:1px solid rgba(255,255,255,.08);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:22px 20px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 20px 48px rgba(0,0,0,.45)">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.4)">06</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Consult</span>
+          <span style="font-size:13px;line-height:1.5;color:rgba(255,255,255,.58)">Stay close between every session.</span>
+          <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45)">↓</span>
+        </div>
+        <div data-reveal="120" onClick="{{ goDesign }}" style="border:1px solid rgba(255,255,255,.08);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:22px 20px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 20px 48px rgba(0,0,0,.45)">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.4)">07</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Design</span>
+          <span style="font-size:13px;line-height:1.5;color:rgba(255,255,255,.58)">Build programs worth a client's trust.</span>
+          <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45)">↓</span>
+        </div>
+        <div data-reveal="180" onClick="{{ goOperate }}" style="border:1px solid rgba(255,255,255,.08);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:22px 20px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 20px 48px rgba(0,0,0,.45)">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.4)">08</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Operate</span>
+          <span style="font-size:13px;line-height:1.5;color:rgba(255,255,255,.58)">Run the practice without the drag.</span>
+          <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45)">↓</span>
+        </div>
+        <div data-reveal="240" onClick="{{ goClient }}" style="border:1px solid rgba(255,255,255,.08);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:22px 20px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 20px 48px rgba(0,0,0,.45)">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.4)">09</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Client Experience</span>
+          <span style="font-size:13px;line-height:1.5;color:rgba(255,255,255,.58)">The app your clients open every day.</span>
+          <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45)">↓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PROOF BAR -->
+  <section data-screen-label="03 Proof bar" style="padding:8px 32px 72px">
+    <p data-reveal="0" style="margin:0;text-align:center;font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.1em;color:rgba(255,255,255,.45);text-transform:uppercase">10,000+ coaching practices · Every feature included from day one · Free transition support</p>
+  </section>
+
+  <!-- 04 THE SYSTEM -->
+  <section data-screen-label="04 The system" style="position:relative;padding:110px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 22%,#0C0E14 78%,#0A0B0F 100%)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:72px;align-items:center">
+      <div>
+        <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">04 · The system</span>
+        <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Coaching isn't five jobs.</span> <span style="color:rgba(255,255,255,.55)">It shouldn't be five tools.</span></h2>
+        <p data-reveal="120" style="margin-top:22px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:520px;text-wrap:pretty">Most coaches run a practice across a programming app, a spreadsheet, a messaging thread, a payment processor, and a notes doc. The work still gets done. The context is what gets lost.</p>
+        <p data-reveal="180" style="margin-top:14px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:520px;text-wrap:pretty">In CoachRx, what you learn in an assessment is there when you design. What a client logs is there before your next conversation. One system, so every decision has the full picture behind it.</p>
+      </div>
+      <div data-reveal="120" style="display:flex;justify-content:center">
+        <svg width="300" height="300" viewBox="0 0 300 300">
+          <circle cx="150" cy="150" r="108" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"></circle>
+          <circle cx="150" cy="42" r="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"></circle>
+          <circle cx="252.7" cy="116.6" r="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"></circle>
+          <circle cx="213.5" cy="237.4" r="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"></circle>
+          <circle cx="86.5" cy="237.4" r="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"></circle>
+          <circle cx="47.3" cy="116.6" r="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"></circle>
+          <text x="150" y="26" text-anchor="middle" fill="rgba(255,255,255,.45)" font-size="10" font-family="var(--font-mono)" letter-spacing="1.5">ASSESS</text>
+          <text x="272" y="112" text-anchor="start" fill="rgba(255,255,255,.45)" font-size="10" font-family="var(--font-mono)" letter-spacing="1.5">CONSULT</text>
+          <text x="220" y="258" text-anchor="middle" fill="rgba(255,255,255,.45)" font-size="10" font-family="var(--font-mono)" letter-spacing="1.5">DESIGN</text>
+          <text x="80" y="258" text-anchor="middle" fill="rgba(255,255,255,.45)" font-size="10" font-family="var(--font-mono)" letter-spacing="1.5">OPERATE</text>
+          <text x="28" y="112" text-anchor="end" fill="rgba(255,255,255,.45)" font-size="10" font-family="var(--font-mono)" letter-spacing="1.5">CLIENT</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ASSESS -->
+  <section id="assess" data-screen-label="05 Assess" style="position:relative;padding:120px 32px;scroll-margin-top:120px">
+    <div style="position:absolute;top:-100px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">05 · Assess</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:700px"><span style="color:rgba(255,255,255,.55)">Stop guessing.</span> <span style="color:#F8FCFF">Start knowing.</span></h2>
+      <p data-reveal="120" style="margin-top:20px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">Good coaching decisions need good information. Movement capacity, performance markers, wearable data, and lifestyle behavior in one profile means you are never making the call on a hunch.</p>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:72px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Track the markers your method depends on.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Body, Move, Work and structural balance analysis are built in and ready to run. On top of them you build your own metric sets: choose the markers you track, group them the way you think about a client, and score every result against the targets you set. Everything is plotted over time, so progress is a trend and not a memory.</p>
+        </div>
+        <div data-reveal="80" style="position:relative;padding-bottom:40px">
+          <div style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+            <div style="position:relative;height:380px;overflow:hidden">
+              <img data-slot="" src="assets/screens/metric-builder.png" alt="Metric set builder" style="width:100%;display:block">
+            </div>
+          </div>
+          <div data-vig="score" style="position:absolute;right:-14px;bottom:0;width:240px;transform:rotate(-1.4deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.7)">
+            <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Body · Move · Work</span>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-top:12px"><span data-scoren="" style="font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#F8FCFF;font-feature-settings:'tnum' 1">82</span><span data-scorepill="" style="font-size:11px;font-weight:700;color:#58FF7A;background:rgba(88,255,122,.12);padding:3px 9px;border-radius:999px">↑ 6 vs last test</span></div>
+            <div style="margin-top:12px;height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden"><span data-scorebar="" style="display:block;width:82%;height:100%;background:linear-gradient(90deg,#1F94EA,#7CC7FF);border-radius:99px;transform-origin:left"></span></div>
+            <span style="display:block;margin-top:10px;font-size:11.5px;color:rgba(255,255,255,.5)">Scored against your targets</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/trends-correlation.png" alt="Sleep and performance trends plotted together" style="width:100%;display:block">
+          </div>
+        </div>
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">The 23 hours you were never in the room for.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Sleep, HRV, recovery, daily activity, and nutrition sync in from seven wearable platforms and five nutrition apps, including Apple Health, WHOOP, Oura, Garmin, Cronometer, and MyFitnessPal. You see how recovery is actually tracking before you write the week, not after it goes badly.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">See the drift before it becomes a drop-off.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Completion rates, check-in consistency, and habit adherence roll up per client and across the roster, so a quiet month shows up as a number instead of a feeling. Client priorities and goals stay pinned to the profile, so an old injury or a hard season never gets lost between programs.</p>
+        </div>
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/roster-compliance.png" alt="Roster compliance and client priorities" style="width:100%;display:block">
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:80px">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">More in Assess</span>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:22px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Assessments and metrics</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Body, Move, Work</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Custom Metric Sets</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Structural Balance</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Fitness Monitoring Exercises</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client Effort &amp; Training Load</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Progress Pictures</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Connected data</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Apple Health</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Google Health Connect</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">WHOOP</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Oura</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Garmin</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Polar</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Fitbit</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Cronometer</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">MyFitnessPal</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">FatSecret</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">MacrosFirst</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">MyMacros+</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Tracking and context</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Historical trends</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client Compliance</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client Priorities</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client goals</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Activity Feed</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Custom Client Reports</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:64px;max-width:760px">
+        <p style="margin:0;font-size:18px;line-height:1.7;color:rgba(255,255,255,.65);text-wrap:pretty">"My in-person and remote clients love the app and the communication we have both in and out of the gym. CoachRx streamlines my coaching workflow, helping me make data driven program design decisions, and consistently communicate with all of my clients."</p>
+        <span style="display:block;margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);text-transform:uppercase">Coach Austin Kapetanakis · Director, Hudson River Athletics</span>
+      </div>
+
+      <div data-reveal="0" style="margin-top:56px;border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">See where your clients actually stand.</span>
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:800;letter-spacing:.06em;padding:13px 26px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 32px rgba(88,255,122,.3);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 48px rgba(88,255,122,.45);color:#0A0B0F">START FOR FREE</a>
+      </div>
+      <div style="margin-top:14px"><a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">Assessments, metrics, and integrations →</a></div>
+    </div>
+  </section>
+
+  <!-- 06 CONSULT -->
+  <section id="consult" data-screen-label="06 Consult" style="position:relative;padding:120px 32px;scroll-margin-top:120px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
+    <div style="position:absolute;top:-80px;right:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">06 · Consult</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:700px"><span style="color:#F8FCFF">Be there</span> <span style="color:rgba(255,255,255,.55)">before they ask.</span></h2>
+      <p data-reveal="120" style="margin-top:20px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">Great coaches don't wait for a client to flag a problem. When check-ins, messages, and consultation notes live in the same place as the program, you catch the small things while they are still small.</p>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:72px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Text is the least of what you can send.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Loom video, voice notes, and threaded messages all sit inside the client's file, with several conversations open at once when you are working through the roster. Show a correction instead of describing it. Let a client hear your tone on a hard week. Every conversation stays connected to the work it is about.</p>
+        </div>
+        <div data-reveal="80" style="position:relative;padding-bottom:40px">
+          <div style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+            <div style="position:relative;height:380px;overflow:hidden">
+              <img data-slot="" src="assets/screens/messages.png" alt="Messaging with Loom and voice notes" style="width:150%;display:block;margin:-4% 0 0 -28%">
+            </div>
+          </div>
+          <div data-vig="thread" style="position:absolute;right:-14px;bottom:0;width:300px;transform:rotate(1.2deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.7);display:flex;flex-direction:column;gap:12px">
+            <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Messages</span>
+            <div data-bub="1" style="display:flex;gap:9px;align-items:flex-end;max-width:92%"><span style="width:26px;height:26px;border-radius:99px;background:linear-gradient(135deg,#004892,#1F94EA);flex:none;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">BO</span><span style="background:rgba(255,255,255,.07);border-radius:12px 12px 12px 4px;padding:10px 13px;font-size:13px;line-height:1.5;color:rgba(255,255,255,.88)">Knee was cranky on the lunges again</span></div>
+            <div data-typing="1" style="display:none;gap:5px;align-items:center;background:rgba(255,255,255,.05);border-radius:12px;padding:10px 14px;width:60px;margin-left:auto"><span style="width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);animation:crxTyping 1s infinite"></span><span style="width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);animation:crxTyping 1s .15s infinite"></span><span style="width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);animation:crxTyping 1s .3s infinite"></span></div>
+            <div data-bub="2" style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;margin-left:auto;max-width:92%">
+              <span style="background:rgba(88,255,122,.13);border:1px solid rgba(88,255,122,.2);border-radius:12px 12px 4px 12px;padding:10px 13px;font-size:13px;line-height:1.5;color:#F8FCFF">Sent you a quick breakdown, watch before Thursday.</span>
+              <span style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:8px 12px"><span style="width:38px;height:26px;border-radius:5px;background:#20222B;display:inline-flex;align-items:center;justify-content:center;flex:none"><span style="width:0;height:0;border-left:7px solid rgba(255,255,255,.9);border-top:4px solid transparent;border-bottom:4px solid transparent;margin-left:2px"></span></span><span style="display:flex;flex-direction:column"><span style="font-size:12px;font-weight:600;color:#F8FCFF">Lunge mechanics review</span><span style="font-size:10.5px;color:rgba(255,255,255,.45)">Loom · 1:48</span></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="80" style="display:flex;justify-content:center">
+          <div style="width:250px;padding:9px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:40px;box-shadow:0 28px 80px rgba(0,0,0,.7)">
+            <div style="position:relative;border-radius:32px;overflow:hidden;background:#0A0B0F;height:500px">
+              <img data-slot="" src="assets/screens/checkin-mobile.png" alt="Weekly check-in on mobile" style="width:100%;display:block">
+              <span style="position:absolute;top:9px;left:50%;transform:translateX(-50%);width:74px;height:18px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
+            </div>
+          </div>
+        </div>
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Check in before they check out.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Set the cadence and the questions once, and every client is prompted to report how the week actually went. Answers land next to their compliance and trend data, so you read the response with the context already in front of you.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">The habit that protects retention.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Set a communication goal for your organization, for a coach, or for a single client, and CoachRx counts every comment, message, and consultation against it. Each client carries a simple weekly status: reached, or not yet. It resets Monday, so the clients you have not spoken to surface while there is still week left to fix it.</p>
+        </div>
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/touchpoints.png" alt="Touchpoints dashboard" style="width:100%;display:block">
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:80px">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">More in Consult</span>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:22px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Conversation</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Direct Messages</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Voice Notes</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Loom video messaging</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Scheduled Messages</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Workout comments and feedback</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Notifications</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Reply to notifications by email</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Online indicators</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Structured contact</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Weekly Check-Ins</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Consultations and booking links</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Intake Forms</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client Reminders</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Touchpoints</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Context that travels with the client</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Notes, day and workout</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Documents</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Profile status cards</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Custom Client Reports</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:64px;max-width:760px">
+        <p style="margin:0;font-size:18px;line-height:1.7;color:rgba(255,255,255,.65);text-wrap:pretty">"Just the perfect tool. It can hold all the information a coach needs, and I'm not only talking about the programming, time management and consultations. I'm talking about personal client data, nutrition and actual lifestyle coaching. The virtual coach-client relationship has never been so easy and efficient as with CoachRx."</p>
+        <span style="display:block;margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);text-transform:uppercase">Coach Bruno Rocha · Owner, Get.The.Coach</span>
+      </div>
+
+      <div data-reveal="0" style="margin-top:56px;border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">Be the coach who's always there.</span>
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:800;letter-spacing:.06em;padding:13px 26px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 32px rgba(88,255,122,.3);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 48px rgba(88,255,122,.45);color:#0A0B0F">START FOR FREE</a>
+      </div>
+      <div style="margin-top:14px"><a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">Messaging, check-ins, and consultations →</a></div>
+    </div>
+  </section>
+
+  <!-- 07 DESIGN -->
+  <section id="design" data-screen-label="07 Design" style="position:relative;padding:120px 32px;scroll-margin-top:120px">
+    <div style="position:absolute;top:-100px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">07 · Design</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:700px"><span style="color:rgba(255,255,255,.55)">Design better.</span> <span style="color:#F8FCFF">Deliver better.</span></h2>
+      <p data-reveal="120" style="margin-top:20px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">Your clients don't all need the same thing, and efficiency shouldn't cost you personalization. Full control over every variable, with the structures you have already built ready to reuse.</p>
+
+      <div style="margin-top:72px">
+        <div data-reveal="0" style="max-width:640px">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Program the whole person on one screen.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Sets, reps, tempo, and rest sit alongside daily nutrition targets and lifestyle prescriptions in a single calendar. Drag, copy, and adjust across weeks without switching tools. The client sees one plan, not three.</p>
+        </div>
+        <div data-reveal="80" style="position:relative;margin-top:36px;padding-bottom:44px">
+          <div style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 40px;font-size:11px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:38px"></span></div>
+            <img data-slot="" src="assets/screens/calendar.png" alt="Unified program design calendar" style="width:100%;display:block">
+          </div>
+          <div data-vig="progday" style="position:absolute;right:24px;bottom:0;width:300px;transform:rotate(1.5deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.7)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:#58FF7A;text-transform:uppercase">Thursday</span><span style="font-size:12px;color:rgba(255,255,255,.5)">Lower body</span></div>
+            <div data-row="1" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);margin-top:8px"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF;display:flex;align-items:center;gap:10px"><svg data-check="1" width="17" height="17" viewBox="0 0 17 17" style="flex:none"><circle cx="8.5" cy="8.5" r="8" fill="#58FF7A"></circle><path data-checkpath="1" d="M5 8.7l2.4 2.4 4.6-4.8" fill="none" stroke="#0A0B0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Back Squat</span><span style="font-size:13px;color:rgba(255,255,255,.6);font-feature-settings:'tnum' 1">5 x 3</span></div>
+            <div data-row="2" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font-size:14.5px;color:rgba(255,255,255,.9)">Romanian Deadlift</span><span style="font-size:13px;color:rgba(255,255,255,.6)">4 x 8</span></div>
+            <div data-row="3" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0"><span style="font-size:14.5px;color:rgba(255,255,255,.9)">Split Squat</span><span style="font-size:13px;color:rgba(255,255,255,.6)">3 x 10</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/planning.png" alt="Planning and periodization view" style="width:100%;display:block">
+          </div>
+        </div>
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Coach the next six months, not just next week.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Plan macro, meso, and micro cycles in one view, with phases, deloads, testing, and re-assessment placed before you write a single session. The long arc stays visible while you work in the detail, so week eleven still makes sense alongside week one.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">3,000+ movements. 70+ OPEX programs. Plus everything you build.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Every movement in the CoachRx Index carries a demo video, so clients always know exactly what they're doing. Add your own to your Coach Exercise Library, save your warm-ups, cool-downs, and conditioning pieces as reusable templates, and adapt them to each person, so every program still feels like it was built for them. Because it was.</p>
+        </div>
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/exercise-index.png" alt="Exercise selection filtered by equipment" style="width:100%;display:block">
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:80px">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">Two ways to deliver a program</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px">
+          <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:26px">
+            <span style="font-size:16px;font-weight:700;color:#F8FCFF">Standard Programs</span>
+            <p style="margin-top:10px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62);text-wrap:pretty">Built as a set of templated days. Assign it and those days lay onto that client's calendar from their own start date, so every client can run the same program on their own timeline.</p>
+          </div>
+          <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:26px">
+            <span style="font-size:16px;font-weight:700;color:#F8FCFF">Live Programs</span>
+            <p style="margin-top:10px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62);text-wrap:pretty">Attached to the calendar itself. Every client in the program follows the same day on the same date, together. This is how you deliver one program to many clients at once.</p>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:64px">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">More in Design</span>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:22px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Building</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Program Design Calendar</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Workout builder</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Single exercise drag and drop</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Single exercise copy and paste</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Keyboard shortcuts</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Hide results toggle</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Programs and planning</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Standard Programs</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Live Programs</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Planning &amp; Periodization</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Training Schedule</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client Visibility Settings</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client Autonomy</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Libraries and selection</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">CoachRx Index, 3,000+ movements</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Coach Exercise Library</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">OPEX Programs Library, 70+ programs</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Conditioning Library</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Warm-Up Library</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Cool-Down Library</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Video uploader</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Equipment lists</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Filtered exercise selection</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Lifestyle and nutrition</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Lifestyle &amp; Nutrition Rx</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Macro Calculator</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Lifestyle Trends &amp; Insights</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:64px;max-width:760px">
+        <p style="margin:0;font-size:18px;line-height:1.7;color:rgba(255,255,255,.65);text-wrap:pretty">"We are able to offer not only world-class individual design through CoachRx, but also world-class programs. CoachRx gave us the ability to develop a way of designing our programs and distributing them to our users while retaining all of the functions we wanted from the offset."</p>
+        <span style="display:block;margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);text-transform:uppercase">Coach Sam Smith · Owner, Proof3 Coaching</span>
+      </div>
+
+      <div data-reveal="0" style="margin-top:56px;border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">Build the program the client actually needs.</span>
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:800;letter-spacing:.06em;padding:13px 26px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 32px rgba(88,255,122,.3);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 48px rgba(88,255,122,.45);color:#0A0B0F">START FOR FREE</a>
+      </div>
+      <div style="margin-top:14px"><a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">Program design, libraries, and templates →</a></div>
+    </div>
+  </section>
+
+  <!-- 08 OPERATE -->
+  <section id="operate" data-screen-label="08 Operate" style="position:relative;padding:120px 32px;scroll-margin-top:120px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
+    <div style="position:absolute;top:-80px;right:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">08 · Operate</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:700px"><span style="color:rgba(255,255,255,.55)">Admin</span> <span style="color:#F8FCFF">shouldn't get in the way.</span></h2>
+      <p data-reveal="120" style="margin-top:20px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">The smoother the practice runs, the more of you is left for coaching. Billing, roster, team, and reporting in one place, so the business side stops taking the hours the coaching side needs.</p>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:72px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Get paid without chasing it.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Recurring subscriptions, packages, payment plans, and one-off invoices all run through Stripe, in your currency. Failed payments are recovered and receipts go out without you touching it. Qualified clients can even pay with HSA or FSA funds through TrueMed, which makes the yes easier to get.</p>
+        </div>
+        <div data-reveal="80" style="position:relative;padding-bottom:40px">
+          <div style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+            <div style="position:relative;height:380px;overflow:hidden">
+              <img data-slot="" src="assets/screens/payments.png" alt="Payments and subscriptions" style="width:100%;display:block">
+            </div>
+          </div>
+          <div data-vig="invoice" style="position:absolute;right:-14px;bottom:0;width:300px;transform:rotate(-1.2deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.7)">
+            <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Invoices · August</span>
+            <div style="display:flex;align-items:center;gap:11px;margin-top:16px">
+              <span style="width:32px;height:32px;border-radius:99px;background:linear-gradient(135deg,#004892,#1F94EA);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex:none">BO</span>
+              <span style="display:flex;flex-direction:column;flex:1"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF">Brian Otto</span><span style="font-size:12.5px;color:rgba(255,255,255,.55);font-feature-settings:'tnum' 1">$180.00 · monthly</span></span>
+              <span data-flip="1" style="display:inline-block;font-size:11px;font-weight:600;color:#58FF7A;background:rgba(88,255,122,.1);padding:4px 11px;border-radius:999px;transition:color .3s,background .3s">Paid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/team-roles.png" alt="Team management with role permissions" style="width:100%;display:block">
+          </div>
+        </div>
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Clear roles. No confusion.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Give every coach the access their role needs and nothing more. Client assignments, coach-level reporting, and payroll and commission tracking keep a growing team working to one standard instead of five interpretations of it.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Know which client needs you today.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Revenue, client counts, and the indicators that tell you how the practice is actually running, all in one place. A Needs Attention list surfaces missed sessions, dropping compliance, overdue consultations, and declined payments, so retention work stops being reactive.</p>
+        </div>
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/business.png" alt="Business dashboard with Needs Attention panel" style="width:135%;display:block;margin:-4% 0 0 -18%">
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:80px">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">More in Operate</span>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:22px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Money</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Payments and invoicing</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Products and subscriptions</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Stripe, with multi-currency support</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">TrueMed HSA and FSA payments</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Fees and invoices</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Coupons and discount codes</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Contracts and waivers</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Payroll and commissions</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Selling</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Storefront and sales pages</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Selling programs</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Fullscript dispensary</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Referral program</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Roster</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client management</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Mass client import</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client onboarding</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client transfer between coaches</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Coach as client</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Tasks</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Needs Attention</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Team and brand</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Organization accounts</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Coach roles and permissions</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Coach profile</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Custom theming</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Business metrics and reporting</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Data export</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:64px;max-width:760px">
+        <p style="margin:0;font-size:18px;line-height:1.7;color:rgba(255,255,255,.65);text-wrap:pretty">"CoachRx has improved my business drastically by streamlining operations. Not to mention, it's cut down on my expenses as the subscription is more affordable than TrueCoach. The app has made both front and back of house more robust without added complexity."</p>
+        <span style="display:block;margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);text-transform:uppercase">Coach Kyle Krancher · Owner, Train &amp; Able</span>
+      </div>
+
+      <div data-reveal="0" style="margin-top:56px;border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">Put the hours back where they belong.</span>
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:800;letter-spacing:.06em;padding:13px 26px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 32px rgba(88,255,122,.3);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 48px rgba(88,255,122,.45);color:#0A0B0F">START FOR FREE</a>
+      </div>
+      <div style="margin-top:14px"><a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">Payments, team, and practice management →</a></div>
+    </div>
+  </section>
+
+  <!-- 09 CLIENT EXPERIENCE -->
+  <section id="client-experience" data-screen-label="09 Client Experience" style="position:relative;padding:120px 32px;scroll-margin-top:120px">
+    <div style="position:absolute;top:-100px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">09 · Client Experience</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:700px"><span style="color:#F8FCFF">One app. Both sides.</span> <span style="color:rgba(255,255,255,.55)">Every day.</span></h2>
+      <p data-reveal="120" style="margin-top:20px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:680px;text-wrap:pretty">What happens between sessions decides whether a client stays. Coaches and clients use the same CoachRx app, each seeing the interface built for them, so there is no second download to explain and no client app lagging a version behind the coach tool. Your client opens it, sees exactly what today asks of them, and knows you are on the other side of it.</p>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:72px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Everything today asks of them, with nothing to hunt for.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Training, lifestyle tasks, and your notes for the day, with a demo video on every movement. Clients log results and rate their effort as they go, so you know how the session went without having to ask.</p>
+        </div>
+        <div data-reveal="80" style="position:relative;display:flex;justify-content:center;padding-bottom:40px">
+          <div style="width:270px;padding:9px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:42px;box-shadow:0 28px 90px rgba(0,0,0,.7)">
+            <div style="position:relative;border-radius:34px;overflow:hidden;background:#0A0B0F">
+              <img data-slot="" src="assets/screens/phone-home.png" alt="Client home screen" style="width:100%;display:block">
+              <span style="position:absolute;top:9px;left:50%;transform:translateX(-50%);width:78px;height:18px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
+            </div>
+          </div>
+          <div data-vig="clientpop" style="position:absolute;right:12px;bottom:0;width:250px;transform:rotate(2deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:18px;box-shadow:0 32px 80px rgba(0,0,0,.7);z-index:3">
+            <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Workout complete</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF">Lower body</span><span style="font-size:12px;color:rgba(255,255,255,.55)">45 min</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+              <span style="font-size:12.5px;color:rgba(255,255,255,.6)">Effort 8 / 10</span>
+              <span data-pill="1" style="font-size:11px;font-weight:600;color:#58FF7A;background:rgba(88,255,122,.1);padding:3px 10px;border-radius:999px">Logged 6:12 pm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/lifestyle-rx.png" alt="Lifestyle Rx tasks and connected devices" style="width:100%;display:block">
+          </div>
+        </div>
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Coaching that doesn't stop at the gym door.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Clients see the same care applied to sleep, nutrition, and daily behavior as they do to training. Wearables, Apple Health, Google Health Connect, and nutrition apps connect once and log quietly in the background, so the data arrives without the nagging.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;margin-top:88px">
+        <div data-reveal="0">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF;line-height:1.35">Proof is the best retention tool there is.</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.65);text-wrap:pretty">Completed sessions, active streaks, performance metrics, progress photos, and the goals you set together, visible every time they open the app. They see how far they've come. So do you.</p>
+        </div>
+        <div data-reveal="80" style="border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:380px;overflow:hidden">
+            <img data-slot="" src="assets/screens/client-progress.png" alt="Client progress view" style="width:100%;display:block">
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:80px">
+        <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">More in Client Experience</span>
+        <div style="display:flex;flex-direction:column;gap:22px;margin-top:22px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Getting started</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Guided client onboarding</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Intake forms</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Equipment and training schedule set from day one</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Continue with Google</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Every day</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Today's training and lifestyle tasks</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Workout logging</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Effort and duration rating</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Demo videos and coaching notes</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Client autonomy, so a client can move a session or swap an exercise inside the limits you set</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Connected data</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Apple Health</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Google Health Connect</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">WHOOP</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Oura</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Garmin</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Polar</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Fitbit</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Cronometer</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">MyFitnessPal</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">FatSecret</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">MacrosFirst</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">MyMacros+</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Smart scales, through Apple Health, Health Connect, or Fitbit</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Progress and contact</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Progress and performance tracking</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Streaks</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Progress pictures</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Goals in view</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">In-app messaging</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Voice and video from their coach</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Online indicators</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Consult booking</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Documents and resources</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Platform</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">iOS</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Android</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Web</span><span style="font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:999px">Real-time sync across devices</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="0" style="margin-top:64px;max-width:760px">
+        <p style="margin:0;font-size:18px;line-height:1.7;color:rgba(255,255,255,.65);text-wrap:pretty">"CoachRx allows me to deliver my group program design efficiently from the back end, and on the front end my clients get an amazing app experience. It allows for better results and retention due to the ability to have conversations with each client and tweak their program design."</p>
+        <span style="display:block;margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);text-transform:uppercase">Coach Brandon Wilton · Owner, CrossFit South Bend</span>
+      </div>
+
+      <div data-reveal="0" style="margin-top:56px;border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">Give them an experience worth staying for.</span>
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:800;letter-spacing:.06em;padding:13px 26px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 32px rgba(88,255,122,.3);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 48px rgba(88,255,122,.45);color:#0A0B0F">START FOR FREE</a>
+      </div>
+      <div style="margin-top:14px"><a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">The client app →</a></div>
+    </div>
+  </section>
+
+  <!-- 10 HOW THE PILLARS CONNECT -->
+  <section data-screen-label="10 One system" style="position:relative;padding:130px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0B0E19 18%,#0B0E19 82%,#0A0B0F 100%)">
+    <div style="position:absolute;top:60px;left:50%;transform:translateX(-50%);width:1000px;height:600px;background:radial-gradient(ellipse at center, rgba(31,148,234,.09) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">10 · One system</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em"><span style="color:#F8FCFF">One system.</span> <span style="color:rgba(255,255,255,.55)">No gaps.</span></h2>
+      <p data-reveal="120" style="margin-top:16px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">Any platform can list features. The difference is what happens between them.</p>
+      <div data-vig="sysdiag" style="display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:center;margin-top:56px">
+        <div style="display:flex;justify-content:center">
+          <svg width="460" height="460" viewBox="0 0 460 460" style="max-width:100%;height:auto">
+            <path data-sysarc="0" d="M 230 60 A 170 170 0 0 1 391.7 177.5" fill="none" stroke="rgba(88,255,122,.5)" stroke-width="1.5"></path>
+            <path data-sysarc="1" d="M 391.7 177.5 A 170 170 0 0 1 329.9 367.5" fill="none" stroke="rgba(88,255,122,.5)" stroke-width="1.5"></path>
+            <path data-sysarc="2" d="M 329.9 367.5 A 170 170 0 0 1 130.1 367.5" fill="none" stroke="rgba(88,255,122,.5)" stroke-width="1.5"></path>
+            <path data-sysarc="3" d="M 130.1 367.5 A 170 170 0 0 1 68.3 177.5" fill="none" stroke="rgba(88,255,122,.5)" stroke-width="1.5"></path>
+            <path data-sysarc="4" d="M 68.3 177.5 A 170 170 0 0 1 230 60" fill="none" stroke="rgba(88,255,122,.5)" stroke-width="1.5"></path>
+            <circle cx="230" cy="60" r="6" fill="#0B0E19" stroke="rgba(255,255,255,.55)" stroke-width="1.2"></circle>
+            <circle cx="391.7" cy="177.5" r="6" fill="#0B0E19" stroke="rgba(255,255,255,.55)" stroke-width="1.2"></circle>
+            <circle cx="329.9" cy="367.5" r="6" fill="#0B0E19" stroke="rgba(255,255,255,.55)" stroke-width="1.2"></circle>
+            <circle cx="130.1" cy="367.5" r="6" fill="#0B0E19" stroke="rgba(255,255,255,.55)" stroke-width="1.2"></circle>
+            <circle cx="68.3" cy="177.5" r="6" fill="#0B0E19" stroke="rgba(255,255,255,.55)" stroke-width="1.2"></circle>
+            <text x="230" y="38" text-anchor="middle" fill="rgba(255,255,255,.55)" font-size="11" font-family="var(--font-mono)" letter-spacing="2">ASSESS</text>
+            <text x="412" y="172" text-anchor="start" fill="rgba(255,255,255,.55)" font-size="11" font-family="var(--font-mono)" letter-spacing="2">CONSULT</text>
+            <text x="340" y="394" text-anchor="middle" fill="rgba(255,255,255,.55)" font-size="11" font-family="var(--font-mono)" letter-spacing="2">DESIGN</text>
+            <text x="120" y="394" text-anchor="middle" fill="rgba(255,255,255,.55)" font-size="11" font-family="var(--font-mono)" letter-spacing="2">OPERATE</text>
+            <text x="48" y="172" text-anchor="end" fill="rgba(255,255,255,.55)" font-size="11" font-family="var(--font-mono)" letter-spacing="2">CLIENT</text>
+          </svg>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <div data-sys="0" style="display:flex;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)"><span style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,.4);flex:none">01</span><p style="margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78)">An assessment flags a limitation. It follows the client into program design.</p></div>
+          <div data-sys="1" style="display:flex;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)"><span style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,.4);flex:none">02</span><p style="margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78)">The program lands in their app as today's work, with your notes attached.</p></div>
+          <div data-sys="2" style="display:flex;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)"><span style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,.4);flex:none">03</span><p style="margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78)">What they log, and what their wearable reports, becomes the trend you read next week.</p></div>
+          <div data-sys="3" style="display:flex;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)"><span style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,.4);flex:none">04</span><p style="margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78)">Their check-in answer sits beside that trend, so the conversation starts with context.</p></div>
+          <div data-sys="4" style="display:flex;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)"><span style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,.4);flex:none">05</span><p style="margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78)">Payments, renewals, and flags run underneath all of it without asking for your attention.</p></div>
+          <p data-sys="5" style="margin:26px 0 0;font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">That's the difference between a platform and a system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 EVERY FEATURE, DAY ONE -->
+  <section data-screen-label="11 Every feature day one" style="padding:110px 32px">
+    <div style="max-width:1200px;margin:0 auto">
+      <span data-reveal="0" style="display:block;text-align:center;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">11 · Included</span>
+      <h2 data-reveal="60" style="margin:18px 0 0;text-align:center;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF">Every Feature, Day One.</h2>
+      <p data-reveal="120" style="margin:16px auto 0;text-align:center;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">Every feature on this page is included on every plan. Pricing scales with the size of your roster, not with what you're allowed to use.</p>
+      <div data-reveal="150" style="text-align:center;margin-top:16px"><a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">See plans and pricing ›</a></div>
+      <div data-reveal="180" style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Wearables and health</span>
+          <span style="font-size:13.5px;color:rgba(255,255,255,.6)">Apple Health</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Google Health Connect</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">WHOOP</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Oura</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Garmin</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Polar</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Fitbit</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Smart scales sync through Apple Health, Health Connect, or Fitbit</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Nutrition</span>
+          <span style="font-size:13.5px;color:rgba(255,255,255,.6)">Cronometer</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">MyFitnessPal</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">FatSecret</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">MacrosFirst</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">MyMacros+</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);text-transform:uppercase">Business and platform</span>
+          <span style="font-size:13.5px;color:rgba(255,255,255,.6)">Stripe, with multi-currency support</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">TrueMed, HSA and FSA payments</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Fullscript dispensary</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Loom</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Consult booking links</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">iOS · Android · Web</span><span style="font-size:13.5px;color:rgba(255,255,255,.6)">Real-time sync across devices</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 COMPARISON -->
+  <section data-screen-label="12 Comparison" style="position:relative;padding:110px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
+    <div style="max-width:1100px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">12 · The difference</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:720px"><span style="color:#F8FCFF">Built for coaching,</span> <span style="color:rgba(255,255,255,.55)">not for workout delivery.</span></h2>
+      <p data-reveal="120" style="margin-top:18px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:600px;text-wrap:pretty">Most coaching platforms were built to send workouts and take payments. That's a fine job. It just isn't the whole job.</p>
+      <div data-reveal="160" style="position:relative;margin-top:52px">
+        <div style="position:absolute;top:-14px;bottom:-14px;right:-14px;width:calc((100% - 190px) / 2 + 14px);border-radius:14px;background:rgba(255,255,255,.025);box-shadow:0 0 0 1px rgba(88,255,122,.18);pointer-events:none"></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;padding:0 0 14px">
+          <span></span>
+          <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.45);text-transform:uppercase;padding:0 20px 0 0">Most coaching software</span>
+          <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:#F8FCFF;text-transform:uppercase;padding:0 0 0 20px">CoachRx</span>
+        </div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Assessment</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">Basic metrics</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Custom metric sets, structural balance, Body, Move, Work</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Nutrition and lifestyle</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">A separate app</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Prescribed and tracked in the same calendar as training</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Connected data</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">Limited or none</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Seven wearable platforms and five nutrition apps</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Long-term planning</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">Templates</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Macro, meso, and micro cycle planning</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Group delivery</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">One template, sent out</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Standard programs on each client's timeline, or live programs the whole group follows together</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Relationship measurement</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">Not measured</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Communication goals tracked per client, every week</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">The app</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">A client app, plus a separate coach tool</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">One app, one login, coach and client</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Client autonomy</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">All or nothing</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Set per client, per permission</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Paying for coaching</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">Card only</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Card, or HSA and FSA funds through TrueMed</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Feature access</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">Gated by plan tier</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Everything included, day one</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Support</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">A ticket queue</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">Practicing coaches who use the platform daily</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:190px 1fr 1fr;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:16px 0"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;padding-right:18px">Built on</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);padding-right:20px">A software roadmap</span><span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);padding-left:20px">A coaching philosophy in practice since 1999</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 MAKE THE SWITCH -->
+  <section data-screen-label="13 Make the switch" style="position:relative;padding:120px 32px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+      <div>
+        <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">13 · Make the switch</span>
+        <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em"><span style="color:#F8FCFF">The easiest move</span> <span style="color:rgba(255,255,255,.55)">you'll ever make.</span></h2>
+        <p data-reveal="100" style="margin-top:16px;font-size:16px;font-weight:600;color:rgba(255,255,255,.75)">Switching from another platform?</p>
+        <div data-reveal="140" style="margin-top:20px;display:flex;flex-direction:column">
+          <p style="margin:0;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.7)">We handle the transition for you, so your data, clients, and programs move over intact.</p>
+          <p style="margin:0;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.7)">Work directly with a Coach Success specialist to get your setup right from the start.</p>
+          <p style="margin:0;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.7)">Our support team is made up of real coaches who understand your workflow and your goals.</p>
+        </div>
+        <div data-reveal="180" style="margin-top:30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+          <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+          <a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">Talk to the transition team ›</a>
+        </div>
+      </div>
+      <div data-reveal="120" style="position:relative;height:440px">
+        <div style="position:absolute;inset:0;right:56px;bottom:48px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:relative;height:100%;overflow:hidden">
+            <img data-slot="" src="assets/screens/dashboard.png" alt="A populated coach view" style="width:130%;display:block;margin:-4% 0 0 -4%">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 78%,#0A0B0F 100%);pointer-events:none"></div>
+          </div>
+        </div>
+        <div data-vig="migrate" style="position:absolute;right:0;bottom:0;width:300px;transform:rotate(-1.3deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.7)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Migration</span><span style="font-size:11px;font-weight:600;color:#58FF7A;background:rgba(88,255,122,.1);padding:3px 10px;border-radius:999px">Handled by CoachRx</span></div>
+          <p style="margin-top:12px;font-size:14px;font-weight:600;color:#F8FCFF">TrueCoach import</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span style="font-size:12.5px;color:rgba(255,255,255,.6);font-feature-settings:'tnum' 1">3 of 4 steps complete</span></div>
+          <div style="margin-top:8px;height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden"><span data-mbar="" style="display:block;width:75%;height:100%;background:linear-gradient(90deg,#58FF7A,#8CFFA4);border-radius:99px;transform-origin:left"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 FAQ -->
+  <section data-screen-label="14 FAQ" style="position:relative;padding:110px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 18%,#0C0E14 82%,#0A0B0F 100%)">
+    <div style="max-width:860px;margin:0 auto">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">14 · FAQ</span>
+      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF">Questions coaches ask before they start.</h2>
+      <div data-reveal="120" style="margin-top:44px;display:flex;flex-direction:column">
+        <div style="border-top:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="0" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">Do I have to use all of it?</span><span data-faqplus="0" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="0" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">No. Most coaches start with program design and the client app, then bring in assessments, lifestyle, and the business tools as they need them. Everything is available from day one, but nothing is mandatory.</p></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="1" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">Can I bring my own programs and movements?</span><span data-faqplus="1" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="1" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">Yes. Upload your own movement videos into your Coach Exercise Library, save your program structures for reuse, and keep your warm-ups, cool-downs, and conditioning pieces as templates. The OPEX libraries are there when you want a starting point, not a requirement.</p></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="2" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">What does it cost?</span><span data-faqplus="2" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="2" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">Pricing scales with the number of clients you manage, and every plan includes every feature. See plans and pricing for the current bands.</p></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="3" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">Will this make my coaching feel systematic?</span><span data-faqplus="3" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="3" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">The opposite. CoachRx handles the mechanics, billing, tracking, and surfacing what needs your attention, so that more of your week goes into the conversations only you can have.</p></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="4" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">Do my clients need a separate app?</span><span data-faqplus="4" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="4" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">No. Coaches and clients use the same app, with the experience each of them needs. One download, one login.</p></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="5" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">Can I import from another platform?</span><span data-faqplus="5" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="5" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">Yes. Bring your whole roster over with one upload, or let our transition team handle the migration for you. There's no charge for it.</p></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+          <div data-faqbtn="6" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">What if it doesn't work out?</span><span data-faqplus="6" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
+          <div data-faqbody="6" style="overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.22,1,.36,1)"><p style="margin:0;padding:0 40px 22px 0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.62)">Your data is yours. You can export your clients, workouts, and reporting at any time, and if you need a break rather than an exit you can pause your subscription instead of cancelling it.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 FINAL CTA -->
+  <section data-screen-label="15 Final CTA" style="position:relative;padding:130px 32px 120px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0D1120 60%,#0F1526 100%)">
+    <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:1100px;height:620px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.12) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;text-align:center">
+      <h2 data-reveal="0" style="font-size:clamp(38px,5vw,68px);font-weight:800;line-height:1.04;letter-spacing:-0.03em;text-wrap:balance"><span style="color:#F8FCFF">Deliver the coaching</span> <span style="color:rgba(255,255,255,.55)">you're capable of.</span></h2>
+      <p data-reveal="80" style="margin:20px auto 0;font-size:17px;line-height:1.65;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">Try CoachRx free and see what changes when every part of your practice is in the same place.</p>
+      <div data-reveal="160" style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. No credit card required. Free onboarding and transition support included.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:72px 32px 32px;background:#08090E">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">
+          <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.45);max-width:240px">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Features</span><a href="#assess" style="font-size:13.5px;color:rgba(255,255,255,.6)">Assess</a><a href="#consult" style="font-size:13.5px;color:rgba(255,255,255,.6)">Consult</a><a href="#design" style="font-size:13.5px;color:rgba(255,255,255,.6)">Design</a><a href="#operate" style="font-size:13.5px;color:rgba(255,255,255,.6)">Operate</a><a href="#client-experience" style="font-size:13.5px;color:rgba(255,255,255,.6)">Client Experience</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Resources</span><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Articles</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Videos</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Podcasts</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Coaching Guides</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Referral Program</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Company</span><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">About</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Why CoachRx</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Changelog</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Pricing</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Compare</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Contact</a></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">
+        <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+        <span style="display:flex;gap:20px"><a href="#" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="#" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const go = id => () => this.goTo(id);
+    return {
+      goAssess: go("assess"),
+      goConsult: go("consult"),
+      goDesign: go("design"),
+      goOperate: go("operate"),
+      goClient: go("client-experience")
+    };
+  }
+
+  componentDidMount() {
+    this.rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    setTimeout(() => { this.heroSequence(); this.setupReveals(); this.setupVignettes(); this.setupStickyNav(); this.setupFaq(); this.setupSlots(); }, 60);
+  }
+
+  q(sel) { return Array.from(document.querySelectorAll(sel)); }
+
+  goTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + (document.scrollingElement ? document.scrollingElement.scrollTop : window.scrollY) - 118;
+    window.scrollTo({ top, behavior: this.rm ? "auto" : "smooth" });
+  }
+
+  heroSequence() {
+    if (this.rm) return;
+    const ease = "cubic-bezier(.22,1,.36,1)";
+    this.q("[data-hcta]").forEach((c, i) => { c.style.animation = `crxRise .45s ${ease} ${80 + i * 90}ms both`; });
+    const frame = document.querySelector("[data-hframe]");
+    if (frame) frame.style.animation = `crxFrameRise .6s ${ease} 520ms both`;
+  }
+
+  setupReveals() {
+    if (this.rm) return;
+    const els = this.q("[data-reveal]");
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const el = en.target, d = parseInt(el.getAttribute("data-reveal") || "0", 10);
+        el.style.animation = `crxRise .5s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+        io.unobserve(el);
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  }
+
+  setupVignettes() {
+    if (this.rm) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        this.playVig(en.target.getAttribute("data-vig"), en.target);
+      });
+    }, { threshold: 0.4 });
+    this.q("[data-vig]").forEach(el => io.observe(el));
+  }
+
+  playVig(name, el) {
+    if (this.rm) return;
+    const ease = "cubic-bezier(.22,1,.36,1)";
+    const sub = s => Array.from(el.querySelectorAll(s));
+    if (name === "score") {
+      const n = el.querySelector("[data-scoren]"), bar = el.querySelector("[data-scorebar]"), pill = el.querySelector("[data-scorepill]");
+      if (bar) { bar.style.transform = "scaleX(0)"; }
+      if (pill) pill.style.opacity = "0";
+      const t0 = performance.now(), dur = 900;
+      const step = t => {
+        const p = Math.min(1, (t - t0) / dur), e2 = 1 - Math.pow(1 - p, 3);
+        if (n) n.textContent = String(Math.round(82 * e2));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      if (bar) setTimeout(() => { bar.style.transition = `transform .9s ${ease}`; bar.style.transform = "scaleX(1)"; }, 150);
+      if (pill) setTimeout(() => { pill.style.animation = "crxPop .35s forwards"; pill.style.opacity = "1"; }, 1000);
+    } else if (name === "thread") {
+      const b1 = el.querySelector("[data-bub='1']"), b2 = el.querySelector("[data-bub='2']"), ty = el.querySelector("[data-typing]");
+      [b1, b2].forEach(b => { if (b) { b.style.opacity = ".15"; b.style.transform = "translateY(10px)"; } });
+      const show = b => { b.style.transition = `opacity .35s ${ease}, transform .35s ${ease}`; b.style.opacity = "1"; b.style.transform = "translateY(0)"; };
+      setTimeout(() => { if (b1) show(b1); }, 200);
+      setTimeout(() => { if (ty) ty.style.display = "flex"; }, 750);
+      setTimeout(() => { if (ty) ty.style.display = "none"; if (b2) show(b2); }, 1550);
+    } else if (name === "progday") {
+      const rows = sub("[data-row]"), path = el.querySelector("[data-checkpath]"), check = el.querySelector("[data-check]");
+      if (path) { const len = path.getTotalLength(); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; }
+      if (check) check.style.opacity = "0";
+      rows.forEach((r, i) => { r.style.animation = `crxRise .35s ${ease} ${150 + i * 160}ms both`; });
+      setTimeout(() => {
+        if (check) { check.style.transition = "opacity .2s"; check.style.opacity = "1"; }
+        if (path) { path.style.transition = `stroke-dashoffset .4s ${ease}`; path.style.strokeDashoffset = "0"; }
+      }, 150 + rows.length * 160 + 200);
+    } else if (name === "invoice") {
+      const pill = el.querySelector("[data-flip]");
+      if (!pill) return;
+      pill.textContent = "Due"; pill.style.color = "#FFC466"; pill.style.background = "rgba(255,176,32,.12)";
+      setTimeout(() => {
+        pill.textContent = "Paid"; pill.style.color = "#58FF7A"; pill.style.background = "rgba(88,255,122,.1)";
+        pill.style.animation = "crxPulse .7s ease-out";
+      }, 900);
+    } else if (name === "clientpop") {
+      el.style.animation = `crxRise .5s ${ease} 350ms both`;
+      const pill = el.querySelector("[data-pill]");
+      if (pill) { pill.style.opacity = "0"; setTimeout(() => { pill.style.animation = "crxPop .35s forwards"; pill.style.opacity = "1"; }, 950); }
+    } else if (name === "migrate") {
+      const bar = el.querySelector("[data-mbar]");
+      if (bar) { bar.style.transform = "scaleX(.1)"; setTimeout(() => { bar.style.transition = `transform .9s ${ease}`; bar.style.transform = "scaleX(1)"; }, 300); }
+    } else if (name === "sysdiag") {
+      const arcs = sub("[data-sysarc]"), rows = sub("[data-sys]");
+      arcs.forEach(a => { const len = a.getTotalLength(); a.style.strokeDasharray = len; a.style.strokeDashoffset = len; });
+      arcs.forEach((a, i) => setTimeout(() => {
+        a.style.transition = `stroke-dashoffset .7s ${ease}`;
+        a.style.strokeDashoffset = "0";
+      }, 200 + i * 450));
+      rows.forEach((r, i) => { r.style.animation = `crxRise .5s ${ease} ${200 + i * 450}ms both`; });
+    }
+  }
+
+  setupStickyNav() {
+    const bar = document.getElementById("pillarBar");
+    const navSec = document.getElementById("pillar-nav");
+    const lastSec = document.getElementById("client-experience");
+    if (!bar || !navSec || !lastSec) return;
+    const ids = ["assess", "consult", "design", "operate", "client-experience"];
+    const onScroll = () => {
+      const navBottom = navSec.getBoundingClientRect().bottom;
+      const lastBottom = lastSec.getBoundingClientRect().bottom;
+      const show = navBottom < 60 && lastBottom > 200;
+      bar.style.transform = show ? "translateY(0)" : "translateY(-120%)";
+      let act = -1;
+      ids.forEach((id, i) => {
+        const s = document.getElementById(id);
+        if (!s) return;
+        const r = s.getBoundingClientRect();
+        if (r.top <= 220 && r.bottom > 220) act = i;
+      });
+      bar.querySelectorAll("[data-pnav]").forEach((it, i) => {
+        const a = i === act;
+        it.style.color = a ? "#F8FCFF" : "rgba(255,255,255,.5)";
+        const dot = it.querySelector("[data-pdot]");
+        if (dot) dot.style.opacity = a ? "1" : "0";
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  setupFaq() {
+    this.q("[data-faqbtn]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const i = btn.getAttribute("data-faqbtn");
+        const open = this.openFaq === i;
+        this.q("[data-faqbody]").forEach(b => { b.style.maxHeight = "0"; });
+        this.q("[data-faqplus]").forEach(p => { p.style.transform = "rotate(0deg)"; });
+        if (!open) {
+          const body = document.querySelector(`[data-faqbody='${i}']`);
+          const plus = document.querySelector(`[data-faqplus='${i}']`);
+          if (body) body.style.maxHeight = "240px";
+          if (plus) plus.style.transform = "rotate(45deg)";
+          this.openFaq = i;
+        } else {
+          this.openFaq = null;
+        }
+      });
+    });
+  }
+
+  setupSlots() {
+    this.q("img[data-slot]").forEach(img => {
+      const fix = () => {
+        const p = img.parentElement;
+        if (!p || p.querySelector("[data-slotlabel]")) return;
+        img.style.display = "none";
+        if (getComputedStyle(p).position === "static") p.style.position = "relative";
+        if (p.offsetHeight < 60) p.style.height = "380px";
+        const d = document.createElement("div");
+        d.setAttribute("data-slotlabel", "");
+        d.style.cssText = "position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px)";
+        const name = document.createElement("span");
+        name.style.cssText = "font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase";
+        name.textContent = (img.getAttribute("src") || "").split("/").pop();
+        const hint = document.createElement("span");
+        hint.style.cssText = "font-size:12px;color:rgba(255,255,255,.3)";
+        hint.textContent = "Screenshot slot";
+        d.appendChild(name); d.appendChild(hint);
+        p.appendChild(d);
+      };
+      if (img.complete && img.naturalWidth === 0) fix();
+      else img.addEventListener("error", fix);
+    });
+  }
+}
+</script>
+</body>
+</html>

@@ -9,3 +9,4 @@ out
 next-env.d.ts
 src/data/posts.json
 src/data/changelog.json
+src/generated/
