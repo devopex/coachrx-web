@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { TOPICS } from "@/data/topics";
 import { PostCard } from "@/components/PostCard";
+import { ClosingCTA } from "@/components/ClosingCTA";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export default function ArticlesIndex() {
   const posts = getAllPosts();
   const [featured, ...rest] = posts;
   return (
-    <main className="mx-auto max-w-shell px-6 pb-32 pt-[140px]">
+    <main className="mx-auto max-w-[1100px] px-8 pt-[104px]">
       <div className="overline">Articles</div>
       <h1 className="mt-4 max-w-2xl text-[44px] font-semibold leading-[1.1] tracking-[-0.02em] md:text-[56px]">
         Coaching,{" "}<span className="text-white/[0.55]">written down.</span>
@@ -35,9 +36,10 @@ export default function ArticlesIndex() {
       {featured ? (
         <div className="mt-12"><PostCard post={featured} /></div>
       ) : null}
-      <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {rest.slice(0, 14).map((p) => <PostCard key={p.slug} post={p} />)}
       </div>
+          <ClosingCTA />
     </main>
   );
 }

@@ -85,3 +85,20 @@ readingTime, wordCount, draft, legacyUrl`.
 - Components are server components unless they need state. Only `/keystatic` is client.
 - No `localStorage` in anything rendered server-side.
 - Add new routes to `src/app/sitemap.ts`.
+
+## Cloudflare build settings (easy to get wrong)
+
+In the Cloudflare Workers project, the commands must be:
+
+- **Build command:** `npm run cf:build`
+- **Deploy command:** `npx opennextjs-cloudflare deploy`
+
+`npm run build` alone is **not** enough. Plain `next build` does not produce
+`.open-next/.build/open-next.config.mjs`, and the deploy step fails with
+"Could not find compiled Open Next config". `cf:build` runs `next build` internally
+and then transforms the output into a Worker, so it replaces the plain build, it
+does not run after it.
+
+Harmless noise: `cf:build` prints a wall of `ERROR Failed to copy node_modules/...`
+lines for MDX packages and still completes with "Worker saved in `.open-next/worker.js`".
+Check for that line rather than trusting the absence of the word ERROR.

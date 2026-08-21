@@ -22,19 +22,34 @@ body { background: var(--crx-base); color: var(--crx-ink); }
   color: rgba(255, 255, 255, .5);
 }
 
-/* Article body. 680px column, 18px/1.75, 82% white — set in BRIEF-1. */
-.prose-crx { max-width: 680px; }
-.prose-crx p { font-size: 18px; line-height: 1.75; color: rgba(255,255,255,.82); margin: 0 0 1.5rem; }
-.prose-crx h3 { font-size: 26px; line-height: 1.3; font-weight: 600; color: var(--crx-ink); margin: 3rem 0 1rem; }
-.prose-crx h4 { font-size: 20px; line-height: 1.4; font-weight: 600; color: var(--crx-ink); margin: 2.25rem 0 .75rem; }
-.prose-crx ul, .prose-crx ol { margin: 0 0 1.5rem 1.25rem; }
-.prose-crx li { font-size: 18px; line-height: 1.75; color: rgba(255,255,255,.82); margin-bottom: .5rem; }
-.prose-crx a { color: var(--crx-ink); text-decoration: underline; text-decoration-color: rgba(88,255,122,.5); text-underline-offset: 3px; }
-.prose-crx a:hover { text-decoration-color: var(--crx-accent); }
-.prose-crx blockquote { border-left: 2px solid rgba(88,255,122,.4); padding-left: 1.25rem; margin: 2rem 0; font-size: 19px; line-height: 1.7; color: var(--crx-ink); }
-.prose-crx img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--crx-hairline); margin: 2rem 0; }
-.prose-crx strong { color: var(--crx-ink); font-weight: 600; }
-.prose-crx hr { border: 0; border-top: 1px solid var(--crx-hairline); margin: 3rem 0; }
+/* Article body. Values transcribed from the CoachRx Blog Post design file.
+   Do not round these — 13.5px and .82 white are deliberate. */
+.prose-crx p { margin: 0 0 24px; font-size: 18px; line-height: 1.75; color: rgba(255,255,255,.82); }
+.prose-crx h3 { margin: 48px 0 14px; font-size: 26px; font-weight: 600; line-height: 1.28; letter-spacing: -0.015em; color: var(--crx-ink); }
+.prose-crx h4 { margin: 36px 0 12px; font-size: 20px; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; color: var(--crx-ink); }
+.prose-crx ul, .prose-crx ol { margin: 0 0 24px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.prose-crx li { position: relative; padding-left: 22px; font-size: 18px; line-height: 1.7; color: rgba(255,255,255,.82); }
+.prose-crx li::before { content: ""; position: absolute; left: 2px; top: 12px; width: 5px; height: 5px; border-radius: 99px; background: rgba(255,255,255,.5); }
+.prose-crx blockquote { margin: 32px 0; padding: 2px 0 2px 24px; border-left: 1px solid rgba(255,255,255,.18); font-style: italic; font-size: 18px; line-height: 1.7; color: rgba(255,255,255,.65); }
+.prose-crx blockquote p { margin: 0; font-size: 18px; line-height: 1.7; color: inherit; font-style: italic; }
+.prose-crx strong { font-weight: 600; color: var(--crx-ink); }
+.prose-crx a { color: var(--crx-accent); text-decoration: none; }
+.prose-crx a:hover { color: #8CFFA4; }
+.prose-crx img { width: 100%; height: auto; display: block; border-radius: 12px; }
+.prose-crx figure { margin: 40px 0; }
+.prose-crx figcaption { margin-top: 10px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.5); }
+.prose-crx hr { border: 0; border-top: 1px solid var(--crx-hairline); margin: 48px 0; }
+
+@keyframes crxRise { from { opacity: .15; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* The design's single mobile breakpoint. */
+@media (max-width: 820px) {
+  .crx-col { max-width: none !important; padding-left: 20px !important; padding-right: 20px !important; }
+  .prose-crx p, .prose-crx li { font-size: 17px; }
+  .prose-crx h3 { font-size: 23px; margin-top: 40px; }
+  .prose-crx h4 { font-size: 19px; }
+  .crx-nav-links { display: none !important; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }

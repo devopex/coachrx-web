@@ -17,7 +17,7 @@ const ROUTES = [
 export default function NotFound() {
   const recent = getAllPosts().slice(0, 3);
   return (
-    <main className="mx-auto max-w-shell px-6 pb-32 pt-[140px]">
+    <main className="mx-auto max-w-[1100px] px-8 pb-32 pt-[104px]">
       <div className="overline">404</div>
       <h1 className="mt-4 text-[40px] font-semibold leading-[1.15] tracking-[-0.02em] md:text-[48px]">
         That page isn&rsquo;t here anymore.{" "}
