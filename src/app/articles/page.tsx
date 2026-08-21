@@ -1,45 +1,48 @@
 import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
-import { TOPICS } from "@/data/topics";
-import { PostCard } from "@/components/PostCard";
+import { FeaturedCard } from "@/components/ArticleCard";
+import { PostGrid } from "@/components/PostGrid";
+import { TagChips } from "@/components/TagChips";
 import { ClosingCTA } from "@/components/ClosingCTA";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Articles",
-  description: "Program design, coaching frameworks, and the business of coaching, written down.",
+  description:
+    "Program design, assessment, retention, and the business of coaching. Written by coaches who design for one person at a time.",
   alternates: { canonical: "/articles" },
 };
 
 export default function ArticlesIndex() {
   const posts = getAllPosts();
   const [featured, ...rest] = posts;
-  return (
-    <main className="mx-auto max-w-[1100px] px-8 pt-[104px]">
-      <div className="overline">Articles</div>
-      <h1 className="mt-4 max-w-2xl text-[44px] font-semibold leading-[1.1] tracking-[-0.02em] md:text-[56px]">
-        Coaching,{" "}<span className="text-white/[0.55]">written down.</span>
-      </h1>
-      <p className="mt-5 max-w-xl text-[18px] text-secondary">
-        {posts.length} articles on individual program design, assessment, and building a coaching practice.
-      </p>
 
-      <nav className="mt-10 flex gap-2 overflow-x-auto pb-2" aria-label="Topics">
-        {TOPICS.map((t) => (
-          <Link key={t.slug} href={`/topics/${t.slug}`}
-            className="whitespace-nowrap rounded-full border border-hairline px-4 py-2 text-[13px] text-tertiary transition-colors hover:border-white/[0.12] hover:text-ink">
-            {t.title}
-          </Link>
-        ))}
-      </nav>
+  return (
+    <main>
+      <header className="crx-pad mx-auto max-w-shell px-8 pt-[118px]">
+        <span className="overline block font-semibold">Articles</span>
+        <h1 className="mt-4 text-[clamp(32px,4.4vw,52px)] font-bold leading-[1.08] tracking-[-0.03em] [text-wrap:balance]">
+          Coaching, written down.{" "}
+          <span className="text-white/[0.55]">{posts.length} articles and counting.</span>
+        </h1>
+        <p className="mt-4 max-w-[600px] text-[16.5px] leading-[1.6] text-white/[0.65]">
+          Program design, assessment, retention, and the business of coaching, from coaches who work
+          with one client at a time.
+        </p>
+      </header>
+
+      <TagChips />
 
       {featured ? (
-        <div className="mt-12"><PostCard post={featured} /></div>
+        <div className="crx-pad mx-auto mt-11 max-w-shell px-8">
+          <FeaturedCard post={featured} />
+        </div>
       ) : null}
-      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {rest.slice(0, 14).map((p) => <PostCard key={p.slug} post={p} />)}
+
+      <div className="crx-pad mx-auto mt-11 max-w-shell px-8">
+        <PostGrid posts={rest} />
       </div>
-          <ClosingCTA />
+
+      <ClosingCTA />
     </main>
   );
 }

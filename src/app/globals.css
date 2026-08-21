@@ -51,6 +51,47 @@ body { background: var(--crx-base); color: var(--crx-ink); }
   .crx-nav-links { display: none !important; }
 }
 
+
+/* ---- Card / chip / grid classes transcribed from the Blog Index design ---- */
+.crx-clamp3 { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; }
+.crx-clamp2 { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
+.crx-card { transition: transform .25s var(--crx-ease), border-color .25s, box-shadow .25s; }
+.crx-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.12); box-shadow: 0 20px 48px rgba(0,0,0,.45); }
+.crx-card:hover .crx-shot { transform: scale(1.025); }
+.crx-shot { transition: transform .4s var(--crx-ease); }
+.crx-chips::-webkit-scrollbar { display: none; }
+.crx-chip {
+  display:inline-flex; align-items:center; gap:8px; flex:none;
+  font-size:13px; font-weight:500; padding:8px 14px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.1); background:transparent;
+  color:rgba(255,255,255,.5); cursor:pointer; white-space:nowrap;
+  transition:color .2s, border-color .2s, background .2s;
+}
+.crx-chip:hover { color: var(--crx-ink); border-color: rgba(255,255,255,.2); }
+.crx-chip .crx-dot { width:6px; height:6px; border-radius:99px; flex:none; background:var(--crx-accent); display:none; }
+.crx-chip.is-active { color:var(--crx-ink); font-weight:600; border-color:rgba(88,255,122,.35); background:rgba(88,255,122,.07); }
+.crx-chip.is-active .crx-dot { display:block; }
+.crx-more {
+  text-align:center; font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--crx-accent); border:1px solid rgba(88,255,122,.32); border-radius:10px;
+  padding:15px 34px; cursor:pointer; transition:background .2s, border-color .2s, transform .18s var(--crx-ease);
+}
+.crx-more:hover { background:rgba(88,255,122,.08); border-color:rgba(88,255,122,.5); transform:translateY(-2px); }
+.crx-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.crx-feat { display:grid; grid-template-columns:1.15fr 1fr; }
+
+/* The index design's own breakpoints. */
+@media (max-width:1000px) {
+  .crx-grid { grid-template-columns:1fr 1fr !important; }
+  .crx-feat { grid-template-columns:1fr !important; }
+}
+@media (max-width:700px) {
+  .crx-grid { grid-template-columns:1fr !important; }
+  .crx-pad { padding-left:20px !important; padding-right:20px !important; }
+  .crx-chips { margin-left:-20px; margin-right:-20px; padding-left:20px !important; padding-right:20px !important; }
+  .crx-more { width:100%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }

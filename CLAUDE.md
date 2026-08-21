@@ -139,3 +139,57 @@ see. `populateCache` copies it to `.open-next/assets/cdn-cgi/_next_cache/`.
 - Bare `wrangler dev` does **not**. Testing that way returns 404 on every SSG route
   and looks like a routing bug. Use `npm run cf:preview`, or run
   `npx opennextjs-cloudflare populateCache local` before `wrangler dev`.
+
+## Page inventory
+
+| Route | Source of truth |
+|---|---|
+| `/` | Home v7 design file. Copy in `src/data/home.ts` |
+| `/features` | Features design file. Copy in `src/data/features.ts` |
+| `/pricing` | Real tiers recovered from the archived Squarespace page, `src/data/pricing.ts` |
+| `/why-coachrx` | Built from approved Features copy (comparison + loop) plus archived testimonials |
+| `/about` | **Needs Carl's copy.** Limited to claims sourced from approved copy elsewhere |
+| `/articles`, `/topics/[topic]`, `/articles/[slug]` | Blog Index / Tag Archive / Blog Post design files |
+| `/changelog`, `/changelog/[slug]` | 44 releases extracted from the archived change log into `content/changelog/*.mdx` |
+| 404 | 404 design file |
+
+## Headline levels
+
+`TwoTone` renders an `h2` by default. The one headline that says what a page is about
+must pass `as="h1"`. Home, Features and Why CoachRx shipped with **zero** h1 tags on
+the first pass because of this — check `<h1>` count is exactly 1 on any new page.
+
+## Redirects: 298 rules
+
+`site-migration/redirect-map.csv` is the source of truth and carries a reason per row.
+They emit **301**, not Next's default 308 — Google treats them the same but plenty of
+legacy SEO tooling and CDN log analysis only understands 301, so `redirects.json` sets
+`statusCode: 301` explicitly rather than `permanent: true`.
+
+Covered: 257 cut articles/videos, 32 retired marketing URLs, the 5 IA collapses,
+`/resources`, `/change-log` → `/changelog`, and the Squarespace `/home` and `/404-error`.
+Every old marketing URL now resolves. Verified end to end: 298/298 return 301 with the
+right `Location`, and all 34 unique destinations return 200.
+
+Rows whose `cut_reason` starts with **FLAG** are judgment calls Carl should review —
+mostly lead-magnet pages and the glossary, which had no replacement built.
+
+## Verifying before you claim it works
+
+A green `next build` proves almost nothing about the deployed Worker. The sequence that
+actually catches problems:
+
+```
+npm run cf:build
+npx opennextjs-cloudflare populateCache local
+npx wrangler dev --port 8787 --local
+```
+
+then crawl it. Status codes alone are not enough either — the h1 bug and the
+`/resources` dead end both returned 200-shaped results. Check internal links resolve,
+asset `src` paths exist on disk, one h1 per page, `<title>` and meta description
+present, and JSON-LD parses.
+
+Note: this sandbox is ARM and cannot run headless Chrome, so **visual and mobile QA has
+to happen in a real browser against the deployed preview.** Do not claim a layout is
+correct from markup alone.

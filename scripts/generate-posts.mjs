@@ -15,6 +15,8 @@ import path from "node:path";
 import matter from "gray-matter";
 
 const SRC = path.join(process.cwd(), "content", "posts");
+const CL_SRC = path.join(process.cwd(), "content", "changelog");
+const CL_OUT = path.join(process.cwd(), "src", "data", "changelog.json");
 const OUT = path.join(process.cwd(), "src", "data", "posts.json");
 
 const posts = fs
@@ -39,3 +41,18 @@ if (missing.length) {
   console.error(`generate-posts: ${missing.length} posts missing title/slug/primaryTag`);
   process.exit(1);
 }
+
+// Changelog releases. Bodies are small enough to inline (155 KB total), so unlike
+// posts these carry their body and need no filesystem read at render time.
+const releases = fs
+  .readdirSync(CL_SRC)
+  .filter((f) => f.endsWith(".mdx"))
+  .map((f) => {
+    const { data, content } = matter(fs.readFileSync(path.join(CL_SRC, f), "utf8"));
+    return { ...data, body: content };
+  })
+  .filter((r) => !r.draft)
+  .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+fs.writeFileSync(CL_OUT, JSON.stringify(releases));
+console.log(`generate-posts: ${releases.length} changelog releases -> src/data/changelog.json (${(fs.statSync(CL_OUT).size/1024).toFixed(0)} KB)`);
