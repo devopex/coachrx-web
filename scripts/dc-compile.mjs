@@ -124,8 +124,16 @@ function defaultProps($) {
 function compileNode($, node, scope, ctx) {
   const $node = $(node);
 
-  // sc-if: resolve the branch before compiling anything inside it
+  // sc-if: resolve the branch before compiling anything inside it.
+  //
+  // Skip any sc-if that sits inside an sc-for. Its condition almost always references the
+  // loop variable (`t.idle`, `row.active`), which is not in scope until the loop runs, so
+  // resolving here yields undefined and silently deletes the branch. The recursive
+  // compileNode() call inside the sc-for expansion below handles those with the item in
+  // scope. This cost us every poster image in the testimonial bar: `sc-if value="{{ t.idle }}"`
+  // was evaluated with no `t`, so all 22 tiles compiled to empty rectangles.
   $node.find("sc-if").each((_, el) => {
+    if ($(el).parents("sc-for").length) return;
     const keep = !!resolve(($(el).attr("value") || "").replace(/[{}]/g, ""), scope);
     if (keep) $(el).replaceWith($(el).contents());
     else $(el).remove();
@@ -258,7 +266,9 @@ const TEXT_ROUTES = [
   [/^videos$|^podcasts$/, "/articles"],
   [/^features$/, "/features"],
   // No dedicated pages for these, so route to the people who can answer.
-  [/^contact$|transition team|talk to (the )?(sales|support)/, "mailto:support@coachrx.app"],
+  // coachrx@opexfit.com is the published address, confirmed by Carl 2026-08-21.
+  // support@coachrx.app was wrong and appeared nowhere on the live site.
+  [/^contact$|transition team|talk to (the )?(sales|support)/, "mailto:coachrx@opexfit.com"],
   // Legal lives on the OPEX site; taken from the old Squarespace footer.
   [/^privacy( policy)?$/, "https://www.opexfit.com/privacy-policy/"],
   [/^terms( (and conditions|of service))?$/, "https://www.opexfit.com/terms-and-conditions/"],
