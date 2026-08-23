@@ -144,7 +144,9 @@
       [data-systrack] > div[style*="position:sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"]{position:static!important;display:block!important;min-height:0!important}
       [data-systrack] div[style*="height:600px"],[data-systrack] div[style*="height: 600px"],[data-systrack] div[style*="height: 600px"],[data-systrack] div[style*="height: 600px"]{display:none}
       .crx-mshot{display:block!important}
-      [data-tab][aria-selected="true"] [data-tabdesc]{max-height:none!important}
+      /* Platform pillars: plain vertical stack, all five visible, no tap (BRIEF-21) */
+      [data-tab] [data-tabdesc]{max-height:none!important;overflow:visible!important}
+      [data-tab]{background:transparent!important;box-shadow:none!important;border-radius:0!important;border-top:1px solid rgba(255,255,255,.08)!important;cursor:default;pointer-events:none}
       [data-screen-label="Complete Coaching"] div[style*="height:584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"]{height:auto!important}
       [data-vig="macro"]{position:relative!important;inset:auto!important;height:auto!important}
       [data-vig="macro"] div[style*="1fr 0.8fr"]{grid-template-columns:1fr!important;height:auto!important}
@@ -154,8 +156,13 @@
       [data-vig="rxcheck"]{position:relative!important;inset:auto!important;width:100%!important;transform:none!important;margin-top:20px;box-sizing:border-box}
       [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"],[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:1fr!important}
       [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3),[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"] > div:nth-child(3){grid-column:auto}
-      [data-vig="theming"] div[style*="height:620px"],[data-vig="theming"] div[style*="height: 620px"],[data-vig="theming"] div[style*="height: 620px"],[data-vig="theming"] div[style*="height: 620px"]{height:420px!important}
-      [data-vig="theming"] div[style*="width:208px"],[data-vig="theming"] div[style*="width: 208px"],[data-vig="theming"] div[style*="width: 208px"],[data-vig="theming"] div[style*="width: 208px"]{width:150px!important;right:12px!important;top:120px!important}
+      /* Custom Theming: text first, then one sane whole phone (BRIEF-21). Stage height is the compiler's job. */
+      [data-vig="theming"] div[style*="height:620px"],[data-vig="theming"] div[style*="height: 620px"]{background:transparent!important;border:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
+      [data-vig="theming"] [data-thsplash]{display:none!important}
+      [data-vig="theming"] div[style*="height:620px"] > div[style*="to top"],[data-vig="theming"] div[style*="height: 620px"] > div[style*="to top"]{display:none!important}
+      [data-vig="theming"] div[style*="width:208px"],[data-vig="theming"] div[style*="width: 208px"]{position:static!important;width:280px!important;margin:8px auto 0;padding:8px!important;border-radius:40px!important;border-bottom:1px solid rgba(255,255,255,.16)!important;box-sizing:border-box}
+      .crx-thphone-screen{border-radius:32px!important}
+      .crx-thphone-screen > span[style*="to top"]{display:none!important}
       [data-vig="theming"] > div[style*="flex-wrap:wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"]{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
       [data-chip]{flex:none;scroll-snap-align:start;position:relative}
       [data-chip]::after{content:"";position:absolute;inset:-6px}
@@ -1062,7 +1069,8 @@ class Component extends DCLogic {
       ...t,
       shot: ["assets/screens/insights.png", "assets/screens/messages.png", "assets/screens/calendar.png", "assets/screens/business.png", "assets/screens/dashboard.png"][k],
       shotAlt: ["Client metrics profile", "Client messaging", "Program calendar", "Business reporting", "CoachRx coach dashboard"][k],
-      onSelect: () => (this.isPhone ? this.setActive(t.i) : this.scrollToPanel(t.i))
+      // Phone: pillars are a plain visible stack (BRIEF-21) — taps do nothing, no active state.
+      onSelect: () => { if (!this.isPhone) this.scrollToPanel(t.i); }
     }));
     return {
       tabs,
@@ -1380,8 +1388,7 @@ class Component extends DCLogic {
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
-    // Phone: pillars are an accordion with Assess open by default
-    if (this.isPhone) this.setActive(0);
+    // Phone: pillars render as a plain stack via CSS; no active panel, no init needed (BRIEF-21).
     // Sticky price bar appears once the reader scrolls past the pricing block (phone only)
     const bar = document.querySelector("[data-pricebar]");
     const pricing = document.querySelector('[data-screen-label="Pricing summary"]');

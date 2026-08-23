@@ -361,6 +361,11 @@ function fixLinks($, root, ctx) {
     const href = $a.attr("href") || "";
     const text = ($a.text() || "").replace(/\s+/g, " ").trim().toLowerCase();
 
+    // Anchors whose href is supplied later by fillPodcastLinks(). They ship as href="#", and
+    // without this guard the downgrade-to-span below eats all 29 of them: the links resolve
+    // correctly but land on a <span>, which is not clickable. Leave them alone.
+    if ($a.attr("data-platform")) return;
+
     const retarget = RETARGET.find(([re]) => re.test(text));
     if (retarget && href !== retarget[1]) {
       $a.attr("href", retarget[1]);
@@ -949,18 +954,30 @@ function fillPodcastLinks($, root, ctx) {
 
   const norm = (t) => (t || "").replace(/\s+/g, " ").trim().toLowerCase();
   const byName = new Map(Object.entries(links).map(([k, v]) => [norm(k), v]));
+  const namesByLength = Object.keys(links).sort((a, b) => b.length - a.length);
 
   let set = 0, dropped = 0;
   anchors.each((_, el) => {
     const $a = $(el);
     const platform = ($a.attr("data-platform") || "").toLowerCase();
-    // Walk up to the card and read its show name from the cover image alt, which the compiler
-    // already guarantees is the show name.
+    // Resolve the show by matching the card's own text against the known show names.
+    //
+    // The first version read the cover image alt, which failed for all three featured cards:
+    // they use shape="rect" image slots that do not resolve to a cover file, so there was no
+    // <img> to read and every anchor got deleted. Card text always contains the show name.
+    //
+    // Longest name first so "Back Room Talk: Coach Spotlights" wins over "Back Room Talk".
     let show = "";
     let $p = $a.parent();
-    for (let i = 0; i < 6 && $p.length && !show; i++) {
+    for (let i = 0; i < 7 && $p.length && !show; i++) {
       const alt = $p.find('img[src*="/podcasts/"]').first().attr("alt");
-      if (alt) show = alt;
+      if (alt && byName.has(norm(alt))) { show = alt; break; }
+      const txt = norm($p.text());
+      if (txt) {
+        for (const name of namesByLength) {
+          if (txt.includes(norm(name))) { show = name; break; }
+        }
+      }
       $p = $p.parent();
     }
     const url = byName.get(norm(show))?.[platform];
