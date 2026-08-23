@@ -802,8 +802,12 @@ function normalizeNav($, root, ctx) {
   const linkStyle = ($model && $model.length && $model.attr("style")) ||
     "color:rgba(255,255,255,.68);font-size:14px;font-weight:500";
 
+  // The caret is an inline <svg> appended after the label. On an inline <a> the line box can
+  // break between the two, dropping the caret onto its own line under the word — which is the
+  // "arrow toggles are under the words" Carl reported. inline-flex + nowrap makes that impossible.
+  const NOWRAP = ";display:inline-flex;align-items:center;white-space:nowrap";
   const plain = (label, href) =>
-    $("<a></a>").attr("href", href).attr("style", linkStyle).text(label);
+    $("<a></a>").attr("href", href).attr("style", linkStyle + NOWRAP).text(label);
 
   const menu = (label, items) => {
     const $wrap = $('<span class="crx-menu" style="position:relative;display:inline-flex;align-items:center;height:60px"></span>');
@@ -897,6 +901,102 @@ const NAV_CSS = `
  * square and the tile is square, `object-fit:cover` crops nothing at all, so faces are safe by
  * construction rather than by tuning object-position per image.
  */
+
+/**
+ * Collapse tall fixed-height boxes below 760px.
+ *
+ * This is the single biggest mobile defect. The designs use tall boxes as viewports for
+ * scroll-driven panels and cropped screenshots: `height:619px`, `height:700px`,
+ * `height:230vh` and so on. On a phone the content inside is one narrow column or one
+ * image, so the box keeps its full height and you scroll through screens of nothing. Carl
+ * reported it on Home (before The Problem, before 04 Coaching Intelligence, before Custom
+ * Theming), on Features between every section, and in the Pricing header.
+ *
+ * The old backstop only zeroed three hardcoded vh values, which was never going to hold.
+ *
+ * Done by PARSING the style attribute rather than with `[style*="height:4"]` selectors,
+ * because substring matching also hits `line-height:4`, `max-height:400px` and
+ * `min-height:5...`, and would have collapsed things that must keep their height.
+ *
+ * Thresholds: 400px and 90vh. Below those the height is usually deliberate and small enough
+ * to be fine on a phone — the 288px phone mockup frame and 130px cards keep their geometry.
+ */
+
+/**
+ * Fill in per-show YouTube and Spotify links on the Podcasts page.
+ *
+ * The design has no platform links at all today; BRIEF-21 adds them. It emits, per show card,
+ * anchors carrying `data-platform="youtube"` / `data-platform="spotify"` with any placeholder
+ * href, and this replaces the href with the real one from src/data/podcast-links.json, keyed by
+ * the show name on the card.
+ *
+ * A show with no link for a platform has that anchor REMOVED rather than left pointing nowhere.
+ * The links were recovered from the archived Squarespace podcast-network page. Proximity parsing
+ * mis-assigned several (three shows ended up sharing one Spotify URL), so anything claimed by
+ * more than one show was dropped unless the channel handle matched the show name. 14 of 22 shows
+ * have YouTube and 15 have Spotify; the rest are genuinely unknown and Carl has the gap list.
+ *
+ * No-op until the design emits the anchors, so it is safe to ship ahead of the design pass.
+ */
+function fillPodcastLinks($, root, ctx) {
+  const anchors = root.find("[data-platform]");
+  if (!anchors.length) return;
+
+  let links = {};
+  try {
+    links = JSON.parse(fs.readFileSync(path.join(process.cwd(), "src", "data", "podcast-links.json"), "utf8"));
+  } catch { return; }
+
+  const norm = (t) => (t || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const byName = new Map(Object.entries(links).map(([k, v]) => [norm(k), v]));
+
+  let set = 0, dropped = 0;
+  anchors.each((_, el) => {
+    const $a = $(el);
+    const platform = ($a.attr("data-platform") || "").toLowerCase();
+    // Walk up to the card and read its show name from the cover image alt, which the compiler
+    // already guarantees is the show name.
+    let show = "";
+    let $p = $a.parent();
+    for (let i = 0; i < 6 && $p.length && !show; i++) {
+      const alt = $p.find('img[src*="/podcasts/"]').first().attr("alt");
+      if (alt) show = alt;
+      $p = $p.parent();
+    }
+    const url = byName.get(norm(show))?.[platform];
+    if (url) { $a.attr("href", url).attr("target", "_blank").attr("rel", "noopener"); set++; }
+    else { $a.remove(); dropped++; }
+  });
+  ctx.podcastLinks = { set, dropped };
+}
+
+const TALL_PX = 400, TALL_VH = 90;
+function collapseTallBoxes($, root, ctx) {
+  let n = 0;
+  root.find('[style]').each((_, el) => {
+    const $el = $(el);
+    const style = $el.attr("style") || "";
+    // Only a real `height:` declaration: must start the declaration, so `line-height` and
+    // `max-height`/`min-height` are skipped.
+    const m = /(?:^|;)\s*height:\s*(\d+(?:\.\d+)?)(px|vh)\s*(?:;|$)/i.exec(style);
+    if (!m) return;
+    const v = parseFloat(m[1]), unit = m[2].toLowerCase();
+    if (!((unit === "px" && v >= TALL_PX) || (unit === "vh" && v >= TALL_VH))) return;
+    $el.attr("class", (($el.attr("class") || "") + " crx-mtall").trim());
+    n++;
+  });
+  if (n) { ctx.tallCollapsed = n; }
+}
+
+const TALL_CSS = `
+/* Injected by dc-compile collapseTallBoxes(). See that function for why. */
+@media (max-width:760px){
+  .crx-mtall{height:auto!important;min-height:0!important;max-height:none!important}
+  /* An empty scroll-track div collapses to nothing rather than leaving a gap. */
+  .crx-mtall:empty{display:none!important}
+}
+`;
+
 function renderImageSlots($, root, ctx) {
   const slots = root.find("image-slot");
   if (!slots.length) return;
@@ -1000,6 +1100,8 @@ export function compileDesign(full, override) {
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
+  collapseTallBoxes($, root, ctx);
+  fillPodcastLinks($, root, ctx);
   enforceLogo($, root, ctx);
 
   return {
@@ -1008,7 +1110,7 @@ export function compileDesign(full, override) {
     // templates and the roadmap are compiled through this exported function and write their own
     // .ts files, so without this they got the burger markup and none of the styling or wiring.
     css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
-      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, RESPONSIVE_BACKSTOP].join("\n"),
+      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP].join("\n"),
     script: scriptSrc + (ctx.mobileNavInjected ? MOBILE_NAV_JS : ""),
     data,
     hoverRules: ctx.hoverRules,
@@ -1069,11 +1171,13 @@ for (const page of PAGES) {
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
+  collapseTallBoxes($, root, ctx);
+  fillPodcastLinks($, root, ctx);
   enforceLogo($, root, ctx);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
-    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, RESPONSIVE_BACKSTOP].join("\n");
+    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP].join("\n");
 
   // data minus functions, so pages can reuse the design's own copy where useful
   const plain = JSON.parse(JSON.stringify(data, (k, v) => (typeof v === "function" ? undefined : v)));
