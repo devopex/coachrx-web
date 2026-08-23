@@ -9,8 +9,11 @@
     "cf:build": "opennextjs-cloudflare build",
     "cf:deploy": "opennextjs-cloudflare deploy",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "prebuild": "node scripts/generate-posts.mjs && node scripts/dc-compile.mjs && node scripts/build-blog.mjs",
-    "dc": "node scripts/dc-compile.mjs && node scripts/build-blog.mjs"
+    "prebuild": "npm run generate",
+    "dc": "node scripts/dc-compile.mjs && node scripts/build-blog.mjs && node scripts/build-roadmap.mjs",
+    "roadmap": "node scripts/fetch-roadmap.mjs && node scripts/build-roadmap.mjs",
+    "generate": "node scripts/fetch-roadmap.mjs && node scripts/generate-posts.mjs && node scripts/dc-compile.mjs && node scripts/build-blog.mjs && node scripts/build-roadmap.mjs",
+    "precf:build": "npm run generate"
   },
   "dependencies": {
     "@keystatic/core": "^0.6.8",

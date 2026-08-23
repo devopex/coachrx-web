@@ -58,6 +58,35 @@ const chipsFor = (activeSlug) => [
   ...TOPICS.map((t) => ({ label: t.title, href: `/topics/${t.slug}`, cls: t.slug === activeSlug ? "is-active" : "" })),
 ];
 
+/**
+ * The design renders each topic chip as `<span class="crx-chip" onClick="{{ c.onClick }}">`,
+ * and that onClick calls setState. Compiled pages have a no-op setState, so every chip is
+ * dead: clicking "Program Design" does nothing at all.
+ *
+ * The chip data already carries a real href, and every topic archive exists as a route, so
+ * the fix is to turn each span into an anchor. Done here with a parser rather than asking the
+ * design to change, because the markup, classes and children are preserved exactly — only the
+ * tag name changes and the dead handler is dropped.
+ *
+ * If the design is ever updated to emit anchors itself, this becomes a no-op and can go.
+ */
+function linkifyChips($html, chips) {
+  const $ = cheerio.load($html, null, false);
+  const found = $(".crx-chip");
+  found.each((i, el) => {
+    const href = chips[i]?.href;
+    if (!href) return;
+    const $el = $(el);
+    const a = $("<a></a>")
+      .attr("href", href)
+      .attr("class", $el.attr("class") || "")
+      .attr("style", $el.attr("style") || null)
+      .html($el.html() || "");
+    $el.replaceWith(a);
+  });
+  return { html: $.html(), converted: found.length };
+}
+
 const write = (name, out, extra = "") => {
   fs.writeFileSync(
     path.join(OUT, `${name}.ts`),
@@ -99,6 +128,8 @@ console.log("\nbuild-blog:");
     countLabel: `${POSTS.length} articles`,
   }));
   check("blog-index", out);
+  { const lk = linkifyChips(out.html, chipsFor(null)); out.html = lk.html;
+    console.log(`  fix  blog-index      ${lk.converted} topic chips span -> anchor`); }
   const r = write("blog-index", out);
   console.log(`  ok   blog-index      ${String(r.kb).padStart(4)}KB   ${POSTS.length} posts`);
 }
@@ -125,6 +156,7 @@ console.log("\nbuild-blog:");
       siblings: TOPICS.filter((x) => x.slug !== t.slug).slice(0, 4).map((x) => ({ label: x.title, href: `/topics/${x.slug}` })),
     }));
     check(`topic-${t.slug}`, out);
+    { const lk = linkifyChips(out.html, chipsFor(t.slug)); out.html = lk.html; }
     const r = write(`topic-${t.slug}`, out);
     manifest.push({ slug: t.slug, module: `topic-${t.slug}`, title: t.title, count: posts.length });
     console.log(`  ok   topic-${t.slug.padEnd(28)} ${String(r.kb).padStart(4)}KB   ${String(posts.length).padStart(3)} posts`);

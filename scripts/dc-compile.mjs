@@ -37,6 +37,7 @@ const OUT = path.join(process.cwd(), "src", "generated");
 const PAGES = [
   { file: "CoachRx Home v7.dc.html", name: "home" },
   { file: "CoachRx Features.dc.html", name: "features" },
+  { file: "CoachRx Pricing.dc.html", name: "pricing" },
   { file: "CoachRx Blog Post.dc.html", name: "blogPost" },
   { file: "CoachRx Blog Index.dc.html", name: "blogIndex" },
   { file: "CoachRx Tag Archive.dc.html", name: "tagArchive" },
@@ -256,9 +257,16 @@ const TEXT_ROUTES = [
   [/see all features/, "/features"],
   // commerce
   [/plans and pricing|^pricing$|full pricing/, "/pricing"],
-  [/start (for )?free|start your (free )?trial|get started/, "/pricing"],
+  // Every signup CTA goes to the app, not to /pricing. Sending "Start free trial" to
+  // /pricing made the button a self-link on the pricing page itself. Confirmed by Carl
+  // 2026-08-21. Note: no `_gl` linker params here on purpose. Those are per-session Google
+  // Analytics values; hard-coding them pins one stale session onto every visitor and shows
+  // a wall of junk in the address bar. Cross-domain attribution is configured in GTM.
+  [/start (for )?free|start your (free )?trial|get started|free trial/, "https://dashboard.coachrx.app/signup"],
+  [/^(log ?in|sign ?in)$/, "https://dashboard.coachrx.app/login"],
   // content
   [/^changelog$|what's new|view the changelog/, "/changelog"],
+  [/^roadmap$|see the roadmap|what we.re building/, "/roadmap"],
   [/^compare$|why coachrx|how coachrx compares/, "/why-coachrx"],
   [/^about$/, "/about"],
   [/coaching guides|^resources$|^articles$|read the articles|the coaching library|^all$/, "/articles"],
@@ -268,7 +276,7 @@ const TEXT_ROUTES = [
   // No dedicated pages for these, so route to the people who can answer.
   // coachrx@opexfit.com is the published address, confirmed by Carl 2026-08-21.
   // support@coachrx.app was wrong and appeared nowhere on the live site.
-  [/^contact$|transition team|talk to (the )?(sales|support)/, "mailto:coachrx@opexfit.com"],
+  [/^contact( us)?$|transition team|talk to (the )?(sales|support)/, "mailto:coachrx@opexfit.com"],
   // Legal lives on the OPEX site; taken from the old Squarespace footer.
   [/^privacy( policy)?$/, "https://www.opexfit.com/privacy-policy/"],
   [/^terms( (and conditions|of service))?$/, "https://www.opexfit.com/terms-and-conditions/"],
@@ -298,6 +306,37 @@ function fixLinks($, root, ctx) {
   });
 }
 
+/**
+ * Each design file carries its own copy of the nav, so they drift. When /roadmap was added
+ * only the Roadmap page linked to it, leaving the page unreachable from every other page.
+ *
+ * Rather than a round trip per file for a one-line change, insert the item here by cloning
+ * the existing `Changelog` link and retargeting it. Cloning means it inherits that nav's
+ * exact styling, so it cannot look out of place, and each file stays the source of truth for
+ * how its own nav looks.
+ *
+ * Skips any nav that already has a Roadmap link, so this becomes a no-op once the design
+ * files catch up, and it will not double-insert.
+ *
+ * Position: directly after Changelog. One is what shipped, the other is what is coming.
+ */
+function ensureRoadmapNav($, root, ctx) {
+  let added = 0;
+  root.find("nav, footer").each((_, container) => {
+    const $c = $(container);
+    if ($c.find("a").filter((_, a) => $(a).text().trim() === "Roadmap").length) return;
+    const $changelog = $c
+      .find("a")
+      .filter((_, a) => $(a).text().trim() === "Changelog")
+      .first();
+    if (!$changelog.length) return;
+    const $item = $changelog.clone().attr("href", "/roadmap").text("Roadmap");
+    $changelog.after($item);
+    added++;
+  });
+  if (added) ctx.navInjected = added;
+}
+
 /* ------------------------------------------------------------------- public API */
 
 /**
@@ -325,6 +364,7 @@ export function compileDesign(full, override) {
   compileNode($, root, data, ctx);
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
+  ensureRoadmapNav($, root, ctx);
 
   return {
     html: (root.html() || "").trim(),
@@ -369,6 +409,7 @@ for (const page of PAGES) {
   compileNode($, root, data, ctx);
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
+  ensureRoadmapNav($, root, ctx);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules].join("\n");

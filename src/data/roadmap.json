@@ -1,0 +1,331 @@
+{
+ "generatedAt": "2026-08-22",
+ "source": "seeded from the CoachRx Feature Hub via the Notion connector; refreshed by scripts/fetch-roadmap.mjs once NOTION_TOKEN is set",
+ "columns": [
+  {
+   "status": "In Progress",
+   "label": "Building now",
+   "items": [
+    {
+     "feature": "Workout Builder v2",
+     "summary": "A reworked workout builder that keeps the coach's fast free-text prescription but parses it into structured sets, reps, load, tempo, and rest, giving clients a clear set-by-set logging experience.",
+     "status": "In Progress",
+     "label": "Building now",
+     "pillar": "Design",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Group Chat",
+     "summary": "Group conversations in CoachRx messaging, one thread for a coach and multiple clients.",
+     "status": "In Progress",
+     "label": "Building now",
+     "pillar": "Consult",
+     "platform": [
+      "Coach Web",
+      "Coach Mobile",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "CoachRx MCP",
+     "summary": "Connect your CoachRx account to AI tools like Claude and ChatGPT through an official MCP server.",
+     "status": "In Progress",
+     "label": "Building now",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    },
+    {
+     "feature": "CoachRx Assistant",
+     "summary": "An AI assistant inside CoachRx that reads your clients, messages, consult notes and program design, drafts work for your approval, remembers how you coach, connects out to your other tools, and runs scheduled work for you.",
+     "status": "In Progress",
+     "label": "Building now",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    }
+   ]
+  },
+  {
+   "status": "Up Next",
+   "label": "Up next",
+   "items": [
+    {
+     "feature": "Custom Assessments",
+     "summary": "Build your own assessments and change the defaults for your organization and per client.",
+     "status": "Up Next",
+     "label": "Up next",
+     "pillar": "Assess",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Progress Pictures Upgrade",
+     "summary": "An upgrade to progress pictures on the coach web app: editable timestamps, date-to-date comparison, native upload, and a refined table with photo previews.",
+     "status": "Up Next",
+     "label": "Up next",
+     "pillar": "Assess",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    },
+    {
+     "feature": "In-App Timer",
+     "summary": "A smart workout timer in the client app that reads the coach's workout description and configures itself.",
+     "status": "Up Next",
+     "label": "Up next",
+     "pillar": "Design",
+     "platform": [
+      "Client App"
+     ],
+     "released": null
+    }
+   ]
+  },
+  {
+   "status": "Backlog",
+   "label": "Exploring",
+   "items": [
+    {
+     "feature": "Planning & Periodization Overhaul",
+     "summary": "A rebuilt long-term planning experience: edit in place, transition phases without starting over, and plan in your own language.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Design",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Reporting & Data Export",
+     "summary": "A business reporting layer with historical look-back and real exports: trends over time instead of snapshots that reset.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Lifestyle & Nutrition Programs",
+     "summary": "Build reusable lifestyle and nutrition programs and assign them to clients the way you assign training programs.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Design",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Client Resources Library",
+     "summary": "An organized, client-facing resource hub for videos, guides, and education, evolving the Documents feature.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Consult",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Missed Session Notifications",
+     "summary": "Get notified when a client does not complete a session, not just when they do.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Consult",
+     "platform": [
+      "Coach Web",
+      "Coach Mobile"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Program Self-Selection",
+     "summary": "Clients choose and self-assign from the programs their coach has given them access to.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Design",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Bodyweight in Trends & Check-Ins",
+     "summary": "Adds bodyweight as a tracked metric on the Trends screen, with the option to collect it inside Check-Ins.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Assess",
+     "platform": [
+      "Coach Web",
+      "Coach Mobile",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Menstrual Cycle Tracking",
+     "summary": "Simple cycle tracking so coaches can see where a client is in her cycle and plan training accordingly.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Assess",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "InBody Integration",
+     "summary": "Sync body composition data from InBody scans straight into a client's Health Data.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Assess",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "In-Person Coaching",
+     "summary": "Manage clients you train in person, with full coach-side tracking and client app access turned off.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Multiple Booking Links",
+     "summary": "Create multiple named booking links so clients book the right type of session every time.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Client Sign-Up QR Codes",
+     "summary": "Invite clients to your organization with a QR code or custom sign-up link.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web",
+      "Client App"
+     ],
+     "released": null
+    },
+    {
+     "feature": "Program/Index Sharing",
+     "summary": "Share programs and index items from one organization to another.",
+     "status": "Backlog",
+     "label": "Exploring",
+     "pillar": "Operate",
+     "platform": [
+      "Coach Web"
+     ],
+     "released": null
+    }
+   ]
+  }
+ ],
+ "shipped": [
+  {
+   "feature": "Custom Theming",
+   "summary": "Brand the client app with your colors, typography, logo, and quotes from a theme editor in settings.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Operate",
+   "platform": [],
+   "released": "2026-07-06"
+  },
+  {
+   "feature": "Hide Results Toggle",
+   "summary": "One toggle (and a hotkey) to hide client results in the design calendar and reclaim the screen for designing.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Design",
+   "platform": [],
+   "released": "2026-07-06"
+  },
+  {
+   "feature": "Coach Notes on Dashboard & Notifications",
+   "summary": "Surfaces coach notes on the dashboard and notifications screens so context shows up without opening each client profile.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Consult",
+   "platform": [],
+   "released": "2026-07-06"
+  },
+  {
+   "feature": "Video Uploader",
+   "summary": "Add an exercise demo by pasting a YouTube or Vimeo link or uploading your own file, with a live preview and a progress bar.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Design",
+   "platform": [],
+   "released": "2026-06-25"
+  },
+  {
+   "feature": "Single Exercise Drag and Drop",
+   "summary": "Drag individual exercises to reorder them within a workout or move them between days and workouts on the program calendar.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Design",
+   "platform": [],
+   "released": "2026-06-17"
+  },
+  {
+   "feature": "Email Reply to Notifications",
+   "summary": "Reply to client comments and messages straight from your email inbox; replies post back into CoachRx.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Consult",
+   "platform": [],
+   "released": "2026-06-08"
+  },
+  {
+   "feature": "MyMacros+ Integration",
+   "summary": "Sync nutrition logs from MyMacros+ into CoachRx for coach review.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Assess",
+   "platform": [],
+   "released": "2026-06-08"
+  },
+  {
+   "feature": "Cool-Down Library",
+   "summary": "Save reusable cool-down templates for faster, more consistent program design.",
+   "status": "Shipped",
+   "label": "Shipped",
+   "pillar": "Design",
+   "platform": [],
+   "released": "2026-05-26"
+  }
+ ]
+}

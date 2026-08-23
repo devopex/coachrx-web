@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .crx-cta{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:13px 20px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s,background .25s,color .25s,border-color .25s}
+    .crx-cta:hover{color:#F8FCFF;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.04)}
+    .crx-cta.is-fill{color:#0A0B0F;border-color:transparent;background:linear-gradient(180deg,#7BFF96,#58FF7A);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 28px rgba(88,255,122,.24)}
+    .crx-cta.is-fill:hover{color:#0A0B0F;transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 42px rgba(88,255,122,.4)}
+    .crx-seg{font-family:inherit;border:none;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:7px 16px;border-radius:7px;background:transparent;transition:color .25s,background .25s}
+    .crx-seg.is-on{color:#F8FCFF;font-weight:600;background:rgba(88,255,122,.09)}
+    .crx-save{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);transition:color .25s}
+    .crx-save.is-on{color:#58FF7A}
+    .crx-plan{position:relative;padding:26px 26px 28px;border-left:1px solid rgba(255,255,255,.07);transition:background .18s,border-color .18s;min-width:0}
+    .crx-plan:first-child{border-left:none}
+    .crx-plan:hover{background:rgba(255,255,255,.015);border-left-color:rgba(255,255,255,.14)}
+    .crx-plan .crx-top{position:absolute;left:0;top:0;right:0;height:2px;background:linear-gradient(90deg,rgba(88,255,122,.55),rgba(88,255,122,.12));opacity:0;transition:opacity .3s cubic-bezier(.22,1,.36,1)}
+    .crx-plan.is-on .crx-top{opacity:1}
+    .crx-plan.is-on{background:rgba(88,255,122,.018)}
+    .crx-range{-webkit-appearance:none;appearance:none;display:block;width:100%;height:24px;background:transparent;cursor:grab;margin:0;position:relative;z-index:2}
+    .crx-range:active{cursor:grabbing}
+    .crx-range:focus-visible{outline:none}
+    .crx-range::-webkit-slider-runnable-track{height:24px;background:transparent}
+    .crx-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;margin-top:4px;border-radius:99px;background:#0A0B0F;border:2px solid #58FF7A;box-shadow:0 0 0 0 rgba(88,255,122,.1);transition:box-shadow .2s,width .15s,height .15s,margin-top .15s}
+    .crx-range:hover::-webkit-slider-thumb{box-shadow:0 0 0 7px rgba(88,255,122,.1),0 0 14px rgba(88,255,122,.4)}
+    .crx-range:active::-webkit-slider-thumb{width:18px;height:18px;margin-top:3px}
+    .crx-range::-moz-range-track{height:24px;background:transparent}
+    .crx-range::-moz-range-thumb{width:14px;height:14px;border-radius:99px;background:#0A0B0F;border:2px solid #58FF7A}
+    .crx-bubble{position:absolute;top:-26px;transform:translateX(-50%);font-family:var(--font-mono);font-size:11px;color:#F8FCFF;border:1px solid rgba(255,255,255,.18);background:rgba(10,11,15,.92);padding:3px 9px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .15s;white-space:nowrap;z-index:3}
+    .crx-bubble.is-on{opacity:1}
+    .crx-count{width:76px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);border-radius:8px;color:#F8FCFF;font-family:var(--font-mono);font-size:16px;font-weight:600;text-align:center;padding:9px 8px;outline:none;transition:border-color .2s;-moz-appearance:textfield;appearance:textfield}
+    .crx-count::-webkit-outer-spin-button,.crx-count::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+    .crx-count:focus{border-color:rgba(88,255,122,.5)}
+    .crx-faqbody{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.22,1,.36,1)}
+    .crx-faqrow:hover .crx-faqq{color:#F8FCFF}
+    .crx-pillars-acc{display:none}
+    .crx-sticky{position:fixed;left:0;right:0;bottom:0;z-index:95;display:none;align-items:center;justify-content:space-between;gap:14px;padding:12px 20px;background:rgba(10,11,15,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.1);transform:translateY(110%);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+    .crx-sticky.is-up{transform:translateY(0)}
+    @media (max-width:900px){
+      .crx-plans{grid-template-columns:1fr!important}
+      .crx-plan{border-left:none!important;border-top:1px solid rgba(255,255,255,.07);padding:24px 20px!important}
+      .crx-plan:first-child{border-top:none}
+      .crx-togglerow{justify-content:stretch!important}
+      .crx-togglerow > span:first-child{flex:1;display:flex!important}
+      .crx-togglerow .crx-seg{flex:1;text-align:center}
+      .crx-pillars-grid{display:none!important}
+      .crx-pillars-acc{display:block}
+      .crx-calcrow{flex-direction:column!important;align-items:flex-start!important;gap:16px!important}
+      .crx-panel{padding:20px!important}
+    }
+    @media (max-width:700px){
+      .crx-pad{padding-left:20px!important;padding-right:20px!important}
+      .crx-nav-links{display:none!important}
+      .crx-sticky{display:flex}
+    }
+  </style>
+</helmet>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div class="crx-nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="CoachRx Features.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Features</a>
+      <a href="CoachRx Blog Index.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Resources</a>
+      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Changelog</a>
+      <a href="/roadmap" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Roadmap</a>
+      <a href="#" style="color:#F8FCFF;font-size:14px;font-weight:600">Pricing</a>
+    </div>
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:10px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
+  </nav>
+
+  <!-- 1 · HEADER -->
+  <header data-screen-label="Header" style="position:relative;overflow:hidden;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
+    <div style="position:absolute;top:-60px;left:-140px;width:820px;height:600px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;top:120px;right:-200px;width:700px;height:520px;background:radial-gradient(ellipse at center, rgba(0,72,146,.09) 0%, rgba(0,72,146,0) 65%);pointer-events:none"></div>
+    <div class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:190px 32px 0">
+      <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#F8FCFF">Pricing</h1>
+      <p data-reveal="60" style="margin:20px 0 0;font-size:17.5px;line-height:1.62;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">Every plan includes every feature. The only thing that changes is how many clients you carry.</p>
+    </div>
+  </header>
+
+  <!-- 2 · PLANS + CALCULATOR -->
+  <section data-screen-label="Plans" data-plans="" class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:56px 32px 0">
+    <div data-reveal="60" class="crx-panel" style="position:relative;background:linear-gradient(180deg,#14151A,#101118);border:1px solid rgba(255,255,255,.09);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.5);padding:28px 32px 32px">
+      <div class="crx-togglerow" style="display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-bottom:24px">
+        <span style="display:inline-flex;align-items:center;gap:3px;padding:3px;border:1px solid rgba(255,255,255,.12);border-radius:9px">
+          <button type="button" data-seg="monthly" class="crx-seg">Monthly</button>
+          <button type="button" data-seg="annual" class="crx-seg is-on">Annual</button>
+        </span>
+        <span data-save="" class="crx-save is-on">Save 15%</span>
+      </div>
+
+      <div class="crx-plans" style="display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.07)">
+        <div data-col="0" class="crx-plan" style="display:flex;flex-direction:column">
+          <span class="crx-top"></span>
+          <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)">1–5 clients</span>
+          <span style="display:flex;align-items:flex-end;gap:7px;margin-top:18px;height:44px">
+            <span data-price="0" style="white-space:nowrap;font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1">$25</span>
+            <span style="font-size:14px;line-height:1.15;color:rgba(255,255,255,.5)">/month</span>
+          </span>
+          <span data-note="0" style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45);min-height:18px">$300 billed once</span>
+          <a href="https://dashboard.coachrx.app/signup" data-cta="0" class="crx-cta" style="margin-top:26px;width:100%;box-sizing:border-box">Start free trial</a>
+        </div>
+        <div data-col="1" class="crx-plan is-on" style="display:flex;flex-direction:column">
+          <span class="crx-top"></span>
+          <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)">6–50 clients</span>
+          <span style="display:flex;align-items:flex-end;gap:7px;margin-top:18px;height:44px">
+            <span data-price="1" style="white-space:nowrap;font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1">$67</span>
+            <span style="font-size:14px;line-height:1.15;color:rgba(255,255,255,.5)">/month</span>
+          </span>
+          <span data-note="1" style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45);min-height:18px">$804 billed once</span>
+          <a href="https://dashboard.coachrx.app/signup" data-cta="1" class="crx-cta is-fill" style="margin-top:26px;width:100%;box-sizing:border-box">Start free trial</a>
+        </div>
+        <div data-col="2" class="crx-plan" style="display:flex;flex-direction:column">
+          <span class="crx-top"></span>
+          <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)">51–150 clients</span>
+          <span style="display:flex;align-items:flex-end;gap:7px;margin-top:18px;height:44px">
+            <span data-price="2" style="white-space:nowrap;font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1">$169</span>
+            <span style="font-size:14px;line-height:1.15;color:rgba(255,255,255,.5)">/month</span>
+          </span>
+          <span data-note="2" style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45);min-height:18px">$2,028 billed once</span>
+          <a href="https://dashboard.coachrx.app/signup" data-cta="2" class="crx-cta" style="margin-top:26px;width:100%;box-sizing:border-box">Start free trial</a>
+        </div>
+        <div data-col="3" class="crx-plan" style="display:flex;flex-direction:column">
+          <span class="crx-top"></span>
+          <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)">150+ clients</span>
+          <span style="display:flex;align-items:flex-end;gap:7px;margin-top:18px;height:44px">
+            <span style="white-space:nowrap;font-size:28px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:#F8FCFF;font-feature-settings:'tnum' 1">From $249</span>
+            <span style="font-size:14px;line-height:1.15;color:rgba(255,255,255,.5)">/month</span>
+          </span>
+          <span style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45);min-height:18px">+ $1.25 per user / month</span>
+          <a href="mailto:coachrx@opexfit.com" data-cta="3" class="crx-cta" style="margin-top:26px;width:100%;box-sizing:border-box">Contact us</a>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,.07);padding:26px 26px 6px;margin-top:0">
+        <div class="crx-calcrow" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px">
+          <label style="display:flex;align-items:center;gap:14px;font-size:15px;font-weight:500;color:rgba(255,255,255,.7)">How many clients do you carry?
+            <input type="number" min="1" max="999" value="40" data-count="" class="crx-count" aria-label="Number of clients">
+          </label>
+          <p data-readout="" style="margin:0;font-size:16.5px;line-height:1.4;color:rgba(255,255,255,.7)">You're on the <span style="color:#F8FCFF;font-weight:600">6–50</span> plan · <span style="color:#F8FCFF;font-weight:600">$67</span><span style="color:rgba(255,255,255,.5)">/month</span></p>
+        </div>
+        <div style="position:relative;height:24px">
+          <span style="position:absolute;left:0;right:0;top:11px;height:2px;background:rgba(255,255,255,.11);pointer-events:none"></span>
+          <span data-fill="" style="position:absolute;left:0;top:11px;height:2px;background:linear-gradient(90deg,rgba(88,255,122,.5),#58FF7A);pointer-events:none;width:44.4%"></span>
+          <span style="position:absolute;left:25%;top:8px;width:1px;height:7px;background:rgba(255,255,255,.22);pointer-events:none"></span>
+          <span style="position:absolute;left:50%;top:8px;width:1px;height:7px;background:rgba(255,255,255,.22);pointer-events:none"></span>
+          <span style="position:absolute;left:75%;top:8px;width:1px;height:7px;background:rgba(255,255,255,.22);pointer-events:none"></span>
+          <span data-bubble="" class="crx-bubble" style="left:44.4%">40</span>
+          <input type="range" min="0" max="100" step="0.25" value="44.4" data-range="" class="crx-range" aria-label="Clients on your roster">
+        </div>
+        <div style="position:relative;height:16px;margin-top:4px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.35)">
+          <span style="position:absolute;left:0">1</span>
+          <span style="position:absolute;left:25%;transform:translateX(-50%)">5</span>
+          <span style="position:absolute;left:50%;transform:translateX(-50%)">50</span>
+          <span style="position:absolute;left:75%;transform:translateX(-50%)">150</span>
+        </div>
+      </div>
+    </div>
+
+    <p data-reveal="120" style="margin:24px 0 0;font-size:13px;color:rgba(255,255,255,.45);text-align:center">Full access, free for 14 days. Card required, nothing charged until day 15. Cancel any time. We move your data, clients and programs across for you at no cost.</p>
+  </section>
+
+  <!-- 3 · INCLUDED ON EVERY PLAN -->
+  <section data-screen-label="Included" style="position:relative;margin-top:140px;padding:0 32px">
+    <div style="position:absolute;top:-70px;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 64px));height:1px;background:rgba(255,255,255,.06)"></div>
+    <div style="position:absolute;top:-100px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.07) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:0">
+      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#58FF7A">Included on every plan</span>
+      <p data-reveal="60" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.7);max-width:560px;text-wrap:pretty">Not a single feature is gated. Pick a plan by roster size and get the whole platform.</p>
+
+      <div data-reveal="120" class="crx-pillars-grid" style="display:grid;grid-template-columns:repeat(5,1fr);margin-top:56px">
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px 0 0">
+        <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Assess</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Body, Move, Work</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom metric sets</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Structural balance</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Wearable and nutrition sync</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Compliance and trends</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Assessment history</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
+        <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Consult</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Check-ins</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Messaging and voice notes</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Video messages</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Communication goals</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Consultation logging</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client notes</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
+        <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Design</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Program calendar</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Macro, meso, micro planning</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Nutrition prescription</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Lifestyle Rx</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Exercise index and templates</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">RxBot assistant</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
+        <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Operate</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Payments and subscriptions</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">HSA and FSA via TrueMed</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Reporting</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Team roles</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Contracts and waivers</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Data export</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
+        <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Client experience</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">iOS, Android and web</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom theming</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client reports</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Effort and session logging</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Trends for clients</span>
+        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Branded experience</span>
+      </div>
+      </div>
+
+      <div class="crx-pillars-acc" style="margin-top:36px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Assess</span>
+          <span data-accsign="" style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Body, Move, Work</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom metric sets</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Structural balance</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Wearable and nutrition sync</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Compliance and trends</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Assessment history</span>
+        </div></div>
+      </div>
+      <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Consult</span>
+          <span data-accsign="" style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Check-ins</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Messaging and voice notes</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Video messages</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Communication goals</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Consultation logging</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client notes</span>
+        </div></div>
+      </div>
+      <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Design</span>
+          <span data-accsign="" style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Program calendar</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Macro, meso, micro planning</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Nutrition prescription</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Lifestyle Rx</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Exercise index and templates</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">RxBot assistant</span>
+        </div></div>
+      </div>
+      <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Operate</span>
+          <span data-accsign="" style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Payments and subscriptions</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">HSA and FSA via TrueMed</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Reporting</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Team roles</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Contracts and waivers</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Data export</span>
+        </div></div>
+      </div>
+      <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Client experience</span>
+          <span data-accsign="" style="font-family:var(--font-mono);font-size:15px;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">iOS, Android and web</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom theming</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client reports</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Effort and session logging</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Trends for clients</span>
+          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Branded experience</span>
+        </div></div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · ONE NUMBER -->
+  <section data-screen-label="Social proof" style="position:relative;margin-top:140px;padding:100px 32px;text-align:center;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 64px));height:1px;background:rgba(255,255,255,.06)"></div>
+    <div style="position:absolute;top:-80px;right:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.07) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <p data-reveal="0" style="position:relative;margin:0;font-size:19px;color:rgba(255,255,255,.7)">Trusted by more than <span style="color:#F8FCFF;font-weight:600">10,000</span> coaching practices</p>
+    <p data-reveal="60" style="position:relative;margin:14px 0 0;font-size:14.5px"><a href="CoachRx Tag Archive.dc.html">Read what coaches say →</a></p>
+  </section>
+
+  <!-- 5 · FAQ -->
+  <section data-screen-label="FAQ" class="crx-pad" style="max-width:860px;margin:0 auto;padding:140px 32px 0">
+    <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Before you start</span>
+    <div data-reveal="60" style="margin-top:26px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div data-faqrow="" class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-faqhead="" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
+          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What counts as a client?</span>
+          <span data-sign="" style="flex:none;font-family:var(--font-mono);font-size:16px;font-weight:400;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">Active clients only. Archiving a client removes them from your count, so you never pay for someone you have stopped coaching.</p></div>
+      </div>
+      <div data-faqrow="" class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-faqhead="" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
+          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What happens when I outgrow my plan?</span>
+          <span data-sign="" style="flex:none;font-family:var(--font-mono);font-size:16px;font-weight:400;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">You move up when you add the client that crosses the line, prorated. No sales call.</p></div>
+      </div>
+      <div data-faqrow="" class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-faqhead="" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
+          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What happens after the 14 days?</span>
+          <span data-sign="" style="flex:none;font-family:var(--font-mono);font-size:16px;font-weight:400;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">Your card is charged on day 15 for the plan matching your active client count. Cancel any time before then and you are not charged.</p></div>
+      </div>
+      <div data-faqrow="" class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-faqhead="" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
+          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">Is there a contract?</span>
+          <span data-sign="" style="flex:none;font-family:var(--font-mono);font-size:16px;font-weight:400;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">No. Monthly is month to month. Annual is a twelve-month term, paid in full up front, at the lower rate.</p></div>
+      </div>
+      <div data-faqrow="" class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+        <span data-faqhead="" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
+          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What if it doesn't work out?</span>
+          <span data-sign="" style="flex:none;font-family:var(--font-mono);font-size:16px;font-weight:400;color:rgba(255,255,255,.4)">+</span>
+        </span>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">Export your clients, workouts and reporting at any time, or pause the subscription instead of cancelling.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · CLOSE -->
+  <section data-screen-label="Close" style="position:relative;margin-top:140px;padding:130px 32px 120px;overflow:hidden;text-align:center;background:linear-gradient(180deg,#0A0B0F 0%,#0D1120 60%,#0F1526 100%)">
+    <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:1100px;height:620px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.12) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto">
+      <h2 data-reveal="0" style="margin:0;font-size:clamp(34px,4.4vw,58px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#F8FCFF;text-wrap:balance">Start coaching in CoachRx.</h2>
+      <p data-reveal="40" style="margin:18px auto 0;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.6);max-width:460px;text-wrap:pretty">Every feature, free for 14 days. We move your clients and programs across for you.</p>
+      <div data-reveal="80" style="margin-top:36px">
+        <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill" style="padding:17px 40px;font-size:14px">Start free trial</a>
+      </div>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:#08090E">
+    <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+      <img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:20px;width:auto">
+      <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <div data-sticky="" class="crx-sticky">
+    <span style="display:flex;flex-direction:column;gap:3px">
+      <span data-stickyband="" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">6–50 clients</span>
+      <span style="display:flex;align-items:baseline;gap:5px"><span data-stickyprice="" style="font-size:19px;font-weight:700;color:#F8FCFF;font-feature-settings:'tnum' 1">$67</span><span data-stickyunit="" style="font-size:12px;color:rgba(255,255,255,.45)">/month</span></span>
+    </span>
+    <a href="https://dashboard.coachrx.app/signup" data-stickycta="" class="crx-cta is-fill" style="padding:13px 20px">Start free trial</a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;defaultAnnual&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+// Compiled-site safe: no setState, no state-derived renderVals. All dynamics are
+// direct DOM writes from render(), with listeners bound in componentDidMount (BRIEF-16 rule).
+const RATE_M = [29, 79, 199];
+const RATE_A = [25, 67, 169];
+const BAND_NAME = ["1–5 clients", "6–50 clients", "51–150 clients", "150+ clients"];
+const BAND_SHORT = ["1–5", "6–50", "51–150"];
+
+class Component extends DCLogic {
+  renderVals() { return {}; }
+
+  // Slider position (0–100) maps piecewise so band breaks land on the notches at 25/50/75%.
+  clientsFromPos(pos) {
+    if (pos <= 25) return Math.max(1, Math.round(1 + (pos / 25) * 4));
+    if (pos <= 50) return Math.round(5 + ((pos - 25) / 25) * 45);
+    if (pos <= 75) return Math.round(50 + ((pos - 50) / 25) * 100);
+    return 151;
+  }
+  posFromClients(n) {
+    if (n <= 5) return (n - 1) / 4 * 25;
+    if (n <= 50) return 25 + (n - 5) / 45 * 25;
+    if (n <= 150) return 50 + (n - 50) / 100 * 25;
+    return 84;
+  }
+  // Native range thumbs travel (width - 16px), not the full width — compensate so fill and bubble sit under the circle.
+  thumbLeft(pos) { return "calc(" + pos + "% + " + (8 - pos / 100 * 16).toFixed(2) + "px)"; }
+  bandIndex(n) { return n > 150 ? 3 : n > 50 ? 2 : n > 5 ? 1 : 0; }
+  rates() { return this.annual ? RATE_A : RATE_M; }
+
+  render() {
+    const pos = this.pos, clients = this.clientsFromPos(pos), band = this.bandIndex(clients), over = band === 3;
+    const r = this.rates();
+    for (let i = 0; i < 3; i++) {
+      const note = document.querySelector('[data-note="' + i + '"]');
+      if (note) note.textContent = this.annual ? "$" + (r[i] * 12).toLocaleString("en-US") + " billed once" : "Billed monthly";
+      if (!this.tweening) {
+        const price = document.querySelector('[data-price="' + i + '"]');
+        if (price) price.textContent = "$" + r[i];
+      }
+    }
+    document.querySelectorAll("[data-col]").forEach(col => {
+      const k = parseInt(col.getAttribute("data-col"), 10), active = k === band;
+      col.classList.toggle("is-on", active);
+      const cta = col.querySelector("[data-cta]");
+      if (cta) cta.classList.toggle("is-fill", active);
+    });
+    const fill = document.querySelector("[data-fill]");
+    if (fill) fill.style.width = this.thumbLeft(pos);
+    const bubble = document.querySelector("[data-bubble]");
+    if (bubble) { bubble.textContent = over ? "150+" : String(clients); bubble.style.left = this.thumbLeft(pos); }
+    const count = document.querySelector("[data-count]");
+    if (count && document.activeElement !== count) count.value = over ? 150 : clients;
+    const readout = document.querySelector("[data-readout]");
+    if (readout) {
+      const b = s => '<span style="color:#F8FCFF;font-weight:600">' + s + "</span>";
+      const dim = s => '<span style="color:rgba(255,255,255,.5)">' + s + "</span>";
+      readout.innerHTML = over
+        ? "You're on the " + b("150+") + " plan · " + b("From $249") + dim("/month") + " + $1.25 per user"
+        : "You're on the " + b(BAND_SHORT[band]) + " plan · " + b("$" + r[band]) + dim("/month");
+    }
+    const sb = document.querySelector("[data-stickyband]"), sp = document.querySelector("[data-stickyprice]"),
+          su = document.querySelector("[data-stickyunit]"), sc = document.querySelector("[data-stickycta]");
+    if (sb) sb.textContent = BAND_NAME[band];
+    if (sp) sp.textContent = over ? "From $249" : "$" + r[band];
+    if (su) su.textContent = "/month";
+    if (sc) {
+      sc.textContent = over ? "Contact us" : "Start free trial";
+      sc.setAttribute("href", over ? "mailto:coachrx@opexfit.com" : "https://dashboard.coachrx.app/signup");
+    }
+  }
+
+  setBilling(annual) {
+    if (annual === this.annual) return;
+    const from = this.rates().slice();
+    this.annual = annual;
+    const to = this.rates();
+    document.querySelectorAll("[data-seg]").forEach(s => s.classList.toggle("is-on", (s.getAttribute("data-seg") === "annual") === annual));
+    const save = document.querySelector("[data-save]");
+    if (save) save.classList.toggle("is-on", annual);
+    if (this.rm) { this.render(); return; }
+    this.tweening = true;
+    if (this.raf) cancelAnimationFrame(this.raf);
+    const t0 = performance.now(), dur = 350;
+    const step = now => {
+      const pr = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - pr, 3);
+      for (let i = 0; i < 3; i++) {
+        const el = document.querySelector('[data-price="' + i + '"]');
+        if (el) el.textContent = "$" + Math.round(from[i] + (to[i] - from[i]) * e);
+      }
+      if (pr < 1) this.raf = requestAnimationFrame(step);
+      else { this.tweening = false; }
+    };
+    this.raf = requestAnimationFrame(step);
+    this.render();
+  }
+
+  componentDidMount() {
+    this.rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    this.annual = this.props.defaultAnnual !== false;
+    this.pos = 44.4;
+    setTimeout(() => {
+      document.querySelectorAll("[data-seg]").forEach(s =>
+        s.addEventListener("click", () => this.setBilling(s.getAttribute("data-seg") === "annual")));
+      const range = document.querySelector("[data-range]");
+      const bubble = document.querySelector("[data-bubble]");
+      if (range) {
+        range.addEventListener("input", () => { this.pos = parseFloat(range.value); this.render(); });
+        const on = () => { if (bubble) bubble.classList.add("is-on"); };
+        const off = () => { if (bubble) bubble.classList.remove("is-on"); };
+        range.addEventListener("pointerdown", on);
+        window.addEventListener("pointerup", off);
+        range.addEventListener("keydown", on);
+        range.addEventListener("blur", off);
+      }
+      const count = document.querySelector("[data-count]");
+      if (count) {
+        const apply = () => {
+          const n = Math.max(1, Math.min(999, parseInt(count.value, 10) || 1));
+          this.pos = this.posFromClients(n);
+          if (range) range.value = this.pos;
+          this.render();
+        };
+        count.addEventListener("input", apply);
+        count.addEventListener("blur", () => { apply(); this.render(); });
+      }
+      // FAQ accordion: classList + textContent only, single-open.
+      const rows = Array.from(document.querySelectorAll("[data-faqrow]"));
+      rows.forEach(row => row.querySelector("[data-faqhead]").addEventListener("click", () => {
+        const opening = !row.classList.contains("is-open");
+        rows.forEach(rw => {
+          const open = opening && rw === row;
+          rw.classList.toggle("is-open", open);
+          rw.querySelector("[data-sign]").textContent = open ? "−" : "+";
+          const body = rw.querySelector(".crx-faqbody");
+          body.style.maxHeight = open ? body.scrollHeight + "px" : "0";
+        });
+      }));
+      // Mobile pillars accordion, same pattern.
+      const accs = Array.from(document.querySelectorAll("[data-acc]"));
+      accs.forEach(acc => acc.querySelector("[data-acchead]").addEventListener("click", () => {
+        const opening = !acc.classList.contains("is-open");
+        accs.forEach(a => {
+          const open = opening && a === acc;
+          a.classList.toggle("is-open", open);
+          a.querySelector("[data-accsign]").textContent = open ? "−" : "+";
+          const body = a.querySelector(".crx-faqbody");
+          body.style.maxHeight = open ? body.scrollHeight + "px" : "0";
+        });
+      }));
+      if (!this.rm) {
+        const io = new IntersectionObserver(es => es.forEach(e => {
+          if (!e.isIntersecting) return;
+          const d = parseInt(e.target.getAttribute("data-reveal") || "0", 10);
+          e.target.style.animation = `crxRise .5s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+          io.unobserve(e.target);
+        }), { threshold: 0.12 });
+        document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+      }
+      const bar = document.querySelector("[data-sticky]");
+      const plansEl = document.querySelector("[data-plans]");
+      if (bar && plansEl) {
+        const onScroll = () => bar.classList.toggle("is-up", plansEl.getBoundingClientRect().bottom < 0);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
+      this.render();
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>
