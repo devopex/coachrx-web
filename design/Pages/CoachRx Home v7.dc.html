@@ -113,22 +113,22 @@
       .crx-navlinks{display:none!important}
       [data-navsignup]{display:none!important}
       .crx-burger{display:flex}
-      div[style*="grid-template-columns:400px 1fr"]{grid-template-columns:340px 1fr!important;gap:36px!important}
+      div[style*="grid-template-columns:400px 1fr"],div[style*="grid-template-columns: 400px 1fr"],div[style*="grid-template-columns: 400px 1fr"],div[style*="grid-template-columns: 400px 1fr"]{grid-template-columns:340px 1fr!important;gap:36px!important}
       [data-screen-label="The problem"] div[style*="0.9fr 1.1fr"]{grid-template-columns:1fr!important}
-      [data-screen-label="The problem"] div[style*="position:sticky"]{position:static!important}
+      [data-screen-label="The problem"] div[style*="position:sticky"],[data-screen-label="The problem"] div[style*="position: sticky"],[data-screen-label="The problem"] div[style*="position: sticky"],[data-screen-label="The problem"] div[style*="position: sticky"]{position:static!important}
       div[style*="1.1fr 0.9fr"]{grid-template-columns:1fr!important}
-      [data-screen-label="Migration"] div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
-      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"]{grid-template-columns:repeat(2,1fr)!important}
-      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3){grid-column:1/-1}
+      [data-screen-label="Migration"] div[style*="grid-template-columns:1fr 1fr"],[data-screen-label="Migration"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Migration"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Migration"] div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
+      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"],[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:repeat(2,1fr)!important}
+      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3),[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"] > div:nth-child(3){grid-column:1/-1}
     }
     @media (max-width:760px){
       section{padding-left:20px!important;padding-right:20px!important;padding-top:64px!important;padding-bottom:64px!important}
       section#hero{padding-top:96px!important;padding-bottom:0!important}
       section[data-screen-label="Testimonial videos"]{padding-left:0!important;padding-right:0!important}
       section[data-screen-label="Closing CTA"]{padding-bottom:0!important}
-      [data-screen-label="Closing CTA"] > div[style*="margin:120px -32px"]{margin-left:-20px!important;margin-right:-20px!important}
+      [data-screen-label="Closing CTA"] > div[style*="margin:120px -32px"],[data-screen-label="Closing CTA"] > div[style*="margin: 120px -32px"],[data-screen-label="Closing CTA"] > div[style*="margin: 120px -32px"],[data-screen-label="Closing CTA"] > div[style*="margin: 120px -32px"]{margin-left:-20px!important;margin-right:-20px!important}
       footer{padding:48px 20px 24px!important}
-      div[style*="gap:64px"]{gap:32px!important}
+      div[style*="gap:64px"],div[style*="gap: 64px"],div[style*="gap: 64px"],div[style*="gap: 64px"]{gap:32px!important}
       #hero p[data-hcta="1"]{font-size:16.5px!important;max-width:100%!important}
       #hero div[data-hcta="2"] > a{width:min(100%,340px);box-sizing:border-box;display:flex;align-items:center;justify-content:center}
       #hero a[data-hcta="0"]{display:none!important}
@@ -137,58 +137,63 @@
       [data-hframe] > div > div:first-child{display:none}
       [data-hframe] > div > div:last-child{height:100%!important}
       [data-hphone]{display:none}
-      [data-screen-label="Works with"] div[style*="gap:52px"]{gap:24px 28px!important}
-      [data-screen-label="Works with"] div[style*="gap:52px"] > span{font-size:14px!important}
+      [data-screen-label="Works with"] div[style*="gap:52px"],[data-screen-label="Works with"] div[style*="gap: 52px"],[data-screen-label="Works with"] div[style*="gap: 52px"],[data-screen-label="Works with"] div[style*="gap: 52px"]{gap:24px 28px!important}
+      [data-screen-label="Works with"] div[style*="gap:52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span{font-size:14px!important}
       [data-vig="converge"]{height:340px!important;transform:scale(.62);transform-origin:top center}
       [data-systrack] > div[style*="230vh"]{display:none}
-      [data-systrack] > div[style*="position:sticky"]{position:static!important;display:block!important;min-height:0!important}
-      [data-systrack] div[style*="height:600px"]{display:none}
+      [data-systrack] > div[style*="position:sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"]{position:static!important;display:block!important;min-height:0!important}
+      [data-systrack] div[style*="height:600px"],[data-systrack] div[style*="height: 600px"],[data-systrack] div[style*="height: 600px"],[data-systrack] div[style*="height: 600px"]{display:none}
       .crx-mshot{display:block!important}
       [data-tab][aria-selected="true"] [data-tabdesc]{max-height:none!important}
-      [data-screen-label="Complete Coaching"] div[style*="height:584px"]{height:auto!important}
+      [data-screen-label="Complete Coaching"] div[style*="height:584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"]{height:auto!important}
       [data-vig="macro"]{position:relative!important;inset:auto!important;height:auto!important}
       [data-vig="macro"] div[style*="1fr 0.8fr"]{grid-template-columns:1fr!important;height:auto!important}
       [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child{border-right:none!important;border-bottom:1px solid rgba(255,255,255,.07)}
       [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child > div:nth-of-type(3){display:none}
       [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child > div:nth-of-type(5){display:none}
       [data-vig="rxcheck"]{position:relative!important;inset:auto!important;width:100%!important;transform:none!important;margin-top:20px;box-sizing:border-box}
-      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"]{grid-template-columns:1fr!important}
-      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3){grid-column:auto}
-      [data-vig="theming"] div[style*="height:620px"]{height:420px!important}
-      [data-vig="theming"] div[style*="width:208px"]{width:150px!important;right:12px!important;top:120px!important}
-      [data-vig="theming"] > div[style*="flex-wrap:wrap"]{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"],[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:1fr!important}
+      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3),[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"] > div:nth-child(3){grid-column:auto}
+      [data-vig="theming"] div[style*="height:620px"],[data-vig="theming"] div[style*="height: 620px"],[data-vig="theming"] div[style*="height: 620px"],[data-vig="theming"] div[style*="height: 620px"]{height:420px!important}
+      [data-vig="theming"] div[style*="width:208px"],[data-vig="theming"] div[style*="width: 208px"],[data-vig="theming"] div[style*="width: 208px"],[data-vig="theming"] div[style*="width: 208px"]{width:150px!important;right:12px!important;top:120px!important}
+      [data-vig="theming"] > div[style*="flex-wrap:wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"]{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
       [data-chip]{flex:none;scroll-snap-align:start;position:relative}
       [data-chip]::after{content:"";position:absolute;inset:-6px}
-      [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"]{grid-template-columns:1fr!important}
-      [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"] > div{padding:22px!important}
-      [data-screen-label="Proof"] div[style*="repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
-      [data-screen-label="Proof"] div[style*="repeat(4,1fr)"] > div:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.08)}
-      [data-screen-label="Proof"] div[style*="repeat(4,1fr)"] > div:nth-child(2n){border-right:none!important}
+      [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"],[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"]{grid-template-columns:1fr!important}
+      [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"] > div,[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"] > div{padding:22px!important}
+      [data-screen-label="Proof"] div[style*="repeat(4,1fr)"],[data-screen-label="Proof"] div[style*="repeat(4, 1fr)"]{grid-template-columns:repeat(2,1fr)!important}
+      [data-screen-label="Proof"] div[style*="repeat(4,1fr)"] > div:nth-child(-n+2),[data-screen-label="Proof"] div[style*="repeat(4, 1fr)"] > div:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.08)}
+      [data-screen-label="Proof"] div[style*="repeat(4,1fr)"] > div:nth-child(2n),[data-screen-label="Proof"] div[style*="repeat(4, 1fr)"] > div:nth-child(2n){border-right:none!important}
       .crx-quotes{grid-template-columns:1fr!important}
-      [data-screen-label="Innovation strip"] div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+      [data-screen-label="Innovation strip"] div[style*="grid-template-columns:1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
       [data-vig="transfer"]{grid-template-columns:1fr 28px 1fr!important;padding:18px!important}
-      [data-vig="transfer"] span[style*="font-size:13.5px"]{font-size:12px!important}
+      [data-vig="transfer"] span[style*="font-size:13.5px"],[data-vig="transfer"] span[style*="font-size: 13.5px"],[data-vig="transfer"] span[style*="font-size: 13.5px"],[data-vig="transfer"] span[style*="font-size: 13.5px"]{font-size:12px!important}
       .crx-hplans{grid-template-columns:1fr!important}
       .crx-hplans > div{border-left:none!important;border-top:1px solid rgba(255,255,255,.08);padding:20px 0!important}
       .crx-hplans > div:first-child{border-top:none;padding-top:0!important}
       [data-screen-label="Pricing summary"] .crx-togglerow{justify-content:stretch}
       .crx-pricebar{display:flex}
-      [data-screen-label="Closing CTA"] div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
-      [data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap:12px"]{flex-wrap:wrap;justify-content:center;row-gap:8px}
-      [data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap:12px"] > span:last-child{width:100%;text-align:center}
-      [data-screen-label="Closing CTA"] div[style*="width:320px"]{width:240px!important}
+      [data-screen-label="Closing CTA"] div[style*="grid-template-columns:1fr 1fr"],[data-screen-label="Closing CTA"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Closing CTA"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Closing CTA"] div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
+      [data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap:12px"],[data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap: 12px"],[data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap: 12px"],[data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap: 12px"]{flex-wrap:wrap;justify-content:center;row-gap:8px}
+      [data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap:12px"] > span:last-child,[data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap: 12px"] > span:last-child,[data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap: 12px"] > span:last-child,[data-screen-label="Closing CTA"] div[data-reveal="160"] > span[style*="gap: 12px"] > span:last-child{width:100%;text-align:center}
+      [data-screen-label="Closing CTA"] div[style*="width:320px"],[data-screen-label="Closing CTA"] div[style*="width: 320px"],[data-screen-label="Closing CTA"] div[style*="width: 320px"],[data-screen-label="Closing CTA"] div[style*="width: 320px"]{width:240px!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}
-      footer div[style*="justify-content:space-between"]{flex-direction:column;gap:10px;text-align:center}
+      footer div[style*="justify-content:space-between"],footer div[style*="justify-content: space-between"],footer div[style*="justify-content: space-between"],footer div[style*="justify-content: space-between"]{flex-direction:column;gap:10px;text-align:center}
       footer a{padding:6px 0}
-      a[style*="font-weight:600;color"]{padding-top:10px;padding-bottom:10px;display:inline-block}
+      a[style*="font-weight:600;color"],a[style*="font-weight: 600;color"],a[style*="font-weight: 600;color"],a[style*="font-weight: 600;color"]{padding-top:10px;padding-bottom:10px;display:inline-block}
+      [data-vig="macro"] > div:first-child{display:none}
+      [data-hframe] img{width:100%!important;height:100%!important;object-fit:cover;object-position:top center;margin:0!important}
+      .crx-mshot img{aspect-ratio:1677/1232;object-fit:cover}
+      .crx-marqwrap{scroll-padding:0 20px}
+      [data-vig="trend"] > div[style*="gap:7px"] > span:nth-child(even),[data-vig="trend"] > div[style*="gap: 7px"] > span:nth-child(even),[data-vig="trend"] > div[style*="gap: 7px"] > span:nth-child(even),[data-vig="trend"] > div[style*="gap: 7px"] > span:nth-child(even){visibility:hidden}
+      #wwMore{padding:12px 10px;margin:-12px -10px}
     }
     @media (max-width:400px){
       #hero h1{font-size:38px!important}
       [data-screen-label="Closing CTA"] h2[style*="clamp(44px"]{font-size:36px!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:auto}
-      [data-vig="trend"] > div[style*="gap:7px"] > span:nth-child(even){display:none}
     }
     @keyframes crxPhoneRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
     @keyframes crxEdge{0%{box-shadow:0 0 0 0 rgba(88,255,122,.5),0 24px 80px rgba(0,0,0,.5)}50%{box-shadow:0 0 48px 4px rgba(88,255,122,.28),0 24px 80px rgba(0,0,0,.5)}100%{box-shadow:0 0 24px 0 rgba(88,255,122,.14),0 24px 80px rgba(0,0,0,.5)}}
@@ -473,7 +478,7 @@
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
-              <img loading="lazy" decoding="async" src="assets/screens/insights.png" alt="Client metrics profile" style="width:100%;height:100%;object-fit:cover;object-position:left top;display:block">
+              <img loading="lazy" decoding="async" src="assets/screens/insights.png" alt="Client metrics profile" style="width:150%;display:block;margin:-6% 0 0 -5%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
@@ -497,7 +502,7 @@
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
-              <img loading="lazy" decoding="async" src="assets/screens/messages.png" alt="Client messaging" style="width:100%;height:100%;object-fit:cover;object-position:72% top;display:block">
+              <img loading="lazy" decoding="async" src="assets/screens/messages.png" alt="Client messaging" style="width:150%;display:block;margin:-5% 0 0 -31%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
@@ -518,7 +523,7 @@
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
-              <img loading="lazy" decoding="async" src="assets/screens/calendar.png" alt="Program calendar" style="width:100%;height:100%;object-fit:cover;object-position:left top;display:block">
+              <img loading="lazy" decoding="async" src="assets/screens/calendar.png" alt="Program calendar" style="width:150%;display:block;margin:-6% 0 0 -7%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
@@ -536,7 +541,7 @@
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
-              <img loading="lazy" decoding="async" src="assets/screens/business.png" alt="Business reporting" style="width:100%;height:100%;object-fit:cover;object-position:72% top;display:block">
+              <img loading="lazy" decoding="async" src="assets/screens/business.png" alt="Business reporting" style="width:150%;display:block;margin:-7% 0 0 -31%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
@@ -841,7 +846,7 @@
           <p style="font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78)">Pick up where you left off: everything is waiting for you, you just log in.</p>
         </div>
       </div>
-      <p data-reveal="220" style="margin-top:24px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.5)">Coming from TrueCoach, Trainerize, or Everfit? We've moved hundreds of practices. <a href="CoachRx Features.dc.html" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.6)" style-hover="color:#8CFFA4">See how CoachRx compares →</a></p>
+      <p data-reveal="220" style="margin-top:24px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.5)">Coming from TrueCoach, Trainerize, or Everfit? We've moved hundreds of practices. <a href="CoachRx Pricing.dc.html#why" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.6)" style-hover="color:#8CFFA4">Why coaches switch →</a></p>
     </div>
     <div data-reveal="120" style="position:relative">
       <div data-vig="transfer" style="position:relative;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 24px 80px rgba(0,0,0,.5);padding:26px 28px;display:grid;grid-template-columns:1fr 56px 1fr">

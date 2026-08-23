@@ -13,6 +13,8 @@
   <script src="./image-slot.js"></script>
   <style>
     body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    /* Glows extend past section edges; clip so the page never overflows horizontally (same rule as Home). */
+    header,section,footer{overflow-x:clip}
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
     @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -93,21 +95,21 @@
         <span style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#F8FCFF">Frameworks</span>
         <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Hosts: Carl Hardwick, CEO &amp; James FitzGerald, Founder</span>
         <span class="crx-clamp4" style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">A podcast for fitness coaches pursuing lasting impact through principled coaching, personal growth, and a practice built to last. Each week Carl breaks down the principles, strategies and mindset shifts behind sustainable success in the gym and beyond.</span>
-        <span style="display:flex;gap:8px;margin-top:auto;padding-top:14px"><span class="crx-ic crx-ic-youtube" aria-label="YouTube" title="YouTube"></span><span class="crx-ic crx-ic-spotify" aria-label="Spotify" title="Spotify"></span><a href="CoachRx Blog Index.dc.html" class="crx-ic crx-ic-articles" aria-label="Articles" title="Articles"></a></span>
+        <span style="display:flex;gap:8px;margin-top:auto;padding-top:14px"><a href="#" class="crx-ic crx-ic-youtube" aria-label="YouTube" title="YouTube"></a><a href="#" class="crx-ic crx-ic-spotify" aria-label="Spotify" title="Spotify"></a><a href="CoachRx Blog Index.dc.html" class="crx-ic crx-ic-articles" aria-label="Articles" title="Articles"></a></span>
       </div>
       <div data-reveal="80" style="display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#101118;padding:28px">
         <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin-bottom:6px"><image-slot id="pod-marketing" shape="rect" placeholder="Marketing for Fitness Coaches cover art"></image-slot></div>
         <span style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#F8FCFF">Marketing for Fitness Coaches</span>
         <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Host: Kandace Hudspeth, CMO of OPEX &amp; CoachRx</span>
         <span class="crx-clamp4" style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">Helping fitness coaches market with the same consistency, care and systems they bring to coaching. A complete five-part marketing system to attract leads, book consults and grow a practice, without burning out.</span>
-        <span style="display:flex;gap:8px;margin-top:auto;padding-top:14px"><span class="crx-ic crx-ic-youtube" aria-label="YouTube" title="YouTube"></span><span class="crx-ic crx-ic-spotify" aria-label="Spotify" title="Spotify"></span><a href="CoachRx Blog Index.dc.html" class="crx-ic crx-ic-articles" aria-label="Articles" title="Articles"></a></span>
+        <span style="display:flex;gap:8px;margin-top:auto;padding-top:14px"><a href="#" class="crx-ic crx-ic-youtube" aria-label="YouTube" title="YouTube"></a><a href="#" class="crx-ic crx-ic-spotify" aria-label="Spotify" title="Spotify"></a><a href="CoachRx Blog Index.dc.html" class="crx-ic crx-ic-articles" aria-label="Articles" title="Articles"></a></span>
       </div>
       <div data-reveal="160" style="display:flex;flex-direction:column;gap:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#101118;padding:28px">
         <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin-bottom:6px"><image-slot id="pod-btd" shape="rect" placeholder="Behind The Design cover art"></image-slot></div>
         <span style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#F8FCFF">Behind The Design</span>
         <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Hosts: Daniel Persson &amp; Brandon Gallagher</span>
         <span class="crx-clamp4" style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">A live program design series. Two OPEX coaches break down real client programs and explain the thinking behind every decision: assessments, priorities, and how Individual Design coaches build with intent.</span>
-        <span style="display:flex;gap:8px;margin-top:auto;padding-top:14px"><span class="crx-ic crx-ic-youtube" aria-label="YouTube" title="YouTube"></span><a href="CoachRx Blog Index.dc.html" class="crx-ic crx-ic-articles" aria-label="Articles" title="Articles"></a></span>
+        <span style="display:flex;gap:8px;margin-top:auto;padding-top:14px"><a href="#" class="crx-ic crx-ic-youtube" aria-label="YouTube" title="YouTube"></a><a href="CoachRx Blog Index.dc.html" class="crx-ic crx-ic-articles" aria-label="Articles" title="Articles"></a></span>
       </div>
     </div>
   </section>
@@ -227,9 +229,7 @@ class Component extends DCLogic {
       shows: SHOWS.map(([name, host, summary, links, archive]) => ({
         name, host, summary, archive,
         slug: "pod-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
-        links: links.map(l => ({ label: l, cls: "crx-ic-" + l.toLowerCase(), href: l === "Articles" ? "CoachRx Blog Index.dc.html"
-            : l === "YouTube" ? "https://www.youtube.com/playlist?list=PLz-l7oWFJS0LoAShXZI7nn3whKGbClqeE"
-            : null }))
+        links: links.map(l => ({ label: l, cls: "crx-ic-" + l.toLowerCase(), href: l === "Articles" ? "CoachRx Blog Index.dc.html" : "#" }))
       }))
     };
   }

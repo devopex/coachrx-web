@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    header,section,footer,article{overflow-x:clip}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    /* Rich-text body: styled by descendant selectors so build-time content maps 1:1 */
+    .crx-relbody h2{margin:44px 0 12px;font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-0.015em;color:#F8FCFF}
+    .crx-relbody h3{margin:32px 0 10px;font-size:18px;font-weight:600;line-height:1.35;letter-spacing:-0.01em;color:#F8FCFF}
+    .crx-relbody p{margin:0 0 20px;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.78)}
+    .crx-relbody ul{margin:0 0 20px;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+    .crx-relbody li{position:relative;padding-left:20px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.78)}
+    .crx-relbody li::before{content:"";position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:99px;background:rgba(88,255,122,.6)}
+    .crx-relbody strong{font-weight:600;color:#F8FCFF}
+    .crx-pn{display:flex;flex-direction:column;gap:8px;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:20px;color:inherit;min-height:44px;transition:border-color .2s,background .2s,transform .2s cubic-bezier(.22,1,.36,1)}
+    .crx-pn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.02);transform:translateY(-2px)}
+    @media (max-width:760px){
+      .crx-pad{padding-left:20px!important;padding-right:20px!important}
+      .crx-relbody p{font-size:17px;line-height:1.75}
+      .crx-relbody li{font-size:17px;line-height:1.7}
+      .crx-relbody h2{font-size:22px}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+    }
+  </style>
+</helmet>
+
+<nav data-screen-label="Nav"></nav>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <article data-screen-label="Release" style="padding:140px 0 0">
+    <header class="crx-pad" style="max-width:744px;margin:0 auto;padding:0 32px">
+      <nav data-reveal="0" aria-label="Breadcrumb" style="display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase">
+        <a href="CoachRx Changelog.dc.html" style="color:rgba(255,255,255,.5);padding:10px 0" style-hover="color:#8CFFA4">Changelog</a>
+        <span style="color:rgba(255,255,255,.3)">/</span>
+        <span style="color:rgba(255,255,255,.75)">{{ post.month }}</span>
+      </nav>
+      <h1 data-reveal="60" style="margin:22px 0 0;font-size:clamp(34px,4.6vw,52px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#F8FCFF">{{ post.month }}</h1>
+      <span data-reveal="90" style="display:block;margin-top:12px;font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ post.dateLabel }}</span>
+      <p data-reveal="130" style="margin:26px 0 0;font-size:19px;font-weight:400;line-height:1.6;color:rgba(255,255,255,.75);max-width:620px;text-wrap:pretty">{{ post.description }}</p>
+    </header>
+
+    <div data-reveal="0" class="crx-pad crx-relbody" data-slot="body" style="max-width:744px;margin:36px auto 0;padding:0 32px;box-sizing:border-box">
+      <h2>Program library search</h2>
+      <p>Search now spans the CoachRx Index, your own exercise library, and every saved template in a single query. Results are grouped by source, and selecting one drops it straight into the day you are building.</p>
+      <ul>
+        <li><strong>One search field</strong> across all three libraries, with keyboard navigation.</li>
+        <li>Filters for equipment, pattern, and the libraries you want included.</li>
+        <li>Recent selections surface first while you are building a program.</li>
+      </ul>
+      <h2>Improvements</h2>
+      <h3>Program design</h3>
+      <ul>
+        <li>Copying a week now carries attached notes and lifestyle prescriptions.</li>
+        <li>Tempo fields accept ranges.</li>
+      </ul>
+      <h3>Client app</h3>
+      <ul>
+        <li>Faster session load on older Android devices.</li>
+        <li>Progress pictures can be captured in-app without leaving the day view.</li>
+      </ul>
+      <h2>Fixes</h2>
+      <p>Resolved an issue where archived clients still counted toward the weekly communication goal, and a rare case where a rescheduled consult kept its original reminder time.</p>
+    </div>
+
+    <!-- PREV / NEXT -->
+    <div data-reveal="0" class="crx-pad" style="max-width:744px;margin:72px auto 0;padding:0 32px;box-sizing:border-box">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <a href="CoachRx Changelog Entry.dc.html" class="crx-pn">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">← Previous</span>
+          <span style="font-size:15.5px;font-weight:600;color:#F8FCFF">{{ prev.month }}</span>
+        </a>
+        <sc-if value="{{ hasNext }}" hint-placeholder-val="{{ false }}">
+          <a href="CoachRx Changelog Entry.dc.html" class="crx-pn" style="text-align:right;align-items:flex-end">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Next →</span>
+            <span style="font-size:15.5px;font-weight:600;color:#F8FCFF">{{ next.month }}</span>
+          </a>
+        </sc-if>
+        <sc-if value="{{ isLatest }}" hint-placeholder-val="{{ true }}">
+          <span class="crx-pn" style="text-align:right;align-items:flex-end;opacity:.55">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Latest</span>
+            <span style="font-size:15.5px;font-weight:600;color:rgba(255,255,255,.6)">You're on the newest release</span>
+          </span>
+        </sc-if>
+      </div>
+    </div>
+  </article>
+
+  <!-- CLOSE -->
+  <section data-screen-label="Closing CTA" style="position:relative;margin-top:110px;padding:96px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 45%,#0A0B0F 100%)">
+    <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:900px;height:460px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:720px;margin:0 auto;text-align:center">
+      <h2 data-reveal="0" style="margin:0;font-size:clamp(28px,3.6vw,42px);font-weight:700;line-height:1.1;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Deliver the coaching</span> <span style="color:rgba(255,255,255,.55)">you're capable of.</span></h2>
+      <div data-reveal="80" style="margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="https://dashboard.coachrx.app/signup" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer data-screen-label="Footer"></footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+// Data contract: the compiler replaces POST/PREV/NEXT per release. body content
+// is injected into [data-slot="body"]; the demo markup shows the element set it may use.
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const label = iso => MONTHS[parseInt(iso.slice(5,7),10)-1] + " " + iso.slice(0,4);
+const POST = { date: "2026-07-24", description: "Program library search now spans the CoachRx Index, your exercise library, and every saved template in one query. Plus faster program building and client-app improvements." };
+const PREV = { date: "2026-06-25" };
+const NEXT = null; // newest release
+
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      post: {
+        month: label(POST.date),
+        dateLabel: MONTHS[parseInt(POST.date.slice(5,7),10)-1] + " " + parseInt(POST.date.slice(8,10),10) + ", " + POST.date.slice(0,4),
+        description: POST.description
+      },
+      prev: PREV ? { month: label(PREV.date) } : null,
+      next: NEXT ? { month: label(NEXT.date) } : null,
+      hasNext: !!NEXT,
+      isLatest: !NEXT
+    };
+  }
+
+  componentDidMount() {
+    const rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    if (rm) return;
+    setTimeout(() => {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const d = parseInt(e.target.getAttribute("data-reveal") || "0", 10);
+        e.target.style.animation = `crxRise .5s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+        io.unobserve(e.target);
+      }), { threshold: 0.12 });
+      document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>

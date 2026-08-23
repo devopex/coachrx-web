@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    header,section,footer{overflow-x:clip}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes crxShip{0%,14%,100%{background:rgba(88,255,122,.22);box-shadow:none}5%{background:#58FF7A;box-shadow:0 0 12px rgba(88,255,122,.55)}}
+    .crx-marks{display:grid;grid-template-columns:repeat(60,1fr);gap:3px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+    .crx-mk{display:block;height:26px;border-radius:2px;background:rgba(88,255,122,.22)}
+    .crx-relrow{display:grid;grid-template-columns:74px 1fr auto;gap:8px 20px;align-items:center;min-height:56px;padding:14px 12px;margin:0 -12px;border-top:1px solid rgba(255,255,255,.08);color:inherit;transition:background .2s,border-color .2s}
+    .crx-relrow:hover{background:rgba(255,255,255,.022);border-top-color:rgba(255,255,255,.12)}
+    .crx-relrow:hover .crx-relarrow{color:#58FF7A;transform:translateX(3px)}
+    .crx-clamp1{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}
+    details.crx-early > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;margin-top:36px;border:1px solid rgba(255,255,255,.12);border-radius:10px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .2s,border-color .2s,background .2s}
+    details.crx-early > summary:hover{color:#F8FCFF;border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.03)}
+    details.crx-early > summary::-webkit-details-marker{display:none}
+    details.crx-early > summary .crx-sumchev{transition:transform .25s cubic-bezier(.22,1,.36,1)}
+    details.crx-early[open] > summary{margin-bottom:36px}
+    details.crx-early[open] > summary .crx-sumchev{transform:rotate(180deg)}
+    details.crx-early[open] > summary .crx-sumshow{display:none}
+    details.crx-early:not([open]) > summary .crx-sumhide{display:none}
+    .crx-yeargrp{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:start;padding-top:44px}
+    @media (max-width:760px){
+      .crx-pad{padding-left:20px!important;padding-right:20px!important}
+      .crx-marks{grid-template-columns:repeat(30,1fr)}
+      .crx-yeargrp{grid-template-columns:1fr;gap:8px;padding-top:36px}
+      .crx-relrow{grid-template-columns:1fr auto}
+      .crx-reldate{grid-row:1;grid-column:1}
+      .crx-reltitle{grid-row:2;grid-column:1}
+      .crx-relarrow{grid-row:1/3;grid-column:2}
+      .crx-reldesc{display:none}
+      [data-latest] h2{font-size:24px!important}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+    }
+  </style>
+</helmet>
+
+<nav data-screen-label="Nav"></nav>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <!-- HERO -->
+  <header data-screen-label="Hero" class="crx-pad" style="position:relative;max-width:1040px;margin:0 auto;padding:150px 32px 0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
+    <div style="position:absolute;top:-80px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.09) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <span data-reveal="0" style="position:relative;display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Changelog</span>
+    <h1 data-reveal="60" style="position:relative;margin:16px 0 0;font-size:clamp(34px,4.6vw,56px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#F8FCFF;text-wrap:balance">Every release, on the record.</h1>
+    <p data-reveal="110" style="position:relative;margin:18px 0 0;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">CoachRx ships every month. What shipped, when it shipped, and what it does — the complete history.</p>
+  </header>
+
+  <!-- CADENCE -->
+  <section data-screen-label="Cadence" class="crx-pad" style="max-width:1040px;margin:0 auto;padding:52px 32px 0">
+    <div data-reveal="0" data-cadence="" aria-hidden="true">
+      <div class="crx-marks">
+        <sc-for list="{{ pulses }}" as="p" hint-placeholder-count="30">
+          <span class="crx-mk"></span>
+        </sc-for>
+      </div>
+      <p style="margin:14px 0 0;font-size:13px;color:rgba(255,255,255,.45)">A release lands here every month.</p>
+    </div>
+  </section>
+
+  <!-- LATEST -->
+  <section data-screen-label="Latest release" class="crx-pad" style="max-width:1040px;margin:0 auto;padding:64px 32px 0">
+    <a data-reveal="0" data-latest="" href="CoachRx Changelog Entry.dc.html" style="display:block;position:relative;border:1px solid rgba(88,255,122,.35);border-radius:16px;background:linear-gradient(180deg,#14151A,#101118);box-shadow:0 24px 80px rgba(0,0,0,.5);padding:32px;color:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);border-color:rgba(88,255,122,.6);box-shadow:0 32px 90px rgba(0,0,0,.6);color:inherit">
+      <span style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#58FF7A">Latest release</span>
+        <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ latest.dateLabel }}</span>
+      </span>
+      <h2 style="margin:14px 0 0;font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;color:#F8FCFF">{{ latest.month }}</h2>
+      <p style="margin:12px 0 0;font-size:16px;line-height:1.65;color:rgba(255,255,255,.72);max-width:640px;text-wrap:pretty">{{ latest.description }}</p>
+      <span style="display:inline-block;margin-top:18px;font-size:13.5px;font-weight:600;color:#58FF7A">Read the release →</span>
+    </a>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section data-screen-label="Archive" class="crx-pad" style="max-width:1040px;margin:0 auto;padding:24px 32px 0">
+    <sc-for list="{{ recentYears }}" as="yr" hint-placeholder-count="2">
+      <div class="crx-yeargrp">
+        <span style="font-size:34px;font-weight:700;letter-spacing:-0.02em;color:rgba(255,255,255,.28);line-height:1;font-feature-settings:'tnum' 1">{{ yr.year }}</span>
+        <div style="border-bottom:1px solid rgba(255,255,255,.08)">
+          <sc-for list="{{ yr.items }}" as="r" hint-placeholder-count="7">
+            <a href="CoachRx Changelog Entry.dc.html" class="crx-relrow">
+              <span class="crx-reldate" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ r.dateShort }}</span>
+              <span class="crx-reltitle" style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                <span style="font-size:15.5px;font-weight:600;color:#F8FCFF">{{ r.title }}</span>
+                <span class="crx-reldesc crx-clamp1" style="font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.55)">{{ r.description }}</span>
+              </span>
+              <span class="crx-relarrow" style="font-size:14px;color:rgba(255,255,255,.35);transition:color .2s,transform .2s;justify-self:end">→</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <details class="crx-early">
+      <summary>
+        <span class="crx-sumshow">Show {{ earlyCount }} earlier releases</span>
+        <span class="crx-sumhide">Hide earlier releases</span>
+        <svg class="crx-sumchev" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </summary>
+      <sc-for list="{{ earlyYears }}" as="yr" hint-placeholder-count="4">
+        <div class="crx-yeargrp" style="padding-top:0;padding-bottom:36px">
+          <span style="font-size:34px;font-weight:700;letter-spacing:-0.02em;color:rgba(255,255,255,.28);line-height:1;font-feature-settings:'tnum' 1">{{ yr.year }}</span>
+          <div style="border-bottom:1px solid rgba(255,255,255,.08)">
+            <sc-for list="{{ yr.items }}" as="r" hint-placeholder-count="7">
+              <a href="CoachRx Changelog Entry.dc.html" class="crx-relrow">
+                <span class="crx-reldate" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ r.dateShort }}</span>
+                <span class="crx-reltitle" style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                  <span style="font-size:15.5px;font-weight:600;color:#F8FCFF">{{ r.title }}</span>
+                  <span class="crx-reldesc crx-clamp1" style="font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.55)">{{ r.description }}</span>
+                </span>
+                <span class="crx-relarrow" style="font-size:14px;color:rgba(255,255,255,.35);transition:color .2s,transform .2s;justify-self:end">→</span>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </details>
+  </section>
+
+  <!-- CLOSE -->
+  <section data-screen-label="Closing CTA" style="position:relative;margin-top:120px;padding:110px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0D1120 60%,#0F1526 100%)">
+    <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:1100px;height:620px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.12) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;text-align:center">
+      <h2 data-reveal="0" style="margin:0;font-size:clamp(44px,5.5vw,76px);font-weight:800;line-height:1.02;letter-spacing:-0.03em;color:#F8FCFF"><span style="color:rgba(255,255,255,.55)">Become</span> unstoppable.</h2>
+      <p data-reveal="80" style="margin-top:18px;font-size:18px;color:rgba(255,255,255,.65)">Scale with confidence. Coach without compromise.</p>
+      <div data-reveal="160" style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer data-screen-label="Footer"></footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+// Data contract: the compiler replaces RELEASES with real changelog rows
+// (title, slug, date ISO, description). Everything below derives from it.
+const RELEASES = [
+  ["july-2026-release","2026-07-24","Program library search now spans the CoachRx Index, your exercise library, and every saved template in one query."],
+  ["june-2026-release","2026-06-25","Client Effort & Training Load: clients rate every session and load trends roll up on the profile."],
+  ["may-2026-release","2026-05-22","TrueMed support, so qualified clients pay with HSA and FSA funds. Online indicators in messaging."],
+  ["april-2026-release","2026-04-23","Scheduled messages, plus replying to notifications straight from email."],
+  ["march-2026-release","2026-03-26","Branded custom client reports, exportable per client."],
+  ["february-2026-release","2026-02-20","A faster program calendar: drag, copy and paste across weeks, with keyboard shortcuts."],
+  ["january-2026-release","2026-01-22","Payroll and commission tracking for organization accounts."],
+  ["december-2025-release","2025-12-18","Consultation booking links that respect your calendar."],
+  ["november-2025-release","2025-11-20","Structural balance analysis joins the assessment suite."],
+  ["october-2025-release","2025-10-23","Custom metric sets: track the markers your method depends on."],
+  ["september-2025-release","2025-09-25","Loom video messaging inside every client thread."],
+  ["july-2025-release","2025-07-24","Voice notes, and several conversations open at once."],
+  ["june-2025-release","2025-06-19","Contracts and waivers with signature tracking."],
+  ["may-2025-release","2025-05-22","Client autonomy controls: session moves and exercise swaps inside your limits."],
+  ["april-2025-release","2025-04-24","Coupons, discount codes, and payment plans."],
+  ["march-2025-release","2025-03-20","Nutrition app sync: Cronometer, MyFitnessPal, FatSecret, MacrosFirst, MyMacros+."],
+  ["february-2025-release","2025-02-20","Weekly check-ins with configurable questions and cadence."],
+  ["january-2025-release","2025-01-23","Client transfer between coaches, and coach-as-client accounts."],
+  ["december-2024-release","2024-12-19","The Needs Attention list: missed sessions, dropping compliance, declined payments."],
+  ["november-2024-release","2024-11-21","Business reporting: gross, net, MRR, and average price point."],
+  ["september-2024-release","2024-09-26","Communication goals, tracked per client every week."],
+  ["august-2024-release","2024-08-22","Mass client import and guided onboarding flows."],
+  ["july-2024-release","2024-07-25","Warm-up, cool-down and conditioning libraries."],
+  ["june-2024-release","2024-06-20","Live Programs: one program, many clients, same day."],
+  ["may-2024-release","2024-05-23","Storefront and sales pages for selling programs."],
+  ["march-2024-release","2024-03-21","Wearable sync: WHOOP, Oura, Garmin, Polar, Fitbit."],
+  ["february-2024-release","2024-02-22","Planning & periodization: macro, meso and micro cycles in one view."],
+  ["january-2024-release","2024-01-25","Team roles and permissions for organization accounts."],
+  ["december-2023-release","2023-12-21","Progress pictures and client goals pinned to the profile."],
+  ["october-2023-release","2023-10-26","Intake forms with client-facing links."],
+  ["september-2023-release","2023-09-21","RxBot: AI-assisted program review and suggestions."],
+  ["july-2023-release","2023-07-20","The OPEX Programs Library: 70+ programs ready to adapt."],
+  ["june-2023-release","2023-06-22","Stripe payments with multi-currency support."],
+  ["april-2023-release","2023-04-20","Workout comments and feedback threads on every session."],
+  ["march-2023-release","2023-03-23","Android app reaches feature parity with iOS."],
+  ["january-2023-release","2023-01-26","Reusable program templates with per-client adaptation."],
+  ["december-2022-release","2022-12-15","Client compliance tracking across the roster."],
+  ["october-2022-release","2022-10-20","Lifestyle Rx: prescribe sleep, habits and behavior beside training."],
+  ["september-2022-release","2022-09-22","Body, Move, Work assessments built in."],
+  ["july-2022-release","2022-07-21","Direct messaging between coach and client."],
+  ["may-2022-release","2022-05-19","The CoachRx Index: 3,000+ movements with demo video."],
+  ["april-2022-release","2022-04-21","Client mobile app on iOS with daily Rx view."],
+  ["february-2022-release","2022-02-17","Subscriptions and invoicing through the platform."],
+  ["january-2021-release","2021-01-28","CoachRx launches in early access: the program design calendar."]
+];
+
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const monthName = iso => MONTHS[parseInt(iso.slice(5,7),10)-1] + " " + iso.slice(0,4);
+const key = iso => parseInt(iso.slice(0,4),10)*12 + parseInt(iso.slice(5,7),10)-1;
+
+class Component extends DCLogic {
+  renderVals() {
+    const rel = RELEASES.map(([slug,date,description]) => ({
+      slug, date, description,
+      title: monthName(date) + " release",
+      month: monthName(date),
+      year: date.slice(0,4),
+      dateShort: date.slice(5,7).replace(/^0?(\d+)$/,(m,d)=>MONTHS[d-1].slice(0,3).toUpperCase()) + " " + parseInt(date.slice(8,10),10),
+      dateLabel: MONTHS[parseInt(date.slice(5,7),10)-1].slice(0,3).toUpperCase() + " " + parseInt(date.slice(8,10),10) + ", " + date.slice(0,4)
+    }));
+    const years = {};
+    rel.forEach(r => { (years[r.year] = years[r.year] || []).push(r); });
+    const sorted = Object.keys(years).sort((a,b)=>b-a);
+    const recent = sorted.filter(y => y >= "2025");
+    const early = sorted.filter(y => y < "2025");
+    return {
+      pulses: Array.from({ length: 60 }, () => ({})),
+      latest: rel[0],
+      recentYears: recent.map(y => ({ year: y, items: years[y] })),
+      earlyYears: early.map(y => ({ year: y, items: years[y] })),
+      earlyCount: early.reduce((n,y) => n + years[y].length, 0)
+    };
+  }
+
+  componentDidMount() {
+    const rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    if (rm) return; // marks are filled in markup; reduced motion is the final state
+    setTimeout(() => {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const d = parseInt(e.target.getAttribute("data-reveal") || "0", 10);
+        e.target.style.animation = `crxRise .5s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+        io.unobserve(e.target);
+      }), { threshold: 0.12 });
+      document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+      // Evergreen cadence pulse: a wave of green travels the strip on a loop.
+      // Reduced motion never reaches here, leaving the static band (final state).
+      document.querySelectorAll("[data-cadence] .crx-mk").forEach((mk, i) => {
+        mk.style.animation = `crxShip 7.2s linear ${i * 120}ms infinite`;
+      });
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>

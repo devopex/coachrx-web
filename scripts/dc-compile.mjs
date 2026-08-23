@@ -274,6 +274,12 @@ const DESIGN_ROUTES = {
   "CoachRx Features.dc.html": "/features",
   "CoachRx Pricing.dc.html": "/pricing",
   "CoachRx Roadmap.dc.html": "/roadmap",
+  // Compiled by scripts/build-changelog.mjs, not the CLI loop, because both need real
+  // release data injected. Listed here so fixLinks() can resolve the design-file hrefs the
+  // design uses for release rows and prev/next; build-changelog then overwrites those with
+  // the real per-release slugs.
+  "CoachRx Changelog.dc.html": "/changelog",
+  "CoachRx Changelog Entry.dc.html": "/changelog",
   "CoachRx About.dc.html": "/about",
   "CoachRx Podcasts.dc.html": "/podcasts",
   "CoachRx Blog Index.dc.html": "/articles",
@@ -306,7 +312,11 @@ const TEXT_ROUTES = [
   // content
   [/^changelog$|what's new|view the changelog/, "/changelog"],
   [/^roadmap$|see the roadmap|what we.re building/, "/roadmap"],
-  [/^compare$|why coachrx|how coachrx compares/, "/why-coachrx"],
+  // The comparison lives in a section at the bottom of /pricing, not on its own page.
+  // /why-coachrx was orphaned (0 inbound links from any compiled page, 3 legacy redirects)
+  // and would have meant re-verifying four competitors' pricing forever. Carl killed it
+  // 2026-08-23. See design-briefs/BRIEF-20-pricing-comparison.md.
+  [/^compare$|why coachrx|how coachrx compares|see how coachrx compares/, "/pricing#compare"],
   [/^about$/, "/about"],
   [/coaching guides|^resources$|^articles$|read the articles|the coaching library|^all$/, "/articles"],
   // We cut every video-only page in the migration, so these point at the library.
@@ -323,11 +333,40 @@ const TEXT_ROUTES = [
   [/^referral program$/, "/articles/coachrx-referral-program"],
 ];
 
+/**
+ * Links that must be retargeted even though their current href is already a valid route.
+ *
+ * TEXT_ROUTES only fires on `href="#"` or an empty href, so a link that already points
+ * somewhere plausible is left alone. Right almost always, but Home's "See how CoachRx
+ * compares" pointed at /features, which has nothing of the sort on it.
+ *
+ * There is no comparison anywhere on the site and there will not be one: Carl ruled out
+ * publishing competitor pricing or comparison tables (2026-08-23). The destination is now the
+ * "Why CoachRx" section at the foot of /pricing, which makes the same case in first person.
+ *
+ * This is a safety net. BRIEF-20 retexts the Home link to "Why coaches switch" and points it at
+ * /pricing#why directly, after which this row is a harmless no-op. Kept because the old text may
+ * survive in an un-rerun design file, and a link promising a comparison that does not exist is
+ * worse than a slightly generic one.
+ *
+ * Keep this list very short: it overrides the design file, which is normally wrong to do.
+ */
+const RETARGET = [
+  [/see how coachrx compares|how coachrx compares|^compare( plans| us)?$/, "/pricing#why"],
+];
+
 function fixLinks($, root, ctx) {
   $(root).find("a[href]").each((_, el) => {
     const $a = $(el);
     const href = $a.attr("href") || "";
     const text = ($a.text() || "").replace(/\s+/g, " ").trim().toLowerCase();
+
+    const retarget = RETARGET.find(([re]) => re.test(text));
+    if (retarget && href !== retarget[1]) {
+      $a.attr("href", retarget[1]);
+      ctx.retargeted = (ctx.retargeted || 0) + 1;
+      return;
+    }
 
     const base = href.split(/[#?]/)[0];
     if (base.endsWith(".dc.html")) {
@@ -412,6 +451,61 @@ function ensureNavItems($, root, ctx) {
       ctx.navInjected = (ctx.navInjected || 0) + 1;
     }
   });
+}
+
+
+/**
+ * Build the canonical footer when a design file leaves <footer> empty.
+ *
+ * Same gap normalizeNav() had: DESIGN-FILE-CONTRACT.md tells Claude Design not to build the
+ * footer, but this compiler could only ADD legal links to an existing one. The changelog design
+ * followed the contract and shipped `<footer></footer>`, so those pages had no logo, no link
+ * columns and no copyright — and Carl explicitly asked for the white/blue wordmark in every
+ * header AND footer.
+ *
+ * Markup and styling are lifted verbatim from the footer the other ten pages already ship, so a
+ * synthesised footer is indistinguishable from a designed one.
+ *
+ * Runs BEFORE ensureLegalLinks(), which then finds Privacy/Terms already present and no-ops.
+ */
+const FOOTER_COL = (head, links) =>
+  `<div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">${head}</span>` +
+  links.map(([t, h]) => `<a href="${h}" style="font-size:13.5px;color:rgba(255,255,255,.6)">${t}</a>`).join("") +
+  `</div>`;
+
+const CANONICAL_FOOTER =
+  `<div style="max-width:1200px;margin:0 auto">` +
+  `<div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">` +
+  `<div style="display:flex;flex-direction:column;gap:16px">` +
+  `<img loading="lazy" decoding="async" src="${"/design/assets/coachrx-primary-whiteblue.png"}" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">` +
+  `<p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.45);max-width:240px">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>` +
+  `</div>` +
+  FOOTER_COL("Features", [["Assess", "/features#assess"], ["Consult", "/features#consult"], ["Design", "/features#design"], ["Operate", "/features#operate"], ["Client Experience", "/features#client-experience"]]) +
+  FOOTER_COL("Resources", [["Articles", "/articles"], ["Podcasts", "/podcasts"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"]]) +
+  FOOTER_COL("Company", [["Log in", "https://dashboard.coachrx.app/login"], ["About", "/about"], ["Pricing", "/pricing"], ["Contact", "mailto:coachrx@opexfit.com"]]) +
+  `</div>` +
+  `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">` +
+  `<span style="font-size:12.5px;color:rgba(255,255,255,.35)">© ${new Date().getFullYear()} OPEX Fitness LLC. All rights reserved.</span>` +
+  `<span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>` +
+  `</div></div>`;
+
+const FOOTER_STYLE = "border-top:1px solid rgba(255,255,255,.08);padding:72px 32px 32px;background:#08090E";
+
+function ensureFooter($, root, ctx) {
+  let $footer = root.find("footer").first();
+  if (!$footer.length) {
+    root.append(`<footer data-screen-label="Footer" style="${FOOTER_STYLE}"></footer>`);
+    $footer = root.find("footer").first();
+  }
+  const hasLogo = $footer.find("img").filter((_, e) => /coachrx-(primary|wordmark)/i.test($(e).attr("src") || "")).length;
+  const links = $footer.find("a").length;
+  // A real designed footer has a wordmark and a dozen-plus links. Anything less is an empty shell
+  // that only ensureLegalLinks() has touched.
+  if (hasLogo && links >= 8) return;
+
+  if (!($footer.attr("style") || "").trim()) $footer.attr("style", FOOTER_STYLE);
+  $footer.empty().append(CANONICAL_FOOTER);
+  ctx.footerSynthesised = true;
 }
 
 function ensureLegalLinks($, root, ctx) {
@@ -670,6 +764,12 @@ function normalizeNav($, root, ctx) {
   const $nav = root.find("nav").first();
   if (!$nav.length) return;
 
+  // Some design files put their own hamburger button INSIDE the nav (Home does), and $nav.empty()
+  // below threw it away, leaving a mobile sheet with no way to open it. That is exactly the "no
+  // hamburger nav" Carl reported. Harvest it and put it back after the rebuild.
+  const $burger = $nav.find(".crx-burger").first();
+  const $burgerKeep = $burger.length ? $burger.clone() : null;
+
   // Harvest what the page already has, so styling is inherited rather than invented.
   const found = new Map();
   let $cta = null, $login = null, $logo = null;
@@ -689,11 +789,18 @@ function normalizeNav($, root, ctx) {
       ? $('<a href="/" aria-label="CoachRx home" style="display:inline-flex"></a>').append($img.clone())
       : null;
   }
-  if (!$logo || !$logo.length) return;
+  // A design file that follows DESIGN-FILE-CONTRACT.md leaves <nav> completely empty, because the
+  // compiler owns the nav. Until now this function could only NORMALISE an existing nav, so an
+  // empty one produced a page with no header and no logo at all — the contract and the compiler
+  // disagreed. Build from scratch instead of bailing.
+  if (!$logo || !$logo.length) {
+    $logo = $(`<a href="/" aria-label="CoachRx home" style="display:inline-flex"><img src="${CANONICAL_LOGO}" alt="CoachRx" width="1500" height="388" style="height:22px;width:auto" loading="eager" decoding="async"></a>`);
+    ctx.navSynthesised = true;
+  }
 
   const $model = found.get("Features") || found.get("Pricing") || [...found.values()][0];
-  if (!$model || !$model.length) return;
-  const linkStyle = $model.attr("style") || "color:rgba(255,255,255,.68);font-size:14px;font-weight:500";
+  const linkStyle = ($model && $model.length && $model.attr("style")) ||
+    "color:rgba(255,255,255,.68);font-size:14px;font-weight:500";
 
   const plain = (label, href) =>
     $("<a></a>").attr("href", href).attr("style", linkStyle).text(label);
@@ -741,9 +848,19 @@ function normalizeNav($, root, ctx) {
   ).text("Start for free"));
   $actions.append($ctaOut.attr("href", "https://dashboard.coachrx.app/signup"));
 
-  const style = ($nav.attr("style") || "").replace(/justify-content:[^;]*;?/g, "");
+  // An empty <nav> carries no styling either, so it would render as a plain unfixed strip.
+  const BASE_NAV_STYLE =
+    "position:fixed;top:0;left:0;right:0;z-index:99;height:60px;padding:0 32px;" +
+    "background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);" +
+    "border-bottom:1px solid rgba(255,255,255,.08)";
+  const existing = ($nav.attr("style") || "").replace(/justify-content:[^;]*;?/g, "");
+  const style = existing.trim() ? existing : BASE_NAV_STYLE;
   $nav.attr("style", style + ";display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px");
   $nav.empty().append($logo.clone(), $links, $actions);
+  // Below 1080px .crx-navlinks and .crx-navactions are display:none, so they vacate their grid
+  // cells and auto-placement would drop the burger into the MIDDLE column. Pin it right.
+  if ($burgerKeep) $nav.append($burgerKeep.attr("style",
+    ($burgerKeep.attr("style") || "") + ";grid-column:3;justify-self:end"));
   ctx.navRebuilt = true;
 }
 
@@ -753,7 +870,13 @@ const NAV_CSS = `
 .crx-menu:hover .crx-menudd,.crx-menu:focus-within .crx-menudd{display:block}
 .crx-menudd a:hover{background:rgba(255,255,255,.05);color:#F8FCFF}
 .crx-navactions a:last-child{white-space:nowrap}
-@media (max-width:1080px){ .crx-menudd{display:none!important} .crx-navactions{display:none!important} }
+@media (max-width:1080px){
+  .crx-menudd{display:none!important}
+  .crx-navactions{display:none!important}
+  /* Links and actions vacate their grid cells at this width, so pin the burger to column 3
+     or auto-placement centres it. Covers both the design's own burger and the injected one. */
+  nav .crx-burger{grid-column:3;justify-self:end}
+}
 `;
 
 
@@ -872,6 +995,7 @@ export function compileDesign(full, override) {
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
   ensureNavItems($, root, ctx);
+  ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
@@ -940,6 +1064,7 @@ for (const page of PAGES) {
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
   ensureNavItems($, root, ctx);
+  ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);

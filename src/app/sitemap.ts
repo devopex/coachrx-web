@@ -4,7 +4,7 @@ import { getReleases } from "@/lib/changelog";
 import { TOPICS } from "@/data/topics";
 
 const BASE = "https://www.coachrx.app";
-const MARKETING = ["", "/features", "/pricing", "/why-coachrx", "/about", "/articles", "/changelog"];
+const MARKETING = ["", "/features", "/pricing", "/about", "/articles", "/changelog"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

@@ -28,6 +28,13 @@
       .crx-foot{grid-template-columns:1fr 1fr!important}
       .crx-nav-links{display:none!important}
     }
+    @media (max-width:760px){
+      main[data-screen-label="404"] > span[data-reveal="0"],main[data-screen-label="404"] > h1{text-align:center;margin-left:auto;margin-right:auto}
+      main[data-screen-label="404"] > span[data-reveal="0"]{display:block}
+    }
+    @media (max-width:400px){
+      main[data-screen-label="404"] > span[data-reveal="0"]{font-size:72px!important}
+    }
   </style>
 </helmet>
 

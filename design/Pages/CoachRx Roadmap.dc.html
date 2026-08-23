@@ -12,6 +12,8 @@
   <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
   <style>
     body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    /* Glows extend past section edges; clip so the page never overflows horizontally (same rule as Home). */
+    header,section,footer{overflow-x:clip}
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
     @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -44,8 +46,8 @@
       .crx-col{padding:0;border-left:none;border-top:1px solid rgba(255,255,255,.08);margin-top:28px;padding-top:8px}
       .crx-col:first-child{border-top:none;margin-top:0}
       .crx-col[data-col="exploring"]{margin-top:28px;padding-top:8px}
-      .crx-colhead{position:sticky;top:60px;z-index:5;background:rgba(10,11,15,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-top:10px;padding-bottom:14px}
-      .crx-filters{overflow-x:auto;flex-wrap:nowrap!important;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+      .crx-colhead{position:sticky!important;top:60px;z-index:5;background:rgba(10,11,15,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-top:10px;padding-bottom:14px}
+      .crx-filters{overflow-x:auto;flex-wrap:nowrap!important;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px;scroll-padding:0 20px}
       .crx-fpill{flex:none;scroll-snap-align:start;min-height:44px}
       .crx-more{min-height:44px}
       .crx-shiprow{grid-template-columns:1fr!important;gap:5px!important}

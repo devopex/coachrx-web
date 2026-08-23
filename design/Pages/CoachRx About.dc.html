@@ -12,6 +12,8 @@
   <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
   <style>
     body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    /* Glows extend past section edges; clip so the page never overflows horizontally (same rule as Home). */
+    header,section,footer{overflow-x:clip}
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
     @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -34,6 +36,15 @@
       .crx-navlinks,.crx-navcta > a:first-child{display:none!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}
+    }
+    @media (max-width:760px){
+      /* Six principles: one column, hairline between each, 28px apart */
+      .crx-principles > div{display:contents!important}
+      .crx-principles > div > div{border-top:1px solid rgba(255,255,255,.08);padding:14px 0}
+      .crx-principles > div:first-child > div:first-child{border-top:none;padding-top:0}
+      /* Origin copy: 16px / 1.7 / 24px between paragraphs */
+      [data-screen-label="The origin"] div[style*="gap:28px"],[data-screen-label="The origin"] div[style*="gap: 28px"]{gap:24px!important}
+      [data-screen-label="The origin"] p{font-size:16px!important;line-height:1.7!important}
     }
   </style>
 </helmet>

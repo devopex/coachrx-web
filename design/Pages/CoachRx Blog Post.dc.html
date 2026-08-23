@@ -48,6 +48,17 @@
       .crx-mid{grid-area:2/1/3/3!important}
       .crx-nav-links{display:none!important}
     }
+    @media (max-width:760px){
+      .crx-body p,.crx-body li{font-size:17px!important;line-height:1.75!important}
+      .crx-figure,.crx-twoup{margin:20px 0!important}
+      .crx-body blockquote{margin:24px 0;padding:0;border-left:none}
+      /* Author/date line stacks instead of wrapping mid-name */
+      [data-screen-label="Post"] > header > div[data-reveal="110"]{flex-direction:column;align-items:flex-start;gap:4px!important}
+      [data-screen-label="Post"] > header > div[data-reveal="110"] > span:nth-child(even){display:none}
+      /* No fixed-height slots: aspect-ratio drives height */
+      div[style*="height:382px"],div[style*="height: 382px"]{height:auto!important;aspect-ratio:16/10}
+      [data-shot]{height:auto!important;aspect-ratio:16/9}
+    }
   </style>
 </helmet>
 

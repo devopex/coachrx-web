@@ -1321,7 +1321,7 @@
  },
  {
   "source": "/why-switch",
-  "destination": "/why-coachrx",
+  "destination": "/pricing",
   "statusCode": 301
  },
  {
@@ -1336,12 +1336,12 @@
  },
  {
   "source": "/coachrx-comparison",
-  "destination": "/why-coachrx",
+  "destination": "/pricing",
   "statusCode": 301
  },
  {
   "source": "/whos-coachrx-for",
-  "destination": "/why-coachrx",
+  "destination": "/",
   "statusCode": 301
  },
  {
@@ -1487,6 +1487,11 @@
  {
   "source": "/home",
   "destination": "/",
+  "statusCode": 301
+ },
+ {
+  "source": "/why-coachrx",
+  "destination": "/pricing",
   "statusCode": 301
  }
 ]
