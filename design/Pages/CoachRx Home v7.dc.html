@@ -132,21 +132,30 @@
       #hero p[data-hcta="1"]{font-size:16.5px!important;max-width:100%!important}
       #hero div[data-hcta="2"] > a{width:min(100%,340px);box-sizing:border-box;display:flex;align-items:center;justify-content:center}
       #hero a[data-hcta="0"]{display:none!important}
-      [data-hframe]{height:260px!important;margin-top:44px!important}
-      [data-hframe] > div{height:100%!important;border-radius:14px!important}
-      [data-hframe] > div > div:first-child{display:none}
-      [data-hframe] > div > div:last-child{height:100%!important}
-      [data-hphone]{display:none}
+      /* Hero (boxes 1-3): static flow; crop frames keep overflow:hidden, aspect-ratio replaces fixed height (BRIEF-22) */
+      [data-hframe]{height:auto!important;min-height:0;position:static!important;margin-top:44px!important}
+      [data-hframe] > div:first-child{position:static!important;inset:auto!important;height:auto!important;border-radius:14px!important;width:100%;box-sizing:border-box}
+      [data-hframe] > div:first-child > div:first-child{display:none}
+      [data-hframe] > div:first-child > div:last-child{height:auto!important;aspect-ratio:16/10;overflow:hidden}
+      [data-hphone]{position:static!important;inset:auto!important;right:auto!important;bottom:auto!important;width:240px!important;margin:20px auto 0;transform:none!important}
       [data-screen-label="Works with"] div[style*="gap:52px"],[data-screen-label="Works with"] div[style*="gap: 52px"],[data-screen-label="Works with"] div[style*="gap: 52px"],[data-screen-label="Works with"] div[style*="gap: 52px"]{gap:24px 28px!important}
       [data-screen-label="Works with"] div[style*="gap:52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span{font-size:14px!important}
-      [data-vig="converge"]{height:340px!important;transform:scale(.62);transform-origin:top center}
+      /* The Problem (box 4): five cards stack in flow, no scatter, no overlap (BRIEF-22) */
+      [data-vig="converge"]{height:auto!important;min-height:0;position:static!important;transform:none!important;display:flex;flex-direction:column;gap:12px}
+      [data-vig="converge"] > div{position:static!important;inset:auto!important;top:auto!important;left:auto!important;transform:none!important;width:100%!important;box-sizing:border-box}
+      [data-cframe]{height:auto!important}
       [data-systrack] > div[style*="230vh"]{display:none}
       [data-systrack] > div[style*="position:sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"]{position:static!important;display:block!important;min-height:0!important}
       [data-systrack] div[style*="height:600px"],[data-systrack] div[style*="height: 600px"],[data-systrack] div[style*="height: 600px"],[data-systrack] div[style*="height: 600px"]{display:none}
-      .crx-mshot{display:block!important}
-      /* Platform pillars: plain vertical stack, all five visible, no tap (BRIEF-21) */
-      [data-tab] [data-tabdesc]{max-height:none!important;overflow:visible!important}
-      [data-tab]{background:transparent!important;box-shadow:none!important;border-radius:0!important;border-top:1px solid rgba(255,255,255,.08)!important;cursor:default;pointer-events:none}
+      /* The Platform (box 5): swipe carousel below 760 (BRIEF-22). FLEX track, flex-basis cards — never grid, never min-width. */
+      [role="tablist"]{display:none!important}
+      .crx-pcarwrap{display:block!important}
+      .crx-pcar{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:28px -20px 0;padding:0 20px}
+      .crx-pcar::-webkit-scrollbar{display:none}
+      .crx-pcar > div{flex:0 0 86%;scroll-snap-align:start;box-sizing:border-box}
+      .crx-pdots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+      .crx-pdots span{width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.18);transition:width .25s cubic-bezier(.22,1,.36,1),background .25s}
+      .crx-pdots span.is-on{width:18px;background:#58FF7A}
       [data-screen-label="Complete Coaching"] div[style*="height:584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"],[data-screen-label="Complete Coaching"] div[style*="height: 584px"]{height:auto!important}
       [data-vig="macro"]{position:relative!important;inset:auto!important;height:auto!important}
       [data-vig="macro"] div[style*="1fr 0.8fr"]{grid-template-columns:1fr!important;height:auto!important}
@@ -190,7 +199,6 @@
       footer a{padding:6px 0}
       a[style*="font-weight:600;color"],a[style*="font-weight: 600;color"],a[style*="font-weight: 600;color"],a[style*="font-weight: 600;color"]{padding-top:10px;padding-bottom:10px;display:inline-block}
       [data-vig="macro"] > div:first-child{display:none}
-      [data-hframe] img{width:100%!important;height:100%!important;object-fit:cover;object-position:top center;margin:0!important}
       .crx-mshot img{aspect-ratio:1677/1232;object-fit:cover}
       .crx-marqwrap{scroll-padding:0 20px}
       [data-vig="trend"] > div[style*="gap:7px"] > span:nth-child(even),[data-vig="trend"] > div[style*="gap: 7px"] > span:nth-child(even),[data-vig="trend"] > div[style*="gap: 7px"] > span:nth-child(even),[data-vig="trend"] > div[style*="gap: 7px"] > span:nth-child(even){visibility:hidden}
@@ -478,9 +486,10 @@
         </div>
       </div>
 
-      <div style="position:relative;height:600px">
+      <div style="position:relative;height:600px;overflow:hidden">
+        <div data-ptrack="" style="display:flex;gap:24px;height:100%;align-items:stretch;transition:transform .5s cubic-bezier(.22,1,.36,1);will-change:transform">
         <!-- Panel 0: Assess -->
-        <div data-vpanel="0" role="tabpanel" id="panel-0" aria-labelledby="tab-0" aria-hidden="false" style="position:absolute;inset:0;transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+        <div data-vpanel="0" role="tabpanel" id="panel-0" aria-labelledby="tab-0" aria-hidden="false" style="position:relative;flex:0 0 88%;min-width:0;opacity:1;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
           <div style="position:absolute;top:-60px;left:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
@@ -504,7 +513,7 @@
         </div>
 
         <!-- Panel 1: Consult -->
-        <div data-vpanel="1" role="tabpanel" id="panel-1" aria-labelledby="tab-1" aria-hidden="true" style="position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+        <div data-vpanel="1" role="tabpanel" id="panel-1" aria-labelledby="tab-1" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
           <div style="position:absolute;top:-60px;right:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
@@ -525,7 +534,7 @@
         </div>
 
         <!-- Panel 2: Design -->
-        <div data-vpanel="2" role="tabpanel" id="panel-2" aria-labelledby="tab-2" aria-hidden="true" style="position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+        <div data-vpanel="2" role="tabpanel" id="panel-2" aria-labelledby="tab-2" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
           <div style="position:absolute;top:-60px;left:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
@@ -543,7 +552,7 @@
         </div>
 
         <!-- Panel 3: Operate -->
-        <div data-vpanel="3" role="tabpanel" id="panel-3" aria-labelledby="tab-3" aria-hidden="true" style="position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+        <div data-vpanel="3" role="tabpanel" id="panel-3" aria-labelledby="tab-3" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
           <div style="position:absolute;top:-60px;right:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
           <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
@@ -563,7 +572,7 @@
         </div>
 
         <!-- Panel 4: Client Experience -->
-        <div data-vpanel="4" role="tabpanel" id="panel-4" aria-labelledby="tab-4" aria-hidden="true" style="position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+        <div data-vpanel="4" role="tabpanel" id="panel-4" aria-labelledby="tab-4" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
           <div style="position:absolute;top:-60px;left:-60px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
           <div style="position:absolute;left:0;top:24px;bottom:80px;width:58%;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:#101118;box-shadow:0 24px 80px rgba(0,0,0,.5);overflow:hidden;opacity:.85">
             <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
@@ -589,7 +598,51 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
+
+    <!-- Mobile pillar carousel (BRIEF-22): flex track, 86% cards, edge bleed, snap. Hidden above 760 via inline display. -->
+    <div class="crx-pcarwrap" style="display:none">
+      <div class="crx-pcar">
+        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/insights.png" alt="Client metrics profile" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
+            <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">01</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Assess</span></span>
+            <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Movement, performance, lifestyle and nutrition in one profile.</span>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/messages.png" alt="Client messaging" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
+            <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">02</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Consult</span></span>
+            <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Check-ins, messaging and reviews keep you close between sessions.</span>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/calendar.png" alt="Program calendar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
+            <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">03</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Design</span></span>
+            <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Individualized programs across exercise, lifestyle and nutrition.</span>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/business.png" alt="Business reporting" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
+            <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">04</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Operate</span></span>
+            <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Payments, roster, team and reporting in the system you coach from.</span>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/dashboard.png" alt="CoachRx coach dashboard" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
+            <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">05</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Client Experience</span></span>
+            <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">A clean, branded app your clients open every day.</span>
+          </div>
+        </div>
+      </div>
+      <div class="crx-pdots" aria-hidden="true"><span class="is-on"></span><span></span><span></span><span></span><span></span></div>
+    </div>
+
     <div style="position:relative;height:230vh"></div>
     </div>
   </section>
@@ -1388,7 +1441,21 @@ class Component extends DCLogic {
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
-    // Phone: pillars render as a plain stack via CSS; no active panel, no init needed (BRIEF-21).
+    // Phone: pillar carousel dots follow scroll position — classList only, never setState (BRIEF-22).
+    const car = document.querySelector(".crx-pcar");
+    if (car) {
+      const dots = Array.from(document.querySelectorAll(".crx-pdots span"));
+      const cards = Array.from(car.children);
+      let dq = false;
+      const updDots = () => {
+        dq = false;
+        const x = car.scrollLeft + car.clientWidth / 2;
+        let idx = 0;
+        cards.forEach((c, j) => { if (c.offsetLeft <= x) idx = j; });
+        dots.forEach((d, j) => d.classList.toggle("is-on", j === idx));
+      };
+      car.addEventListener("scroll", () => { if (!dq) { dq = true; requestAnimationFrame(updDots); } }, { passive: true });
+    }
     // Sticky price bar appears once the reader scrolls past the pricing block (phone only)
     const bar = document.querySelector("[data-pricebar]");
     const pricing = document.querySelector('[data-screen-label="Pricing summary"]');
@@ -1835,11 +1902,17 @@ class Component extends DCLogic {
       const desc = btn.querySelector("[data-tabdesc]");
       if (desc) desc.style.maxHeight = active ? "260px" : "0";
     });
-    this.q("[data-vpanel]").forEach(p => {
+    // BRIEF-22: panels sit in a flex row; the active one slides in via translateX on the
+    // track (next panel peeks, dimmed). Track height, scroll listener and progress maths unchanged.
+    const ptrack = document.querySelector("[data-ptrack]");
+    const panels = this.q("[data-vpanel]");
+    if (ptrack && panels[i]) {
+      if (this.rm) ptrack.style.transition = "none";
+      ptrack.style.transform = "translateX(" + (-panels[i].offsetLeft) + "px)";
+    }
+    panels.forEach(p => {
       const k = parseInt(p.getAttribute("data-vpanel"), 10), active = k === i;
-      p.style.opacity = active ? "1" : "0";
-      p.style.visibility = active ? "visible" : "hidden";
-      p.style.transform = active ? "translateY(0)" : "translateY(12px)";
+      p.style.opacity = active ? "1" : "0.4";
       p.setAttribute("aria-hidden", active ? "false" : "true");
       if (active && !first && !this.rm) {
         Array.from(p.querySelectorAll("[data-vig]")).forEach(v => this.playVig(v.getAttribute("data-vig"), v));
