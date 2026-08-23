@@ -235,10 +235,27 @@ function applyLeaf($, node, scope, ctx) {
  * rewritten here. Anything that cannot be resolved is reported rather than shipped
  * silently.
  */
+/**
+ * Claude Design links pages to each other by DESIGN FILENAME, e.g.
+ * `href="CoachRx Pricing.dc.html"`. Every one of those must be mapped to a real route here or
+ * it ships as a literal `.dc.html` URL and 404s.
+ *
+ * This is exactly what happened when About and Podcasts were added: four inter-page links
+ * (Pricing, Roadmap, About, Podcasts) had no entry, so the nav on every new page 404'd while
+ * the pages themselves rendered perfectly. The failure is silent because the href looks
+ * plausible, so `fixLinks` cannot flag it as a dead link.
+ *
+ * RULE: adding a page to PAGES means adding it here in the same edit. The assertion below
+ * enforces it so this cannot be forgotten again.
+ */
 const DESIGN_ROUTES = {
   "CoachRx Home v7.dc.html": "/",
   "CoachRx Home.dc.html": "/",
   "CoachRx Features.dc.html": "/features",
+  "CoachRx Pricing.dc.html": "/pricing",
+  "CoachRx Roadmap.dc.html": "/roadmap",
+  "CoachRx About.dc.html": "/about",
+  "CoachRx Podcasts.dc.html": "/podcasts",
   "CoachRx Blog Index.dc.html": "/articles",
   "CoachRx Tag Archive.dc.html": "/articles",
   "CoachRx Blog Post.dc.html": "/articles",
@@ -302,8 +319,19 @@ function fixLinks($, root, ctx) {
     }
     if (href === "#" || href === "") {
       const hit = TEXT_ROUTES.find(([re]) => re.test(text));
-      if (hit) $a.attr("href", hit[1]);
-      else ctx.deadLinks.push(`href="#" text: "${text.slice(0, 44) || "(no text)"}"`);
+      if (hit) { $a.attr("href", hit[1]); return; }
+      // No destination and no text to route on. This happens when renderVals() supplies a null
+      // href for a link we do not have a URL for yet, e.g. per-show Spotify links on the
+      // podcast page. An anchor with nowhere to go is worse than plain text: it looks
+      // clickable, it is focusable, and it reloads the page. Downgrade it to a span so the
+      // content still renders and nothing is a dead link.
+      const $span = $("<span></span>");
+      for (const [k, v] of Object.entries({ ...(el.attribs || {}) })) {
+        if (k !== "href") $span.attr(k, v);
+      }
+      $span.html($a.html() || "");
+      $a.replaceWith($span);
+      ctx.downgraded = (ctx.downgraded || 0) + 1;
     }
   });
 }
@@ -323,16 +351,49 @@ function fixLinks($, root, ctx) {
  * Position: directly after Changelog. One is what shipped, the other is what is coming.
  */
 /**
- * Nav and footer drift, part two.
+ * Nav drift, the general fix.
  *
- * Each design file owns its own nav and footer, so new pages and legal links land unevenly.
- * After Passes 1-4, five pages had no Privacy or Terms link at all — including the three blog
- * templates, which serve 340 articles and are the most-visited pages on the site. A commercial
- * site needs those reachable from every page.
+ * Each design file owns its own nav, so items appear and disappear unevenly between passes.
+ * Two things have already gone wrong this way:
+ *   - /roadmap shipped with only the Roadmap page linking to it.
+ *   - Changelog was dropped from ALL TEN navs in a later pass, orphaning 44 releases.
  *
- * Same approach as the Roadmap item: clone an existing link so styling is inherited, skip if
- * already present, so this is a no-op once the design files catch up.
+ * So rather than patching one item, guarantee the set. For each required item, if the nav has
+ * no link with that text, clone any existing nav link (so styling is inherited exactly) and
+ * insert it at the right position. Skips anything already present, so it is a no-op once the
+ * design files agree, and it can never double-insert.
+ *
+ * Intended order: Features · Resources · Changelog · Roadmap · Pricing
  */
+const REQUIRED_NAV = [
+  { text: "Changelog", href: "/changelog", before: "Roadmap" },
+  { text: "Roadmap", href: "/roadmap", after: "Changelog" },
+];
+
+function ensureNavItems($, root, ctx) {
+  root.find("nav, footer").each((_, container) => {
+    const $c = $(container);
+    const find = (t) => $c.find("a, span").filter((_, a) => $(a).text().trim() === t).first();
+    // Only touch containers that actually look like navigation.
+    const links = $c.find("a");
+    if (links.length < 2) return;
+    for (const item of REQUIRED_NAV) {
+      if (find(item.text).length) continue;
+      const $model = links.filter((_, a) => {
+        const t = $(a).text().trim();
+        return t && t.length < 20 && !/start for free/i.test(t);
+      }).first();
+      if (!$model.length) continue;
+      const $new = $model.clone().attr("href", item.href).text(item.text);
+      const $anchorEl = item.before ? find(item.before) : item.after ? find(item.after) : $();
+      if ($anchorEl.length && item.before) $anchorEl.before($new);
+      else if ($anchorEl.length) $anchorEl.after($new);
+      else $model.after($new);
+      ctx.navInjected = (ctx.navInjected || 0) + 1;
+    }
+  });
+}
+
 function ensureLegalLinks($, root, ctx) {
   const footers = root.find("footer");
   if (!footers.length) return;
@@ -402,7 +463,7 @@ export function compileDesign(full, override) {
   compileNode($, root, data, ctx);
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
-  ensureRoadmapNav($, root, ctx);
+  ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
 
   return {
@@ -423,6 +484,16 @@ export { SRC as DESIGN_SRC, OUT as GENERATED_OUT };
 // The three blog templates are compiled by scripts/build-blog.mjs instead, because
 // they need real post data injected. Compiling them here too would just produce
 // sample-content versions that nothing imports.
+// Fail the build if a page is compiled but has no route mapping. Without this, an unmapped
+// page's inter-page links ship as literal ".dc.html" URLs and 404 silently.
+for (const pg of PAGES) {
+  if (!(pg.file in DESIGN_ROUTES)) {
+    console.error(`dc-compile: "${pg.file}" is in PAGES but missing from DESIGN_ROUTES.`);
+    console.error(`  Add it, or every link to this page will ship as a .dc.html URL and 404.`);
+    process.exit(1);
+  }
+}
+
 const CLI_SKIP = new Set(["blogPost", "blogIndex", "tagArchive"]);
 
 if (process.argv[1] && process.argv[1].endsWith("dc-compile.mjs")) {
@@ -448,7 +519,7 @@ for (const page of PAGES) {
   compileNode($, root, data, ctx);
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
-  ensureRoadmapNav($, root, ctx);
+  ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
 
   const html = (root.html() || "").trim();
