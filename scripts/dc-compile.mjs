@@ -999,6 +999,31 @@ function collapseTallBoxes($, root, ctx) {
     if (!m) return;
     const v = parseFloat(m[1]), unit = m[2].toLowerCase();
     if (!((unit === "px" && v >= TALL_PX) || (unit === "vh" && v >= TALL_VH))) return;
+
+    // TWO KINDS OF TALL BOX MUST KEEP THEIR HEIGHT. Collapsing them was my mistake and it broke
+    // the Platform screenshots and the Problem section on Carl's phone.
+    //
+    // 1. A CROP FRAME: overflow:hidden wrapping an image scaled past 100%. The height IS the
+    //    crop. height:auto lets the frame grow to the full image, so the screenshot un-crops and
+    //    sits misaligned. Same class of error as adding width/height attributes to these images.
+    //
+    // 2. A POSITIONING CONTEXT: a box whose children are position:absolute. Its height is
+    //    reserving the space those children occupy. height:auto makes it zero-height, the
+    //    children escape, and they land on top of whatever follows — which is the "ONE SYSTEM"
+    //    panel printing through the middle of The Problem paragraph.
+    //
+    // On Home that is 7 of 19 boxes. They need a real mobile layout in the design, not a blunt
+    // override here, so leave them alone and say so rather than half-breaking them.
+    const cropFrame = /overflow:\s*hidden/.test(style) &&
+      $el.find("img").toArray().some((im) => {
+        const w = /width:\s*(\d+(?:\.\d+)?)%/.exec($(im).attr("style") || "");
+        return w && parseFloat(w[1]) > 100;
+      });
+    if (cropFrame) { ctx.tallSkippedCrop = (ctx.tallSkippedCrop || 0) + 1; return; }
+
+    const positioning = $el.children().toArray()
+      .some((k) => /position:\s*absolute/.test($(k).attr("style") || ""));
+    if (positioning) { ctx.tallSkippedAbs = (ctx.tallSkippedAbs || 0) + 1; return; }
     $el.attr("class", (($el.attr("class") || "") + " crx-mtall").trim());
     n++;
   });
