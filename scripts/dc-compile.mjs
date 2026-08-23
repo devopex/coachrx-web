@@ -31,7 +31,27 @@ import * as cheerio from "cheerio";
 
 // Design files live IN the repo: Cloudflare clones only this repo, so anything
 // outside it does not exist at build time and the compile would silently skip.
-const SRC = process.env.DC_SRC || path.join(process.cwd(), "design");
+const DESIGN_ROOT = process.env.DC_SRC || path.join(process.cwd(), "design");
+
+/**
+ * Resolve a design file whether it sits in design/ or in a subfolder.
+ *
+ * The folder gets reorganised as it grows — the .dc.html files were moved into design/Pages/
+ * alongside a covers folder, and the compiler silently skipped all ten and produced an empty
+ * build. A silent skip is the worst outcome, so search one level down and fail loudly if a
+ * file genuinely is not there.
+ */
+function findDesignFile(file) {
+  const direct = path.join(DESIGN_ROOT, file);
+  if (fs.existsSync(direct)) return direct;
+  for (const entry of fs.readdirSync(DESIGN_ROOT, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const nested = path.join(DESIGN_ROOT, entry.name, file);
+    if (fs.existsSync(nested)) return nested;
+  }
+  return null;
+}
+const SRC = DESIGN_ROOT;
 const OUT = path.join(process.cwd(), "src", "generated");
 
 const PAGES = [
@@ -685,41 +705,62 @@ const NAV_CSS = `
 /**
  * <image-slot> is a Claude Design placeholder element, not an image.
  *
- * The Podcasts page uses it for all 22 show covers with `placeholder="Frameworks cover art"`
- * and so on. There is no artwork behind it: Claude Design draws a styled placeholder box in its
- * own preview via ./image-slot.js, a script that does not exist in this build. So the elements
- * rendered as nothing on the live site and every cover was simply missing.
+ * The Podcasts page uses it for all 22 show covers. Claude Design draws a styled placeholder in
+ * its own preview via ./image-slot.js, a script that does not exist in this build, so every
+ * cover rendered as nothing on the live site.
  *
- * Rather than ship 22 holes or 22 mismatched cover images we do not have, render a branded
- * monogram tile per show, derived from the placeholder text. Same reasoning as the blog index:
- * when the artwork does not exist or is inconsistent, deliberate typography beats bad images.
+ * Real cover art now exists in public/design/assets/podcasts, keyed by a slug of the show name
+ * in src/data/podcast-covers.json. Match on that and emit a real <img>. If a show has no cover
+ * yet, fall back to a branded monogram tile rather than a hole.
  *
- * When real cover art arrives, replace the <image-slot> elements with <img> in the design and
- * this becomes a no-op.
+ * Every cover is square: the 20 that arrived square are untouched, and the two that arrived as
+ * a 2.42:1 banner and a 16:9 frame were PADDED to square, not cropped. Cropping a 2.42:1 image
+ * to 1:1 removes ~59% of its width and cuts through faces and wordmarks. Because the art is
+ * square and the tile is square, `object-fit:cover` crops nothing at all, so faces are safe by
+ * construction rather than by tuning object-position per image.
  */
 function renderImageSlots($, root, ctx) {
   const slots = root.find("image-slot");
   if (!slots.length) return;
+
+  let covers = {};
+  try {
+    covers = JSON.parse(fs.readFileSync(path.join(process.cwd(), "src", "data", "podcast-covers.json"), "utf8"));
+  } catch { /* no manifest yet: every slot falls back to a monogram */ }
+
+  const slug = (t) =>
+    t.normalize("NFKD").replace(/[̀-ͯ]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+
+  let withArt = 0, withoutArt = [];
   slots.each((_, el) => {
     const $el = $(el);
     const label = ($el.attr("placeholder") || "").replace(/\s*cover art\s*$/i, "").trim();
+    const file = covers[slug(label)];
+
+    if (file) {
+      withArt++;
+      $el.replaceWith(
+        `<img src="/design/assets/podcasts/${file}" alt="${label}" loading="lazy" decoding="async" ` +
+          `width="640" height="640" style="display:block;width:100%;aspect-ratio:1/1;` +
+          `object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.08)">`
+      );
+      return;
+    }
+
+    withoutArt.push(label || "(unlabelled)");
     const initials =
-      label
-        .split(/\s+/)
-        .filter((w) => /^[A-Za-z0-9]/.test(w))
-        .slice(0, 2)
-        .map((w) => w[0].toUpperCase())
-        .join("") || "CR";
-    const square = ($el.attr("shape") || "rect") === "square";
+      label.split(/\s+/).filter((w) => /^[A-Za-z0-9]/.test(w)).slice(0, 2)
+        .map((w) => w[0].toUpperCase()).join("") || "CR";
     $el.replaceWith(
       `<span role="img" aria-label="${label || "CoachRx"}" style="display:flex;align-items:center;justify-content:center;` +
-        `aspect-ratio:${square ? "1/1" : "16/10"};width:100%;border-radius:12px;` +
-        `background:linear-gradient(160deg,#1B1C23,#101118);border:1px solid rgba(255,255,255,.08);` +
-        `font-family:var(--font-mono);font-size:22px;font-weight:600;letter-spacing:.14em;` +
-        `color:rgba(255,255,255,.38)">${initials}</span>`
+        `aspect-ratio:1/1;width:100%;border-radius:12px;background:linear-gradient(160deg,#1B1C23,#101118);` +
+        `border:1px solid rgba(255,255,255,.08);font-family:var(--font-mono);font-size:22px;font-weight:600;` +
+        `letter-spacing:.14em;color:rgba(255,255,255,.38)">${initials}</span>`
     );
   });
-  ctx.imageSlots = slots.length;
+  ctx.coversUsed = withArt;
+  ctx.coversMissing = withoutArt;
 }
 
 /* ------------------------------------------------------------------- public API */
@@ -796,8 +837,12 @@ const report = [];
 
 for (const page of PAGES) {
   if (CLI_SKIP.has(page.name)) continue;
-  const full = path.join(SRC, page.file);
-  if (!fs.existsSync(full)) { console.log(`  skip ${page.file} (not found)`); continue; }
+  const full = findDesignFile(page.file);
+  if (!full) {
+    console.error(`dc-compile: cannot find "${page.file}" in ${SRC} or any subfolder.`);
+    console.error(`  A missing design file used to skip silently and ship an empty page. Failing instead.`);
+    process.exit(1);
+  }
 
   const $ = cheerio.load(fs.readFileSync(full, "utf8"), { xmlMode: false });
 

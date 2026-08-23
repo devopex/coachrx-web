@@ -15,7 +15,18 @@ import path from "node:path";
 import { compileDesign } from "./dc-compile.mjs";
 
 const ROOT = process.cwd();
-const SRC = path.join(ROOT, "design", "CoachRx Roadmap.dc.html");
+const DROOT = path.join(ROOT, "design");
+const findDesign = (f) => {
+  const d = path.join(DROOT, f);
+  if (fs.existsSync(d)) return d;
+  for (const e of fs.readdirSync(DROOT, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    const n = path.join(DROOT, e.name, f);
+    if (fs.existsSync(n)) return n;
+  }
+  return d;
+};
+const SRC = findDesign("CoachRx Roadmap.dc.html");
 const DATA = path.join(ROOT, "src", "data", "roadmap.json");
 const OUT = path.join(ROOT, "src", "generated", "roadmap.ts");
 

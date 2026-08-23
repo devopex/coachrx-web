@@ -22,6 +22,17 @@ import { compileDesign } from "./dc-compile.mjs";
 
 const ROOT = process.cwd();
 const SRC = path.join(ROOT, "design");
+/** Design files may live in design/ or design/<subfolder>/. Resolve either. */
+const findDesign = (f) => {
+  const d = path.join(SRC, f);
+  if (fs.existsSync(d)) return d;
+  for (const e of fs.readdirSync(SRC, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    const n = path.join(SRC, e.name, f);
+    if (fs.existsSync(n)) return n;
+  }
+  return d;
+};
 const OUT = path.join(ROOT, "src", "generated");
 const POSTS = JSON.parse(fs.readFileSync(path.join(ROOT, "src", "data", "posts.json"), "utf8"));
 
@@ -113,7 +124,7 @@ console.log("\nbuild-blog:");
 /* ------------------------------------------------------------------ blog index */
 {
   const rows = POSTS.map(toRow);
-  const out = compileDesign(path.join(SRC, "CoachRx Blog Index.dc.html"), (d) => ({
+  const out = compileDesign(findDesign("CoachRx Blog Index.dc.html"), (d) => ({
     ...d,
     chips: chipsFor(null),
     // Two "start here" posts, then every remaining article as a row. All 340 links are
@@ -140,7 +151,7 @@ console.log("\nbuild-blog:");
   for (const t of TOPICS) {
     const posts = POSTS.filter((p) => p.primaryTag === t.tag || (p.tags || []).includes(t.tag));
     const rows = posts.map(toRow);
-    const out = compileDesign(path.join(SRC, "CoachRx Tag Archive.dc.html"), (d) => ({
+    const out = compileDesign(findDesign("CoachRx Tag Archive.dc.html"), (d) => ({
       ...d,
       tagName: t.title,
       intro: t.intro,
@@ -180,7 +191,7 @@ console.log("\nbuild-blog:");
   // The post template is compiled once with tokens, then substituted per post at
   // render time. 340 separate compiled pages would bloat the bundle for no gain.
   const T = (k) => `@@${k}@@`;
-  const out = compileDesign(path.join(SRC, "CoachRx Blog Post.dc.html"), (d) => ({
+  const out = compileDesign(findDesign("CoachRx Blog Post.dc.html"), (d) => ({
     ...d,
     post: {
       tag: T("tag"), tagHref: T("tagHref"), title: T("title"), author: T("author"),
