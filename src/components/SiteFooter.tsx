@@ -12,7 +12,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[1100px] px-8 py-16">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <img src="/brand/coachrx-wordmark.webp" alt="CoachRx" className="h-[22px] w-auto" />
+            <img src="/design/assets/coachrx-primary-whiteblue.png" alt="CoachRx" className="h-[22px] w-auto" />
             <p className="mt-4 max-w-[260px] text-[13.5px] leading-relaxed text-white/[0.5]">
               Coaching software for coaches who design for one person at a time.
             </p>

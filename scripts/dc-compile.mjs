@@ -640,65 +640,120 @@ const RESPONSIVE_BACKSTOP = `
 
 
 /**
- * Canonical nav layout and the Resources dropdown.
+ * The canonical nav, built the same way on every page.
  *
- * TWO PROBLEMS THIS SOLVES
- * 1. Every nav used `justify-content:space-between`, so the link group's horizontal position
- *    depended on how wide the logo and the right-hand actions happened to be. Home has a
- *    `Log in` link and a CTA, most pages have only a CTA, so the links sat centred on Home and
- *    drifted right everywhere else. A 3-column grid with `1fr auto 1fr` pins the middle column
- *    to the true centre regardless of what flanks it.
- * 2. Only Home, About and Podcasts had the Resources dropdown. Six pages had a bare `Resources`
- *    link that went to /articles, so Podcasts was unreachable from most of the site.
+ * THREE PROBLEMS THIS SOLVES
+ * 1. `Log in` and `Start for free` were sitting inside the centred link group, because the
+ *    mobile-nav wrapper had swept every child after the logo into one span. Every serious SaaS
+ *    nav puts auth actions hard right: Linear, Stripe, Vercel, Notion, Figma all do. So the nav
+ *    is now three real grid columns — logo left, links centred, actions right.
+ * 2. Seven top-level items is too many. Changelog and Roadmap are the same idea seen from two
+ *    directions, what shipped and what is coming, so they group under one `Updates` menu. That
+ *    takes the centre from seven items to four, which is where the best navs sit.
+ * 3. `About` comes out of the nav entirely. Nobody navigates to About from a SaaS nav; it lives
+ *    in the footer Company column, where it already is.
  *
- * The injected dropdown is CSS-only (`:hover` plus `:focus-within`). The hand-built one on Home
- * uses `onMouseEnter` handlers from renderVals, which pages without those handlers cannot use,
- * and a CSS dropdown is better anyway: it works before JS and it is keyboard accessible.
+ * Final shape:  Features · Resources ▾ · Updates ▾ · Pricing    |   Log in   [Start for free]
+ *   Resources ▾  Articles, Podcasts
+ *   Updates ▾    Changelog, Roadmap
+ *
+ * Built here rather than in the design files because each file owns its own nav and this has
+ * drifted on every single pass. Doing it once at compile time is the only way it stays identical.
  */
+const NAV_MENUS = [
+  { label: "Resources", items: [["Articles", "/articles"], ["Podcasts", "/podcasts"]] },
+  { label: "Updates", items: [["Changelog", "/changelog"], ["Roadmap", "/roadmap"]] },
+];
+const NAV_ORDER = ["Features", "Resources", "Updates", "Pricing"];
+
 function normalizeNav($, root, ctx) {
   const $nav = root.find("nav").first();
   if (!$nav.length) return;
 
-  // 1. Centre the link group. Three columns: logo, links, actions.
-  const style = ($nav.attr("style") || "").replace(/justify-content:[^;]*;?/g, "");
-  $nav.attr("style", style + ";display:grid;grid-template-columns:1fr auto 1fr;align-items:center");
-  const $mid = $nav.find(".crx-navlinks").first();
-  if ($mid.length) {
-    $mid.attr("style", ($mid.attr("style") || "") + ";justify-self:center");
+  // Harvest what the page already has, so styling is inherited rather than invented.
+  const found = new Map();
+  let $cta = null, $login = null, $logo = null;
+  $nav.find("a").each((_, a) => {
+    const $a = $(a);
+    const t = $a.text().trim();
+    if ($a.find("img").length && !$logo) { $logo = $a; return; }
+    if (/start for free|free trial/i.test(t)) { if (!$cta) $cta = $a; return; }
+    if (/^log ?in$|^sign ?in$/i.test(t)) { if (!$login) $login = $a; return; }
+    if (t && !found.has(t)) found.set(t, $a);
+  });
+  if (!$logo) {
+    // On some pages the logo is a bare <img> child of <nav>, so .parent() is the nav itself and
+    // cloning it nests a whole <nav> inside the nav. Wrap the image instead.
+    const $img = $nav.find("img").first();
+    $logo = $img.length
+      ? $('<a href="/" aria-label="CoachRx home" style="display:inline-flex"></a>').append($img.clone())
+      : null;
   }
-  ctx.navCentred = true;
+  if (!$logo || !$logo.length) return;
 
-  // 2. Give a bare Resources link a real dropdown.
-  const $res = $nav.find("a").filter((_, a) => $(a).text().trim() === "Resources").first();
-  if (!$res.length) return;
-  if ($res.parent().find("[data-resdd]").length) return;   // already has one
-  if ($nav.find("#resDD").length) return;                  // Home's hand-built version
+  const $model = found.get("Features") || found.get("Pricing") || [...found.values()][0];
+  if (!$model || !$model.length) return;
+  const linkStyle = $model.attr("style") || "color:rgba(255,255,255,.68);font-size:14px;font-weight:500";
 
-  const kids = [
-    ["Articles", "/articles"],
-    ["Podcasts", "/podcasts"],
-  ];
-  const item = ([t, h]) =>
-    `<a href="${h}" style="display:block;padding:10px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72);min-height:44px;line-height:24px">${t}</a>`;
+  const plain = (label, href) =>
+    $("<a></a>").attr("href", href).attr("style", linkStyle).text(label);
 
-  const $wrap = $('<span class="crx-res" style="position:relative;display:inline-flex;align-items:center;height:60px"></span>');
-  $res.replaceWith($wrap);
-  $wrap.append($res);
-  $res.append(
-    '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6;margin-left:6px"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
+  const menu = (label, items) => {
+    const $wrap = $('<span class="crx-menu" style="position:relative;display:inline-flex;align-items:center;height:60px"></span>');
+    const $trigger = plain(label, items[0][1]).append(
+      '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6;margin-left:6px"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
+    );
+    const rows = items
+      .map(([t, h]) =>
+        `<a href="${h}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)">${t}</a>`
+      )
+      .join("");
+    return $wrap
+      .append($trigger)
+      .append(
+        `<span class="crx-menudd" style="position:absolute;top:100%;left:-16px;padding-top:8px"><span style="display:flex;flex-direction:column;background:#14151A;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:180px;box-shadow:0 24px 56px rgba(0,0,0,.6)">${rows}</span></span>`
+      );
+  };
+
+  // Middle column, in canonical order.
+  const $links = $('<span class="crx-navlinks" style="display:flex;align-items:center;gap:26px;justify-self:center"></span>');
+  for (const label of NAV_ORDER) {
+    const m = NAV_MENUS.find((x) => x.label === label);
+    if (m) { $links.append(menu(m.label, m.items)); continue; }
+    const existing = found.get(label);
+    $links.append(existing && existing.length ? existing.clone() : plain(label, "/" + label.toLowerCase()));
+  }
+
+  // Right column. Actions hard right, which is the whole point of item 1 above.
+  const $actions = $('<span class="crx-navactions" style="display:flex;align-items:center;gap:20px;justify-self:end"></span>');
+  $actions.append(
+    ($login && $login.length ? $login.clone() : plain("Log in", "https://dashboard.coachrx.app/login"))
+      .attr("href", "https://dashboard.coachrx.app/login")
+      .text("Log in")   // some pages said "Sign in"; one label everywhere
   );
-  $wrap.append(
-    `<span data-resdd class="crx-resdd" style="position:absolute;top:100%;left:-16px;padding-top:8px"><span style="display:flex;flex-direction:column;background:#14151A;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:180px;box-shadow:0 24px 56px rgba(0,0,0,.6)">${kids.map(item).join("")}</span></span>`
-  );
-  ctx.resDropdownInjected = true;
+  // Pricing and Roadmap shipped without a nav CTA at all, so there was nothing to harvest.
+  // Synthesise one in the house style rather than leaving the right column half empty — the nav
+  // CTA is the single most valuable element on a marketing page.
+  const $ctaOut = ($cta && $cta.length ? $cta.clone() : $("<a></a>").attr("style",
+    "background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;" +
+    "letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;white-space:nowrap;" +
+    "box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25)"
+  ).text("Start for free"));
+  $actions.append($ctaOut.attr("href", "https://dashboard.coachrx.app/signup"));
+
+  const style = ($nav.attr("style") || "").replace(/justify-content:[^;]*;?/g, "");
+  $nav.attr("style", style + ";display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px");
+  $nav.empty().append($logo.clone(), $links, $actions);
+  ctx.navRebuilt = true;
 }
 
 const NAV_CSS = `
 /* Injected by dc-compile normalizeNav(). CSS-only dropdown: no JS, keyboard accessible. */
-.crx-resdd{display:none}
-.crx-res:hover .crx-resdd,.crx-res:focus-within .crx-resdd{display:block}
-.crx-resdd a:hover{background:rgba(255,255,255,.05);color:#F8FCFF}
-@media (max-width:1080px){ .crx-resdd{display:none!important} }
+.crx-menudd{display:none}
+.crx-menu:hover .crx-menudd,.crx-menu:focus-within .crx-menudd{display:block}
+.crx-menudd a:hover{background:rgba(255,255,255,.05);color:#F8FCFF}
+.crx-navactions a:last-child{white-space:nowrap}
+@media (max-width:1080px){ .crx-menudd{display:none!important} .crx-navactions{display:none!important} }
 `;
 
 
@@ -763,6 +818,31 @@ function renderImageSlots($, root, ctx) {
   ctx.coversMissing = withoutArt;
 }
 
+
+/**
+ * One logo, everywhere.
+ *
+ * The wordmark exists in white, white/green and white/blue variants, and different pages
+ * referenced different ones — including a stale `coachrx-primary-white.png` and, briefly, a
+ * whitegreen file I had aliased in when the whiteblue was missing. The brand mark is white
+ * "Coach" with light-blue "Rx", so every header and footer instance is forced to that file.
+ *
+ * Cheap to enforce here and impossible to enforce across ten hand-maintained design files.
+ */
+const CANONICAL_LOGO = "/design/assets/coachrx-primary-whiteblue.png";
+function enforceLogo($, root, ctx) {
+  let n = 0;
+  root.find("img").each((_, el) => {
+    const $img = $(el);
+    const src = $img.attr("src") || "";
+    if (!/coachrx-(primary|wordmark)/i.test(src)) return;
+    if (src.endsWith("coachrx-primary-whiteblue.png")) return;
+    $img.attr("src", CANONICAL_LOGO);
+    n++;
+  });
+  if (n) ctx.logosNormalised = n;
+}
+
 /* ------------------------------------------------------------------- public API */
 
 /**
@@ -793,9 +873,10 @@ export function compileDesign(full, override) {
   fixLinks($, root, ctx);
   ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
-  ensureMobileNav($, root, ctx);
   normalizeNav($, root, ctx);
+  ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
+  enforceLogo($, root, ctx);
 
   return {
     html: (root.html() || "").trim(),
@@ -860,9 +941,10 @@ for (const page of PAGES) {
   fixLinks($, root, ctx);
   ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
-  ensureMobileNav($, root, ctx);
   normalizeNav($, root, ctx);
+  ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
+  enforceLogo($, root, ctx);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
