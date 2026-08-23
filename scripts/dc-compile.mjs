@@ -574,9 +574,27 @@ const RESPONSIVE_BACKSTOP = `
   [style*="width:7"][style*="px"],[style*="width:8"][style*="px"],
   [style*="width:9"][style*="px"]{max-width:100%!important}
 
+  /* min-width floors are the most common cause of horizontal scroll. */
+  [style*="min-width:1"],[style*="min-width:2"],[style*="min-width:3"],
+  [style*="min-width:4"],[style*="min-width:5"],[style*="min-width:6"],
+  [style*="min-width:7"],[style*="min-width:8"],[style*="min-width:9"]{min-width:0!important}
+
+  /* nowrap text overflows instead of wrapping. An overflowing line is worse than a wrapped pill. */
+  [style*="white-space:nowrap"]{white-space:normal!important}
+
+  /* A sticky column in a single-column stack pins itself over the content below it. */
+  [style*="position:sticky"]{position:static!important}
+
+  /* Viewport-width units plus a scrollbar equals horizontal scroll. */
+  [style*="vw"]{max-width:100%!important}
+
   /* Absolutely positioned side panels and vignettes stack instead of colliding. */
   [style*="position:absolute"][style*="right:0"],
-  [style*="position:absolute"][style*="right:-"]{position:relative!important;right:auto!important;bottom:auto!important;top:auto!important;transform:none!important;width:100%!important;margin-top:20px}
+  [style*="position:absolute"][style*="right:-"],
+  [style*="position:absolute"][style*="bottom:0"][style*="right"]{position:relative!important;right:auto!important;bottom:auto!important;top:auto!important;left:auto!important;transform:none!important;width:100%!important;margin-top:20px}
+
+  /* Tall scroll-driven spacers become dead scrolling on a phone. */
+  [style*="height:230vh"],[style*="height:200vh"],[style*="height:180vh"]{height:auto!important;min-height:0!important}
 
   /* Section rhythm. 110px of vertical padding is a lot of scrolling on a phone. */
   section,header,footer{padding-left:20px!important;padding-right:20px!important}
@@ -585,18 +603,124 @@ const RESPONSIVE_BACKSTOP = `
   /* Type: stop desktop display sizes from wrapping to one word per line. */
   h1{font-size:clamp(32px,8.5vw,44px)!important}
   h2{font-size:clamp(24px,6.5vw,32px)!important}
+  h3{font-size:clamp(18px,5vw,22px)!important}
 
-  /* Multi-column text (the blog quote columns) never works on a phone. */
+  /* Multi-column text never works on a phone. */
   [style*="columns:2"],[style*="columns: 2"]{columns:1!important}
 
   /* Anything genuinely wide scrolls rather than breaking the page. */
-  table,[style*="min-width:7"],[style*="min-width:8"],[style*="min-width:9"]{display:block;overflow-x:auto}
+  table{display:block;overflow-x:auto}
 
   /* Touch targets. */
   a,button,[role="button"]{min-height:44px}
   nav a,nav button,.crx-sheet a{min-height:44px;display:flex;align-items:center}
 }
 `;
+
+
+
+/**
+ * Canonical nav layout and the Resources dropdown.
+ *
+ * TWO PROBLEMS THIS SOLVES
+ * 1. Every nav used `justify-content:space-between`, so the link group's horizontal position
+ *    depended on how wide the logo and the right-hand actions happened to be. Home has a
+ *    `Log in` link and a CTA, most pages have only a CTA, so the links sat centred on Home and
+ *    drifted right everywhere else. A 3-column grid with `1fr auto 1fr` pins the middle column
+ *    to the true centre regardless of what flanks it.
+ * 2. Only Home, About and Podcasts had the Resources dropdown. Six pages had a bare `Resources`
+ *    link that went to /articles, so Podcasts was unreachable from most of the site.
+ *
+ * The injected dropdown is CSS-only (`:hover` plus `:focus-within`). The hand-built one on Home
+ * uses `onMouseEnter` handlers from renderVals, which pages without those handlers cannot use,
+ * and a CSS dropdown is better anyway: it works before JS and it is keyboard accessible.
+ */
+function normalizeNav($, root, ctx) {
+  const $nav = root.find("nav").first();
+  if (!$nav.length) return;
+
+  // 1. Centre the link group. Three columns: logo, links, actions.
+  const style = ($nav.attr("style") || "").replace(/justify-content:[^;]*;?/g, "");
+  $nav.attr("style", style + ";display:grid;grid-template-columns:1fr auto 1fr;align-items:center");
+  const $mid = $nav.find(".crx-navlinks").first();
+  if ($mid.length) {
+    $mid.attr("style", ($mid.attr("style") || "") + ";justify-self:center");
+  }
+  ctx.navCentred = true;
+
+  // 2. Give a bare Resources link a real dropdown.
+  const $res = $nav.find("a").filter((_, a) => $(a).text().trim() === "Resources").first();
+  if (!$res.length) return;
+  if ($res.parent().find("[data-resdd]").length) return;   // already has one
+  if ($nav.find("#resDD").length) return;                  // Home's hand-built version
+
+  const kids = [
+    ["Articles", "/articles"],
+    ["Podcasts", "/podcasts"],
+  ];
+  const item = ([t, h]) =>
+    `<a href="${h}" style="display:block;padding:10px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72);min-height:44px;line-height:24px">${t}</a>`;
+
+  const $wrap = $('<span class="crx-res" style="position:relative;display:inline-flex;align-items:center;height:60px"></span>');
+  $res.replaceWith($wrap);
+  $wrap.append($res);
+  $res.append(
+    '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6;margin-left:6px"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
+  );
+  $wrap.append(
+    `<span data-resdd class="crx-resdd" style="position:absolute;top:100%;left:-16px;padding-top:8px"><span style="display:flex;flex-direction:column;background:#14151A;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:180px;box-shadow:0 24px 56px rgba(0,0,0,.6)">${kids.map(item).join("")}</span></span>`
+  );
+  ctx.resDropdownInjected = true;
+}
+
+const NAV_CSS = `
+/* Injected by dc-compile normalizeNav(). CSS-only dropdown: no JS, keyboard accessible. */
+.crx-resdd{display:none}
+.crx-res:hover .crx-resdd,.crx-res:focus-within .crx-resdd{display:block}
+.crx-resdd a:hover{background:rgba(255,255,255,.05);color:#F8FCFF}
+@media (max-width:1080px){ .crx-resdd{display:none!important} }
+`;
+
+
+/**
+ * <image-slot> is a Claude Design placeholder element, not an image.
+ *
+ * The Podcasts page uses it for all 22 show covers with `placeholder="Frameworks cover art"`
+ * and so on. There is no artwork behind it: Claude Design draws a styled placeholder box in its
+ * own preview via ./image-slot.js, a script that does not exist in this build. So the elements
+ * rendered as nothing on the live site and every cover was simply missing.
+ *
+ * Rather than ship 22 holes or 22 mismatched cover images we do not have, render a branded
+ * monogram tile per show, derived from the placeholder text. Same reasoning as the blog index:
+ * when the artwork does not exist or is inconsistent, deliberate typography beats bad images.
+ *
+ * When real cover art arrives, replace the <image-slot> elements with <img> in the design and
+ * this becomes a no-op.
+ */
+function renderImageSlots($, root, ctx) {
+  const slots = root.find("image-slot");
+  if (!slots.length) return;
+  slots.each((_, el) => {
+    const $el = $(el);
+    const label = ($el.attr("placeholder") || "").replace(/\s*cover art\s*$/i, "").trim();
+    const initials =
+      label
+        .split(/\s+/)
+        .filter((w) => /^[A-Za-z0-9]/.test(w))
+        .slice(0, 2)
+        .map((w) => w[0].toUpperCase())
+        .join("") || "CR";
+    const square = ($el.attr("shape") || "rect") === "square";
+    $el.replaceWith(
+      `<span role="img" aria-label="${label || "CoachRx"}" style="display:flex;align-items:center;justify-content:center;` +
+        `aspect-ratio:${square ? "1/1" : "16/10"};width:100%;border-radius:12px;` +
+        `background:linear-gradient(160deg,#1B1C23,#101118);border:1px solid rgba(255,255,255,.08);` +
+        `font-family:var(--font-mono);font-size:22px;font-weight:600;letter-spacing:.14em;` +
+        `color:rgba(255,255,255,.38)">${initials}</span>`
+    );
+  });
+  ctx.imageSlots = slots.length;
+}
 
 /* ------------------------------------------------------------------- public API */
 
@@ -618,6 +742,7 @@ export function compileDesign(full, override) {
   else if (override) data = { ...data, ...override };
 
   $("helmet").remove();
+  $('script[src^="./"]').remove();   // Claude Design preview-only runtime; 404s in this build
   $('script[type="text/x-dc"]').remove();
 
   const root = $("x-dc").length ? $("x-dc") : $("body");
@@ -628,6 +753,8 @@ export function compileDesign(full, override) {
   ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
   ensureMobileNav($, root, ctx);
+  normalizeNav($, root, ctx);
+  renderImageSlots($, root, ctx);
 
   return {
     html: (root.html() || "").trim(),
@@ -635,7 +762,7 @@ export function compileDesign(full, override) {
     // templates and the roadmap are compiled through this exported function and write their own
     // .ts files, so without this they got the burger markup and none of the styling or wiring.
     css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
-      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", RESPONSIVE_BACKSTOP].join("\n"),
+      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, RESPONSIVE_BACKSTOP].join("\n"),
     script: scriptSrc + (ctx.mobileNavInjected ? MOBILE_NAV_JS : ""),
     data,
     hoverRules: ctx.hoverRules,
@@ -689,10 +816,12 @@ for (const page of PAGES) {
   ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
   ensureMobileNav($, root, ctx);
+  normalizeNav($, root, ctx);
+  renderImageSlots($, root, ctx);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
-    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", RESPONSIVE_BACKSTOP].join("\n");
+    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, RESPONSIVE_BACKSTOP].join("\n");
 
   // data minus functions, so pages can reuse the design's own copy where useful
   const plain = JSON.parse(JSON.stringify(data, (k, v) => (typeof v === "function" ? undefined : v)));
