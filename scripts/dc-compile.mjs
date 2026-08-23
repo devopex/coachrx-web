@@ -38,6 +38,8 @@ const PAGES = [
   { file: "CoachRx Home v7.dc.html", name: "home" },
   { file: "CoachRx Features.dc.html", name: "features" },
   { file: "CoachRx Pricing.dc.html", name: "pricing" },
+  { file: "CoachRx About.dc.html", name: "about" },
+  { file: "CoachRx Podcasts.dc.html", name: "podcasts" },
   { file: "CoachRx Blog Post.dc.html", name: "blogPost" },
   { file: "CoachRx Blog Index.dc.html", name: "blogIndex" },
   { file: "CoachRx Tag Archive.dc.html", name: "tagArchive" },
@@ -320,6 +322,42 @@ function fixLinks($, root, ctx) {
  *
  * Position: directly after Changelog. One is what shipped, the other is what is coming.
  */
+/**
+ * Nav and footer drift, part two.
+ *
+ * Each design file owns its own nav and footer, so new pages and legal links land unevenly.
+ * After Passes 1-4, five pages had no Privacy or Terms link at all — including the three blog
+ * templates, which serve 340 articles and are the most-visited pages on the site. A commercial
+ * site needs those reachable from every page.
+ *
+ * Same approach as the Roadmap item: clone an existing link so styling is inherited, skip if
+ * already present, so this is a no-op once the design files catch up.
+ */
+function ensureLegalLinks($, root, ctx) {
+  const footers = root.find("footer");
+  if (!footers.length) return;
+  let added = 0;
+  footers.each((_, el) => {
+    const $f = $(el);
+    const has = (t) => $f.find("a").filter((_, a) => $(a).text().trim() === t).length > 0;
+    if (has("Privacy") && has("Terms")) return;
+    // Anchor to clone for styling: any existing footer link, else the copyright span.
+    const $model = $f.find("a").first();
+    const mk = (text, href) => {
+      const $a = $model.length ? $model.clone().empty() : $("<a></a>");
+      return $a.attr("href", href).attr("style",
+        ($model.attr("style") || "font-size:12.5px;color:rgba(255,255,255,.4)")).text(text);
+    };
+    const $wrap = $('<span style="display:flex;gap:20px"></span>');
+    if (!has("Privacy")) $wrap.append(mk("Privacy", "https://www.opexfit.com/privacy-policy/"));
+    if (!has("Terms")) $wrap.append(mk("Terms", "https://www.opexfit.com/terms-and-conditions/"));
+    $f.find("> div").last().append($wrap);
+    if (!$f.find("> div").length) $f.append($wrap);
+    added++;
+  });
+  if (added) ctx.legalInjected = added;
+}
+
 function ensureRoadmapNav($, root, ctx) {
   let added = 0;
   root.find("nav, footer").each((_, container) => {
@@ -365,6 +403,7 @@ export function compileDesign(full, override) {
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
   ensureRoadmapNav($, root, ctx);
+  ensureLegalLinks($, root, ctx);
 
   return {
     html: (root.html() || "").trim(),
@@ -410,6 +449,7 @@ for (const page of PAGES) {
   applyLeaf($, root, data, ctx);
   fixLinks($, root, ctx);
   ensureRoadmapNav($, root, ctx);
+  ensureLegalLinks($, root, ctx);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules].join("\n");

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .crx-navlinks a:hover{color:#F8FCFF}
+    #resDD{display:none;position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px}
+    #resDD.is-open{display:block}
+    .crx-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;cursor:pointer}
+    .crx-sheet{display:none}
+    @media (max-width:860px){
+      .crx-principles{grid-template-columns:1fr!important}
+      .crx-principles > div{border-left:none!important;padding:22px 0!important;border-top:1px solid rgba(255,255,255,.08)}
+      .crx-principles > div:first-child{border-top:none;padding-top:0!important}
+      .crx-quotes{grid-template-columns:1fr!important}
+      .crx-proofbar{grid-template-columns:1fr!important}
+      .crx-proofbar > div{border-left:none!important;padding:20px 0!important;border-top:1px solid rgba(255,255,255,.08)}
+      .crx-proofbar > div:first-child{border-top:none}
+    }
+    @media (max-width:700px){
+      .crx-pad{padding-left:20px!important;padding-right:20px!important}
+      .crx-navlinks,.crx-navcta > a:first-child{display:none!important}
+      footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+      footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}
+    }
+  </style>
+</helmet>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img loading="lazy" decoding="async" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div class="crx-navlinks" style="display:flex;align-items:center;gap:28px">
+      <a href="CoachRx Features.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Features</a>
+      <div id="resWrap" style="position:relative;display:flex;align-items:center;height:60px">
+        <button id="resBtn" type="button" aria-haspopup="true" aria-expanded="false" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.68);font-size:14px;font-weight:500;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit">Resources<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div id="resDD">
+          <div style="background:#14151A;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:190px;box-shadow:0 24px 56px rgba(0,0,0,.6);display:flex;flex-direction:column">
+            <a href="CoachRx Blog Index.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Articles</a>
+            <a href="CoachRx Podcasts.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Podcasts</a>
+          </div>
+        </div>
+      </div>
+      <a href="CoachRx Roadmap.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Roadmap</a>
+      <a href="CoachRx Pricing.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+      <a href="CoachRx About.dc.html" style="color:#F8FCFF;font-size:14px;font-weight:600">About</a>
+    </div>
+    <div class="crx-navcta" style="display:flex;align-items:center;gap:20px">
+      <a href="https://dashboard.coachrx.app/login" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500;padding:10px 0;white-space:nowrap;flex:none" style-hover="color:#F8FCFF">Log in</a>
+      <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header data-screen-label="Header" class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:200px 32px 0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
+    <div style="position:absolute;top:-80px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.09) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <h1 data-reveal="0" style="position:relative;margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.06;letter-spacing:-0.03em;color:#F8FCFF">The coaching came first.</h1>
+    <p data-reveal="60" style="position:relative;margin:26px 0 0;font-size:17.5px;line-height:1.62;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">Most coaching platforms are built from the outside in, by technology companies whose reference point is fitness as the culture defines it. Classes, workouts, templates. CoachRx was built from inside the coaching relationship, by a company that has spent over 30 years coaching individuals and educating coaches to deliver Individual Design Coaching, a method we defined. It is not built around what one way of coaching looks like. It is built around what truly individualized coaching actually takes.</p>
+  </header>
+
+  <!-- PROOF BAR -->
+  <section data-screen-label="Proof bar" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:72px 32px 0">
+    <div data-reveal="120" class="crx-proofbar" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="padding:28px 28px 28px 0">
+        <div style="font-size:34px;font-weight:700;letter-spacing:-0.02em;color:#F8FCFF;font-feature-settings:'tnum' 1">30+ years</div>
+        <div style="margin-top:6px;font-size:13px;color:rgba(255,255,255,.5)">of Individual Design coaching</div>
+      </div>
+      <div style="padding:28px;border-left:1px solid rgba(255,255,255,.08)">
+        <div style="font-size:28px;font-weight:700;letter-spacing:-0.02em;color:#F8FCFF;line-height:41px">Since 1999</div>
+        <div style="margin-top:6px;font-size:13px;color:rgba(255,255,255,.5)">educating coaches</div>
+      </div>
+      <div style="padding:28px 0 28px 28px;border-left:1px solid rgba(255,255,255,.08)">
+        <div style="font-size:34px;font-weight:700;letter-spacing:-0.02em;color:#F8FCFF;font-feature-settings:'tnum' 1">10,000+</div>
+        <div style="margin-top:6px;font-size:13px;color:rgba(255,255,255,.5)">coaching practices on CoachRx</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ORIGIN -->
+  <section data-screen-label="The origin" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:140px 32px 0">
+    <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">The origin</span>
+    <h2 data-reveal="60" style="margin:18px 0 0;font-size:clamp(28px,3.4vw,44px);font-weight:700;line-height:1.12;letter-spacing:-0.026em;color:#F8FCFF;max-width:680px">Why a coaching company built its own software.</h2>
+    <div style="margin-top:40px;max-width:680px;display:flex;flex-direction:column;gap:28px">
+      <p data-reveal="0" style="margin:0;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);text-wrap:pretty">For over 30 years the work has looked the same. Assess the person in front of you. Understand the life they are living. Design for the years ahead, not just the week ahead. Coach the whole person, not just their training. OPEX has been doing that with clients and educating it to coaches since 1999.</p>
+      <p data-reveal="60" style="margin:0;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);text-wrap:pretty">That work has never fit the industry's tools. Coaches doing it end up stitching it together themselves: a programming app here, a spreadsheet for nutrition, a notes app for the conversations that actually move the client. The tools were built to deliver workouts. Workouts are what the wider fitness culture asks for. The coaching kept happening in the gaps.</p>
+      <p data-reveal="120" style="margin:0;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);text-wrap:pretty">So we built CoachRx. Assessment, program design, nutrition, lifestyle, communication, and the business behind it, in one place. Every feature is available from the first day of your trial, because a coach should not have to upgrade to do the job properly.</p>
+      <p data-reveal="180" style="margin:0;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);text-wrap:pretty">CoachRx does not prescribe a philosophy. Plenty of coaches on the platform have never taken an OPEX course, and it never asks them to. What it assumes is that you are coaching individuals, one at a time, and that you would rather spend your hours on the person than on the admin.</p>
+      <p data-reveal="240" style="margin:0;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);text-wrap:pretty">The platform is now led by the engineer who built the first coaching app the industry adopted at scale. He started as an OPEX coaching client and returned to OPEX and CoachRx to build the version he could not build then, on top of coaching principles that were already decades proven.</p>
+    </div>
+  </section>
+
+  <!-- BAND -->
+  <section data-screen-label="Band" style="margin-top:140px;background:#0C0E14;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div class="crx-pad" style="max-width:1200px;margin:0 auto;padding:44px 32px">
+      <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.42)">Assess · Consult · Design · Operate · Deliver — since 1999, now in one platform</span>
+    </div>
+  </section>
+
+  <!-- WHAT WE STAND FOR -->
+  <section data-screen-label="What we stand for" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:140px 32px 0">
+    <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">What we stand for</span>
+    <h2 data-reveal="60" style="margin:18px 0 0;font-size:clamp(28px,3.4vw,44px);font-weight:700;line-height:1.12;letter-spacing:-0.026em;color:#F8FCFF">What we stand for</h2>
+    <p data-reveal="120" style="margin:18px 0 0;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">Coaching is a profession, not a side hustle or a content channel. These are the beliefs behind what we build. They are not rules for how you coach.</p>
+    <div class="crx-principles" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px">
+      <div data-reveal="0" style="display:flex;flex-direction:column;gap:32px;padding:0 32px 0 0">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:17px;font-weight:600;color:#F8FCFF;letter-spacing:-0.01em">Person before program</span>
+          <span style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">Understand who you are coaching before you decide what they should do. The assessment is the reason the program works.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:17px;font-weight:600;color:#F8FCFF;letter-spacing:-0.01em">Decades over quarters</span>
+          <span style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">Real change is slow. Planning a year should be as easy as planning a week.</span>
+        </div>
+      </div>
+      <div data-reveal="60" style="display:flex;flex-direction:column;gap:32px;padding:0 32px;border-left:1px solid rgba(255,255,255,.08)">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:17px;font-weight:600;color:#F8FCFF;letter-spacing:-0.01em">Individual over generic</span>
+          <span style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">No two clients are the same. Their fitness and lifestyle should not be either.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:17px;font-weight:600;color:#F8FCFF;letter-spacing:-0.01em">Standards over shortcuts</span>
+          <span style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">Doing it properly takes longer. It is also the only version that holds.</span>
+        </div>
+      </div>
+      <div data-reveal="120" style="display:flex;flex-direction:column;gap:32px;padding:0 0 0 32px;border-left:1px solid rgba(255,255,255,.08)">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:17px;font-weight:600;color:#F8FCFF;letter-spacing:-0.01em">Relationship over interface</span>
+          <span style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">Every feature gets judged on one question. Does this put the coach closer to the client, or further away?</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:17px;font-weight:600;color:#F8FCFF;letter-spacing:-0.01em">Independence over dependence</span>
+          <span style="font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.65)">The best coaching leaves a client able to carry it themselves. We build for coaches who want that.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO'S BEHIND IT -->
+  <section data-screen-label="The people" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:140px 32px 0">
+    <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">The people</span>
+    <h2 data-reveal="60" style="margin:18px 0 0;font-size:clamp(28px,3.4vw,44px);font-weight:700;line-height:1.12;letter-spacing:-0.026em;color:#F8FCFF">Who's behind it</h2>
+    <p data-reveal="120" style="margin:28px 0 0;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);max-width:680px;text-wrap:pretty">OPEX was founded in 1999 by <strong style="font-weight:600;color:#F8FCFF">James FitzGerald</strong>. <strong style="font-weight:600;color:#F8FCFF">Carl Hardwick</strong>, CEO, leads the education and product strategy. <strong style="font-weight:600;color:#F8FCFF">Casey Jenks</strong>, CTO, leads the platform. The people building CoachRx are the people who coach, teach coaching, and are deeply connected to the needs of the professionals using the platform, which is the only reason the software knows what a coach needs.</p>
+  </section>
+
+  <!-- WHAT COACHES SAY -->
+  <section data-screen-label="What coaches say" class="crx-pad" style="max-width:1200px;margin:0 auto;padding:140px 32px 0">
+    <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">What coaches say</span>
+    <div class="crx-quotes" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;margin-top:36px">
+      <div data-reveal="0" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <p style="font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.85);text-wrap:pretty">"CoachRx allows me to deliver my group program design efficiently from the back end, and on the front end my clients get an amazing app experience. It allows for better results and retention due to the ability to have conversations with each client and tweak their program design."</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:20px">
+          <span style="width:38px;height:38px;border-radius:99px;background:linear-gradient(135deg,#004892,#1F94EA);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">BW</span>
+          <span style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600;color:#F8FCFF">Brandon Wilton</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">Owner, CrossFit South Bend</span></span>
+        </div>
+      </div>
+      <div data-reveal="70" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <p style="font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.85);text-wrap:pretty">"Whether it's custom rehab plans or their performance programs, the use of CoachRx has allowed me to get more out of my athletes and coach athletes all over the world."</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:20px">
+          <span style="width:38px;height:38px;border-radius:99px;background:linear-gradient(135deg,#282E36,#5A6977);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">AS</span>
+          <span style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600;color:#F8FCFF">Dr. Austin Schoen</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">Owner, Warrior Sports Wellness</span></span>
+        </div>
+      </div>
+      <div data-reveal="140" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <p style="font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.85);text-wrap:pretty">"CoachRx has improved my business drastically by streamlining operations. Not to mention, it's cut down on my expenses. The app has made both front and back of house more robust without added complexity."</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:20px">
+          <span style="width:38px;height:38px;border-radius:99px;background:linear-gradient(135deg,#004892,#061636);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">KK</span>
+          <span style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600;color:#F8FCFF">Kyle Krancher</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">Owner, Train &amp; Able</span></span>
+        </div>
+      </div>
+      <div data-reveal="210" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <p style="font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.85);text-wrap:pretty">"We are able to offer not only world-class individual design through CoachRx, but also world-class programs. CoachRx gave us the ability to develop a seamless way of designing our programs and distributing them to our users."</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:20px">
+          <span style="width:38px;height:38px;border-radius:99px;background:linear-gradient(135deg,#1F94EA,#58FF7A);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">SS</span>
+          <span style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600;color:#F8FCFF">Coach Sam Smith</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">Proof3 Coaching</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <section data-screen-label="Closing CTA" style="position:relative;margin-top:140px;padding:110px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0D1120 60%,#0F1526 100%)">
+    <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:1100px;height:620px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.12) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;text-align:center">
+      <h2 data-reveal="0" style="margin:0;font-size:clamp(44px,5.5vw,76px);font-weight:800;line-height:1.02;letter-spacing:-0.03em;color:#F8FCFF"><span style="color:rgba(255,255,255,.55)">Become</span> unstoppable.</h2>
+      <p data-reveal="80" style="margin-top:18px;font-size:18px;color:rgba(255,255,255,.65)">Scale with confidence. Coach without compromise.</p>
+      <div data-reveal="160" style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:72px 32px 32px;background:#08090E">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <img loading="lazy" decoding="async" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">
+          <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.45);max-width:240px">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Features</span><a href="CoachRx Features.dc.html#assess" style="font-size:13.5px;color:rgba(255,255,255,.6)">Assess</a><a href="CoachRx Features.dc.html#consult" style="font-size:13.5px;color:rgba(255,255,255,.6)">Consult</a><a href="CoachRx Features.dc.html#design" style="font-size:13.5px;color:rgba(255,255,255,.6)">Design</a><a href="CoachRx Features.dc.html#operate" style="font-size:13.5px;color:rgba(255,255,255,.6)">Operate</a><a href="CoachRx Features.dc.html#client-experience" style="font-size:13.5px;color:rgba(255,255,255,.6)">Client Experience</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Resources</span><a href="CoachRx Blog Index.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Articles</a><a href="CoachRx Podcasts.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Podcasts</a><a href="CoachRx Roadmap.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Roadmap</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Company</span><a href="https://dashboard.coachrx.app/login" style="font-size:13.5px;color:rgba(255,255,255,.6)">Log in</a><a href="CoachRx About.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">About</a><a href="CoachRx Pricing.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Pricing</a><a href="mailto:coachrx@opexfit.com" style="font-size:13.5px;color:rgba(255,255,255,.6)">Contact</a></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">
+        <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+        <span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    setTimeout(() => {
+      if (!rm) {
+        const io = new IntersectionObserver(es => es.forEach(e => {
+          if (!e.isIntersecting) return;
+          const d = parseInt(e.target.getAttribute("data-reveal") || "0", 10);
+          e.target.style.animation = `crxRise .5s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+          io.unobserve(e.target);
+        }), { threshold: 0.12 });
+        document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+      }
+      const wrap = document.getElementById("resWrap"), btn = document.getElementById("resBtn"), dd = document.getElementById("resDD");
+      if (wrap && dd) {
+        const open = v => { dd.classList.toggle("is-open", v); btn.setAttribute("aria-expanded", String(v)); };
+        wrap.addEventListener("mouseenter", () => open(true));
+        wrap.addEventListener("mouseleave", () => open(false));
+        btn.addEventListener("click", () => open(!dd.classList.contains("is-open")));
+      }
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>

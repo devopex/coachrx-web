@@ -36,6 +36,9 @@
       .crx-spec{grid-template-columns:1fr 1fr!important;row-gap:32px!important}
       .crx-spec > .crx-speccol{border-left:none!important;padding:0!important}
       .crx-cmprow{grid-template-columns:1fr!important;gap:10px!important;align-items:start!important}
+      .crx-cmpcols3{grid-template-columns:1fr!important;gap:28px!important}
+      .crx-cmptabs{margin-left:-20px;margin-right:-20px;padding:0 20px}
+      .crx-cmptabs > button{flex:none;scroll-snap-align:start}
       .crx-cmphead{display:none!important}
       .crx-cmpbody > [data-cmprail]{display:none!important}
       .crx-sysgrid{grid-template-columns:1fr!important;gap:0!important}
@@ -51,13 +54,13 @@
 
   <!-- NAV -->
   <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
-    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
     <div style="display:flex;align-items:center;gap:28px">
-      <a href="#" style="color:#F8FCFF;font-size:14px;font-weight:600">Features</a>
-      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Resources</a>
-      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Changelog</a>
-      <a href="/roadmap" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Roadmap</a>
-      <a href="#" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+      <a href="CoachRx Features.dc.html" style="color:#F8FCFF;font-size:14px;font-weight:600">Features</a>
+      <a href="CoachRx Blog Index.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Resources</a>
+      <a href="CoachRx Roadmap.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Roadmap</a>
+      <a href="CoachRx Pricing.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+      <a href="CoachRx About.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
     </div>
     <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
   </nav>
@@ -83,7 +86,7 @@
       <p data-hcta="2" style="margin:22px 0 0;font-size:18px;line-height:1.6;color:rgba(255,255,255,.66);max-width:640px;text-wrap:pretty">Assess, consult, design, operate, and deliver. Every part of your practice in one place, so nothing gets missed and nothing slows you down.</p>
       <div data-hcta="3" style="margin:32px 0 0;display:flex;flex-direction:column;align-items:center;gap:12px">
         <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
-        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Card required, nothing charged until day 15. Cancel any time.</span>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
       </div>
       <div data-hframe="1" style="position:relative;width:100%;max-width:1100px;margin-top:60px;height:480px">
         
@@ -492,20 +495,27 @@
         <div class="crx-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px">
           <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:26px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.015)">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-size:16px;font-weight:700;color:#F8FCFF">Standard Programs</span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px 10px;white-space:nowrap">Own timeline</span></div>
-            <div style="display:flex;flex-direction:column;gap:9px;margin:20px 0 18px">
-              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:22px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.4)">SC</span><span style="position:relative;flex:1;height:8px"><span style="position:absolute;left:0%;width:46%;height:100%;border-radius:4px;background:linear-gradient(90deg,rgba(31,148,234,.7),rgba(31,148,234,.3))"></span></span></div>
-              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:22px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.4)">TR</span><span style="position:relative;flex:1;height:8px"><span style="position:absolute;left:18%;width:46%;height:100%;border-radius:4px;background:linear-gradient(90deg,rgba(31,148,234,.7),rgba(31,148,234,.3))"></span></span></div>
-              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:22px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.4)">KI</span><span style="position:relative;flex:1;height:8px"><span style="position:absolute;left:36%;width:46%;height:100%;border-radius:4px;background:linear-gradient(90deg,rgba(31,148,234,.7),rgba(31,148,234,.3))"></span></span></div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin:20px 0 18px">
+              <div style="display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 12px;background:rgba(255,255,255,.02)"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);flex:none">Day 1</span><span style="font-size:12px;color:rgba(255,255,255,.65)">Lower body strength</span><span style="margin-left:auto;display:flex;gap:4px"><span style="width:22px;height:5px;border-radius:3px;background:rgba(31,148,234,.55)"></span><span style="width:14px;height:5px;border-radius:3px;background:rgba(31,148,234,.3)"></span></span></div>
+              <div style="display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 12px;background:rgba(255,255,255,.02)"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);flex:none">Day 2</span><span style="font-size:12px;color:rgba(255,255,255,.65)">Upper body + row intervals</span><span style="margin-left:auto;display:flex;gap:4px"><span style="width:16px;height:5px;border-radius:3px;background:rgba(31,148,234,.55)"></span><span style="width:20px;height:5px;border-radius:3px;background:rgba(31,148,234,.3)"></span></span></div>
+              <div style="display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 12px;background:rgba(255,255,255,.02)"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);flex:none">Day 3</span><span style="font-size:12px;color:rgba(255,255,255,.65)">Aerobic + lifestyle</span><span style="margin-left:auto;display:flex;gap:4px"><span style="width:12px;height:5px;border-radius:3px;background:rgba(31,148,234,.55)"></span><span style="width:24px;height:5px;border-radius:3px;background:rgba(31,148,234,.3)"></span></span></div>
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:2px 0 0 2px">Starts whenever the client starts</span>
             </div>
             <p style="margin:0;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62);text-wrap:pretty">Built as a set of templated days. Assign it and those days lay onto that client's calendar from their own start date, so every client runs the same program on their own timeline.</p>
           </div>
           <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:26px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.015)">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-size:16px;font-weight:700;color:#F8FCFF">Live Programs</span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px 10px;white-space:nowrap">Same day, together</span></div>
-            <div style="position:relative;display:flex;flex-direction:column;gap:9px;margin:20px 0 18px">
-              <span style="position:absolute;left:calc(32px + 18%);top:-5px;bottom:-5px;width:1px;background:rgba(255,255,255,.3)"></span>
-              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:22px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.4)">SC</span><span style="position:relative;flex:1;height:8px"><span style="position:absolute;left:18%;width:46%;height:100%;border-radius:4px;background:linear-gradient(90deg,rgba(31,148,234,.7),rgba(31,148,234,.3))"></span></span></div>
-              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:22px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.4)">TR</span><span style="position:relative;flex:1;height:8px"><span style="position:absolute;left:18%;width:46%;height:100%;border-radius:4px;background:linear-gradient(90deg,rgba(31,148,234,.7),rgba(31,148,234,.3))"></span></span></div>
-              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:22px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.4)">KI</span><span style="position:relative;flex:1;height:8px"><span style="position:absolute;left:18%;width:46%;height:100%;border-radius:4px;background:linear-gradient(90deg,rgba(31,148,234,.7),rgba(31,148,234,.3))"></span></span></div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin:20px 0 18px">
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0 9px;"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">M</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.06)"></span><span style="width:16px;height:4px;border-radius:2px;background:transparent"></span></span></span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0 9px;"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">T</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.06)"></span><span style="width:16px;height:4px;border-radius:2px;background:transparent"></span></span></span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(31,148,234,.55);border-radius:8px;padding:8px 0 9px;background:rgba(31,148,234,.1)"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7CC7FF">W</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(31,148,234,.8)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(31,148,234,.5)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(31,148,234,.3)"></span></span></span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0 9px;"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">T</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.06)"></span><span style="width:16px;height:4px;border-radius:2px;background:transparent"></span></span></span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0 9px;"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">F</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.06)"></span><span style="width:16px;height:4px;border-radius:2px;background:transparent"></span></span></span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0 9px;"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">S</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.06)"></span><span style="width:16px;height:4px;border-radius:2px;background:transparent"></span></span></span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0 9px;"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">S</span><span style="display:flex;flex-direction:column;gap:3px"><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)"></span><span style="width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.06)"></span><span style="width:16px;height:4px;border-radius:2px;background:transparent"></span></span></span>
+              </div>
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding-left:2px">Wednesday · SC, TR and KI all on today's session</span>
             </div>
             <p style="margin:0;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62);text-wrap:pretty">Attached to the calendar itself. Every client in the program follows the same day on the same date, together. One program, delivered to many clients at once.</p>
           </div>
@@ -994,7 +1004,103 @@
       <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase">12 · The difference</span>
       <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:720px"><span style="color:#F8FCFF">Built for coaching,</span> <span style="color:rgba(255,255,255,.55)">not for workout delivery.</span></h2>
       <p data-reveal="120" style="margin-top:18px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:600px;text-wrap:pretty">Most coaching platforms were built to send workouts and take payments. That's a fine job. It just isn't the whole job.</p>
-      <div data-vig="cmprail" data-reveal="160" style="margin-top:56px">
+
+      <div data-reveal="150" class="crx-cmptabs" style="display:flex;gap:8px;margin-top:44px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory">
+          <button type="button" data-cmptab="0" aria-selected="true" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:#F8FCFF;background:rgba(88,255,122,.09);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:10px 18px;cursor:pointer;transition:color .25s,background .25s,border-color .25s">TRUECOACH</button>
+          <button type="button" data-cmptab="1" aria-selected="false" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.45);background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:10px 18px;cursor:pointer;transition:color .25s,background .25s,border-color .25s">TRAINERIZE</button>
+          <button type="button" data-cmptab="2" aria-selected="false" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.45);background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:10px 18px;cursor:pointer;transition:color .25s,background .25s,border-color .25s">EVERFIT</button>
+          <button type="button" data-cmptab="3" aria-selected="false" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.45);background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:10px 18px;cursor:pointer;transition:color .25s,background .25s,border-color .25s">TRAINHEROIC</button>
+          <button type="button" data-cmptab="4" aria-selected="false" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.45);background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:10px 18px;cursor:pointer;transition:color .25s,background .25s,border-color .25s">EVERYONE ELSE</button>
+      </div>
+        <div data-cmppanel="0" style="display:block">
+          <div class="crx-cmpcols3" style="display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:36px;align-items:start;margin-top:34px">
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What they do well</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Fast drag-and-drop workout building, with edits to a program pushing to every assigned client</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Payments included free on every tier, via Stripe</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>The widest direct wearable list of any platform here: Oura, Apple, Garmin, WHOOP, Polar, Fitbit, Google Fit</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Where the ceiling is</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No assessments. Their own help centre tells coaches to build a movement screen out of workout-builder exercises and grade uploaded videos by hand</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No nutrition prescription. Meal plans are delivered as documents; logging is MyFitnessPal</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No scheduling, no consultations, no contracts, no waivers, and no practice-level reporting of any kind</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What CoachRx does instead</span>
+              <p style="margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-left:2px solid #58FF7A;border-radius:0 10px 10px 0;padding:18px 20px;text-wrap:pretty">Assessment is a first-class object, not a workaround: custom metric sets, structural balance, Body, Move, Work. Nutrition and lifestyle are prescribed in the same calendar as training. Consultations and weekly check-ins are built in, and the Business Suite covers payments, contracts, waivers and reporting on your practice.</p>
+              
+            </div>
+          </div>
+        </div>
+        <div data-cmppanel="1" style="display:none">
+          <div class="crx-cmpcols3" style="display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:36px;align-items:start;margin-top:34px">
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What they do well</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Genuine phase-based periodisation. You build named training phases and order them into a program</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Nutrition genuinely built in, including an AI meal planner with shopping lists</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Booking, selling and payments as first-class surfaces, with a working public storefront</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Where the ceiling is</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No assessments. Their own blog says fitness tests do not need to be built in “because it’s able to track any workout”. The feature request has sat open since 2020</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No practice-level reporting. There is no reporting line item in their own plan-comparison table</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Capability is sold as add-ons. The meal planner and payments are each priced on top of the plan</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What CoachRx does instead</span>
+              <p style="margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-left:2px solid #58FF7A;border-radius:0 10px 10px 0;padding:18px 20px;text-wrap:pretty">Assessment drives the program rather than being something you improvise. Every feature is on every plan from day one. Reporting covers your practice, not just your clients.</p>
+              <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:rgba(255,255,255,.45)">WHOOP and Oura reach it only through Google Health Connect, so Android only.</p>
+            </div>
+          </div>
+        </div>
+        <div data-cmppanel="2" style="display:none">
+          <div class="crx-cmpcols3" style="display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:36px;align-items:start;margin-top:34px">
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What they do well</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Nutrition is real prescription, not just targets: structured meal plans, 500+ recipes, client-side swapping, photo-based macro logging</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Habits and tasks sit in the same client calendar as training</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Deep automation, including onboarding flows that branch on form answers</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Where the ceiling is</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No assessments. Forms and questionnaires are the substitute</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No periodisation beyond multi-week templates</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Scheduling is in beta, web only, and single-trainer only. No contracts or waivers. No direct smartwatch sync at all: their help centre says the watch must sync to another app first</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What CoachRx does instead</span>
+              <p style="margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-left:2px solid #58FF7A;border-radius:0 10px 10px 0;padding:18px 20px;text-wrap:pretty">Assessment and long-term planning are the point, not an add-on. Macro, meso and micro cycles are a real object, so a year is as easy to plan as a week. Consultations and check-ins are shipped, not in beta.</p>
+              <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:rgba(255,255,255,.45)">Six paid add-ons: automation, on-demand collections, payments, meal plans, and a marketplace licence with a monthly fee and a revenue share.</p>
+            </div>
+          </div>
+        </div>
+        <div data-cmppanel="3" style="display:none">
+          <div class="crx-cmpcols3" style="display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:36px;align-items:start;margin-top:34px">
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What they do well</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>The athlete app is genuinely good: built-in AMRAP and EMOM timers, 1RM calculator, 1,500+ movements with points of performance, and it is free to the athlete</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>A real marketplace with real seller economics and attribution reporting</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Team delivery with per-athlete override inside a team</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Where the ceiling is</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No nutrition prescription at all. Their help centre suggests creating a custom “exercise” for protein or calories</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>No coach-prescribed habits, no scheduling, no billing for 1:1 clients, no contracts or waivers. Apple Health is the only wearable integration</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Readiness, streaks and nutrition display sit behind a separate subscription the athlete pays</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What CoachRx does instead</span>
+              <p style="margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-left:2px solid #58FF7A;border-radius:0 10px 10px 0;padding:18px 20px;text-wrap:pretty">Built for the one-to-one coach first, then group. Nutrition and lifestyle are prescribed by you, not logged around you. Everything a client needs is included in what you pay, so you are never asking a client to buy an upgrade.</p>
+              <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:rgba(255,255,255,.45)">TrainHeroic was acquired by Garmin in July 2026. It is architected, priced and worded around teams and facilities: personal training clients have to be organised into “Teams”, and their own help centre says the billing model “is not necessarily designed for billing personal training clients”.</p>
+            </div>
+          </div>
+        </div>
+        <div data-cmppanel="4" style="display:none">
+          <div class="crx-cmpcols3" style="display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:36px;align-items:start;margin-top:34px">
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What they do well</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Most of them are genuinely good at delivering a workout to a phone</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.7);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>Most of them will get a new coach running in an afternoon</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Where the ceiling is</span>
+              <div style="display:flex;flex-direction:column;margin-top:14px"><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>They are built to answer a business question: how do you manage more clients in less time</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>That is not the same question as how do you coach them better</span></span><span style="display:flex;gap:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.88);padding:10px 0;border-top:1px solid rgba(255,255,255,.06)"><span style="flex:none;width:14px;height:1px;background:rgba(255,255,255,.25);margin-top:11px"></span><span>The moment you want to assess a client properly, plan a year, or prescribe nutrition and lifestyle alongside training, you are back to a spreadsheet</span></span></div>
+            </div>
+            <div>
+              <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">What CoachRx does instead</span>
+              <p style="margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-left:2px solid #58FF7A;border-radius:0 10px 10px 0;padding:18px 20px;text-wrap:pretty">We built for the coaching first and the software second. OPEX has been coaching individuals and educating coaches since 1999, and CoachRx is that work made into a platform. It does not assume a philosophy. It assumes you are coaching people one at a time.</p>
+              
+            </div>
+          </div>
+        </div>
+
+      
+
+            <div data-vig="cmprail" data-reveal="160" style="margin-top:56px">
         <div class="crx-cmphead" style="display:grid;grid-template-columns:190px 1fr 1.15fr;gap:28px;padding-bottom:18px">
           <span></span>
           <span data-cmphead="" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);opacity:0;transition:opacity .4s cubic-bezier(.22,1,.36,1)">Most coaching software</span>
@@ -1009,7 +1115,7 @@
         </div>
         <div class="crx-cmprow" style="display:grid;grid-template-columns:190px 1fr 1.15fr;gap:28px;align-items:center;min-height:96px;padding:14px 0;border-top:1px solid rgba(255,255,255,.06)">
           <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Nutrition and lifestyle</span>
-          <span data-cmpthem="1" style="font-size:15px;line-height:1.5;color:rgba(255,255,255,.34);opacity:0;transition:opacity .45s cubic-bezier(.22,1,.36,1)">A separate app</span>
+          <span data-cmpthem="1" style="font-size:15px;line-height:1.5;color:rgba(255,255,255,.34);opacity:0;transition:opacity .45s cubic-bezier(.22,1,.36,1)">A separate app, or an add-on</span>
           <span data-cmpus="1" style="font-size:16px;line-height:1.5;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-radius:0 10px 10px 0;padding:16px 20px;opacity:0;transform:translateY(10px);transition:opacity .45s cubic-bezier(.22,1,.36,1),transform .45s cubic-bezier(.22,1,.36,1)">Prescribed and tracked in the same calendar as training</span>
         </div>
         <div class="crx-cmprow" style="display:grid;grid-template-columns:190px 1fr 1.15fr;gap:28px;align-items:center;min-height:96px;padding:14px 0;border-top:1px solid rgba(255,255,255,.06)">
@@ -1029,7 +1135,7 @@
         </div>
         <div class="crx-cmprow" style="display:grid;grid-template-columns:190px 1fr 1.15fr;gap:28px;align-items:center;min-height:96px;padding:14px 0;border-top:1px solid rgba(255,255,255,.06)">
           <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Feature access</span>
-          <span data-cmpthem="5" style="font-size:15px;line-height:1.5;color:rgba(255,255,255,.34);opacity:0;transition:opacity .45s cubic-bezier(.22,1,.36,1)">Gated by plan tier</span>
+          <span data-cmpthem="5" style="font-size:15px;line-height:1.5;color:rgba(255,255,255,.34);opacity:0;transition:opacity .45s cubic-bezier(.22,1,.36,1)">Gated by plan tier, or sold as add-ons</span>
           <span data-cmpus="5" style="font-size:16px;line-height:1.5;color:rgba(255,255,255,.88);background:rgba(88,255,122,.045);border-radius:0 10px 10px 0;padding:16px 20px;opacity:0;transform:translateY(10px);transition:opacity .45s cubic-bezier(.22,1,.36,1),transform .45s cubic-bezier(.22,1,.36,1)">Everything included, day one</span>
         </div>
         </div>
@@ -1119,7 +1225,7 @@
       <p data-reveal="80" style="margin:20px auto 0;font-size:17px;line-height:1.65;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">Try CoachRx free and see what changes when every part of your practice is in the same place.</p>
       <div data-reveal="160" style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:12px">
         <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
-        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Card required, nothing charged until day 15. Cancel any time.</span>
+        <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
       </div>
     </div>
   </section>
@@ -1129,12 +1235,12 @@
     <div style="max-width:1200px;margin:0 auto">
       <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
         <div style="display:flex;flex-direction:column;gap:16px">
-          <img src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">
+          <img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">
           <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.45);max-width:240px">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Features</span><a href="#assess" style="font-size:13.5px;color:rgba(255,255,255,.6)">Assess</a><a href="#consult" style="font-size:13.5px;color:rgba(255,255,255,.6)">Consult</a><a href="#design" style="font-size:13.5px;color:rgba(255,255,255,.6)">Design</a><a href="#operate" style="font-size:13.5px;color:rgba(255,255,255,.6)">Operate</a><a href="#client-experience" style="font-size:13.5px;color:rgba(255,255,255,.6)">Client Experience</a></div>
-        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Resources</span><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Articles</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Videos</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Podcasts</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Coaching Guides</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Referral Program</a></div>
-        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Company</span><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">About</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Why CoachRx</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Changelog</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Pricing</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Compare</a><a href="#" style="font-size:13.5px;color:rgba(255,255,255,.6)">Contact</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Resources</span><a href="CoachRx Blog Index.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Articles</a><a href="CoachRx Podcasts.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Podcasts</a><a href="CoachRx Roadmap.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Roadmap</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Company</span><a href="https://dashboard.coachrx.app/login" style="font-size:13.5px;color:rgba(255,255,255,.6)">Log in</a><a href="CoachRx About.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">About</a><a href="CoachRx Pricing.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Pricing</a><a href="mailto:coachrx@opexfit.com" style="font-size:13.5px;color:rgba(255,255,255,.6)">Contact</a></div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">
         <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
@@ -1160,7 +1266,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
-    setTimeout(() => { this.heroSequence(); this.setupReveals(); this.setupVignettes(); this.setupStickyNav(); this.setupCmpRail(); this.setupVigAnim(); this.setupFaq(); this.setupSlots(); }, 60);
+    setTimeout(() => { this.heroSequence(); this.setupReveals(); this.setupVignettes(); this.setupStickyNav(); this.setupCmpRail(); this.setupCmpTabs(); this.setupVigAnim(); this.setupFaq(); this.setupSlots(); }, 60);
   }
 
   q(sel) { return Array.from(document.querySelectorAll(sel)); }
@@ -1463,6 +1569,21 @@ class Component extends DCLogic {
       });
     }, { threshold: 0.15 });
     document.querySelectorAll("[data-vig^='vg']").forEach(v => io.observe(v));
+  }
+
+  setupCmpTabs() {
+    const tabs = Array.from(document.querySelectorAll("[data-cmptab]"));
+    const panels = Array.from(document.querySelectorAll("[data-cmppanel]"));
+    if (!tabs.length) return;
+    tabs.forEach((t, i) => t.addEventListener("click", () => {
+      tabs.forEach((x, j) => {
+        const a = j === i;
+        x.style.color = a ? "#F8FCFF" : "rgba(255,255,255,.45)";
+        x.style.background = a ? "rgba(88,255,122,.09)" : "transparent";
+        x.setAttribute("aria-selected", String(a));
+      });
+      panels.forEach((p, j) => { p.style.display = j === i ? "block" : "none"; });
+    }));
   }
 
   setupCmpRail() {
