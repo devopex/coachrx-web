@@ -436,6 +436,168 @@ function ensureRoadmapNav($, root, ctx) {
   if (added) ctx.navInjected = added;
 }
 
+
+/**
+ * Mobile navigation, guaranteed on every page.
+ *
+ * WHY THIS IS IN THE COMPILER AND NOT THE DESIGN
+ * Home v7 has a proper burger and full-screen sheet. About and Podcasts inherited part of it.
+ * Seven pages had NOTHING: no burger, no sheet, and a nav that simply vanished below 1080px
+ * with no way to reach any other page. Around 90% of CoachRx traffic is mobile, so that is the
+ * single most damaging defect on the site.
+ *
+ * Each design file owns its own nav, so this has drifted three times already. Guaranteeing it
+ * here means it cannot drift again, and it stays in sync because the sheet is built from the
+ * page's OWN nav links rather than a hardcoded list.
+ *
+ * Skips any page that already has `.crx-burger`, so Home keeps its hand-built version and this
+ * becomes a no-op once the design files agree.
+ */
+function ensureMobileNav($, root, ctx) {
+  const $nav = root.find("nav").first();
+  if (!$nav.length) return;
+  if ($nav.find(".crx-burger").length || root.find(".crx-sheet").length) return;
+
+  // Build the sheet from this page's own nav, so the two can never disagree.
+  const items = [];
+  $nav.find("a").each((_, a) => {
+    const $a = $(a);
+    const text = $a.text().trim();
+    const href = $a.attr("href") || "";
+    if (!text || text.length > 24) return;
+    if (/start for free/i.test(text)) return;              // the CTA is pinned to the bottom
+    if (items.some((i) => i.text === text)) return;        // dropdown parents duplicate
+    items.push({ text, href });
+  });
+  if (items.length < 2) return;
+
+  const login = items.find((i) => /^log ?in$/i.test(i.text));
+  const links = items.filter((i) => i !== login);
+
+  const li = (i, cls) =>
+    `<a href="${i.href}" style="color:${cls};font-size:20px;font-weight:600;padding:13px 0;min-height:44px;display:flex;align-items:center">${i.text}</a>`;
+
+  const sheet =
+    `<div id="mobileSheet" class="crx-sheet" aria-hidden="true">` +
+    links.map((i) => li(i, "#F8FCFF")).join("") +
+    `<span style="height:1px;background:rgba(255,255,255,.08);margin:16px 0"></span>` +
+    (login ? li(login, "rgba(255,255,255,.68)") : "") +
+    `<a href="https://dashboard.coachrx.app/signup" style="margin-top:auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 0;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35)">Start for free</a>` +
+    `</div>`;
+
+  const bar = (n, extra) =>
+    `<span data-bar="${n}" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:2px;transition:${extra}"></span>`;
+  const burger =
+    `<button id="navBurger" class="crx-burger" type="button" aria-expanded="false" aria-controls="mobileSheet" aria-label="Open menu">` +
+    bar(1, "transform .25s cubic-bezier(.22,1,.36,1)") +
+    bar(2, "opacity .2s") +
+    bar(3, "transform .25s cubic-bezier(.22,1,.36,1)") +
+    `</button>`;
+
+  // Wrap the existing nav children so they can be hidden as a group below 1080px.
+  const $kids = $nav.children();
+  if (!$nav.find(".crx-navlinks").length) {
+    $kids.slice(1).wrapAll('<span class="crx-navlinks" style="display:flex;align-items:center;gap:24px"></span>');
+  }
+  $nav.append(burger);
+  $nav.after(sheet);
+  ctx.mobileNavInjected = true;
+}
+
+const MOBILE_NAV_CSS = `
+/* Injected by dc-compile ensureMobileNav(). See that function for why. */
+.crx-burger{display:none;flex-direction:column;gap:4px;align-items:center;justify-content:center;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:0;flex:none}
+.crx-burger.is-open [data-bar="1"]{transform:translateY(6px) rotate(45deg)}
+.crx-burger.is-open [data-bar="2"]{opacity:0}
+.crx-burger.is-open [data-bar="3"]{transform:translateY(-6px) rotate(-45deg)}
+.crx-sheet{position:fixed;inset:0;z-index:90;background:rgba(10,11,15,.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;flex-direction:column;align-items:stretch;padding:84px 24px 28px;transform:translateY(-102%);transition:transform .28s cubic-bezier(.22,1,.36,1),visibility .28s;visibility:hidden}
+.crx-sheet.is-open{transform:translateY(0);visibility:visible}
+body.crx-noscroll{overflow:hidden}
+@media (max-width:1080px){
+  .crx-navlinks{display:none!important}
+  .crx-burger{display:flex}
+}
+`;
+
+const MOBILE_NAV_JS = `
+/* Injected by dc-compile ensureMobileNav(). Plain DOM, no setState: compiled pages have none. */
+(function(){
+  var b=document.getElementById("navBurger"), s=document.getElementById("mobileSheet");
+  if(!b||!s) return;
+  function set(open){
+    b.classList.toggle("is-open",open); s.classList.toggle("is-open",open);
+    b.setAttribute("aria-expanded",open?"true":"false");
+    s.setAttribute("aria-hidden",open?"false":"true");
+    b.setAttribute("aria-label",open?"Close menu":"Open menu");
+    document.body.classList.toggle("crx-noscroll",open);
+    if(open){ var f=s.querySelector("a"); if(f) f.focus(); } else { b.focus(); }
+  }
+  b.addEventListener("click",function(){ set(!s.classList.contains("is-open")); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&s.classList.contains("is-open")) set(false); });
+  s.addEventListener("click",function(e){ if(e.target.tagName==="A") set(false); });
+  window.addEventListener("resize",function(){ if(window.innerWidth>1080&&s.classList.contains("is-open")) set(false); });
+})();
+`;
+
+
+/**
+ * Responsive backstop, applied to every page.
+ *
+ * WHY
+ * Around 90% of CoachRx traffic is mobile. Home has 9 media queries and Features has 3; every
+ * other page has one or two, which is effectively no mobile design at all. These pages are
+ * almost entirely inline-styled, so a fixed `grid-template-columns:repeat(3,1fr)` or a
+ * `width:520px` in a style attribute cannot be overridden without `!important` and an attribute
+ * selector.
+ *
+ * This is deliberately NOT a substitute for designing each page for mobile. It is a floor: at
+ * 760px and below, nothing overflows, nothing is unreadably narrow, and every multi-column
+ * layout becomes a single column. Where a page already has proper mobile rules they agree with
+ * these, so nothing regresses.
+ *
+ * Appended last so it wins over inline styles. Kept narrow on purpose — only rules that are
+ * always correct on a phone.
+ */
+const RESPONSIVE_BACKSTOP = `
+@media (max-width:760px){
+  /* Nothing may push the page wider than the viewport. */
+  html,body{max-width:100%;overflow-x:hidden}
+  img,svg,video,iframe{max-width:100%!important}
+
+  /* Every multi-column grid collapses. Covers repeat(n), fr pairs and fixed-first columns. */
+  [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+
+  /* Fixed pixel widths become fluid. Three digits and up, so 44px targets survive. */
+  [style*="width:1"][style*="px"],[style*="width:2"][style*="px"],
+  [style*="width:3"][style*="px"],[style*="width:4"][style*="px"],
+  [style*="width:5"][style*="px"],[style*="width:6"][style*="px"],
+  [style*="width:7"][style*="px"],[style*="width:8"][style*="px"],
+  [style*="width:9"][style*="px"]{max-width:100%!important}
+
+  /* Absolutely positioned side panels and vignettes stack instead of colliding. */
+  [style*="position:absolute"][style*="right:0"],
+  [style*="position:absolute"][style*="right:-"]{position:relative!important;right:auto!important;bottom:auto!important;top:auto!important;transform:none!important;width:100%!important;margin-top:20px}
+
+  /* Section rhythm. 110px of vertical padding is a lot of scrolling on a phone. */
+  section,header,footer{padding-left:20px!important;padding-right:20px!important}
+  [style*="padding:110px"],[style*="padding:130px"],[style*="padding:140px"],[style*="padding:150px"],[style*="padding:170px"]{padding-top:64px!important;padding-bottom:64px!important}
+
+  /* Type: stop desktop display sizes from wrapping to one word per line. */
+  h1{font-size:clamp(32px,8.5vw,44px)!important}
+  h2{font-size:clamp(24px,6.5vw,32px)!important}
+
+  /* Multi-column text (the blog quote columns) never works on a phone. */
+  [style*="columns:2"],[style*="columns: 2"]{columns:1!important}
+
+  /* Anything genuinely wide scrolls rather than breaking the page. */
+  table,[style*="min-width:7"],[style*="min-width:8"],[style*="min-width:9"]{display:block;overflow-x:auto}
+
+  /* Touch targets. */
+  a,button,[role="button"]{min-height:44px}
+  nav a,nav button,.crx-sheet a{min-height:44px;display:flex;align-items:center}
+}
+`;
+
 /* ------------------------------------------------------------------- public API */
 
 /**
@@ -465,11 +627,16 @@ export function compileDesign(full, override) {
   fixLinks($, root, ctx);
   ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
+  ensureMobileNav($, root, ctx);
 
   return {
     html: (root.html() || "").trim(),
-    css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules].join("\n"),
-    script: scriptSrc,
+    // Mobile nav CSS/JS must ride along here too, not just in the CLI path below. The blog
+    // templates and the roadmap are compiled through this exported function and write their own
+    // .ts files, so without this they got the burger markup and none of the styling or wiring.
+    css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
+      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", RESPONSIVE_BACKSTOP].join("\n"),
+    script: scriptSrc + (ctx.mobileNavInjected ? MOBILE_NAV_JS : ""),
     data,
     hoverRules: ctx.hoverRules,
     unresolved: [...ctx.unresolved],
@@ -521,9 +688,11 @@ for (const page of PAGES) {
   fixLinks($, root, ctx);
   ensureNavItems($, root, ctx);
   ensureLegalLinks($, root, ctx);
+  ensureMobileNav($, root, ctx);
 
   const html = (root.html() || "").trim();
-  const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules].join("\n");
+  const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
+    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", RESPONSIVE_BACKSTOP].join("\n");
 
   // data minus functions, so pages can reuse the design's own copy where useful
   const plain = JSON.parse(JSON.stringify(data, (k, v) => (typeof v === "function" ? undefined : v)));
@@ -533,7 +702,7 @@ for (const page of PAGES) {
     `// GENERATED by scripts/dc-compile.mjs from "${page.file}". Do not edit by hand.\n` +
     `export const html = ${JSON.stringify(html)};\n` +
     `export const css = ${JSON.stringify(finalCss)};\n` +
-    `export const script = ${JSON.stringify(scriptSrc)};\n` +
+    `export const script = ${JSON.stringify(scriptSrc + (ctx.mobileNavInjected ? MOBILE_NAV_JS : ""))};\n` +
     `export const data = ${JSON.stringify(plain)} as const;\n`
   );
 
