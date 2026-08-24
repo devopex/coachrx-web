@@ -997,6 +997,46 @@ function fillPodcastLinks($, root, ctx) {
   ctx.podcastLinks = { set, dropped };
 }
 
+
+/**
+ * Never ship a broken image.
+ *
+ * A design pass can reference a screenshot filename that does not exist. The Custom Theming pass
+ * introduced `client-trends-full.png` and `session-complete.png`; neither had ever been in the
+ * repo, and both would have rendered as a broken-image icon on the live site. The build was green
+ * and every other check passed, so only comparing every src against the filesystem caught it.
+ *
+ * Order: alias to a real file where the content genuinely matches, otherwise drop the <img>.
+ * Dropping leaves a gap; a broken image icon looks like the whole site is broken. Prefer the gap.
+ *
+ * IMG_ALIASES must only map to a file showing the same thing. Never alias to something merely
+ * similar just to make a check go green.
+ */
+const IMG_ALIASES = {
+  // Same screen family. The design's alt is "Client Trends: nutrition and sleep", which is what
+  // client-trends-fitness.png shows.
+  "client-trends-full.png": "client-trends-fitness.png",
+};
+
+function resolveMissingImages($, root, ctx) {
+  const pub = path.join(process.cwd(), "public");
+  root.find("img[src]").each((_, el) => {
+    const $img = $(el);
+    const src = $img.attr("src") || "";
+    if (!src.startsWith("/")) return;
+    if (fs.existsSync(path.join(pub, decodeURIComponent(src)))) return;
+    const file = src.split("/").pop();
+    const alias = IMG_ALIASES[file];
+    if (alias && fs.existsSync(path.join(pub, decodeURIComponent(src.replace(file, alias))))) {
+      $img.attr("src", src.replace(file, alias));
+      (ctx.imgAliased = ctx.imgAliased || []).push(`${file} -> ${alias}`);
+      return;
+    }
+    $img.remove();
+    (ctx.imgDropped = ctx.imgDropped || []).push(file);
+  });
+}
+
 const TALL_PX = 400, TALL_VH = 90;
 function collapseTallBoxes($, root, ctx) {
   let n = 0;
@@ -1041,6 +1081,16 @@ function collapseTallBoxes($, root, ctx) {
 }
 
 const TALL_CSS = `
+/* Hide the Hero's floating phone on phones. Carl 2026-08-23: the hero already shows the web app
+   screenshot, and stacking a second device under it on a 390px screen reads as clutter. Desktop
+   keeps both.
+
+   Deliberately ONE element via the design's own purpose-built [data-hphone] hook, verified to
+   contain only client-home.png and NOT dashboard.png, so the web-app screenshot is untouched.
+   This is the opposite of the pattern-matched backstop rule that was removed: that one matched 64
+   elements and overrode the design's own work. Narrow and named, not broad and inferred. */
+@media (max-width:760px){ [data-hphone]{display:none!important} }
+
 /* Injected by dc-compile collapseTallBoxes(). See that function for why. */
 @media (max-width:760px){
   .crx-mtall{height:auto!important;min-height:0!important;max-height:none!important}
@@ -1154,6 +1204,7 @@ export function compileDesign(full, override) {
   renderImageSlots($, root, ctx);
   collapseTallBoxes($, root, ctx);
   fillPodcastLinks($, root, ctx);
+  resolveMissingImages($, root, ctx);
   enforceLogo($, root, ctx);
 
   return {
@@ -1225,6 +1276,7 @@ for (const page of PAGES) {
   renderImageSlots($, root, ctx);
   collapseTallBoxes($, root, ctx);
   fillPodcastLinks($, root, ctx);
+  resolveMissingImages($, root, ctx);
   enforceLogo($, root, ctx);
 
   const html = (root.html() || "").trim();

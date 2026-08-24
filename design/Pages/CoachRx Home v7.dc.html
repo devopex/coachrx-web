@@ -136,7 +136,8 @@
       [data-hframe]{height:auto!important;min-height:0;position:static!important;margin-top:44px!important}
       [data-hframe] > div:first-child{position:static!important;inset:auto!important;height:auto!important;border-radius:14px!important;width:100%;box-sizing:border-box}
       [data-hframe] > div:first-child > div:first-child{display:none}
-      [data-hframe] > div:first-child > div:last-child{height:auto!important;aspect-ratio:16/10;overflow:hidden}
+      [data-hframe] > div:first-child > div:last-child{height:auto!important;aspect-ratio:16/10;overflow:hidden;position:relative}
+      [data-hframe] > div:first-child > div:last-child::after{content:"";position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.92));pointer-events:none}
       [data-hphone]{position:static!important;inset:auto!important;right:auto!important;bottom:auto!important;width:240px!important;margin:20px auto 0;transform:none!important}
       [data-screen-label="Works with"] div[style*="gap:52px"],[data-screen-label="Works with"] div[style*="gap: 52px"],[data-screen-label="Works with"] div[style*="gap: 52px"],[data-screen-label="Works with"] div[style*="gap: 52px"]{gap:24px 28px!important}
       [data-screen-label="Works with"] div[style*="gap:52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span,[data-screen-label="Works with"] div[style*="gap: 52px"] > span{font-size:14px!important}
@@ -165,14 +166,19 @@
       [data-vig="rxcheck"]{position:relative!important;inset:auto!important;width:100%!important;transform:none!important;margin-top:20px;box-sizing:border-box}
       [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"],[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:1fr!important}
       [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3),[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"] > div:nth-child(3){grid-column:auto}
-      /* Custom Theming: text first, then one sane whole phone (BRIEF-21). Stage height is the compiler's job. */
-      [data-vig="theming"] div[style*="height:620px"],[data-vig="theming"] div[style*="height: 620px"]{background:transparent!important;border:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
-      [data-vig="theming"] [data-thsplash]{display:none!important}
-      [data-vig="theming"] div[style*="height:620px"] > div[style*="to top"],[data-vig="theming"] div[style*="height: 620px"] > div[style*="to top"]{display:none!important}
-      [data-vig="theming"] div[style*="width:208px"],[data-vig="theming"] div[style*="width: 208px"]{position:static!important;width:280px!important;margin:8px auto 0;padding:8px!important;border-radius:40px!important;border-bottom:1px solid rgba(255,255,255,.16)!important;box-sizing:border-box}
-      .crx-thphone-screen{border-radius:32px!important}
-      .crx-thphone-screen > span[style*="to top"]{display:none!important}
-      [data-vig="theming"] > div[style*="flex-wrap:wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"]{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+      /* Custom Theming (05) mobile: splash as backdrop, phone overlapping bottom-right (BRIEF-23) */
+      [data-screen-label="Custom Theming"] div[style*="1.1fr 0.9fr"]{grid-template-columns:1fr!important}
+      [data-screen-label="Custom Theming"] div[style*="1.1fr 0.9fr"] > div{min-width:0;width:100%;max-width:100%;box-sizing:border-box}
+      [data-screen-label="Custom Theming"] h2{font-size:clamp(26px,7vw,34px)!important;line-height:1.15!important;letter-spacing:-0.01em!important}
+      [data-screen-label="Custom Theming"] p[style*="max-width:520px"],[data-screen-label="Custom Theming"] p[style*="max-width: 520px"]{max-width:100%!important}
+      [data-screen-label="Custom Theming"] div[style*="max-width:520px"],[data-screen-label="Custom Theming"] div[style*="max-width: 520px"]{max-width:100%!important}
+      [data-screen-label="Custom Theming"] > div[style*="width:760px"],[data-screen-label="Custom Theming"] > div[style*="width: 760px"]{display:none!important}
+      [data-vig="theming"] div[style*="height:620px"],[data-vig="theming"] div[style*="height: 620px"]{height:auto!important;aspect-ratio:4/3}
+      [data-vig="theming"] [data-thsplash]{object-position:left center!important}
+      [data-vig="theming"] div[style*="width:208px"],[data-vig="theming"] div[style*="width: 208px"]{width:46%!important;right:14px!important;padding:6px 6px 0!important;border-radius:28px 28px 0 0!important}
+      .crx-thphone-screen{border-radius:22px 22px 0 0!important;aspect-ratio:9/14}
+      [data-vig="theming"] > div[style*="flex-wrap:wrap"],[data-vig="theming"] > div[style*="flex-wrap: wrap"]{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:18px -20px 0!important;padding:0 20px 8px}
+      [data-vig="theming"] > div[style*="flex-wrap:wrap"]::-webkit-scrollbar,[data-vig="theming"] > div[style*="flex-wrap: wrap"]::-webkit-scrollbar{display:none}
       [data-chip]{flex:none;scroll-snap-align:start;position:relative}
       [data-chip]::after{content:"";position:absolute;inset:-6px}
       [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"],[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"]{grid-template-columns:1fr!important}
@@ -572,28 +578,42 @@
         </div>
 
         <!-- Panel 4: Client Experience -->
-        <div data-vpanel="4" role="tabpanel" id="panel-4" aria-labelledby="tab-4" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
+        <div data-vpanel="4" data-rfx-zone="" role="tabpanel" id="panel-4" aria-labelledby="tab-4" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .45s cubic-bezier(.22,1,.36,1)">
           <div style="position:absolute;top:-60px;left:-60px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
-          <div style="position:absolute;left:0;top:24px;bottom:80px;width:58%;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:#101118;box-shadow:0 24px 80px rgba(0,0,0,.5);overflow:hidden;opacity:.85">
-            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
-            <div style="position:relative;height:100%;overflow:hidden">
-              <img loading="lazy" decoding="async" src="assets/screens/dashboard.png" alt="CoachRx coach dashboard" style="width:120%;display:block;margin:-3% 0 0 -4%">
-              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:10%;top:36px;bottom:0;width:260px;transform:rotate(-6deg);transform-origin:bottom center;padding:9px;background:#14151A;border:1px solid rgba(255,255,255,.12);border-radius:40px 40px 0 0;border-bottom:none;box-shadow:0 28px 80px rgba(0,0,0,.6);opacity:.92;z-index:1">
+            <div style="position:relative;border-radius:28px 28px 0 0;overflow:hidden;height:100%;background:#0A0B0F">
+              <img loading="lazy" decoding="async" src="assets/screens/client-trends-full.png" alt="Client Trends: nutrition and sleep" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block">
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 55%,rgba(10,11,15,.94) 100%);pointer-events:none"></div>
             </div>
+          </div>
+          <div data-rfx-pill="" style="position:absolute;left:min(calc(50% + 152px), calc(100% - 186px));top:34%;display:flex;align-items:center;gap:8px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;box-shadow:0 18px 50px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1);z-index:3;white-space:nowrap">
+            <span style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase">Training load</span>
+            <span data-rfx-pload="" style="font-size:14px;font-weight:800;color:#58FF7A;font-variant-numeric:tabular-nums">0</span>
+            <span data-rfx-pcheck="" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:99px;background:rgba(88,255,122,.15);border:1px solid rgba(88,255,122,.5);opacity:0;transform:scale(.6);transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1)"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
           </div>
           <div style="position:absolute;left:50%;transform:translateX(-50%);top:16px;bottom:0;width:280px;padding:10px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:44px 44px 0 0;border-bottom:none;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 32px 100px rgba(0,0,0,.65);overflow:hidden;z-index:2">
-            <div style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:100%">
-              <img loading="lazy" decoding="async" src="assets/screens/client-trends-fitness.png" alt="Client Trends: resting heart rate and VO₂ max" style="width:100%;display:block">
-              <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:74px;height:17px;border-radius:99px;background:#0A0B0F"></span>
-              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 74%,rgba(10,11,15,.92) 100%);pointer-events:none"></div>
-            </div>
-          </div>
-          <div data-vig="clientpop" style="position:absolute;right:0;bottom:36px;width:250px;transform:rotate(2deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:18px;box-shadow:0 32px 80px rgba(0,0,0,.7);z-index:3">
-            <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Workout complete</span>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF">Lower body</span><span style="font-size:12px;color:rgba(255,255,255,.55)">45 min</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
-              <span style="font-size:12.5px;color:rgba(255,255,255,.6)">Effort 8 / 10</span>
-              <span data-pill="1" style="font-size:11px;font-weight:600;color:#58FF7A;background:rgba(88,255,122,.1);padding:3px 10px;border-radius:999px">Logged 6:12 pm</span>
+            <div data-rfx="" style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:100%;background:#0A0B0F">
+              <div data-rfx-scroll="" style="padding:34px 16px 14px;transition:transform .6s cubic-bezier(.22,1,.36,1);will-change:transform">
+                <span style="display:block;font-size:17px;font-weight:800;letter-spacing:-0.02em;color:#F8FCFF">Rate Your Effort</span>
+                <span style="display:block;margin-top:3px;font-size:9.5px;color:rgba(255,255,255,.45)">Due Aug 21, 2026</span>
+                <div style="display:flex;flex-direction:column;gap:7px;margin-top:12px">
+                  <div data-rfx-row="1" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#2DD4BF;text-align:center">1</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">EASY</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Could do this all day</span></span></div>
+                  <div data-rfx-row="2" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#8AE85C;text-align:center">2</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">MODERATE</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Comfortable but working</span></span></div>
+                  <div data-rfx-row="3" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#EAB308;text-align:center">3</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">CHALLENGING</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Had to focus and push</span></span></div>
+                  <div data-rfx-row="4" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#F97316;text-align:center">4</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">HARD</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Really had to dig in</span></span></div>
+                  <div data-rfx-row="5" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#EF4444;text-align:center">5</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">ALL-OUT</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Nothing left in the tank</span></span></div>
+                </div>
+                <span style="display:block;margin-top:13px;font-size:10px;color:rgba(255,255,255,.7)">How many minutes was your workout?</span>
+                <div style="margin-top:6px;background:rgba(255,255,255,.09);border-radius:8px;padding:8px 10px;font-size:12px;color:#F8FCFF;min-height:15px"><span data-rfx-minval=""></span><span data-rfx-caret="min" style="display:none;color:#58FF7A">|</span></div>
+                <span style="display:block;margin-top:12px;font-size:10px;color:rgba(255,255,255,.7)">Leave a comment for your coach</span>
+                <div style="margin-top:6px;background:rgba(255,255,255,.09);border-radius:8px;padding:8px 10px;font-size:10.5px;line-height:1.45;color:rgba(255,255,255,.85);min-height:30px"><span data-rfx-comval=""></span><span data-rfx-caret="com" style="display:none;color:#58FF7A">|</span></div>
+                <div data-rfx-done="" style="margin-top:13px;background:linear-gradient(180deg,#C9D8E6,#9DB3C8);border-radius:9px;padding:9px;text-align:center;font-size:12.5px;font-weight:700;color:#0A0B0F;transition:transform .15s,opacity .15s">Done</div>
+              </div>
+              <div data-rfx-ovl="" style="position:absolute;inset:0;background:#0A0B0F;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.22,1,.36,1)">
+                <img data-rfx-shot="" loading="lazy" decoding="async" src="assets/screens/session-complete.png" alt="Great session! Workout complete recap" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;opacity:0;transform:translateY(26px) scale(.96);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)">
+                <div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,rgba(10,11,15,0),rgba(10,11,15,.9));pointer-events:none"></div>
+              </div>
+              <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:74px;height:17px;border-radius:99px;background:#000;z-index:3"></span>
             </div>
           </div>
         </div>
@@ -605,35 +625,67 @@
     <div class="crx-pcarwrap" style="display:none">
       <div class="crx-pcar">
         <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
-          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/insights.png" alt="Client metrics profile" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/insights.png" alt="Client metrics profile" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">01</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Assess</span></span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Movement, performance, lifestyle and nutrition in one profile.</span>
           </div>
         </div>
         <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
-          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/messages.png" alt="Client messaging" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/messages.png" alt="Client messaging" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">02</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Consult</span></span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Check-ins, messaging and reviews keep you close between sessions.</span>
           </div>
         </div>
         <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
-          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/calendar.png" alt="Program calendar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/calendar.png" alt="Program calendar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">03</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Design</span></span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Individualized programs across exercise, lifestyle and nutrition.</span>
           </div>
         </div>
         <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
-          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/business.png" alt="Business reporting" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/business.png" alt="Business reporting" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">04</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Operate</span></span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Payments, roster, team and reporting in the system you coach from.</span>
           </div>
         </div>
         <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
-          <div style="aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/dashboard.png" alt="CoachRx coach dashboard" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>
+          <div data-rfx-zone="" style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);background:radial-gradient(ellipse at 50% 0%, rgba(31,148,234,.12) 0%, rgba(31,148,234,0) 60%),#0C0E14;display:flex;justify-content:center">
+            <div data-rfx-pill="" style="position:absolute;right:6px;top:26%;display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 10px;box-shadow:0 14px 40px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1);z-index:4;white-space:nowrap">
+              <span style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase">Training load</span>
+              <span data-rfx-pload="" style="font-size:12px;font-weight:800;color:#58FF7A;font-variant-numeric:tabular-nums">0</span>
+              <span data-rfx-pcheck="" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:99px;background:rgba(88,255,122,.15);border:1px solid rgba(88,255,122,.5);opacity:0;transform:scale(.6);transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1)"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:48px;background:linear-gradient(180deg,rgba(12,14,20,0),rgba(12,14,20,.95));pointer-events:none;z-index:3"></div>
+            <div style="width:280px;flex:none;margin-top:10px;transform:scale(.66);transform-origin:top center;box-sizing:border-box;padding:10px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:44px 44px 0 0;border-bottom:none;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 70px rgba(0,0,0,.6)">
+            <div data-rfx="" style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:300px;background:#0A0B0F">
+              <div data-rfx-scroll="" style="padding:34px 16px 14px;transition:transform .6s cubic-bezier(.22,1,.36,1);will-change:transform">
+                <span style="display:block;font-size:17px;font-weight:800;letter-spacing:-0.02em;color:#F8FCFF">Rate Your Effort</span>
+                <span style="display:block;margin-top:3px;font-size:9.5px;color:rgba(255,255,255,.45)">Due Aug 21, 2026</span>
+                <div style="display:flex;flex-direction:column;gap:7px;margin-top:12px">
+                  <div data-rfx-row="1" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#2DD4BF;text-align:center">1</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">EASY</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Could do this all day</span></span></div>
+                  <div data-rfx-row="2" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#8AE85C;text-align:center">2</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">MODERATE</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Comfortable but working</span></span></div>
+                  <div data-rfx-row="3" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#EAB308;text-align:center">3</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">CHALLENGING</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Had to focus and push</span></span></div>
+                  <div data-rfx-row="4" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#F97316;text-align:center">4</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">HARD</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Really had to dig in</span></span></div>
+                  <div data-rfx-row="5" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:7px 11px;transition:border-color .3s,background .3s,transform .2s cubic-bezier(.22,1,.36,1)"><span style="width:13px;font-size:15px;font-weight:800;color:#EF4444;text-align:center">5</span><span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#F8FCFF">ALL-OUT</span><span style="font-size:9px;color:rgba(255,255,255,.5)">Nothing left in the tank</span></span></div>
+                </div>
+                <span style="display:block;margin-top:13px;font-size:10px;color:rgba(255,255,255,.7)">How many minutes was your workout?</span>
+                <div style="margin-top:6px;background:rgba(255,255,255,.09);border-radius:8px;padding:8px 10px;font-size:12px;color:#F8FCFF;min-height:15px"><span data-rfx-minval=""></span><span data-rfx-caret="min" style="display:none;color:#58FF7A">|</span></div>
+                <span style="display:block;margin-top:12px;font-size:10px;color:rgba(255,255,255,.7)">Leave a comment for your coach</span>
+                <div style="margin-top:6px;background:rgba(255,255,255,.09);border-radius:8px;padding:8px 10px;font-size:10.5px;line-height:1.45;color:rgba(255,255,255,.85);min-height:30px"><span data-rfx-comval=""></span><span data-rfx-caret="com" style="display:none;color:#58FF7A">|</span></div>
+                <div data-rfx-done="" style="margin-top:13px;background:linear-gradient(180deg,#C9D8E6,#9DB3C8);border-radius:9px;padding:9px;text-align:center;font-size:12.5px;font-weight:700;color:#0A0B0F;transition:transform .15s,opacity .15s">Done</div>
+              </div>
+              <div data-rfx-ovl="" style="position:absolute;inset:0;background:#0A0B0F;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.22,1,.36,1)">
+                <img data-rfx-shot="" loading="lazy" decoding="async" src="assets/screens/session-complete.png" alt="Great session! Workout complete recap" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;opacity:0;transform:translateY(26px) scale(.96);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)">
+                <div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,rgba(10,11,15,0),rgba(10,11,15,.9));pointer-events:none"></div>
+              </div>
+              <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:74px;height:17px;border-radius:99px;background:#000;z-index:3"></span>
+            </div>
+            </div>
+          </div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)">05</span><span style="font-size:16px;font-weight:700;color:#F8FCFF">Client Experience</span></span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">A clean, branded app your clients open every day.</span>
@@ -1412,7 +1464,7 @@ class Component extends DCLogic {
   componentDidMount() {
     this.rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
     this.isPhone = matchMedia("(max-width:760px)").matches;
-    setTimeout(() => { this.setupWorksWith(); this.heroSequence(); this.setupReveals(); this.setupVignettes(); this.setupSystemScroll(); if (this.rm) document.querySelector("[data-marq]")?.classList.add("is-static"); this.setupOverview(); this.setupYtGuard(); this.setupA11y(); this.setupDemo(); this.applyDurationLabels(); this.setupMobile(); this.applyConstants(); this.applyChangelog(); this.setupHomePricing(); }, 60);
+    setTimeout(() => { this.setupWorksWith(); this.heroSequence(); this.setupReveals(); this.setupVignettes(); this.setupSystemScroll(); this.setupRfx(); if (this.rm) document.querySelector("[data-marq]")?.classList.add("is-static"); this.setupOverview(); this.setupYtGuard(); this.setupA11y(); this.setupDemo(); this.applyDurationLabels(); this.setupMobile(); this.applyConstants(); this.applyChangelog(); this.setupHomePricing(); }, 60);
   }
 
   setSheet(open) {
@@ -1814,7 +1866,7 @@ class Component extends DCLogic {
   startThemeCycle(root) {
     if (this.themingStarted) return;
     this.themingStarted = true;
-    const n = 7, DWELL = 6000; // one dwell everywhere (BRIEF-13C item 3b)
+    const n = 7, DWELL = 3000; // 3s per brand, desktop and mobile alike
     let i = 0, paused = false;
     const chips = Array.from(root.querySelectorAll("[data-chip]"));
     chips.forEach(c => {
@@ -1864,6 +1916,79 @@ class Component extends DCLogic {
     root.addEventListener("focusin", pause);
     root.addEventListener("focusout", (e) => { if (!root.contains(e.relatedTarget)) resume(); });
     if (!this.rm) { setProg(0); this.themeTimer = setInterval(() => setActive((i + 1) % n), DWELL); }
+  }
+
+  // Illustrated "Rate Your Effort" loop (both instances: desktop panel 05 + mobile carousel card 05).
+  // Direct DOM only; reduced motion shows the completed form statically.
+  setupRfx() {
+    const roots = Array.from(document.querySelectorAll("[data-rfx]"));
+    if (!roots.length) return;
+    const COMMENT = "That was tough, great session!", FISTS = ["\u{1F44A}", "\u{1F44A}", "\u{1F44A}"];
+    roots.forEach(root => {
+      const q = s => root.querySelector(s);
+      const rows = Array.from(root.querySelectorAll("[data-rfx-row]")), row3 = rows[2];
+      const scroll = q("[data-rfx-scroll]"), minv = q("[data-rfx-minval]"), comv = q("[data-rfx-comval]");
+      const minc = q('[data-rfx-caret="min"]'), comc = q('[data-rfx-caret="com"]');
+      const done = q("[data-rfx-done]"), ovl = q("[data-rfx-ovl]"), shot = q("[data-rfx-shot]");
+      const zone = root.closest("[data-rfx-zone]"), pill = zone && zone.querySelector("[data-rfx-pill]");
+      const pload = pill && pill.querySelector("[data-rfx-pload]"), pcheck = pill && pill.querySelector("[data-rfx-pcheck]");
+      const mark = on => { row3.style.borderColor = on ? "#EAB308" : "rgba(255,255,255,.13)"; row3.style.background = on ? "rgba(234,179,8,.13)" : "transparent"; };
+      if (this.rm) {
+        mark(true); minv.textContent = "48"; comv.textContent = COMMENT + " " + FISTS.join("");
+        if (pill) { pill.style.opacity = "1"; pill.style.transform = "none"; pload.textContent = "264"; pcheck.style.opacity = "1"; pcheck.style.transform = "scale(1)"; }
+        return;
+      }
+      const follow = el => {
+        const need = el.offsetTop + el.offsetHeight + 18 - root.clientHeight;
+        scroll.style.transform = "translateY(" + (-Math.max(0, need)) + "px)";
+      };
+      let alive = false, timers = [];
+      const at = (t, fn) => timers.push(setTimeout(fn, t));
+      const count = () => {
+        if (!pload) return;
+        const t0 = performance.now(), D = 1100, ease = p => 1 - Math.pow(1 - p, 3);
+        const tick = now => {
+          const p = Math.min(1, (now - t0) / D);
+          pload.textContent = Math.round(264 * ease(p));
+          if (p < 1 && alive) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const cycle = () => {
+        if (!alive) return;
+        timers = [];
+        mark(false); minv.textContent = ""; comv.textContent = "";
+        minc.style.display = "none"; comc.style.display = "none";
+        scroll.style.transform = "translateY(0)";
+        ovl.style.opacity = "0";
+        if (pill) { pill.style.opacity = "0"; pill.style.transform = "translateY(10px)"; pload.textContent = "0"; pcheck.style.opacity = "0"; pcheck.style.transform = "scale(.6)"; }
+        if (shot) { shot.style.opacity = "0"; shot.style.transform = "translateY(26px) scale(.96)"; }
+        at(800, () => { row3.style.transform = "scale(.97)"; });
+        at(950, () => { row3.style.transform = "scale(1)"; mark(true); });
+        at(1600, () => { follow(minv.parentElement); minc.style.display = "inline"; });
+        at(1950, () => { minv.textContent = "4"; });
+        at(2100, () => { minv.textContent = "48"; });
+        at(2550, () => { minc.style.display = "none"; follow(comv.parentElement); comc.style.display = "inline"; });
+        for (let j = 0; j < COMMENT.length; j++) at(2850 + j * 26, () => { comv.textContent = COMMENT.slice(0, j + 1); });
+        const tf = 2850 + COMMENT.length * 26 + 220;
+        FISTS.forEach((f, j) => at(tf + j * 200, () => { comv.textContent = COMMENT + " " + FISTS.slice(0, j + 1).join(""); }));
+        const td = tf + 900;
+        at(td, () => { comc.style.display = "none"; follow(done); });
+        at(td + 350, () => { done.style.transform = "translateY(1px)"; done.style.opacity = ".85"; });
+        at(td + 550, () => { done.style.transform = ""; done.style.opacity = ""; });
+        at(td + 750, () => { if (pill) { pill.style.opacity = "1"; pill.style.transform = "translateY(0)"; } });
+        at(td + 1100, count);
+        at(td + 2350, () => { if (pcheck) { pcheck.style.opacity = "1"; pcheck.style.transform = "scale(1)"; } });
+        at(td + 2950, () => { ovl.style.opacity = "1"; });
+        at(td + 3100, () => { if (shot) { shot.style.opacity = "1"; shot.style.transform = "translateY(0) scale(1)"; } });
+        at(td + 5900, cycle);
+      };
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting && !alive) { alive = true; cycle(); }
+        else if (!e.isIntersecting && alive) { alive = false; timers.forEach(clearTimeout); timers = []; }
+      }), { threshold: 0.15 });
+      io.observe(root);
+    });
   }
 
   setupSystemScroll() {
