@@ -21,10 +21,16 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const DATA_SOURCE = "28e0519a-8d52-80c7-8e76-000b492d024d"; // CoachRx Feature Hub - Database
+// Notion exposes the SAME table under two different ids, and they are not interchangeable:
+//   DATABASE_ID    used by /v1/databases/{id}/query        (Notion-Version 2022-06-28)
+//   DATA_SOURCE_ID used by /v1/data_sources/{id}/query     (Notion-Version 2025-09-03+)
+// The original code sent the DATA SOURCE id to the data_sources endpoint while declaring
+// version 2022-06-28, and Notion answered 400 invalid_request_url — new endpoint, old version.
+// Both are kept so the request can be retried the other way round without another round trip.
+const DATABASE_ID = "28e0519a-8d52-8069-bd0e-eb9494be7244";
+const DATA_SOURCE_ID = "28e0519a-8d52-80c7-8e76-000b492d024d";
 const OUT = path.join(process.cwd(), "src", "data", "roadmap.json");
 const TOKEN = process.env.NOTION_TOKEN;
-const NOTION_VERSION = "2022-06-28";
 
 /** Public column labels. "Backlog" is internal language and reads as a junk drawer. */
 const PUBLIC_STATUS = {
@@ -79,34 +85,68 @@ function toRow(page) {
   };
 }
 
+/**
+ * Mirrors the "Public Roadmap" view in Notion exactly, read from the view's own config:
+ *   Public Roadmap checkbox is true   OR   Recently Shipped formula is the STRING "true"
+ *
+ * Recently Shipped is a formula returning text, not a checkbox. The original filter used
+ * formula:{checkbox:...}, which does not match a string formula, so even once the URL was right
+ * the shipped rows would have been dropped.
+ */
+const FILTER = {
+  or: [
+    { property: "Public Roadmap", checkbox: { equals: true } },
+    { property: "Recently Shipped", formula: { string: { equals: "true" } } },
+  ],
+};
+
+/** One page of results from whichever API shape works. */
+async function queryPage(mode, cursor) {
+  const url = mode === "classic"
+    ? `https://api.notion.com/v1/databases/${DATABASE_ID}/query`
+    : `https://api.notion.com/v1/data_sources/${DATA_SOURCE_ID}/query`;
+  const version = mode === "classic" ? "2022-06-28" : "2025-09-03";
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Notion-Version": version,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ page_size: 100, start_cursor: cursor, filter: FILTER }),
+  });
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    const err = new Error(`Notion ${res.status} ${body}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
 async function queryAll() {
-  const rows = [];
-  let cursor;
-  do {
-    const res = await fetch(`https://api.notion.com/v1/data_sources/${DATA_SOURCE}/query`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Notion-Version": NOTION_VERSION,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        page_size: 100,
-        start_cursor: cursor,
-        filter: {
-          or: [
-            { property: "Public Roadmap", checkbox: { equals: true } },
-            { property: "Recently Shipped", formula: { checkbox: { equals: true } } },
-          ],
-        },
-      }),
-    });
-    if (!res.ok) throw new Error(`Notion ${res.status} ${await res.text().catch(() => "")}`);
-    const json = await res.json();
-    rows.push(...(json.results || []));
-    cursor = json.has_more ? json.next_cursor : undefined;
-  } while (cursor);
-  return rows;
+  // Try the long-stable classic shape first. If this workspace has moved to data sources and
+  // rejects it, retry the modern shape rather than failing and costing another build.
+  for (const mode of ["classic", "datasource"]) {
+    try {
+      const rows = [];
+      let cursor;
+      do {
+        const json = await queryPage(mode, cursor);
+        rows.push(...(json.results || []));
+        cursor = json.has_more ? json.next_cursor : undefined;
+      } while (cursor);
+      if (mode !== "classic") console.log("  roadmap: used the data_sources API");
+      return rows;
+    } catch (err) {
+      const retryable = err.status === 400 || err.status === 404;
+      if (mode === "classic" && retryable) {
+        console.log(`  roadmap: classic API said ${err.status}, retrying the data_sources API`);
+        continue;
+      }
+      throw err;
+    }
+  }
 }
 
 /* ------------------------------------------------------------------------- main */
