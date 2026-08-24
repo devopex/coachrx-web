@@ -1,5 +1,5 @@
 /**
- * Home page copy, transcribed from the CoachRx Home v7 Claude Design file.
+ * Home page copy, transcribed from the CoachRx Home Claude Design file.
  * v7 is the visual source of truth for the whole site — if this and a design file
  * disagree, the design file wins.
  *

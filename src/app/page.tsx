@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { html, css, script } from "@/generated/home";
 import { DcPage } from "@/components/DcPage";
 
-/** Exact port of "CoachRx Home v7.dc.html". Edit the design file, then `npm run dc`. */
+/** Exact port of "CoachRx Home.dc.html". Edit the design file, then `npm run dc`. */
 export const metadata: Metadata = {
   title: "CoachRx — Deliver the coaching you're capable of",
   description:

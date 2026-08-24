@@ -55,7 +55,7 @@ const SRC = DESIGN_ROOT;
 const OUT = path.join(process.cwd(), "src", "generated");
 
 const PAGES = [
-  { file: "CoachRx Home v7.dc.html", name: "home" },
+  { file: "CoachRx Home.dc.html", name: "home" },
   { file: "CoachRx Features.dc.html", name: "features" },
   { file: "CoachRx Pricing.dc.html", name: "pricing" },
   { file: "CoachRx About.dc.html", name: "about" },
@@ -269,8 +269,13 @@ function applyLeaf($, node, scope, ctx) {
  * enforces it so this cannot be forgotten again.
  */
 const DESIGN_ROUTES = {
-  "CoachRx Home v7.dc.html": "/",
   "CoachRx Home.dc.html": "/",
+  // Carl renamed the file from "CoachRx Home v7.dc.html" on 2026-08-23. The other nine design
+  // files still carry the old name in their nav links and have not been re-exported, so BOTH
+  // names must map to "/". Removing this line left 17 pages shipping href="CoachRx Home
+  // v7.dc.html" — caught by the noDc invariant, not by the build. Keep it until every design
+  // file has been re-exported with the new name.
+  "CoachRx Home v7.dc.html": "/",
   "CoachRx Features.dc.html": "/features",
   "CoachRx Pricing.dc.html": "/pricing",
   "CoachRx Roadmap.dc.html": "/roadmap",
@@ -560,7 +565,7 @@ function ensureRoadmapNav($, root, ctx) {
  * Mobile navigation, guaranteed on every page.
  *
  * WHY THIS IS IN THE COMPILER AND NOT THE DESIGN
- * Home v7 has a proper burger and full-screen sheet. About and Podcasts inherited part of it.
+ * Home has a proper burger and full-screen sheet. About and Podcasts inherited part of it.
  * Seven pages had NOTHING: no burger, no sheet, and a nav that simply vanished below 1080px
  * with no way to reach any other page. Around 90% of CoachRx traffic is mobile, so that is the
  * single most damaging defect on the site.
