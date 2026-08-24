@@ -117,7 +117,29 @@ let raw;
 try {
   raw = await queryAll();
 } catch (err) {
-  bail(`Notion fetch failed: ${err.message}`);
+  // FAIL LOUDLY when a token IS present. Falling back silently made sense while there was no
+  // token: a Notion outage should not block a deploy of the whole site for one page. But once a
+  // token is configured, a failure means something is genuinely wrong, and a silent fallback is
+  // indistinguishable from success — Carl set the token, deployed, and the roadmap did not
+  // change, with nothing on the page or in the summary to say why.
+  console.error(`\nfetch-roadmap: Notion request FAILED and a token is configured.\n`);
+  console.error(`  ${err.message}\n`);
+  if (/\b404\b/.test(err.message)) {
+    console.error("  404 means the token is valid but the integration cannot see the database.");
+    console.error("  This is the usual cause and it is not the token.");
+    console.error("  Fix: open the CoachRx Feature Hub in Notion, the ... menu at the top right,");
+    console.error("       Connections, then add your integration. Notion integrations see nothing");
+    console.error("       until a database is explicitly shared with them.\n");
+  } else if (/\b401\b/.test(err.message)) {
+    console.error("  401 means the token itself was rejected: wrong value, or the integration");
+    console.error("  was deleted. Recreate it and update NOTION_TOKEN in the Cloudflare Build");
+    console.error("  variables.\n");
+  } else if (/\b429\b/.test(err.message)) {
+    console.error("  429 is Notion rate limiting. Re-run the build; nothing is misconfigured.\n");
+  }
+  console.error("  Stopping the build on purpose. A silent fallback here looks exactly like a");
+  console.error("  successful deploy, which is how this went unnoticed for two days.\n");
+  process.exit(1);
 }
 
 const rows = raw.map(toRow).filter((r) => r.feature && keep(r.status));
@@ -133,7 +155,12 @@ if (noSummary.length) {
 const usable = rows.filter((r) => r.summary);
 if (!usable.length) {
   // Almost always means the integration was created but never connected to the database.
-  bail("Notion returned 0 usable rows — check the connection is attached to the Feature Hub");
+  console.error("\nfetch-roadmap: Notion answered, but 0 rows are publishable.\n");
+  console.error("  The query worked, so auth and the database connection are both fine.");
+  console.error("  Nothing in the Feature Hub currently has Public Roadmap ticked, or a");
+  console.error("  Release Date recent enough for Recently Shipped.\n");
+  console.error("  Tick Public Roadmap on the rows you want public, then rebuild.\n");
+  process.exit(1);
 }
 
 const upcoming = usable.filter((r) => r.status !== "Shipped");
