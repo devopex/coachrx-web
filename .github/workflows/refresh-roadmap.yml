@@ -1,0 +1,45 @@
+# Rebuild the site on a schedule so /roadmap picks up Notion edits.
+#
+# WHY THIS EXISTS
+# The roadmap is baked into the page at build time by scripts/fetch-roadmap.mjs, which reads the
+# Feature Hub through NOTION_TOKEN. Nothing fetches Notion at request time, so a Notion edit is
+# invisible until a build runs. Carl does not want to run builds by hand, so this does it.
+#
+# It POSTs to a Cloudflare Deploy Hook, which triggers a normal production build on main. The
+# build re-runs fetch-roadmap and the new data ships.
+#
+# CADENCE. Every 3 hours, 8 builds a day. Hourly would be more responsive but each build costs
+# 3-5 minutes of Cloudflare build time, and 24 a day adds up fast on a small plan. If Notion
+# webhooks are available on the workspace plan, point a Feature Hub automation at the same hook
+# for near-instant updates and drop this to daily as a safety net.
+#
+# SETUP. One repo secret, CF_DEPLOY_HOOK, set to the full Deploy Hook URL from
+# Cloudflare > Workers & Pages > coachrx-web > Settings > Build > Deploy Hooks.
+# GitHub > Settings > Secrets and variables > Actions > New repository secret.
+#
+# Nothing here needs the Notion token. That lives only in Cloudflare and is only read at build
+# time, by name, from the environment.
+name: Refresh roadmap
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:        # lets you trigger it by hand from the Actions tab
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger a Cloudflare build
+        env:
+          HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "CF_DEPLOY_HOOK is not set. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          code=$(curl -s -o /tmp/out -w '%{http_code}' -X POST "$HOOK")
+          echo "Cloudflare responded $code"
+          cat /tmp/out
+          # Cloudflare returns 200 with {"success":true,...} when the build is queued.
+          [ "$code" = "200" ] || exit 1
