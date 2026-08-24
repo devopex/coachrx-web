@@ -1137,7 +1137,7 @@ const FOOTER_COLUMNS = {
     ["Podcasts", "/podcasts"],
     ["Changelog", "/changelog"],
     ["Roadmap", "/roadmap"],
-    ["Help center", "https://help.coachrx.app"],
+    ["Help center", "https://intercom.help/coachrx/en/collections/2743482-coachrx-coach-support"],
   ],
   Company: [
     ["Log in", "https://dashboard.coachrx.app/login"],
