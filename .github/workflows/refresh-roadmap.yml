@@ -13,6 +13,9 @@
 # webhooks are available on the workspace plan, point a Feature Hub automation at the same hook
 # for near-instant updates and drop this to daily as a safety net.
 #
+# DORMANT BY DEFAULT. With no CF_DEPLOY_HOOK secret this exits 0 with an explanation rather
+# than failing, so it does not email a failure every three hours before it is switched on.
+#
 # SETUP. One repo secret, CF_DEPLOY_HOOK, set to the full Deploy Hook URL from
 # Cloudflare > Workers & Pages > coachrx-web > Settings > Build > Deploy Hooks.
 # GitHub > Settings > Secrets and variables > Actions > New repository secret.
@@ -35,8 +38,16 @@ jobs:
           HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
         run: |
           if [ -z "$HOOK" ]; then
-            echo "CF_DEPLOY_HOOK is not set. Add it under Settings > Secrets and variables > Actions."
-            exit 1
+            echo "CF_DEPLOY_HOOK is not set, so there is nothing to trigger. Skipping."
+            echo
+            echo "This is not a failure. The workflow is dormant until the secret exists."
+            echo "To switch it on: GitHub > Settings > Secrets and variables > Actions >"
+            echo "New repository secret, named CF_DEPLOY_HOOK, set to the Cloudflare"
+            echo "Deploy Hook URL from Workers & Pages > coachrx-web > Settings > Build."
+            echo
+            echo "Until then /roadmap still refreshes on every push, because the build"
+            echo "re-reads Notion each time."
+            exit 0
           fi
           code=$(curl -s -o /tmp/out -w '%{http_code}' -X POST "$HOOK")
           echo "Cloudflare responded $code"
