@@ -1258,6 +1258,22 @@ function collapseTallBoxes($, root, ctx) {
       .some((k) => /position:\s*absolute/.test($(k).attr("style") || ""));
     if (positioning) { ctx.tallSkippedAbs = (ctx.tallSkippedAbs || 0) + 1; return; }
     $el.attr("class", (($el.attr("class") || "") + " crx-mtall").trim());
+
+    // An EMPTY tall box is a scroll-height spacer, and it must never intercept clicks.
+    //
+    // The Platform section has `position:relative;height:230vh` with no children, creating the
+    // track that drives the pinned rail. It sits AFTER the sticky panel in the DOM, so as a
+    // later positioned sibling it paints on top of it, and with no pointer-events it swallowed
+    // every click across 230vh — which is why "See all features" did nothing on desktop while
+    // working fine on mobile, where this collapses to zero height.
+    //
+    // Applied at ALL widths, not just mobile: a spacer with no content has no reason to receive
+    // a pointer event at any size.
+    const empty = $el.children().length === 0 && !$el.text().trim();
+    if (empty && !/pointer-events/.test(style)) {
+      $el.attr("style", style + ";pointer-events:none");
+      ctx.spacersNeutralised = (ctx.spacersNeutralised || 0) + 1;
+    }
     n++;
   });
   if (n) { ctx.tallCollapsed = n; }
