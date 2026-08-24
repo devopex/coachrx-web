@@ -1037,6 +1037,82 @@ function resolveMissingImages($, root, ctx) {
   });
 }
 
+
+/**
+ * Convert percentage-width crops to object-fit, then refuse to let the old technique come back.
+ *
+ * THE RECURRING BUG. The designs crop screenshots by making the image wider than its frame and
+ * pulling it with a negative margin: `width:150%; margin:-7% 0 0 -31%` inside an overflow:hidden
+ * box. That shears whichever edge the margin pulls, so the dashboard loses its left third and
+ * leaves blank space on the other side. Carl has reported "the web screens are not fitting" three
+ * times and asked for something that stops it happening again.
+ *
+ * It is fragile for a structural reason: the visible window depends on the frame width, the image
+ * width, the margin AND the image's intrinsic aspect ratio all agreeing. Change any one and the
+ * crop shears. object-fit:cover depends on none of them.
+ *
+ * THE CONVERSION preserves the intended focal point rather than guessing. With width:W% and
+ * margin-left:-L%, the visible window starts at L/W of the image and spans 100/W of it, so the
+ * centre of the window sits at (L + 50) / W. That becomes object-position. Same for the top.
+ *
+ * THE GUARD: anything that cannot be converted, because its frame has no size to fill, fails the
+ * build with the file and the offending style. A sheared screenshot on the live site is worse than
+ * a red build.
+ */
+function normalizeCrops($, root, ctx, label = "") {
+  const converted = [], unconvertible = [];
+  root.find("img[style]").each((_, el) => {
+    const $img = $(el);
+    const st = $img.attr("style") || "";
+    const w = /(?:^|;)\s*width:\s*(\d+(?:\.\d+)?)%/.exec(st);
+    if (!w || parseFloat(w[1]) <= 100) return;
+    const mg = /(?:^|;)\s*margin:\s*(-?[\d.]+)%\s+([^;]*?)\s*(-?[\d.]+)%/.exec(st);
+    if (!mg) return;                                     // oversized but not margin-cropped
+
+    const $frame = $img.parent();
+    const fs_ = $frame.attr("style") || "";
+    if (!/overflow:\s*hidden/.test(fs_)) return;         // not a crop frame, leave alone
+
+    const W = parseFloat(w[1]);
+    const top = parseFloat(mg[1]);                        // negative % from the top
+    const left = parseFloat(mg[3]);                       // negative % from the left
+    const posX = Math.min(100, Math.max(0, (-left + 50) / W * 100));
+    const posY = Math.min(100, Math.max(0, (-top + 50) / W * 100));
+
+    // The frame must have something to fill, or object-fit has no box to work in.
+    const sized = /height:\s*\d+(px|vh|%)/.test(fs_) || /aspect-ratio/.test(fs_);
+    if (!sized) { unconvertible.push(st.slice(0, 90)); return; }
+
+    if (!/position:\s*relative|position:\s*absolute/.test(fs_)) {
+      $frame.attr("style", fs_ + ";position:relative");
+    }
+    $img.attr("style",
+      "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" +
+      `object-position:${posX.toFixed(1)}% ${posY.toFixed(1)}%;display:block`);
+    converted.push(`${($img.attr("src") || "").split("/").pop()} ${W}%/${left}%,${top}% -> ${posX.toFixed(0)}% ${posY.toFixed(0)}%`);
+  });
+
+  if (unconvertible.length) {
+    console.error(`\ndc-compile: percentage-width crop with no sized frame in ${label || "a page"}:`);
+    for (const u of unconvertible) console.error("  ! " + u);
+    console.error("  A frame must have a height or aspect-ratio for object-fit to fill.");
+    process.exit(1);
+  }
+  if (converted.length) ctx.cropsConverted = converted;
+
+  // Guard: nothing oversized-and-margin-cropped may survive this step.
+  const left = root.find("img[style]").toArray().filter((el) => {
+    const st = $(el).attr("style") || "";
+    const w = /(?:^|;)\s*width:\s*(\d+(?:\.\d+)?)%/.exec(st);
+    return w && parseFloat(w[1]) > 100 && /margin:\s*-/.test(st) &&
+      /overflow:\s*hidden/.test($(el).parent().attr("style") || "");
+  });
+  if (left.length) {
+    console.error(`\ndc-compile: ${left.length} percentage-width crop(s) survived normalizeCrops in ${label || "a page"}.`);
+    process.exit(1);
+  }
+}
+
 const TALL_PX = 400, TALL_VH = 90;
 function collapseTallBoxes($, root, ctx) {
   let n = 0;
@@ -1205,6 +1281,7 @@ export function compileDesign(full, override) {
   collapseTallBoxes($, root, ctx);
   fillPodcastLinks($, root, ctx);
   resolveMissingImages($, root, ctx);
+  normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
 
   return {
@@ -1277,6 +1354,7 @@ for (const page of PAGES) {
   collapseTallBoxes($, root, ctx);
   fillPodcastLinks($, root, ctx);
   resolveMissingImages($, root, ctx);
+  normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
 
   const html = (root.html() || "").trim();
