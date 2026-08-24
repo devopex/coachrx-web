@@ -1012,11 +1012,17 @@ function fillPodcastLinks($, root, ctx) {
  * IMG_ALIASES must only map to a file showing the same thing. Never alias to something merely
  * similar just to make a check go green.
  */
-const IMG_ALIASES = {
-  // Same screen family. The design's alt is "Client Trends: nutrition and sleep", which is what
-  // client-trends-fitness.png shows.
-  "client-trends-full.png": "client-trends-fitness.png",
-};
+/**
+ * Empty on purpose. Carl supplied the real client-trends-full.png and session-complete.png on
+ * 2026-08-23, so the temporary alias to client-trends-fitness.png is gone — that substitute was a
+ * different screen and read as low quality, which is exactly why an alias is a stopgap and not a
+ * fix. Add an entry only when a file genuinely shows the same thing, never to silence a warning.
+ *
+ * Note for next time: the file arrived as `client-trends-full.png.png`. macOS hides known
+ * extensions, so a rename in Finder can leave a double extension that looks correct on screen.
+ * Worth checking the literal filename when an asset seems missing but the user says it is there.
+ */
+const IMG_ALIASES = {};
 
 function resolveMissingImages($, root, ctx) {
   const pub = path.join(process.cwd(), "public");
