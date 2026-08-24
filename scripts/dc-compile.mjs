@@ -1119,6 +1119,83 @@ function normalizeCrops($, root, ctx, label = "") {
   }
 }
 
+
+/**
+ * Enforce the canonical footer link columns on every page.
+ *
+ * Each design file carries its own footer, so they drift exactly like the nav did. Kandace's
+ * review found two real problems: Help Center was missing from all ten footers, and Home listed
+ * Roadmap twice, once under Resources and once under Company.
+ *
+ * Columns are matched by their heading and their links rebuilt by cloning an existing anchor from
+ * that column, so each page keeps its own footer styling. Only the set and order of links is
+ * normalised. A column heading the design does not have is left alone rather than invented.
+ */
+const FOOTER_COLUMNS = {
+  Resources: [
+    ["Articles", "/articles"],
+    ["Podcasts", "/podcasts"],
+    ["Changelog", "/changelog"],
+    ["Roadmap", "/roadmap"],
+    ["Help center", "https://help.coachrx.app"],
+  ],
+  Company: [
+    ["Log in", "https://dashboard.coachrx.app/login"],
+    ["About", "/about"],
+    ["Pricing", "/pricing"],
+    ["Contact", "mailto:coachrx@opexfit.com"],
+  ],
+};
+
+function normalizeFooterLinks($, root, ctx) {
+  const $footer = root.find("footer").first();
+  if (!$footer.length) return;
+  let changed = 0;
+
+  for (const [heading, links] of Object.entries(FOOTER_COLUMNS)) {
+    // Find the column whose first label-ish child matches this heading.
+    let $col = null;
+    $footer.find("div").each((_, c) => {
+      if ($col) return;
+      const $c = $(c);
+      if ($c.find("div").length) return;                  // only leaf columns
+      const head = $c.children().first().text().trim();
+      if (head.toLowerCase() === heading.toLowerCase()) $col = $c;
+    });
+    if (!$col || !$col.length) continue;
+
+    const $model = $col.find("a").first();
+    if (!$model.length) continue;
+    const style = $model.attr("style") || "";
+    const $head = $col.children().first().clone();
+
+    const before = $col.find("a").map((_, a) => $(a).text().trim()).get().join("|");
+    $col.empty().append($head);
+    for (const [label, href] of links) {
+      $col.append($("<a></a>").attr("href", href).attr("style", style).text(label));
+    }
+    const after = links.map(([l]) => l).join("|");
+    if (before !== after) changed++;
+  }
+
+  // Whole-footer duplicate check: the same label twice is always a mistake.
+  const labels = $footer.find("a").map((_, a) => $(a).text().trim()).get();
+  const dupes = [...new Set(labels.filter((t, i) => labels.indexOf(t) !== i))];
+  if (dupes.length) {
+    // Keep the first occurrence of each, drop later ones, but never touch the legal row.
+    const seen = new Set();
+    $footer.find("a").each((_, a) => {
+      const $a = $(a);
+      const t = $a.text().trim();
+      if (/privacy|terms/i.test(t)) return;
+      if (seen.has(t)) { $a.remove(); changed++; return; }
+      seen.add(t);
+    });
+    ctx.footerDupesRemoved = dupes;
+  }
+  if (changed) ctx.footerNormalised = changed;
+}
+
 const TALL_PX = 400, TALL_VH = 90;
 function collapseTallBoxes($, root, ctx) {
   let n = 0;
@@ -1281,6 +1358,7 @@ export function compileDesign(full, override) {
   ensureNavItems($, root, ctx);
   ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
+  normalizeFooterLinks($, root, ctx);
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
@@ -1354,6 +1432,7 @@ for (const page of PAGES) {
   ensureNavItems($, root, ctx);
   ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
+  normalizeFooterLinks($, root, ctx);
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
