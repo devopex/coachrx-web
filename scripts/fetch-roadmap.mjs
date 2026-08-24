@@ -93,12 +93,19 @@ function toRow(page) {
  * formula:{checkbox:...}, which does not match a string formula, so even once the URL was right
  * the shipped rows would have been dropped.
  */
-const FILTER = {
-  or: [
-    { property: "Public Roadmap", checkbox: { equals: true } },
-    { property: "Recently Shipped", formula: { string: { equals: "true" } } },
-  ],
-};
+/**
+ * NO SERVER-SIDE FILTER, on purpose.
+ *
+ * The "Public Roadmap" view gates on: Public Roadmap checkbox true OR the Recently Shipped formula
+ * true. Notion refuses to filter the second one — "Unable to filter based on a formula of unknown
+ * type" — and the schema flags Recently Shipped as not queryable at all. Filtering on the checkbox
+ * alone would silently drop every shipped row, which is the same class of silent-wrong that has
+ * already cost days here.
+ *
+ * Notion does RETURN the formula value, and toRow already captures both gates as viaFlag and
+ * viaShipped. So fetch the table and apply the gate locally: a transcription of the Notion view
+ * rather than an approximation of it. A couple of extra result pages on a table this size.
+ */
 
 /** One page of results from whichever API shape works. */
 async function queryPage(mode, cursor) {
@@ -113,7 +120,7 @@ async function queryPage(mode, cursor) {
       "Notion-Version": version,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ page_size: 100, start_cursor: cursor, filter: FILTER }),
+    body: JSON.stringify({ page_size: 100, start_cursor: cursor }),
   });
   if (!res.ok) {
     const body = await res.text().catch(() => "");
@@ -182,7 +189,10 @@ try {
   process.exit(1);
 }
 
-const rows = raw.map(toRow).filter((r) => r.feature && keep(r.status));
+const all = raw.map(toRow).filter((r) => r.feature && keep(r.status));
+// The gate, applied here rather than in the query. See the note above FILTER's removal.
+const rows = all.filter((r) => r.viaFlag || r.viaShipped);
+console.log(`  roadmap: ${raw.length} rows in the Hub, ${rows.length} pass the public gate`);
 
 // A feature with no summary would render as a bare heading, which looks broken. Skip it
 // rather than shipping an empty card, and say which so it can be fixed in Notion.
@@ -197,8 +207,8 @@ if (!usable.length) {
   // Almost always means the integration was created but never connected to the database.
   console.error("\nfetch-roadmap: Notion answered, but 0 rows are publishable.\n");
   console.error("  The query worked, so auth and the database connection are both fine.");
-  console.error("  Nothing in the Feature Hub currently has Public Roadmap ticked, or a");
-  console.error("  Release Date recent enough for Recently Shipped.\n");
+  console.error("  Nothing in the Hub has Public Roadmap ticked and nothing is Recently");
+  console.error("  Shipped. Both gates are read from Notion, not inferred.\n");
   console.error("  Tick Public Roadmap on the rows you want public, then rebuild.\n");
   process.exit(1);
 }
