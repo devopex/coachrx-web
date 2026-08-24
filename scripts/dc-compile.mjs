@@ -707,10 +707,20 @@ const RESPONSIVE_BACKSTOP = `
   /* Viewport-width units plus a scrollbar equals horizontal scroll. */
   [style*="vw"]{max-width:100%!important}
 
-  /* Absolutely positioned side panels and vignettes stack instead of colliding. */
-  [style*="position:absolute"][style*="right:0"],
-  [style*="position:absolute"][style*="right:-"],
-  [style*="position:absolute"][style*="bottom:0"][style*="right"]{position:relative!important;right:auto!important;bottom:auto!important;top:auto!important;left:auto!important;transform:none!important;width:100%!important;margin-top:20px}
+  /* REMOVED. This rule force-repositioned absolutely positioned elements to
+     position:relative;width:100% below 760px. It was meant for side panels but it matched 64
+     elements on Home alone: 24+ decorative gradient fade overlays (left:0;right:0;bottom:0),
+     five rotated cards, the radial glows, and the Custom Theming phone chrome at
+     right:24px;bottom:0;width:208px — which is why that phone rendered viewport-wide and
+     appeared to bleed over the sections below it.
+
+     Worse, it carried !important, so it silently overrode the design's own mobile rules. That
+     is why three design passes could not fix Custom Theming: the fixes were landing and then
+     being overridden here.
+
+     Absolutely positioned decorations inside a position:relative parent are contained by
+     construction, and html,body{overflow-x:hidden} above already prevents page-level
+     horizontal scroll. The design owns mobile layout for these elements now. */
 
   /* Tall scroll-driven spacers become dead scrolling on a phone. */
   [style*="height:230vh"],[style*="height:200vh"],[style*="height:180vh"]{height:auto!important;min-height:0!important}
