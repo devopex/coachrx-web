@@ -1029,8 +1029,9 @@ function fillPodcastLinks($, root, ctx) {
  */
 const IMG_ALIASES = {};
 
-function resolveMissingImages($, root, ctx) {
+function resolveMissingImages($, root, ctx, label = "") {
   const pub = path.join(process.cwd(), "public");
+  const missing = [];
   root.find("img[src]").each((_, el) => {
     const $img = $(el);
     const src = $img.attr("src") || "";
@@ -1043,9 +1044,27 @@ function resolveMissingImages($, root, ctx) {
       (ctx.imgAliased = ctx.imgAliased || []).push(`${file} -> ${alias}`);
       return;
     }
-    $img.remove();
-    (ctx.imgDropped = ctx.imgDropped || []).push(file);
+    // FAIL LOUDLY. Dropping the <img> avoids a broken-image icon, but it is silent, and silence
+    // is how four testimonial avatars went missing while every other change landed: the design
+    // asked for `uploads/Austin Schoen.png`, the files had been put in
+    // public/images/testimonial photos/, and this step quietly deleted all four.
+    //
+    // A missing asset is always someone needing to drop a file in a specific folder, so say
+    // exactly which file and exactly where, and stop the build.
+    missing.push({ file, src });
   });
+
+  if (missing.length) {
+    console.error(`\ndc-compile: ${missing.length} image(s) the design asks for do not exist${label ? " in " + label : ""}:\n`);
+    for (const m of missing) {
+      console.error(`  ! ${m.src}`);
+      console.error(`    put the file at: public${m.src}`);
+    }
+    console.error("\n  A silent drop is how four testimonial avatars went missing while every other");
+    console.error("  change landed. Add the file, or add an IMG_ALIASES entry ONLY if an existing");
+    console.error("  file shows the same thing.\n");
+    process.exit(1);
+  }
 }
 
 
