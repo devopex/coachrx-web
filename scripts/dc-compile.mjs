@@ -276,6 +276,8 @@ const DESIGN_ROUTES = {
   // v7.dc.html" — caught by the noDc invariant, not by the build. Keep it until every design
   // file has been re-exported with the new name.
   "CoachRx Home v7.dc.html": "/",
+  // v2 pass, 2026-08-29. Same trap as v7: other design files may still link the v2 name.
+  "CoachRx Home v2.dc.html": "/",
   "CoachRx Features.dc.html": "/features",
   "CoachRx Pricing.dc.html": "/pricing",
   "CoachRx Roadmap.dc.html": "/roadmap",
@@ -682,6 +684,17 @@ const MOBILE_NAV_JS = `
  * Appended last so it wins over inline styles. Kept narrow on purpose — only rules that are
  * always correct on a phone.
  */
+/**
+ * The floating overview-video launcher sits bottom-right, which is exactly where the Intercom
+ * bubble sits on a phone. The design file carried this rule until the v2 pass deleted it and the
+ * mobile gate caught it (2026-08-29). Chrome-adjacent positioning is compiler-owned, so it lives
+ * here now and survives every future design export.
+ */
+const LAUNCHER_CLEARANCE = `
+@media (max-width:760px){
+  .crx-ovw{right:auto!important;left:20px!important;bottom:calc(20px + var(--crx-launcher-clear))!important}
+}`;
+
 const RESPONSIVE_BACKSTOP = `
 @media (max-width:760px){
   /* Nothing may push the page wider than the viewport. */
@@ -1414,7 +1427,7 @@ export function compileDesign(full, override) {
     // templates and the roadmap are compiled through this exported function and write their own
     // .ts files, so without this they got the burger markup and none of the styling or wiring.
     css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
-      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP].join("\n"),
+      ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP, LAUNCHER_CLEARANCE].join("\n"),
     script: scriptSrc + (ctx.mobileNavInjected ? MOBILE_NAV_JS : ""),
     data,
     hoverRules: ctx.hoverRules,
@@ -1484,7 +1497,7 @@ for (const page of PAGES) {
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
-    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP].join("\n");
+    ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP, LAUNCHER_CLEARANCE].join("\n");
 
   // data minus functions, so pages can reuse the design's own copy where useful
   const plain = JSON.parse(JSON.stringify(data, (k, v) => (typeof v === "function" ? undefined : v)));
