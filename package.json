@@ -12,7 +12,7 @@
     "prebuild": "npm run generate",
     "dc": "node scripts/dc-compile.mjs && node scripts/build-blog.mjs && node scripts/build-roadmap.mjs",
     "roadmap": "node scripts/fetch-roadmap.mjs && node scripts/build-roadmap.mjs",
-    "generate": "node scripts/fetch-roadmap.mjs && node scripts/generate-posts.mjs && node scripts/dc-compile.mjs && node scripts/build-blog.mjs && node scripts/build-roadmap.mjs && node scripts/build-changelog.mjs && node scripts/check-mobile.mjs",
+    "generate": "node scripts/fetch-roadmap.mjs && node scripts/generate-posts.mjs && node scripts/dc-compile.mjs && node scripts/build-blog.mjs && node scripts/build-roadmap.mjs && node scripts/build-changelog.mjs && node scripts/check-runtime.mjs && node scripts/check-mobile.mjs",
     "precf:build": "npm run generate",
     "mobile:accept": "node scripts/check-mobile.mjs --accept"
   },
