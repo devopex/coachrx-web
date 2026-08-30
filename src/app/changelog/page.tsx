@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { html, css, script } from "@/generated/changelog-index";
+import { html, css, script } from "@/generated/updates-changelog";
 import { DcPage } from "@/components/DcPage";
 import { getReleases } from "@/lib/changelog";
 

@@ -811,14 +811,14 @@ const RESPONSIVE_BACKSTOP = `
  *
  * Final shape:  Features · Resources ▾ · Updates ▾ · Pricing    |   Log in   [Start for free]
  *   Resources ▾  Articles, Podcasts
- *   Updates ▾    Changelog, Roadmap
+ *   Updates ▾    Roadmap, Changelog, Feature requests
  *
  * Built here rather than in the design files because each file owns its own nav and this has
  * drifted on every single pass. Doing it once at compile time is the only way it stays identical.
  */
 const NAV_MENUS = [
   { label: "Resources", items: [["Articles", "/articles"], ["Podcasts", "/podcasts"]] },
-  { label: "Updates", items: [["Changelog", "/changelog"], ["Roadmap", "/roadmap"]] },
+  { label: "Updates", items: [["Roadmap", "/roadmap"], ["Changelog", "/changelog"], ["Feature requests", "/feature-requests"]] },
 ];
 const NAV_ORDER = ["Features", "Resources", "Updates", "Pricing"];
 
@@ -1201,8 +1201,9 @@ const FOOTER_COLUMNS = {
   Resources: [
     ["Articles", "/articles"],
     ["Podcasts", "/podcasts"],
-    ["Changelog", "/changelog"],
     ["Roadmap", "/roadmap"],
+    ["Changelog", "/changelog"],
+    ["Feature requests", "/feature-requests"],
     ["Help center", "https://intercom.help/coachrx/en/collections/2743482-coachrx-coach-support"],
   ],
   Company: [

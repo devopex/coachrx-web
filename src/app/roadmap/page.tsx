@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { html, css, script } from "@/generated/roadmap";
+import { html, css, script } from "@/generated/updates-roadmap";
 import { DcPage } from "@/components/DcPage";
 
 /**
- * Exact port of "CoachRx Roadmap.dc.html", compiled against the CoachRx Feature Hub in
- * Notion at build time. Edit the design file, then `npm run roadmap`.
+ * The Roadmap tab of "CoachRx Updates.dc.html", split out by scripts/build-updates.mjs and
+ * compiled against the CoachRx Feature Hub in Notion at build time.
  *
  * App root rather than (chrome) because the ported design carries its own nav and footer.
  */

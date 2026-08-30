@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    header,section,footer{overflow-x:clip}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .crx-tabs{display:flex;gap:36px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .crx-tab{display:inline-flex;align-items:center;min-height:44px;padding:0 2px;font-size:15px;font-weight:600;color:rgba(255,255,255,.62);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
+    .crx-tab:hover{color:#F8FCFF}
+    .crx-tab.is-active{color:#F8FCFF;border-bottom-color:#58FF7A}
+    .crx-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;transition:border-color .18s}
+    .crx-card:hover{border-color:rgba(255,255,255,.14)}
+    .crx-chip{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:4px 8px;white-space:nowrap}
+    .crx-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+    .crx-logrow{display:grid;grid-template-columns:72px 100px 1fr auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)}
+    .crx-reqrow{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);min-height:44px;box-sizing:border-box}
+    .crx-in{display:block;width:100%;box-sizing:border-box;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);border-radius:0;color:#F8FCFF;font-family:inherit;font-size:17px;line-height:1.6;padding:12px 0;outline:none;transition:border-color .2s;text-wrap:unset}
+    .crx-in::placeholder{color:rgba(255,255,255,.35)}
+    .crx-in:focus{border-bottom-color:rgba(88,255,122,.6)}
+    .crx-route{border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);background:#08090E;padding:13px 32px;text-align:center}
+    .crx-pad{padding-left:32px;padding-right:32px}
+    h1,h2,h3{text-wrap:balance}
+    @media (max-width:760px){
+      .crx-pad{padding-left:20px!important;padding-right:20px!important}
+      .crx-nav-links{display:none!important}
+      .crx-tabs{gap:18px}
+      .crx-tab{font-size:13px}
+      .crx-cols{grid-template-columns:1fr;gap:0}
+      .crx-col2{border-top:1px solid rgba(255,255,255,.08);margin-top:32px;padding-top:32px}
+      .crx-logrow{grid-template-columns:1fr;gap:4px}
+      .crx-panel{padding-top:72px!important;padding-bottom:72px!important}
+    }
+  </style>
+</helmet>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <a href="CoachRx Home v2.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div class="crx-nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="CoachRx Features v2.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Features</a>
+      <a href="CoachRx Blog Index.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Resources</a>
+      <a href="CoachRx Updates v2.dc.html" style="color:#F8FCFF;font-size:14px;font-weight:600">Updates</a>
+      <a href="CoachRx Pricing v2.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+      <a href="CoachRx About.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
+    </div>
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:10px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
+  </nav>
+
+  <!-- ══════════ ROUTE /roadmap ══════════ -->
+  <section data-screen-label="Route /roadmap" class="crx-pad crx-panel" style="max-width:1150px;margin:0 auto;padding-top:180px;padding-bottom:120px">
+    <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.03;letter-spacing:-0.03em;color:#F8FCFF">Product updates</h1>
+    <p data-reveal="40" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:560px;text-wrap:pretty">What we are building, what we shipped, and what you have asked for.</p>
+    <div data-reveal="80" class="crx-tabs" style="margin-top:44px">
+      <a class="crx-tab is-active" href="/roadmap">Roadmap</a>
+      <a class="crx-tab" href="/changelog">Changelog</a>
+      <a class="crx-tab" href="/feature-requests">Feature requests</a>
+    </div>
+
+    <div data-reveal="120" style="margin-top:40px">
+      <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)">Updated {{ updated }}</span>
+    </div>
+
+    <div class="crx-cols" style="margin-top:28px">
+      <div>
+        <div data-reveal="0" style="display:flex;align-items:baseline;gap:8px;padding-bottom:18px">
+          <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#58FF7A">Building now</span>
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· {{ buildingCount }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ building }}" as="it" hint-placeholder-count="4">
+            <div class="crx-card" data-reveal="0">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                <span style="font-size:16px;font-weight:600;color:#F8FCFF;line-height:1.4">{{ it.feature }}</span>
+                <span class="crx-chip">{{ it.pillar }}</span>
+              </div>
+              <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.62);text-wrap:pretty">{{ it.summary }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="crx-col2">
+        <div data-reveal="0" style="display:flex;align-items:baseline;gap:8px;padding-bottom:18px">
+          <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Up next</span>
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· {{ upnextCount }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ upnext }}" as="it" hint-placeholder-count="3">
+            <div class="crx-card" data-reveal="0">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                <span style="font-size:16px;font-weight:600;color:#F8FCFF;line-height:1.4">{{ it.feature }}</span>
+                <span class="crx-chip">{{ it.pillar }}</span>
+              </div>
+              <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.62);text-wrap:pretty">{{ it.summary }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ ROUTE /changelog ══════════ -->
+  <div class="crx-route"><span style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)">Build preview · direct route /changelog</span></div>
+  <section data-screen-label="Route /changelog" class="crx-pad crx-panel" style="max-width:1150px;margin:0 auto;padding-top:120px;padding-bottom:120px">
+    <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.03;letter-spacing:-0.03em;color:#F8FCFF">Product updates</h1>
+    <p data-reveal="40" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:560px;text-wrap:pretty">What we are building, what we shipped, and what you have asked for.</p>
+    <div data-reveal="80" class="crx-tabs" style="margin-top:44px">
+      <a class="crx-tab" href="/roadmap">Roadmap</a>
+      <a class="crx-tab is-active" href="/changelog">Changelog</a>
+      <a class="crx-tab" href="/feature-requests">Feature requests</a>
+    </div>
+
+    <p data-reveal="120" style="margin:40px 0 0;font-size:13px;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)">44 releases. Every month since 2021.</p>
+
+    <div data-reveal="140" style="margin-top:20px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ releases }}" as="r" hint-placeholder-count="8">
+        <div class="crx-logrow">
+          <span style="font-family:var(--font-mono);font-size:13px;font-weight:600;color:#F8FCFF">{{ r.version }}</span>
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ r.date }}</span>
+          <span style="font-size:15px;line-height:1.55;color:rgba(255,255,255,.62);text-wrap:pretty">{{ r.summary }}</span>
+          <a href="CoachRx Changelog Entry.dc.html" style="font-size:13px;font-weight:600;color:#FFFFFF;white-space:nowrap" style-hover="color:#FFFFFF;opacity:.75">Read →</a>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ══════════ ROUTE /feature-requests ══════════ -->
+  <div class="crx-route"><span style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)">Build preview · direct route /feature-requests</span></div>
+  <section data-screen-label="Route /feature-requests" class="crx-pad crx-panel" style="max-width:1150px;margin:0 auto;padding-top:120px;padding-bottom:120px">
+    <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.03;letter-spacing:-0.03em;color:#F8FCFF">Product updates</h1>
+    <p data-reveal="40" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:560px;text-wrap:pretty">What we are building, what we shipped, and what you have asked for.</p>
+    <div data-reveal="80" class="crx-tabs" style="margin-top:44px">
+      <a class="crx-tab" href="/roadmap">Roadmap</a>
+      <a class="crx-tab" href="/changelog">Changelog</a>
+      <a class="crx-tab is-active" href="/feature-requests">Feature requests</a>
+    </div>
+
+    <div data-reveal="120" style="margin-top:48px;max-width:640px">
+      <h3 style="margin:0;font-size:22px;font-weight:600;line-height:1.3;color:#F8FCFF">Tell us what to build.</h3>
+      <p style="margin:14px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);text-wrap:pretty">Every request is read. Plenty of what is on this roadmap started as one.</p>
+      <a href="https://opexfitness.notion.site/3880519a8d5280bda54ed97f81a8ae3c" target="_blank" rel="noopener" style="margin-top:28px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#58FF7A;border-radius:10px;color:#04310F;padding:15px 32px;min-height:44px;transition:opacity .2s" style-hover="opacity:.88">Submit a feature request</a>
+      <p style="margin:16px 0 0;font-family:var(--font-mono);font-size:11px;line-height:1.7;letter-spacing:.04em;color:rgba(255,255,255,.42)">Takes a minute. We ask for your name, the email on your CoachRx account, which platform it is for, and what you want it to do.</p>
+    </div>
+
+    <div data-reveal="0" style="margin-top:88px;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="display:flex;flex-wrap:wrap;gap:0 48px">
+        <a href="/roadmap" style="display:inline-flex;align-items:center;min-height:44px;padding:18px 0;font-size:14px;color:rgba(255,255,255,.62)" style-hover="color:#F8FCFF">Already building it?&nbsp;<span style="color:#F8FCFF;font-weight:600">See the roadmap &rarr;</span></a>
+        <a href="/changelog" style="display:inline-flex;align-items:center;min-height:44px;padding:18px 0;font-size:14px;color:rgba(255,255,255,.62)" style-hover="color:#F8FCFF">Already shipped?&nbsp;<span style="color:#F8FCFF;font-weight:600">Read the changelog &rarr;</span></a>
+        <a href="https://intercom.help/coachrx/en/collections/2743482-coachrx-coach-support" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:44px;padding:18px 0;font-size:14px;color:rgba(255,255,255,.62)" style-hover="color:#F8FCFF">Need help instead?&nbsp;<span style="color:#F8FCFF;font-weight:600">Help center &rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:#08090E">
+    <div style="max-width:1150px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+      <img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
+      <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  // ⚠ Data contract: the compiler replaces roadmap cards and releases with live rows.
+  renderVals() {
+    return {
+      updated: "AUG 2026",
+      buildingCount: 4,
+      upnextCount: 3,
+      building: [
+        { feature: "Workout Builder v2", pillar: "Design", summary: "Fast free-text prescription, parsed into structured sets, reps, load, tempo and rest." },
+        { feature: "CoachRx MCP", pillar: "Operate", summary: "Connect CoachRx to the AI tools you already use." },
+        { feature: "Wearable trends v2", pillar: "Assess", summary: "Deeper sleep, HRV and readiness trends on the client profile." },
+        { feature: "Consult scheduling upgrades", pillar: "Consult", summary: "Booking links that respect your calendar, with reminders that reduce no-shows." }
+      ],
+      upnext: [
+        { feature: "Program comparison view", pillar: "Design", summary: "Two phases side by side while you plan the next mesocycle." },
+        { feature: "Client report scheduling", pillar: "Operate", summary: "Branded reports that send themselves on the cadence you set." },
+        { feature: "Check-in templates", pillar: "Consult", summary: "Reusable check-in question sets per client type." }
+      ],
+      releases: [
+        { version: "v5.8", date: "Aug 2026", summary: "Google and Apple sign-in, plus a new billing experience." },
+        { version: "v5.7", date: "Jul 2026", summary: "Program library search spans the CoachRx Index, your exercise library and every saved template." },
+        { version: "v5.6", date: "Jun 2026", summary: "Client Effort and Training Load — session ratings roll up on the profile." },
+        { version: "v5.5", date: "May 2026", summary: "TrueMed HSA/FSA payments and online indicators." },
+        { version: "v5.4", date: "Apr 2026", summary: "Scheduled messages — write now, send at the moment it lands best." },
+        { version: "v5.3", date: "Mar 2026", summary: "Custom theming across the client app, splash to home." },
+        { version: "v5.2", date: "Feb 2026", summary: "Voice notes inside any client thread." },
+        { version: "v5.1", date: "Jan 2026", summary: "Wearable trends — WHOOP and Oura insights on client profiles." }
+      ],
+    };
+  }
+  componentDidMount() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setTimeout(() => {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const d = parseInt(e.target.getAttribute("data-reveal") || "0", 10);
+        e.target.style.animation = `crxRise .4s cubic-bezier(.22,1,.36,1) ${d}ms both`;
+        io.unobserve(e.target);
+      }), { threshold: 0.12 });
+      document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+    }, 50);
+  }
+}
+</script>
+</body>
+</html>
