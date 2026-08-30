@@ -68,6 +68,24 @@ if (fs.existsSync(DATA)) {
   }
 }
 
+// Live releases for the Changelog tab. Repointing /changelog at this split output dropped the
+// real data (2026-08-30): every "Read" link pointed at /changelog itself and the rows showed the
+// design's invented v5.x version numbers. Inject the real ones.
+const CHANGELOG = path.join(ROOT, "src", "data", "changelog.json");
+if (fs.existsSync(CHANGELOG)) {
+  const raw = JSON.parse(fs.readFileSync(CHANGELOG, "utf8"));
+  const all = (Array.isArray(raw) ? raw : raw.releases || raw.items || []).filter((r) => !r.draft);
+  const releases = all.slice(0, 8).map((r) => ({
+    date: r.date
+      ? new Date(r.date).toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase()
+      : "",
+    summary: (r.description || "").replace(/\s+/g, " ").trim().replace(/[,\s]+$/, "").slice(0, 150),
+    href: `/changelog/${r.slug}`,
+  }));
+  override = { ...(override || {}), releases };
+  console.log(`\nbuild-updates: injected ${releases.length} live releases (of ${all.length})`);
+}
+
 const out = compileDesign(SRC, override);
 const $ = cheerio.load(out.html, null, false);
 

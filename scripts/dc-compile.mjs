@@ -286,6 +286,25 @@ const BANNED_CLAIMS = [
  * A <form action="mailto:..."> silently does nothing in every modern browser. One shipped on the
  * Updates page (2026-08-30) as the only way to submit a feature request. Fail the build instead.
  */
+/**
+ * "Log in" rendered four different ways across eight pages (2026-08-30): plain grey text on home and
+ * about, brighter white on features, and a bordered pill on pricing, roadmap, changelog and feature
+ * requests. Each design file styled it independently. The compiler owns nav, so it owns this too.
+ *
+ * It is deliberately the quiet one: "Start for free" is the filled button, so Log in is text.
+ */
+const LOGIN_STYLE =
+  "color:rgba(255,255,255,.68);font-size:14px;font-weight:500;display:inline-flex;" +
+  "align-items:center;white-space:nowrap;flex:none;padding:10px 0;background:none;border:none;text-decoration:none";
+
+function enforceLoginStyle($, root) {
+  root.find("nav a, header a").each((_, a) => {
+    const $a = $(a);
+    if (!/^log ?in$/i.test(($a.text() || "").trim())) return;
+    $a.attr("style", LOGIN_STYLE);
+  });
+}
+
 function checkDeadForms($, root, file) {
   if (root.find('form[action^="mailto:"]').length) {
     console.error(`dc-compile: DEAD FORM in "${file}": <form action="mailto:...">`);
@@ -1224,11 +1243,14 @@ const FOOTER_COLUMNS = {
     ["Changelog", "/changelog"],
     ["Feature requests", "/feature-requests"],
     ["Help center", "https://intercom.help/coachrx/en/collections/2743482-coachrx-coach-support"],
-  ],
-  Company: [
-    ["Log in", "https://dashboard.coachrx.app/login"],
-    ["About", "/about"],
     ["Pricing", "/pricing"],
+  ],
+  // "Company" held Log in and Pricing, which are not company links — Carl flagged it reading wrong
+  // (2026-08-30). Pricing moves up into the product column and Log in sits beside Start for free in
+  // the nav, leaving a column that genuinely is about the company.
+  Company: [
+    ["About", "/about"],
+    ["Careers", "https://www.opexfit.com/careers/"],
     ["Contact", "mailto:coachrx@opexfit.com"],
   ],
 };
@@ -1469,6 +1491,7 @@ export function compileDesign(full, override) {
   resolveMissingImages($, root, ctx);
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
+  enforceLoginStyle($, root);
   checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
 
@@ -1545,6 +1568,7 @@ for (const page of PAGES) {
   resolveMissingImages($, root, ctx);
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
+  enforceLoginStyle($, root);
   checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
 
