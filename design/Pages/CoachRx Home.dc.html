@@ -377,7 +377,7 @@
       #wwMore{padding:12px 10px;margin:-12px -10px}
       /* Replica: keep desktop dimensions, optically scale the whole frame (never restructure).
          --crx-apf = 100vw / 1320 as a number; wrapper height = post-scale frame height (64px nav + 620px panes = 684px). */
-      :root{--crx-apf:tan(atan2(100vw,1320px))}
+      :root{--crx-apf:.5}
       [data-hframe]{margin-top:44px!important;width:100vw!important;margin-left:-20px;height:calc(684px * var(--crx-apf));overflow:hidden;animation:none!important}
       .crx-app{width:1320px;transform:scale(var(--crx-apf));transform-origin:0 0}
       .crx-appanes,#apx:checked~.crx-appanes{height:620px!important;max-height:none!important}
@@ -436,7 +436,7 @@
       [data-screen-label="Innovation strip"] div[style*="grid-template-columns:1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
       [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"] > div:nth-child(n+3),[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"] > div:nth-child(n+3){display:none!important}
       /* Mobile: the fixed price bar is the persistent CTA; the Close section duplicates it */
-      [data-screen-label="Close"]{display:none!important}
+      [data-screen-label="Close"]{padding:72px 20px!important}
       .crx-pricebar{display:flex}
       /* Nav: transparent + blur, wordmark / Start for free / burger only */
       nav[data-screen-label="Nav"]{background:transparent!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important}

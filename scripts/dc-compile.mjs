@@ -735,6 +735,12 @@ const MOBILE_NAV_JS = `
 const LAUNCHER_CLEARANCE = `
 @media (max-width:760px){
   .crx-ovw{right:auto!important;left:20px!important;bottom:calc(20px + var(--crx-launcher-clear))!important}
+  /* is-pill sizing wins. The element carried .is-pill on mobile but still computed to the 232x212
+     card size — 59% of a 375px screen, floating over the hero. Some later rule beats the class, so
+     force it here where nothing can outrank it. Measured on staging 2026-08-30. */
+  .crx-ovw,.crx-ovw.is-card,.crx-ovw.is-pill{width:168px!important;height:44px!important;border-radius:99px!important}
+  .crx-ovw .crx-ovw-cardc{display:none!important}
+  .crx-ovw .crx-ovw-pillc{display:flex!important}
 }`;
 
 const RESPONSIVE_BACKSTOP = `
