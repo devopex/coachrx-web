@@ -282,6 +282,19 @@ const BANNED_CLAIMS = [
   /\b4[,.]?000\s*\+?\s*(coaches|practices|orgs)/i,
   /hundreds of (practices|coaches)/i,
 ];
+/**
+ * A <form action="mailto:..."> silently does nothing in every modern browser. One shipped on the
+ * Updates page (2026-08-30) as the only way to submit a feature request. Fail the build instead.
+ */
+function checkDeadForms($, root, file) {
+  if (root.find('form[action^="mailto:"]').length) {
+    console.error(`dc-compile: DEAD FORM in "${file}": <form action="mailto:...">`);
+    console.error(`  Browsers no longer submit forms to mailto. It looks like it works and does nothing.`);
+    console.error(`  Use a link to a real form, or POST to an endpoint.`);
+    process.exit(1);
+  }
+}
+
 function checkClaims($, root, ctx, file) {
   const text = root.text() || "";
   for (const re of BANNED_CLAIMS) {
@@ -1450,6 +1463,7 @@ export function compileDesign(full, override) {
   resolveMissingImages($, root, ctx);
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
+  checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
 
   return {
@@ -1525,6 +1539,7 @@ for (const page of PAGES) {
   resolveMissingImages($, root, ctx);
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
+  checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
 
   const html = (root.html() || "").trim();
