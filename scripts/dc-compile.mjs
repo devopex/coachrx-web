@@ -121,6 +121,12 @@ function extractData(scriptSrc, props) {
       scrollToPanel() {} setState() {} q() { return []; }
     },
     matchMedia: () => ({ matches: false }),
+    // Design files run inside Claude Design where React is a global. Without it here,
+    // renderVals() threw on a single React.createElement, returned {}, and EVERY sc-for list
+    // compiled empty — the five-pillar rail, the video tiles and the testimonial quotes all
+    // shipped as blank columns (2026-08-30). The same omission had already broken every
+    // animation at runtime; this is the build-time half of it.
+    React: { createElement: (type, props, ...children) => ({ type, props, children }) },
     console, __props: props, out: null,
   });
   const code = `${scriptSrc}
@@ -129,8 +135,12 @@ function extractData(scriptSrc, props) {
     vm.runInContext(code, ctx, { timeout: 8000 });
     return ctx.out || {};
   } catch (err) {
-    console.warn(`      ! renderVals() failed: ${err.message}`);
-    return {};
+    // Returning {} here silently empties every sc-for on the page. That warning scrolled past
+    // unnoticed and shipped three blank sections, so it fails the build now.
+    console.error(`dc-compile: renderVals() THREW while extracting data: ${err.message}`);
+    console.error(`  Every sc-for list on this page would compile empty and ship as a blank column.`);
+    console.error(`  Usually a global the design has and this sandbox does not. Add it in extractData.`);
+    process.exit(1);
   }
 }
 
@@ -170,9 +180,14 @@ function compileNode($, node, scope, ctx) {
     const list = resolve(listExpr, scope);
     const as = el.attr("as") || "item";
     if (!Array.isArray(list)) {
-      ctx.unresolved.add(`sc-for list: ${listExpr.trim()}`);
-      el.remove();
-      continue;
+      // An unresolved list used to be recorded as a warning and the element quietly removed, so a
+      // whole section shipped as a blank column. That is exactly how the five-pillar rail, the
+      // video tiles and the testimonial quotes all went missing at once (2026-08-30) — the note
+      // scrolled past in the build log and nobody saw it.
+      console.error(`dc-compile: UNRESOLVED LIST "${listExpr.trim()}"`);
+      console.error(`  Its sc-for would be removed and that section would render empty.`);
+      console.error(`  Check renderVals() actually returns it, and that extractData can run.`);
+      process.exit(1);
     }
     const parts = [];
     let idx = 0;
