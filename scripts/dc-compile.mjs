@@ -268,6 +268,35 @@ function applyLeaf($, node, scope, ctx) {
  * RULE: adding a page to PAGES means adding it here in the same edit. The assertion below
  * enforces it so this cannot be forgotten again.
  */
+/**
+ * Unapproved count claims fail the build.
+ * Settled on the 2026-08-27 call: "if we say 10,000, we are lying." The agreed line is
+ * "Thousands of coaches in 40+ countries." Four instances of 10,000+ survived across About,
+ * Features and Pricing and shipped unnoticed, so this is a gate rather than a review item.
+ */
+const BANNED_CLAIMS = [
+  /\b10[,.]?000\s*\+?/i,
+  /\b10K\s*\+/i,
+  /\b20[,.]?000\s*\+?/i,
+  /\b8[,.]?000\s*\+?\s*(coaches|practices)/i,
+  /\b4[,.]?000\s*\+?\s*(coaches|practices|orgs)/i,
+  /hundreds of (practices|coaches)/i,
+];
+function checkClaims($, root, ctx, file) {
+  const text = root.text() || "";
+  for (const re of BANNED_CLAIMS) {
+    const m = text.match(re);
+    if (m) {
+      const i = text.indexOf(m[0]);
+      console.error(`dc-compile: UNAPPROVED COUNT CLAIM in "${file}": "${m[0]}"`);
+      console.error(`  context: ...${text.slice(Math.max(0, i - 70), i + 70).replace(/\s+/g, " ")}...`);
+      console.error(`  The only approved wording is "Thousands of coaches in 40+ countries."`);
+      console.error(`  Settled on the 2026-08-27 call with Casey and Kandace. Fix the design file.`);
+      process.exit(1);
+    }
+  }
+}
+
 const DESIGN_ROUTES = {
   "CoachRx Home.dc.html": "/",
   // Carl renamed the file from "CoachRx Home v7.dc.html" on 2026-08-23. The other nine design
@@ -1420,6 +1449,7 @@ export function compileDesign(full, override) {
   resolveMissingImages($, root, ctx);
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
+  checkClaims($, root, ctx, full);
 
   return {
     html: (root.html() || "").trim(),
@@ -1494,6 +1524,7 @@ for (const page of PAGES) {
   resolveMissingImages($, root, ctx);
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
+  checkClaims($, root, ctx, page.file);
 
   const html = (root.html() || "").trim();
   const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
