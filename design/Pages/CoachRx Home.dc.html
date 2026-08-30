@@ -343,7 +343,7 @@
       [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3),[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"] > div:nth-child(3){grid-column:1/-1}
     }
     @media (max-width:760px){
-      section{padding-left:20px!important;padding-right:20px!important;padding-top:72px!important;padding-bottom:72px!important}
+      section{padding-left:20px!important;padding-right:20px!important;padding-top:72px!important;padding-bottom:72px!important;margin-top:0!important;margin-bottom:0!important}
       .crx-miggrid{display:flex!important;flex-direction:column;gap:18px}
       [data-migsrc]{order:1}
       [data-migcap="1"]{order:2;margin-top:0!important;text-align:center}
@@ -352,50 +352,54 @@
       [data-migcard]{order:5}
       [data-migcap="3"]{order:6;margin-top:0!important;text-align:center}
       [data-migsrc]{flex-direction:row!important;flex-wrap:wrap;justify-content:center;gap:8px!important}
-      .crx-migzb{height:56px!important}
+      .crx-migzb{height:44px!important}
       .crx-migfan{display:none}
       .crx-migvert{display:block}
       .crx-mnav{display:none}
+      /* Overview launcher: locked to the pill, pinned bottom-left, never the card */
+      .crx-ovw{left:20px;right:auto}
+      .crx-ovw.is-card{width:168px;height:44px;border-radius:99px}
+      .crx-ovw.is-card:hover{transform:none;border-color:rgba(255,255,255,.14)}
+      .crx-ovw.is-card .crx-ovw-cardc{opacity:0;pointer-events:none}
+      .crx-ovw.is-card .crx-ovw-pillc{opacity:1;pointer-events:auto}
       [data-hpop="2"]{display:block!important;position:static!important;width:min(320px,92%)!important;margin:16px auto 0;box-sizing:border-box}
-      .crx-thstage{height:360px!important}
+      .crx-thstage{height:210px!important}
       .crx-thset{gap:10px}
-      .crx-thset div[style*="width:196px"]{width:37%!important;height:272px!important}
-      .crx-thset div[style*="width:248px"]{width:48%!important;height:336px!important}
-      .crx-thset > span{margin-bottom:110px!important}
+      .crx-thset > div:first-of-type{width:37%!important;height:160px!important}
+      .crx-thset > div:last-of-type{width:48%!important;height:204px!important}
+      .crx-thset > span{margin-bottom:56px!important}
+      [data-theming] .crx-thbody{gap:10px!important}
+      [data-screen-label="Custom Theming"] p{margin-top:12px!important;font-size:15px!important;line-height:1.55!important}
       .crx-thl{padding:10px 12px}
       .crx-thlrow{font-size:11.5px!important}
-      [data-screen-label="Works with"] div[style*="gap:52px"]{gap:24px 28px!important}
+      [data-screen-label="Works with"] div[style*="gap:52px"]{gap:18px 22px!important}
       [data-screen-label="Works with"] div[style*="gap:52px"] > span{font-size:14px!important}
       #wwMore{padding:12px 10px;margin:-12px -10px}
-      [data-hframe]{margin-top:44px!important}
-      .crx-apl{height:44px}
-      .crx-apnavrow{-webkit-mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 40px),transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 40px),transparent 100%)}
-      .crx-appanes{height:auto;max-height:620px;overflow:hidden}
-      .crx-apgrid{grid-template-columns:1fr!important}
-      .crx-apbiz{grid-template-columns:1fr 1fr!important}
-      [data-hframe]{width:calc(100vw - 24px)!important}
-      .crx-fpill{height:44px}
-      .crx-tpav{width:52px;height:52px}
-      .crx-sectab{padding:8px 0 10px}
-      .crx-ttab{padding:10px 0}
-      .crx-tkpill{padding:10px 14px}
-      [data-frow]{height:auto;min-height:44px;flex-wrap:wrap;row-gap:2px;padding:4px 8px}
-      [data-appane] div[style*="grid-template-columns:150px 1fr"],[data-appane] div[style*="grid-template-columns:170px 1fr"]{grid-template-columns:1fr!important}
+      /* Replica: keep desktop dimensions, optically scale the whole frame (never restructure).
+         --crx-apf = 100vw / 1320 as a number; wrapper height = post-scale frame height (64px nav + 620px panes = 684px). */
+      :root{--crx-apf:tan(atan2(100vw,1320px))}
+      [data-hframe]{margin-top:44px!important;width:100vw!important;margin-left:-20px;height:calc(684px * var(--crx-apf));overflow:hidden;animation:none!important}
+      .crx-app{width:1320px;transform:scale(var(--crx-apf));transform-origin:0 0}
+      .crx-appanes,#apx:checked~.crx-appanes{height:620px!important;max-height:none!important}
+      .crx-expand{display:none!important}
       .crx-daygrid{grid-template-columns:1fr!important}
-      .crx-dcol{border-left:none!important;padding:18px 0 22px 34px!important;position:relative}
+      .crx-dcol{border-left:none!important;padding:12px 0 14px 34px!important;position:relative}
       .crx-daynoderow{position:absolute;left:0;top:16px;height:auto;margin:0}
-      .crx-dfig{height:auto!important;margin-top:14px!important}
-      .crx-dfig > div{max-width:380px}
+      .crx-dfig{display:none!important}
       .crx-thder{gap:9px}
       .crx-thdb{width:40px!important;height:22px!important}
       section#hero{padding-top:96px!important;padding-bottom:0!important}
-      footer{padding:48px 20px 24px!important}
+      footer{padding:40px 20px 20px!important}
       div[style*="gap:64px"],div[style*="gap: 64px"],div[style*="gap: 64px"],div[style*="gap: 64px"]{gap:32px!important}
-      #hero p[data-hcta="1"]{font-size:16.5px!important;max-width:100%!important}
-      #hero div[data-hcta="2"] > a{width:min(100%,340px);box-sizing:border-box;display:flex;align-items:center;justify-content:center}
+      #hero [data-hero-variant]{align-items:flex-start!important;text-align:left!important}
+      #hero h1{font-size:38px!important;font-weight:700!important;line-height:1.1!important;letter-spacing:-0.022em!important}
+      #hero p[data-hcta="1"]{font-size:16.5px!important;max-width:100%!important;text-align:left}
+      #hero div[data-hcta="2"]{width:100%;align-items:flex-start!important;text-align:left}
+      #hero div[data-hcta="2"] > a{width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center}
       /* The Problem (box 4): five cards stack in flow, no scatter, no overlap (BRIEF-22) */
       [data-vig="converge"]{height:auto!important;min-height:0;position:static!important;transform:none!important;display:flex;flex-direction:column;gap:12px}
       [data-vig="converge"] > div{position:static!important;inset:auto!important;top:auto!important;left:auto!important;transform:none!important;width:100%!important;box-sizing:border-box}
+      [data-vig="converge"] > div:nth-child(n+4){display:none!important}
       [data-cframe]{height:auto!important}
       [data-systrack] > div[style*="230vh"]{display:none}
       [data-systrack] > div[style*="position:sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"],[data-systrack] > div[style*="position: sticky"]{position:static!important;display:block!important;min-height:0!important}
@@ -413,11 +417,13 @@
       [data-vig="macro"]{position:relative!important;inset:auto!important;height:auto!important}
       [data-vig="macro"] div[style*="1fr 0.8fr"]{grid-template-columns:1fr!important;height:auto!important}
       [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child{border-right:none!important;border-bottom:1px solid rgba(255,255,255,.07)}
-      [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child > div:nth-of-type(3){display:none}
-      [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child > div:nth-of-type(5){display:none}
-      [data-vig="rxcheck"]{position:relative!important;inset:auto!important;width:100%!important;transform:none!important;margin-top:20px;box-sizing:border-box}
-      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"],[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:1fr!important}
-      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3,minmax(0,1fr))"] > div:nth-child(3),[data-screen-label="Coaching Intelligence"] div[style*="repeat(3, minmax(0, 1fr))"] > div:nth-child(3){grid-column:auto}
+      [data-vig="macro"] div[style*="1fr 0.8fr"] > div:first-child{display:none!important}
+      [data-vig="rxcheck"]{display:none!important}
+      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3"]{grid-template-columns:1fr!important}
+      [data-screen-label="Coaching Intelligence"] div[style*="1fr 1fr"]{grid-template-columns:1fr!important;gap:20px!important}
+      /* Mobile compression: one primary visual per spotlight (cards 2-3 and the checklist are desktop detail) */
+      [data-screen-label="Coaching Intelligence"] div[style*="repeat(3"] > div:nth-child(n+2){display:none!important}
+      [data-screen-label="Custom Theming"] div[data-reveal="180"]{display:none!important}
       /* Custom Theming (05) mobile: splash as backdrop, phone overlapping bottom-right (BRIEF-23) */
       [data-screen-label="Custom Theming"] div[style*="1.1fr 0.9fr"]{grid-template-columns:1fr!important}
       [data-screen-label="Custom Theming"] div[style*="1.1fr 0.9fr"] > div{min-width:0;width:100%;max-width:100%;box-sizing:border-box}
@@ -426,13 +432,22 @@
       [data-screen-label="Custom Theming"] div[style*="max-width:520px"],[data-screen-label="Custom Theming"] div[style*="max-width: 520px"]{max-width:100%!important}
       [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"],[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"]{grid-template-columns:1fr!important}
       [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"] > div,[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"] > div{padding:22px!important}
-      .crx-quotes{grid-template-columns:1fr!important}
+      .crx-quotes{display:none!important}
       [data-screen-label="Innovation strip"] div[style*="grid-template-columns:1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"],[data-screen-label="Innovation strip"] div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
+      [data-screen-label="Who it's for"] div[style*="repeat(3,1fr)"] > div:nth-child(n+3),[data-screen-label="Who it's for"] div[style*="repeat(3, 1fr)"] > div:nth-child(n+3){display:none!important}
+      /* Mobile: the fixed price bar is the persistent CTA; the Close section duplicates it */
+      [data-screen-label="Close"]{display:none!important}
       .crx-pricebar{display:flex}
-      footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+      /* Nav: transparent + blur, wordmark / Start for free / burger only */
+      nav[data-screen-label="Nav"]{background:transparent!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important}
+      [data-navsignup]{display:inline-flex!important;font-size:12px;padding:8px 14px}
+      .crx-navcta a[href*="login"]{display:none}
+      .crx-navcta{gap:12px}
+      footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important;gap:24px!important}
       footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}
+      footer div[style*="1.4fr 1fr 1fr 1fr"] > div:nth-child(4){display:none!important}
       footer div[style*="justify-content:space-between"],footer div[style*="justify-content: space-between"],footer div[style*="justify-content: space-between"],footer div[style*="justify-content: space-between"]{flex-direction:column;gap:10px;text-align:center}
-      footer a{padding:6px 0}
+      footer a{padding:4px 0}
       a[style*="font-weight:600;color"],a[style*="font-weight: 600;color"],a[style*="font-weight: 600;color"],a[style*="font-weight: 600;color"]{padding-top:10px;padding-bottom:10px;display:inline-block}
       [data-vig="macro"] > div:first-child{display:none}
       .crx-mshot img{aspect-ratio:1677/1232;object-fit:cover}

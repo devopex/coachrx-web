@@ -5,7 +5,18 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.coachrx.app"),
   title: { default: "CoachRx", template: "%s | CoachRx" },
   description: "Coaching software for coaches who design for one person at a time.",
-  openGraph: { siteName: "CoachRx", type: "website" },
+  openGraph: {
+    siteName: "CoachRx",
+    type: "website",
+    // Without this every link shared to Slack, iMessage, LinkedIn or X rendered as a bare text
+    // link. Added 2026-08-30. The image is the real coach dashboard on brand navy, generated so it
+    // stays in step with the product rather than being a hand-made graphic that drifts.
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "The CoachRx coach dashboard" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
+  },
   robots: { index: true, follow: true },
 };
 
