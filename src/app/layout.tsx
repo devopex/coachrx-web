@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -46,7 +47,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="stylesheet" href="/design/_ds/colors_and_type.css" />
       </head>
-      <body className="bg-base font-sans text-ink antialiased">{children}</body>
+      <body className="bg-base font-sans text-ink antialiased">
+        {/*
+         * Google Tag Manager, carried over from the Squarespace site (read from the live page on
+         * 2026-08-30). The new site had NO analytics of any kind, so switching DNS would have
+         * silently stopped GA4, stopped the Meta pixel mid-campaign, and left us unable to answer
+         * whether the redesign converts better — the question the rebuild exists to answer.
+         *
+         * One container carries everything already configured there:
+         *   GTM  GTM-PXWPDW9Z
+         *   GA4  G-RT01M0WZP5, G-RJQGQHD06P, G-SFSVQM16F1
+         *   Meta pixel  395715638666649
+         *   UA-188029456-2 is legacy and stopped collecting in 2023
+         *
+         * Loaded after interactive so it never competes with first paint.
+         */}
+        <Script id="gtm" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PXWPDW9Z');`}
+        </Script>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-PXWPDW9Z"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }
