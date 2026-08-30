@@ -333,6 +333,78 @@ function checkKnownRegressions($, root, file) {
   }
 }
 
+/**
+ * Hoist repeated inline styles onto shared classes.
+ *
+ * The blog index shipped at 553KB, of which 272KB (49%) was inline style attributes — and 234KB of
+ * that was nine identical style strings repeated 338 times, once per post row. Same shape on any
+ * page built from a repeated row. Hoisting them to classes removes the duplication without touching
+ * a single row, a single link or the crawlability of the page.
+ *
+ * Conservative by design: only strings seen `MIN` times are hoisted, the generated class is
+ * APPENDED to any existing class list rather than replacing it, and the rules are emitted before
+ * the hover rules so a :hover still wins.
+ */
+const HOIST_MIN = 12;
+function hoistRepeatedStyles($, root, ctx) {
+  const freq = new Map();
+  root.find("[style]").each((_, el) => {
+    const v = $(el).attr("style");
+    if (!v || v.length < 24) return;            // tiny styles cost more in class name than they save
+    freq.set(v, (freq.get(v) || 0) + 1);
+  });
+  const hoisted = [...freq.entries()].filter(([, n]) => n >= HOIST_MIN);
+  if (!hoisted.length) return;
+
+  const rules = [];
+  hoisted.forEach(([decl], i) => {
+    const cls = `crx-h${i}`;
+    rules.push(`.${cls}{${decl.replace(/;\s*$/, "")}}`);
+    root.find("[style]").each((_, el) => {
+      const $el = $(el);
+      if ($el.attr("style") !== decl) return;
+      $el.removeAttr("style");
+      $el.attr("class", [$el.attr("class"), cls].filter(Boolean).join(" "));
+    });
+  });
+  ctx.hoistedRules = rules;
+  ctx.hoistedCount = hoisted.length;
+}
+
+/**
+ * Every <img> needs an alt. Three on the home page had none, including the wordmark twice, so a
+ * screen reader announced nothing where the brand is. Decorative images get alt="" deliberately,
+ * which tells assistive tech to skip them rather than read a filename.
+ */
+const ALT_BY_SRC = [
+  [/coachrx-primary|coachrx-icon|coachrx_white/i, "CoachRx"],
+  [/grain\.png/i, ""],
+  [/ytimg|maxresdefault/i, "CoachRx product overview video"],
+];
+function ensureImageAlts($, root) {
+  root.find("img").each((_, el) => {
+    const $img = $(el);
+    if ($img.attr("alt") !== undefined) return;
+    const src = $img.attr("src") || "";
+    const hit = ALT_BY_SRC.find(([re]) => re.test(src));
+    $img.attr("alt", hit ? hit[1] : "");
+  });
+}
+
+/**
+ * Lazy-load below-the-fold images. Home was fetching 30 images on first paint, most of them far
+ * down the page. The first EAGER_COUNT stay eager so the hero still paints immediately.
+ */
+const EAGER_COUNT = 4;
+function ensureLazyImages($, root) {
+  root.find("img").each((i, el) => {
+    const $img = $(el);
+    if ($img.attr("loading")) return;
+    $img.attr("loading", i < EAGER_COUNT ? "eager" : "lazy");
+    if (i >= EAGER_COUNT && !$img.attr("decoding")) $img.attr("decoding", "async");
+  });
+}
+
 function checkDeadForms($, root, file) {
   if (root.find('form[action^="mailto:"]').length) {
     console.error(`dc-compile: DEAD FORM in "${file}": <form action="mailto:...">`);
@@ -1524,12 +1596,17 @@ export function compileDesign(full, override) {
   checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
 
+  ensureImageAlts($, root);
+  ensureLazyImages($, root);
+  hoistRepeatedStyles($, root, ctx);
   return {
     html: (root.html() || "").trim(),
     // Mobile nav CSS/JS must ride along here too, not just in the CLI path below. The blog
     // templates and the roadmap are compiled through this exported function and write their own
     // .ts files, so without this they got the burger markup and none of the styling or wiring.
-    css: [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
+    css: [css, "",
+      ctx.hoistedRules?.length ? "/* repeated inline styles, hoisted to classes */" : "", ...(ctx.hoistedRules || []),
+      "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
       ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP, LAUNCHER_CLEARANCE].join("\n"),
     script: scriptSrc + (ctx.mobileNavInjected ? MOBILE_NAV_JS : ""),
     data,
@@ -1602,8 +1679,13 @@ for (const page of PAGES) {
   checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
 
+  ensureImageAlts($, root);
+  ensureLazyImages($, root);
+  hoistRepeatedStyles($, root, ctx);
   const html = (root.html() || "").trim();
-  const finalCss = [css, "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
+  const finalCss = [css, "",
+    ctx.hoistedRules?.length ? "/* repeated inline styles, hoisted to classes */" : "", ...(ctx.hoistedRules || []),
+    "", "/* style-hover attributes, compiled to real rules */", ...ctx.hoverRules,
     ctx.mobileNavInjected ? MOBILE_NAV_CSS : "", NAV_CSS, TALL_CSS, RESPONSIVE_BACKSTOP, LAUNCHER_CLEARANCE].join("\n");
 
   // data minus functions, so pages can reuse the design's own copy where useful

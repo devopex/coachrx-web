@@ -28,7 +28,21 @@ export function snapshot() {
       // must not decrease
       mobileBlocks: (css.match(/max-width:\s*760px/g) || []).length,
       tallCollapsed: $(".crx-mtall").length,
-      objectFitImgs: $('img[style*="object-fit"]').length,
+      // Counts images that get object-fit either inline OR via a hoisted class. dc-compile now
+      // lifts repeated inline styles onto shared classes (553KB -> 314KB on the blog index), so
+      // counting only inline styles reported a phantom regression: podcasts fell 22 -> 0 while
+      // rendering identically.
+      objectFitImgs: (() => {
+        const hoisted = new Set(
+          [...css.matchAll(/\.(crx-h\d+)\{([^}]*)\}/g)]
+            .filter((m) => /object-fit/.test(m[2]))
+            .map((m) => m[1]),
+        );
+        return $("img").toArray().filter((e) => {
+          if (/object-fit/.test($(e).attr("style") || "")) return true;
+          return ($(e).attr("class") || "").split(/\s+/).some((c) => hoisted.has(c));
+        }).length;
+      })(),
       // must stay exactly
       burger: $(".crx-burger").length,
       sheet: $(".crx-sheet").length,

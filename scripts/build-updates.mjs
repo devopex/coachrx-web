@@ -38,9 +38,9 @@ if (!fs.existsSync(SRC)) {
 }
 
 const ROUTES = [
-  { label: "Route /roadmap", name: "updates-roadmap", route: "/roadmap" },
-  { label: "Route /changelog", name: "updates-changelog", route: "/changelog" },
-  { label: "Route /feature-requests", name: "updates-requests", route: "/feature-requests" },
+  { label: "Route /roadmap", name: "updates-roadmap", route: "/roadmap", h1: "Roadmap" },
+  { label: "Route /changelog", name: "updates-changelog", route: "/changelog", h1: "Changelog" },
+  { label: "Route /feature-requests", name: "updates-requests", route: "/feature-requests", h1: "Feature requests" },
 ];
 
 // Live roadmap rows, if fetch-roadmap has run. Falls back to the design's sample data.
@@ -113,6 +113,18 @@ for (const r of ROUTES) {
   $$("*")
     .filter((_, e) => /^Build preview · direct route/.test(($$(e).text() || "").trim()))
     .remove();
+
+  // All three routes shipped <h1>Product updates</h1>. That is what a screen reader announces and
+  // what Google weights, so each route gets its own. "Product updates" survives as the eyebrow.
+  const $h1 = $$("h1").first();
+  if ($h1.length && r.h1) {
+    $h1.before(
+      `<span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;` +
+        `letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px">` +
+        `${$h1.text().trim()}</span>`,
+    );
+    $h1.text(r.h1);
+  }
 
   const html = ($$.root().html() || "").trim();
   fs.writeFileSync(
