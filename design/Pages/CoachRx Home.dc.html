@@ -485,7 +485,7 @@
       <div data-reswrap="" onMouseEnter="{{ showRes }}" onMouseLeave="{{ hideRes }}" style="position:relative;display:flex;align-items:center;height:60px">
         <button id="resBtn" type="button" aria-haspopup="true" aria-expanded="false" onClick="{{ toggleRes }}" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.68);font-size:14px;font-weight:500;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit">Resources<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
         <div id="resDD" style="display:none;position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px">
-          <div style="background:#14151A;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:190px;box-shadow:0 24px 56px rgba(0,0,0,.6);display:flex;flex-direction:column">
+          <div style="background:#14151A;border-radius:12px;padding:8px;min-width:190px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.6);display:flex;flex-direction:column">
             <a href="CoachRx Blog Index.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Articles</a>
             <a href="CoachRx Podcasts.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Podcasts</a>
           </div>
@@ -766,14 +766,14 @@
             </span>
             <button id="ovwClose" onClick="{{ closeOverview }}" aria-label="Close video" style="width:28px;height:28px;flex:none;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.85);font-size:15px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s" style-hover="background:rgba(255,255,255,.12)">×</button>
           </div>
-          <div id="ovwFrame" style="position:relative;width:100%;aspect-ratio:16/9;max-height:82vh;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 40px 120px rgba(0,0,0,.7);background:#0A0B0F">
+          <div id="ovwFrame" style="position:relative;width:100%;aspect-ratio:16/9;max-height:82vh;border-radius:16px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 40px 120px rgba(0,0,0,.7);background:#0A0B0F">
             <div id="ovwHost" style="position:absolute;inset:0"></div>
           </div>
         </div>
       </div>
       <div id="demoModal">
         <div data-demo-bg="" onClick="{{ closeDemo }}" style="position:absolute;inset:0;background:rgba(6,7,10,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)"></div>
-        <div role="dialog" aria-modal="true" aria-label="Book a demo" style="position:relative;display:flex;flex-direction:column;width:min(680px,94vw);height:min(860px,88vh);border-radius:16px;border:1px solid rgba(255,255,255,.08);background:#0C0E14;box-shadow:0 40px 120px rgba(0,0,0,.7);overflow:hidden">
+        <div role="dialog" aria-modal="true" aria-label="Book a demo" style="position:relative;display:flex;flex-direction:column;width:min(680px,94vw);height:min(860px,88vh);border-radius:16px;background:#0C0E14;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 40px 120px rgba(0,0,0,.7);overflow:hidden">
           <div style="padding:22px 24px 18px;border-bottom:1px solid rgba(255,255,255,.08)">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
               <span style="display:flex;flex-direction:column;gap:6px">
@@ -838,13 +838,13 @@
         <p data-reveal="180" style="margin-top:14px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:460px">But scattered tools, missed touchpoints, and limited visibility make it harder than it should be.</p>
       </div>
       <div data-vig="converge" style="position:relative;height:520px">
-        <div data-cframe="1" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:520px;height:340px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(180deg,#181A21,#101118);transition:border-color .5s">
+        <div data-cframe="1" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:520px;height:340px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);background:linear-gradient(180deg,#181A21,#101118);transition:border-color .5s">
           <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07)">
             <img loading="lazy" decoding="async" width="4349" height="1959" src="assets/coachrx-icon-whitegreen.png" alt="" style="width:16px;height:auto">
             <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.4);text-transform:uppercase">One system</span>
           </div>
         </div>
-        <div data-frag="1" data-scatter="translate(-150px,-70px) rotate(-6deg)" style="position:absolute;top:126px;left:calc(50% - 236px);width:220px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;box-shadow:0 24px 56px rgba(0,0,0,.5)">
+        <div data-frag="1" data-scatter="translate(-150px,-70px) rotate(-6deg)" style="position:absolute;top:126px;left:calc(50% - 236px);width:220px;background:#101112;border-radius:12px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.5)">
           <span style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase">Spreadsheet</span>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:10px">
             <span style="height:13px;background:rgba(255,255,255,.1);border-radius:2px"></span><span style="height:13px;background:rgba(255,255,255,.06);border-radius:2px"></span><span style="height:13px;background:rgba(255,255,255,.06);border-radius:2px"></span><span style="height:13px;background:rgba(255,255,255,.06);border-radius:2px"></span>
@@ -852,15 +852,15 @@
           </div>
           <span style="display:block;margin-top:10px;font-size:12px;color:rgba(255,255,255,.55)">programs_v7_FINAL.xlsx</span>
         </div>
-        <div data-frag="2" data-scatter="translate(130px,-84px) rotate(5deg)" style="position:absolute;top:126px;left:calc(50% + 24px);width:212px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;box-shadow:0 24px 56px rgba(0,0,0,.5)">
+        <div data-frag="2" data-scatter="translate(130px,-84px) rotate(5deg)" style="position:absolute;top:126px;left:calc(50% + 24px);width:212px;background:#101112;border-radius:12px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.5)">
           <span style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase">Texts · 3 unread</span>
           <div style="display:flex;gap:8px;align-items:flex-end;margin-top:12px"><span style="width:22px;height:22px;border-radius:99px;background:rgba(255,255,255,.12);flex:none"></span><span style="background:rgba(255,255,255,.08);border-radius:12px 12px 12px 3px;padding:8px 12px;font-size:12.5px;color:rgba(255,255,255,.8)">Can we reschedule?</span></div>
         </div>
-        <div data-frag="3" data-scatter="translate(-120px,96px) rotate(4deg)" style="position:absolute;top:266px;left:calc(50% - 236px);width:220px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;box-shadow:0 24px 56px rgba(0,0,0,.5)">
+        <div data-frag="3" data-scatter="translate(-120px,96px) rotate(4deg)" style="position:absolute;top:266px;left:calc(50% - 236px);width:220px;background:#101112;border-radius:12px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.5)">
           <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase">Invoice #241</span><span style="font-size:11px;font-weight:600;color:#FFC466;background:rgba(255,176,32,.12);padding:2px 8px;border-radius:99px">Outstanding</span></div>
           <span style="display:block;margin-top:10px;font-size:18px;font-weight:700;color:#F8FCFF;font-feature-settings:'tnum' 1">$2,500.00</span>
         </div>
-        <div data-frag="4" data-scatter="translate(150px,84px) rotate(-5deg)" style="position:absolute;top:266px;left:calc(50% + 24px);width:212px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;box-shadow:0 24px 56px rgba(0,0,0,.5)">
+        <div data-frag="4" data-scatter="translate(150px,84px) rotate(-5deg)" style="position:absolute;top:266px;left:calc(50% + 24px);width:212px;background:#101112;border-radius:12px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.5)">
           <span style="display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase">Task</span>
           <div style="display:flex;gap:10px;align-items:flex-start;margin-top:12px"><span style="width:15px;height:15px;border:1.5px solid rgba(255,255,255,.3);border-radius:4px;margin-top:2px;flex:none"></span><span style="font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.45">Rebuild next cycle - focusing on motor control</span></div>
           <span style="display:block;margin-top:10px;font-size:11px;color:rgba(255,255,255,.45)">Due Friday · Sasha Barkley</span>
@@ -877,14 +877,15 @@
         <h2 data-reveal="60" style="margin-top:0;font-size:clamp(28px,3vw,40px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF">One system for the way you actually coach.</h2>
         <p data-reveal="90" style="margin-top:12px;font-size:15px;line-height:1.6;color:rgba(255,255,255,.6)">Five connected categories cover everything a professional coaching practice needs.</p>
         <div data-reveal="120" style="display:flex;flex-direction:column;margin-top:28px">
-          <div role="tablist" aria-label="Platform pillars" aria-orientation="vertical" style="display:flex;flex-direction:column">
+          <div role="tablist" aria-label="Platform pillars" aria-orientation="vertical" style="display:flex;flex-direction:column;will-change:contents">
           <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
             <button type="button" role="tab" id="tab-{{ t.i }}" aria-controls="panel-{{ t.i }}" aria-selected="false" data-tab="{{ t.i }}" onClick="{{ t.onSelect }}" style="cursor:pointer;padding:14px 18px;border:none;border-top:1px solid rgba(255,255,255,.08);background:transparent;color:inherit;font-family:inherit;text-align:left;width:100%;transition:background .45s cubic-bezier(.22,1,.36,1),box-shadow .45s cubic-bezier(.22,1,.36,1),border-radius .45s,opacity .2s linear">
               <div style="display:flex;flex-direction:column;gap:3px">
                 <span style="font-size:16px;font-weight:600;color:#F8FCFF">{{ t.title }}</span>
                 <span style="font-size:13px;line-height:1.35;color:rgba(255,255,255,.55)">{{ t.gloss }}</span>
               </div>
-              <div data-tabdesc="{{ t.i }}" style="overflow:hidden;max-height:0;transition:max-height .55s cubic-bezier(.22,1,.36,1)">
+              <div data-tabdesc="{{ t.i }}" style="display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s cubic-bezier(.22,1,.36,1)">
+                <div style="min-height:0;overflow:hidden">
                 <p style="margin-top:10px;font-size:14px;line-height:1.6;color:rgba(255,255,255,.62)">{{ t.desc }}</p>
                 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-bottom:6px">
                   <span style="font-size:11.5px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:4px 11px;border-radius:999px;white-space:nowrap">{{ t.c1 }}</span>
@@ -893,6 +894,7 @@
                   <span style="font-size:11.5px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);padding:4px 11px;border-radius:999px;white-space:nowrap">{{ t.c4 }}</span>
                 </div>
                 <span class="crx-mshot" style="display:none"><img src="{{ t.shot }}" alt="{{ t.shotAlt }}" loading="lazy" decoding="async" width="1677" height="1232" style="width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.1);display:block;margin:14px 0 10px"></span>
+                </div>
               </div>
             </button>
           </sc-for>
@@ -906,14 +908,14 @@
         <!-- Panel 0: Assess -->
         <div data-vpanel="0" role="tabpanel" id="panel-0" aria-labelledby="tab-0" aria-hidden="false" style="position:relative;flex:0 0 88%;min-width:0;opacity:1;transition:opacity .12s linear">
           <div style="position:absolute;top:-60px;left:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
-          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
-            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
               <img loading="lazy" decoding="async" src="assets/screens/insights.png" alt="Client metrics profile" style="width:150%;display:block;margin:-6% 0 0 -5%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
-          <div data-vig="ring" style="position:absolute;right:0;bottom:0;z-index:2;width:230px;transform:rotate(-1.5deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:22px;box-shadow:0 32px 80px rgba(0,0,0,.65);display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div data-vig="ring" style="position:absolute;right:0;bottom:0;z-index:2;width:230px;transform:rotate(-1.5deg);background:#101112;border-radius:12px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;gap:12px">
             <div style="position:relative">
               <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:130px;height:130px;background:radial-gradient(circle, rgba(88,255,122,.22) 0%, rgba(88,255,122,0) 70%);pointer-events:none"></div>
               <svg width="116" height="116" viewBox="0 0 116 116" style="position:relative">
@@ -930,14 +932,14 @@
         <!-- Panel 1: Consult -->
         <div data-vpanel="1" role="tabpanel" id="panel-1" aria-labelledby="tab-1" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .12s linear">
           <div style="position:absolute;top:-60px;right:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
-          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
-            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
               <img loading="lazy" decoding="async" src="assets/screens/messages.png" alt="Client messaging" style="width:150%;display:block;margin:-5% 0 0 -31%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
-          <div data-vig="thread" style="position:absolute;right:0;bottom:0;z-index:2;width:310px;transform:rotate(1.2deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.65);display:flex;flex-direction:column;gap:12px">
+          <div data-vig="thread" style="position:absolute;right:0;bottom:0;z-index:2;width:310px;transform:rotate(1.2deg);background:#101112;border-radius:12px;padding:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:12px">
             <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Messages</span>
             <div data-bub="1" style="display:flex;gap:9px;align-items:flex-end;max-width:92%"><img src="assets/avatars/brian-otto.png" alt="Brian Otto" width="26" height="26" style="width:26px;height:26px;border-radius:9999px;object-fit:cover;flex:none"><span style="background:rgba(255,255,255,.07);border-radius:12px 12px 12px 4px;padding:10px 13px;font-size:13px;line-height:1.5;color:rgba(255,255,255,.88)">Knee was cranky on the lunges again</span></div>
             <div data-typing="1" style="display:none;gap:5px;align-items:center;background:rgba(255,255,255,.05);border-radius:12px;padding:10px 14px;width:60px;margin-left:auto"><span style="width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);animation:crxTyping 1s infinite"></span><span style="width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);animation:crxTyping 1s .15s infinite"></span><span style="width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);animation:crxTyping 1s .3s infinite"></span></div>
@@ -951,14 +953,14 @@
         <!-- Panel 2: Design -->
         <div data-vpanel="2" role="tabpanel" id="panel-2" aria-labelledby="tab-2" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .12s linear">
           <div style="position:absolute;top:-60px;left:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
-          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
-            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
               <img loading="lazy" decoding="async" src="assets/screens/calendar.png" alt="Program calendar" style="width:150%;display:block;margin:-6% 0 0 -7%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
-          <div data-vig="progday" style="position:absolute;right:0;bottom:0;z-index:2;width:300px;transform:rotate(1.5deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.65)">
+          <div data-vig="progday" style="position:absolute;right:0;bottom:0;z-index:2;width:300px;transform:rotate(1.5deg);background:#101112;border-radius:12px;padding:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
             <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:#58FF7A;text-transform:uppercase">Thursday</span><span style="font-size:12px;color:rgba(255,255,255,.5)">Lower body</span></div>
             <div data-row="1" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);margin-top:8px"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF;display:flex;align-items:center;gap:10px"><svg data-check="1" width="17" height="17" viewBox="0 0 17 17" style="flex:none"><circle cx="8.5" cy="8.5" r="8" fill="#58FF7A"></circle><path data-checkpath="1" d="M5 8.7l2.4 2.4 4.6-4.8" fill="none" stroke="#0A0B0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Back Squat</span><span style="font-size:13px;color:rgba(255,255,255,.6);font-feature-settings:'tnum' 1">5 x 3</span></div>
             <div data-row="2" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font-size:14.5px;color:rgba(255,255,255,.9)">Romanian Deadlift</span><span style="font-size:13px;color:rgba(255,255,255,.6)">4 x 8</span></div>
@@ -969,14 +971,14 @@
         <!-- Panel 3: Operate -->
         <div data-vpanel="3" role="tabpanel" id="panel-3" aria-labelledby="tab-3" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .12s linear">
           <div style="position:absolute;top:-60px;right:-100px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
-          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
-            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+          <div style="position:absolute;top:0;left:0;right:120px;bottom:64px;border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">coachrx.app</span><span style="width:34px"></span></div>
             <div style="position:relative;height:100%;overflow:hidden">
               <img loading="lazy" decoding="async" src="assets/screens/business.png" alt="Business reporting" style="width:150%;display:block;margin:-7% 0 0 -31%">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 82%,#0A0B0F 100%);pointer-events:none"></div>
             </div>
           </div>
-          <div data-vig="invoice" style="position:absolute;right:0;bottom:0;z-index:2;width:310px;transform:rotate(-1.2deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.65)">
+          <div data-vig="invoice" style="position:absolute;right:0;bottom:0;z-index:2;width:310px;transform:rotate(-1.2deg);background:#101112;border-radius:12px;padding:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
             <span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Invoices · August</span>
             <div style="display:flex;align-items:center;gap:11px;margin-top:16px">
               <img src="assets/avatars/brian-otto.png" alt="Brian Otto" width="32" height="32" style="width:32px;height:32px;border-radius:9999px;object-fit:cover;flex:none">
@@ -989,18 +991,18 @@
         <!-- Panel 4: Client Experience -->
         <div data-vpanel="4" data-rfx-zone="" role="tabpanel" id="panel-4" aria-labelledby="tab-4" aria-hidden="true" style="position:relative;flex:0 0 88%;min-width:0;opacity:.4;transition:opacity .12s linear">
           <div style="position:absolute;top:-60px;left:-60px;width:640px;height:520px;background:radial-gradient(ellipse at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
-          <div style="position:absolute;left:10%;top:36px;bottom:0;width:260px;transform:rotate(-6deg);transform-origin:bottom center;padding:9px;background:#14151A;border:1px solid rgba(255,255,255,.12);border-radius:40px 40px 0 0;border-bottom:none;box-shadow:0 28px 80px rgba(0,0,0,.6);opacity:.92;z-index:1">
+          <div style="position:absolute;left:10%;bottom:-45px;width:260px;aspect-ratio:393/852;box-sizing:border-box;transform:rotate(-6deg);transform-origin:bottom center;padding:9px;background:#101112;border-radius:40px 40px 0 0;border-bottom:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);opacity:.92;z-index:1">
             <div style="position:relative;border-radius:28px 28px 0 0;overflow:hidden;height:100%;background:#0A0B0F">
               <img loading="lazy" decoding="async" src="assets/screens/client-trends-full.png" alt="Client Trends: nutrition and sleep" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block">
               <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,15,0) 55%,rgba(10,11,15,.94) 100%);pointer-events:none"></div>
             </div>
           </div>
-          <div data-rfx-pill="" style="position:absolute;left:min(calc(50% + 152px), calc(100% - 186px));top:34%;display:flex;align-items:center;gap:8px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;box-shadow:0 18px 50px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1);z-index:3;white-space:nowrap">
+          <div data-rfx-pill="" style="position:absolute;left:min(calc(50% + 152px), calc(100% - 186px));top:34%;display:flex;align-items:center;gap:8px;background:linear-gradient(180deg,#1B1C23,#14151A);border-radius:999px;padding:8px 14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 18px 50px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1);z-index:3;white-space:nowrap">
             <span style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase">Training load</span>
             <span data-rfx-pload="" style="font-size:14px;font-weight:800;color:#58FF7A;font-variant-numeric:tabular-nums">0</span>
             <span data-rfx-pcheck="" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:99px;background:rgba(88,255,122,.15);border:1px solid rgba(88,255,122,.5);opacity:0;transform:scale(.6);transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1)"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
           </div>
-          <div style="position:absolute;left:50%;transform:translateX(-50%);top:16px;bottom:0;width:280px;padding:10px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:44px 44px 0 0;border-bottom:none;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 32px 100px rgba(0,0,0,.65);overflow:hidden;z-index:2">
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:-48px;width:280px;aspect-ratio:393/852;box-sizing:border-box;padding:10px;background:#101112;border-radius:44px 44px 0 0;border-bottom:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden;z-index:2">
             <div data-rfx="" style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:100%;background:#0A0B0F">
               <div data-rfx-scroll="" style="padding:34px 16px 14px;transition:transform .6s cubic-bezier(.22,1,.36,1);will-change:transform">
                 <span style="display:block;font-size:17px;font-weight:800;letter-spacing:-0.02em;color:#F8FCFF">Rate Your Effort</span>
@@ -1033,44 +1035,44 @@
     <!-- Mobile pillar carousel (BRIEF-22): flex track, 86% cards, edge bleed, snap. Hidden above 760 via inline display. -->
     <div class="crx-pcarwrap" style="display:none">
       <div class="crx-pcar">
-        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+        <div style="border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
           <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/insights.png" alt="Client metrics profile" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="font-size:16px;font-weight:700;color:#F8FCFF">Assess</span><span style="font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.55)">Where your client actually is today</span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Movement, performance, lifestyle and nutrition in one profile.</span>
           </div>
         </div>
-        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+        <div style="border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
           <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/messages.png" alt="Client messaging" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="font-size:16px;font-weight:700;color:#F8FCFF">Consult</span><span style="font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.55)">The conversation that sets the plan</span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Check-ins, messaging and reviews keep you close between sessions.</span>
           </div>
         </div>
-        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+        <div style="border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
           <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/calendar.png" alt="Program calendar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="font-size:16px;font-weight:700;color:#F8FCFF">Design</span><span style="font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.55)">Programming that takes minutes</span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Individualized programs across exercise, lifestyle and nutrition.</span>
           </div>
         </div>
-        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+        <div style="border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
           <div style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07)"><img src="assets/screens/business.png" alt="Business reporting" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"><div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(16,17,24,0),rgba(16,17,24,.9));pointer-events:none"></div></div>
           <div style="display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px">
             <span style="font-size:16px;font-weight:700;color:#F8FCFF">Operate</span><span style="font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.55)">Billing, roles and reporting, handled</span>
             <span style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">Payments, roster, team and reporting in the system you coach from.</span>
           </div>
         </div>
-        <div style="border:1px solid rgba(255,255,255,.09);border-radius:14px;background:#101118;overflow:hidden">
+        <div style="border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
           <div data-rfx-zone="" style="position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);background:radial-gradient(ellipse at 50% 0%, rgba(31,148,234,.12) 0%, rgba(31,148,234,0) 60%),#0C0E14;display:flex;justify-content:center">
-            <div data-rfx-pill="" style="position:absolute;right:6px;top:26%;display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 10px;box-shadow:0 14px 40px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1);z-index:4;white-space:nowrap">
+            <div data-rfx-pill="" style="position:absolute;right:6px;top:26%;display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1B1C23,#14151A);border-radius:999px;padding:6px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 14px 40px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1);z-index:4;white-space:nowrap">
               <span style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase">Training load</span>
               <span data-rfx-pload="" style="font-size:12px;font-weight:800;color:#58FF7A;font-variant-numeric:tabular-nums">0</span>
               <span data-rfx-pcheck="" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:99px;background:rgba(88,255,122,.15);border:1px solid rgba(88,255,122,.5);opacity:0;transform:scale(.6);transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1)"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
             </div>
             <div style="position:absolute;left:0;right:0;bottom:0;height:48px;background:linear-gradient(180deg,rgba(12,14,20,0),rgba(12,14,20,.95));pointer-events:none;z-index:3"></div>
-            <div style="width:280px;flex:none;margin-top:10px;transform:scale(.66);transform-origin:top center;box-sizing:border-box;padding:10px;background:#14151A;border:1px solid rgba(255,255,255,.16);border-radius:44px 44px 0 0;border-bottom:none;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 70px rgba(0,0,0,.6)">
-            <div data-rfx="" style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:300px;background:#0A0B0F">
+            <div style="width:280px;aspect-ratio:393/852;flex:none;margin-top:10px;transform:scale(.66);transform-origin:top center;box-sizing:border-box;padding:10px;background:#101112;border-radius:44px 44px 0 0;border-bottom:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
+            <div data-rfx="" style="position:relative;border-radius:30px 30px 0 0;overflow:hidden;height:100%;background:#0A0B0F">
               <div data-rfx-scroll="" style="padding:34px 16px 14px;transition:transform .6s cubic-bezier(.22,1,.36,1);will-change:transform">
                 <span style="display:block;font-size:17px;font-weight:800;letter-spacing:-0.02em;color:#F8FCFF">Rate Your Effort</span>
                 <span style="display:block;margin-top:3px;font-size:9.5px;color:rgba(255,255,255,.45)">Due Aug 21, 2026</span>
@@ -1121,7 +1123,7 @@
             <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)">7:04am</span>
             <div class="crx-daynoderow"><span class="crx-daynode2"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#061636" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
             <div class="crx-dfig" style="height:260px;display:flex;align-items:center">
-              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#18181B;border:1px solid #3F3F46;border-radius:8px;padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Needs Attention</span><div style="display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid #27272A"><img src="assets/avatars/danny-henderson.png" alt="Danny Henderson" width="24" height="24" style="width:24px;height:24px;border-radius:9999px;object-fit:cover;flex:none"><span style="font-size:13px;font-weight:500;color:#E4E4E7">Danny Henderson</span><span style="margin-left:auto"><span style="border-radius:9999px;padding:1px 8px;font-size:12px;font-weight:400;background:#7F79EC;color:#FFFFFF;white-space:nowrap">Consult due</span></span></div>
+              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Needs Attention</span><div style="display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid #27272A"><img src="assets/avatars/danny-henderson.png" alt="Danny Henderson" width="24" height="24" style="width:24px;height:24px;border-radius:9999px;object-fit:cover;flex:none"><span style="font-size:13px;font-weight:500;color:#E4E4E7">Danny Henderson</span><span style="margin-left:auto"><span style="border-radius:9999px;padding:1px 8px;font-size:12px;font-weight:400;background:#7F79EC;color:#FFFFFF;white-space:nowrap">Consult due</span></span></div>
 <div style="display:flex;align-items:center;gap:9px;padding:11px 0 2px"><img src="assets/avatars/sasha-barkley.png" alt="Sasha Barkley" width="24" height="24" style="width:24px;height:24px;border-radius:9999px;object-fit:cover;flex:none"><span style="font-size:13px;font-weight:500;color:#E4E4E7">Sasha Barkley</span><span style="margin-left:auto"><span style="border-radius:9999px;padding:1px 8px;font-size:12px;font-weight:400;background:#52CBFA;color:#045A7C;white-space:nowrap">Exercise due</span></span></div></div>
             </div>
             <h3 style="margin:20px 0 0;font-size:15.5px;line-height:1.4;font-weight:600;letter-spacing:-0.005em;color:#F8FCFF">Open the dashboard.</h3>
@@ -1132,7 +1134,7 @@
             <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)">9:30am</span>
             <div class="crx-daynoderow"><span class="crx-daynode2"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#061636" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
             <div class="crx-dfig" style="height:260px;display:flex;align-items:center">
-              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#18181B;border:1px solid #3F3F46;border-radius:8px;padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Workout · Thursday</span><div style="padding:10px 0;border-bottom:1px solid #27272A"><span style="display:block;font-size:13px;font-weight:500;color:#E4E4E7">A1&nbsp;&nbsp;Back Squat</span><span style="display:block;margin-top:3px;font-size:12px;color:#A1A1AA">@30X1, 10,8,6; rest 2 min</span></div>
+              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Workout · Thursday</span><div style="padding:10px 0;border-bottom:1px solid #27272A"><span style="display:block;font-size:13px;font-weight:500;color:#E4E4E7">A1&nbsp;&nbsp;Back Squat</span><span style="display:block;margin-top:3px;font-size:12px;color:#A1A1AA">@30X1, 10,8,6; rest 2 min</span></div>
 <div style="padding:10px 0 2px"><span style="display:block;font-size:13px;font-weight:500;color:#E4E4E7">A2&nbsp;&nbsp;Single Arm Lat Pulldown</span><span style="display:block;margin-top:3px;font-size:12px;color:#A1A1AA">@20X1, 10-12/side x 3 sets</span></div></div>
             </div>
             <h3 style="margin:20px 0 0;font-size:15.5px;line-height:1.4;font-weight:600;letter-spacing:-0.005em;color:#F8FCFF">Program the four clients who need it.</h3>
@@ -1143,7 +1145,7 @@
             <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)">1:15pm</span>
             <div class="crx-daynoderow"><span class="crx-daynode2"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#061636" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
             <div class="crx-dfig" style="height:260px;display:flex;align-items:center">
-              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#18181B;border:1px solid #3F3F46;border-radius:8px;padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Messages · Brian Otto</span><div style="display:flex;margin-top:10px;align-items:flex-end;gap:7px"><img src="assets/avatars/brian-otto.png" alt="Brian Otto" width="20" height="20" style="width:20px;height:20px;border-radius:9999px;object-fit:cover;flex:none"><span style="background:#27272A;border-radius:10px 10px 10px 3px;padding:7px 10px;font-size:12px;line-height:1.5;color:#E4E4E7;max-width:86%">Knee was cranky on the lunges again</span></div>
+              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Messages · Brian Otto</span><div style="display:flex;margin-top:10px;align-items:flex-end;gap:7px"><img src="assets/avatars/brian-otto.png" alt="Brian Otto" width="20" height="20" style="width:20px;height:20px;border-radius:9999px;object-fit:cover;flex:none"><span style="background:#27272A;border-radius:10px 10px 10px 3px;padding:7px 10px;font-size:12px;line-height:1.5;color:#E4E4E7;max-width:86%">Knee was cranky on the lunges again</span></div>
 <div style="display:flex;justify-content:flex-end;margin-top:8px"><span style="background:#3F3F46;border-radius:10px 10px 3px 10px;padding:7px 10px;font-size:12px;line-height:1.5;color:#FFFFFF;max-width:86%">Sent you a quick breakdown — watch before Thursday.</span></div></div>
             </div>
             <h3 style="margin:20px 0 0;font-size:15.5px;line-height:1.4;font-weight:600;letter-spacing:-0.005em;color:#F8FCFF">A check-in landed while you were on the floor.</h3>
@@ -1154,7 +1156,7 @@
             <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)">Friday</span>
             <div class="crx-daynoderow"><span class="crx-daynode2"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#061636" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
             <div class="crx-dfig" style="height:260px;display:flex;align-items:center">
-              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#18181B;border:1px solid #3F3F46;border-radius:8px;padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Invoices · August</span><div style="display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #27272A"><img src="assets/avatars/danny-henderson.png" alt="Danny Henderson" width="22" height="22" style="width:22px;height:22px;border-radius:9999px;object-fit:cover;flex:none"><span style="display:flex;flex-direction:column;min-width:0"><span style="font-size:13px;font-weight:500;color:#E4E4E7">Danny Henderson</span><span style="font-size:11px;color:#71717A;font-feature-settings:'tnum' 1">$180.00 · monthly</span></span><span style="margin-left:auto"><span style="border-radius:9999px;padding:1px 8px;font-size:12px;font-weight:400;background:#08F7AD;color:#036345;white-space:nowrap">Paid</span></span></div>
+              <div style="width:100%;box-sizing:border-box;font-family:'Mona Sans',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);padding:13px 14px;text-align:left"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.02em">Invoices · August</span><div style="display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #27272A"><img src="assets/avatars/danny-henderson.png" alt="Danny Henderson" width="22" height="22" style="width:22px;height:22px;border-radius:9999px;object-fit:cover;flex:none"><span style="display:flex;flex-direction:column;min-width:0"><span style="font-size:13px;font-weight:500;color:#E4E4E7">Danny Henderson</span><span style="font-size:11px;color:#71717A;font-feature-settings:'tnum' 1">$180.00 · monthly</span></span><span style="margin-left:auto"><span style="border-radius:9999px;padding:1px 8px;font-size:12px;font-weight:400;background:#08F7AD;color:#036345;white-space:nowrap">Paid</span></span></div>
 <div style="display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #27272A"><img src="assets/avatars/jon-webber.png" alt="Jon Webber" width="22" height="22" style="width:22px;height:22px;border-radius:9999px;object-fit:cover;flex:none"><span style="display:flex;flex-direction:column;min-width:0"><span style="font-size:13px;font-weight:500;color:#E4E4E7">Jon Webber</span><span style="font-size:11px;color:#71717A;font-feature-settings:'tnum' 1">$220.00 · monthly</span></span><span style="margin-left:auto"><span style="border-radius:9999px;padding:1px 8px;font-size:12px;font-weight:400;background:#08F7AD;color:#036345;white-space:nowrap">Paid</span></span></div>
 <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:10px"><span style="font-size:11px;color:#A1A1AA">Collected this week</span><span style="font-size:13px;font-weight:700;color:#FFFFFF;font-feature-settings:'tnum' 1">$4,120</span></div></div>
             </div>
@@ -1201,7 +1203,7 @@
     <div style="max-width:1200px;margin:56px auto 0">
       <div class="crx-quotes" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
         <sc-for list="{{ quotes }}" as="q" hint-placeholder-count="4">
-          <div data-reveal="{{ q.delay }}" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+          <div data-reveal="{{ q.delay }}" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.12)">
             <p style="font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.85);text-wrap:pretty">"{{ q.text }}"</p>
             <div style="display:flex;align-items:center;gap:12px;margin-top:20px">
               {{ q.avatar }}
@@ -1314,8 +1316,8 @@
         <p data-reveal="120" style="margin-top:22px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:520px;text-wrap:pretty">Exercise, lifestyle, and nutrition prescriptions live in the same design calendar. Program sleep habits next to squats.</p>
       </div>
       <div style="position:relative;height:500px">
-        <div data-vig="macro" style="position:absolute;inset:0;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:#101118;box-shadow:0 0 0 1px rgba(88,255,122,.3),0 24px 80px rgba(0,0,0,.5);overflow:hidden">
-          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">app.coachrx.app</span><span style="width:34px"></span></div>
+        <div data-vig="macro" style="position:absolute;inset:0;border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.14)"></span><span style="margin:0 auto;background:rgba(255,255,255,.05);border-radius:6px;padding:3px 30px;font-size:10.5px;color:rgba(255,255,255,.4)">coachrx.app</span><span style="width:34px"></span></div>
           <div style="display:grid;grid-template-columns:1fr 0.8fr;height:calc(100% - 41px)">
             <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-right:1px solid rgba(255,255,255,.07)">
               <span style="font-size:15px;font-weight:700;color:#F8FCFF;letter-spacing:-0.01em">Calorie &amp; Macronutrient Calculator</span>
@@ -1336,7 +1338,7 @@
             </div>
           </div>
         </div>
-        <div data-vig="rxcheck" style="position:absolute;right:-24px;bottom:-28px;width:280px;transform:rotate(1.4deg);background:linear-gradient(180deg,#1B1C23,#14151A);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.7)">
+        <div data-vig="rxcheck" style="position:absolute;right:-24px;bottom:-28px;width:280px;transform:rotate(1.4deg);background:#101112;border-radius:12px;padding:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
           <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.5);text-transform:uppercase">Today's Rx</span><span style="font-size:11.5px;color:rgba(255,255,255,.45)">Dana Reyes</span></div>
           <div data-rxrow="" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);margin-top:8px"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF;display:flex;align-items:center;gap:10px"><svg data-rxcheck="" width="17" height="17" viewBox="0 0 17 17" style="flex:none"><circle cx="8.5" cy="8.5" r="8" fill="#58FF7A"></circle><path data-rxpath="" d="M5 8.7l2.4 2.4 4.6-4.8" fill="none" stroke="#0A0B0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Nutrition</span><span style="font-size:12px;color:rgba(255,255,255,.55);font-feature-settings:'tnum' 1">2,251 kcal</span></div>
           <div data-rxrow="" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font-size:14.5px;font-weight:600;color:#F8FCFF;display:flex;align-items:center;gap:10px"><svg data-rxcheck="" width="17" height="17" viewBox="0 0 17 17" style="flex:none"><circle cx="8.5" cy="8.5" r="8" fill="#58FF7A"></circle><path data-rxpath="" d="M5 8.7l2.4 2.4 4.6-4.8" fill="none" stroke="#0A0B0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Training</span><span style="font-size:12px;color:rgba(255,255,255,.55)">Upper body</span></div>
@@ -1358,10 +1360,10 @@
         <p data-reveal="120" style="font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.65);max-width:480px;text-wrap:pretty">Wearable data, trends, and insights across your whole client base. See what is actually driving results and act before problems become plateaus.</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:36px">
-        <div data-reveal="0" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:22px;display:flex;flex-direction:column;gap:0">
+        <div data-reveal="0" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:22px;display:flex;flex-direction:column;gap:0">
           <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Fitness</span>
           <div style="margin-top:12px;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 12px">
-            <span style="display:flex;align-items:center;gap:7px"><span data-bulb="" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:99px;background:rgba(88,255,122,.10);border:1px solid rgba(88,255,122,.30);box-shadow:0 0 12px rgba(88,255,122,.35)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span><span style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.6)">INSIGHTS</span></span>
+            <span style="display:flex;align-items:center;gap:7px"><span data-bulb="" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:99px;background:rgba(88,255,122,.10);border:1px solid rgba(88,255,122,.30)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span><span style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.6)">INSIGHTS</span></span>
             <span style="display:flex;gap:7px;margin-top:7px"><span style="font-size:11.5px;font-weight:700;color:rgba(255,255,255,.5);flex:none">1.</span><span style="font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.7)">VO₂ Max is trending up. This shows your aerobic engine is getting stronger.</span></span>
           </div>
           <div data-vig="trend" data-fmt="comma" data-target="48" style="margin-top:14px">
@@ -1375,10 +1377,10 @@
             <div style="display:flex;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)"><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.55)"><span style="width:8px;height:8px;border-radius:99px;background:#7CC7FF;flex:none"></span>Resting Heart Rate</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.55)"><span style="width:8px;height:8px;border-radius:99px;background:rgba(31,148,234,.6);flex:none"></span>VO₂ max</span></div>
           </div>
         </div>
-        <div data-reveal="70" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:22px;display:flex;flex-direction:column;gap:0">
+        <div data-reveal="70" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:22px;display:flex;flex-direction:column;gap:0">
           <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Sleep</span>
           <div style="margin-top:12px;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 12px">
-            <span style="display:flex;align-items:center;gap:7px"><span data-bulb="" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:99px;background:rgba(88,255,122,.10);border:1px solid rgba(88,255,122,.30);box-shadow:0 0 12px rgba(88,255,122,.35)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span><span style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.6)">INSIGHTS</span></span>
+            <span style="display:flex;align-items:center;gap:7px"><span data-bulb="" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:99px;background:rgba(88,255,122,.10);border:1px solid rgba(88,255,122,.30)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span><span style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.6)">INSIGHTS</span></span>
             <span style="display:flex;gap:7px;margin-top:7px"><span style="font-size:11.5px;font-weight:700;color:rgba(255,255,255,.5);flex:none">1.</span><span style="font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.7)">Your sleep timing has been consistent for 5+ days. That consistency is a good baseline to build from.</span></span>
           </div>
           <div data-vig="trend" data-fmt="hm" data-target="395" style="margin-top:14px">
@@ -1392,10 +1394,10 @@
             <div style="display:flex;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)"><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.55)"><span style="width:8px;height:8px;border-radius:99px;background:#A8DBFF;flex:none"></span>Sleep Quality</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.55)"><span style="width:8px;height:8px;border-radius:99px;background:rgba(31,148,234,.6);flex:none"></span>Sleep Hours</span></div>
           </div>
         </div>
-        <div data-reveal="140" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:22px;display:flex;flex-direction:column;gap:0">
+        <div data-reveal="140" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:22px;display:flex;flex-direction:column;gap:0">
           <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Nutrition</span>
           <div style="margin-top:12px;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 12px">
-            <span style="display:flex;align-items:center;gap:7px"><span data-bulb="" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:99px;background:rgba(88,255,122,.10);border:1px solid rgba(88,255,122,.30);box-shadow:0 0 12px rgba(88,255,122,.35)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span><span style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.6)">INSIGHTS</span></span>
+            <span style="display:flex;align-items:center;gap:7px"><span data-bulb="" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:99px;background:rgba(88,255,122,.10);border:1px solid rgba(88,255,122,.30)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#58FF7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span><span style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.6)">INSIGHTS</span></span>
             <span style="display:flex;gap:7px;margin-top:7px"><span style="font-size:11.5px;font-weight:700;color:rgba(255,255,255,.5);flex:none">1.</span><span style="font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.7)">Protein decreased 3+ days in a row.</span></span>
           </div>
           <div data-vig="trend" data-fmt="comma" data-target="1718" style="margin-top:14px">
@@ -1440,14 +1442,14 @@
           <!-- Every brand shows its splash → home pair -->
           <div class="crx-thstage" style="position:relative;height:440px;overflow:hidden">
           <div data-thset="0" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/zoar-splash.png" alt="ZOAR Fitness splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/zoar-home.png" alt="ZOAR Fitness themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1455,14 +1457,14 @@
             </div>
           </div>
           <div data-thset="1" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/csb-splash.png" alt="CrossFit South Bend splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/csb-home.png" alt="CrossFit South Bend themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1470,14 +1472,14 @@
             </div>
           </div>
           <div data-thset="2" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/grit-splash.png" alt="GRIT Performance Co. splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/grit-home.png" alt="GRIT Performance Co. themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1485,14 +1487,14 @@
             </div>
           </div>
           <div data-thset="3" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/kura-splash.png" alt="OPEX Kura splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/kura-home.png" alt="OPEX Kura themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1500,14 +1502,14 @@
             </div>
           </div>
           <div data-thset="4" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/moveo-splash.png" alt="MOVEO splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/moveo-home.png" alt="MOVEO themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1515,14 +1517,14 @@
             </div>
           </div>
           <div data-thset="5" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/mcnutt-splash.png" alt="McNutt splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/mcnutt-home.png" alt="McNutt themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1530,14 +1532,14 @@
             </div>
           </div>
           <div data-thset="6" class="crx-thset">
-            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:32px 32px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:196px;height:336px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:32px 32px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:24px 24px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/bg-splash.png" alt="BG Performance splash screen" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:55px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
               </div>
             </div>
             <span style="align-self:center;margin-bottom:130px;font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.4)">→</span>
-            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#14151A;border:1px solid rgba(255,255,255,.16);border-bottom:none;border-radius:38px 38px 0 0;box-shadow:0 28px 70px rgba(0,0,0,.55)">
+            <div style="width:248px;height:416px;box-sizing:border-box;padding:8px 8px 0;background:#101112;border-bottom:none;border-radius:38px 38px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45)">
               <div style="position:relative;height:100%;border-radius:30px 30px 0 0;overflow:hidden;background:#0A0B0F">
                 <img loading="lazy" decoding="async" src="assets/themes/bg-home.png" alt="BG Performance themed client app home" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
                 <span style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:69px;height:16px;border-radius:99px;background:#0A0B0F;z-index:2"></span>
@@ -1573,17 +1575,17 @@
       <h2 data-reveal="40" style="margin-top:0;font-size:clamp(30px,3.4vw,46px);font-weight:700;line-height:1.1;letter-spacing:-0.025em;color:#F8FCFF">Built for coaches who take it seriously.</h2>
       <p data-reveal="80" style="margin-top:16px;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.65);max-width:640px;text-wrap:pretty">From a one-person practice to an organization with a hundred coaches, solutions for any size client roster.</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px">
-        <div data-reveal="0" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <div data-reveal="0" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.12)">
           <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Solo coaches</h3>
           <p style="margin-top:10px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62)">Run a premium one-person practice without the admin weight.</p>
           <span style="display:block;margin-top:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;color:rgba(255,255,255,.45)">Solutions for any size client roster</span>
         </div>
-        <div data-reveal="70" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <div data-reveal="70" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.12)">
           <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Coaching teams</h3>
           <p style="margin-top:10px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62)">Keep every coach aligned to one standard as you grow.</p>
           <span style="display:block;margin-top:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;color:rgba(255,255,255,.45)">Shared standards, per-coach rosters</span>
         </div>
-        <div data-reveal="140" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:0 12px 40px rgba(0,0,0,.35);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,.5);border-color:rgba(255,255,255,.12)">
+        <div data-reveal="140" style="border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.03);padding:28px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s" style-hover="transform:translateY(-3px);border-color:rgba(255,255,255,.12)">
           <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;color:#F8FCFF">Large organizations</h3>
           <p style="margin-top:10px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.62)">Scale delivery without diluting it. Oversight without micromanaging.</p>
           <span style="display:block;margin-top:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;color:rgba(255,255,255,.45)">Team roles, oversight, reporting</span>
@@ -1635,7 +1637,7 @@
             <svg class="crx-migfan" viewBox="0 0 120 260" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><defs><linearGradient id="miggrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,.18)"></stop><stop offset="1" stop-color="rgba(88,255,122,.5)"></stop></linearGradient></defs><path d="M0 16 C55 16 78 109 120 109" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 53 C55 53 78 116 120 116" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 90 C55 90 78 123 120 123" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 127 C55 127 78 130 120 130" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 164 C55 164 78 137 120 137" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 201 C55 201 78 144 120 144" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 238 C55 238 78 151 120 151" fill="none" stroke="url(#miggrad)" stroke-width="1"></path></svg>
             <span class="crx-migvert" aria-hidden="true"></span>
           </div>
-          <div data-migcard="" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden">
+          <div data-migcard="" style="background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07)">
               <span style="display:flex;align-items:center;gap:10px"><img loading="lazy" decoding="async" width="7568" height="1959" src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:13px;width:auto"><span style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)">Client roster</span></span>
             </div>
@@ -1664,9 +1666,9 @@
   <!-- CLOSE -->
   <section data-screen-label="Close" style="padding:120px 32px 130px">
     <div style="max-width:860px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center">
-      <!-- PLACEHOLDER testimonial figure — verify quote and number with Kyle Krancher before launch -->
+      <!-- Testimonial: Kyle Krancher, verbatim from the archived CMS. The TrueCoach price-comparison clause in the original is removed deliberately (we do not publish rival pricing). Do not paraphrase or add figures: a previous pass invented "$200 a month", which appears in no source. -->
       <img loading="lazy" decoding="async" src="uploads/Kyle Krancher.png" alt="Kyle Krancher" style="width:76px;height:76px;border-radius:99px;object-fit:cover;border:1px solid rgba(255,255,255,.14)">
-      <blockquote style="margin:30px 0 0;font-size:clamp(24px,2.8vw,36px);font-weight:600;line-height:1.35;letter-spacing:-0.015em;color:#F8FCFF;text-wrap:balance">"CoachRx cut my software expenses by $200 a month and made both front and back of house more robust — without added complexity."</blockquote>
+      <blockquote style="margin:30px 0 0;font-size:clamp(24px,2.8vw,36px);font-weight:600;line-height:1.35;letter-spacing:-0.015em;color:#F8FCFF;text-wrap:balance">"CoachRx has improved my business drastically by streamlining operations. Not to mention, it has cut down on my expenses. The app has made both front and back of house more robust without added complexity."</blockquote>
       <span style="margin-top:26px;font-size:15px;font-weight:600;color:#F8FCFF">Kyle Krancher</span>
       <span style="margin-top:4px;font-size:13.5px;color:rgba(255,255,255,.5)">Gym owner · Train &amp; Able</span>
       <a href="https://dashboard.coachrx.app/signup" style="margin-top:44px;background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1)" style-hover="transform:translateY(-2px);color:#0A0B0F">START FOR FREE</a>
@@ -2649,7 +2651,7 @@ class Component extends DCLogic {
       btn.style.borderTopColor = active ? "transparent" : "rgba(255,255,255,.08)";
       btn.setAttribute("aria-selected", active ? "true" : "false");
       const desc = btn.querySelector("[data-tabdesc]");
-      if (desc) desc.style.maxHeight = active ? "260px" : "0";
+      if (desc) desc.style.gridTemplateRows = active ? "1fr" : "0fr";
     });
     this.q("[data-vpanel]").forEach(p => {
       const k = parseInt(p.getAttribute("data-vpanel"), 10), active = k === i;

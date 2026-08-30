@@ -298,6 +298,54 @@ const BANNED_CLAIMS = [
   /hundreds of (practices|coaches)/i,
 ];
 /**
+ * Retired features must not be sold. RxBot was retired and pulled from the product on
+ * 2026-08-19, but "RxBot assistant" survived as a Design-pillar bullet on the pricing page
+ * (twice: the desktop and mobile copies of the same list) and was two hours from shipping on
+ * 2026-08-30. A pricing page is a promise about what the money buys, so this is a gate and not
+ * a review item.
+ *
+ * Scope is the marketing pages only. The blog and changelog legitimately reference RxBot as
+ * history — those posts describe what the product did at the time and must not be rewritten.
+ */
+/**
+ * Design-file comments are notes to us, not to the reader, but cheerio carries them straight
+ * through into the shipped HTML. On 2026-08-30, 28 of them were live in public view-source,
+ * including "PLACEHOLDER testimonial figure - verify quote and number with Kyle Krancher before
+ * launch" and "confirm calendar id with Carl before launch". Anyone reading the page source could
+ * see what we had not finished. Keep the annotations in the design file; ship them to nobody.
+ */
+function stripComments($, root) {
+  let removed = 0;
+  const walk = (node) => {
+    const kids = node.children ? [...node.children] : [];
+    for (const c of kids) {
+      if (c.type === "comment") { $(c).remove(); removed++; }
+      else walk(c);
+    }
+  };
+  root.each((_, n) => walk(n));
+  return removed;
+}
+
+const RETIRED_FEATURES = [/\bRxBot\b/i];
+const RETIRED_EXEMPT = /(Blog|Changelog|Tag Archive)/i;
+
+function checkRetired(root, file) {
+  if (RETIRED_EXEMPT.test(file)) return;
+  const text = root.text() || "";
+  for (const re of RETIRED_FEATURES) {
+    const m = text.match(re);
+    if (m) {
+      const i = text.indexOf(m[0]);
+      console.error(`dc-compile: RETIRED FEATURE ADVERTISED in "${file}": "${m[0]}"`);
+      console.error(`  context: ...${text.slice(Math.max(0, i - 80), i + 80).replace(/\s+/g, " ")}...`);
+      console.error(`  RxBot was retired and removed from the product on 2026-08-19.`);
+      console.error(`  Remove it from the design file. Blog and changelog are exempt (history).`);
+      process.exit(1);
+    }
+  }
+}
+/**
  * A <form action="mailto:..."> silently does nothing in every modern browser. One shipped on the
  * Updates page (2026-08-30) as the only way to submit a feature request. Fail the build instead.
  */
@@ -1625,9 +1673,11 @@ export function compileDesign(full, override) {
   checkKnownRegressions($, root, full);
   checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
+  checkRetired(root, full);
 
   ensureImageAlts($, root);
   ensureLazyImages($, root);
+  stripComments($, root);
   hoistRepeatedStyles($, root, ctx);
   return {
     html: (root.html() || "").trim(),
@@ -1708,9 +1758,11 @@ for (const page of PAGES) {
   checkKnownRegressions($, root, full);
   checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
+  checkRetired(root, page.file);
 
   ensureImageAlts($, root);
   ensureLazyImages($, root);
+  stripComments($, root);
   hoistRepeatedStyles($, root, ctx);
   const html = (root.html() || "").trim();
   const finalCss = [css, "",
