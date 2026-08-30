@@ -305,6 +305,34 @@ function enforceLoginStyle($, root) {
   });
 }
 
+/**
+ * Fixes that have been silently reverted by a Claude Design re-export more than once.
+ *
+ * Each of these was fixed in the repo, wiped by the next export, and re-installed without anyone
+ * noticing. They are cheap to assert and expensive to miss, so they fail the build now.
+ */
+function checkKnownRegressions($, root, file) {
+  if (!/CoachRx Home/.test(file)) return;
+  // Read the SOURCE file, not the compiled root: <helmet style> is stripped before this runs, so
+  // the compiled body carries no CSS and two of these three checks silently passed on first write.
+  let src = "";
+  try { src = fs.readFileSync(file, "utf8"); } catch { return; }
+  const fails = [];
+  if (/\[data-screen-label="Close"\]\s*\{[^}]*display:\s*none/.test(src))
+    fails.push('the closing section is display:none on mobile - the final testimonial and the last "Start for free" are invisible on every phone');
+  if (/--crx-apf:\s*tan\(/.test(src))
+    fails.push("the mobile replica scale is fit-to-width, rendering the app at ~0.28 and illegible; it should be a fixed .5 that clips");
+  if (!/Last touchpoint/.test(src))
+    fails.push('the Activity Feed row is missing the "Last touchpoint: 9 minutes ago" line the live dashboard shows');
+  if (fails.length) {
+    console.error(`dc-compile: KNOWN REGRESSION in "${file}"`);
+    for (const f of fails) console.error(`  - ${f}`);
+    console.error(`  Each of these was fixed once and came back with a design re-export.`);
+    console.error(`  Fix them in Claude Design so they stop returning, then re-export.`);
+    process.exit(1);
+  }
+}
+
 function checkDeadForms($, root, file) {
   if (root.find('form[action^="mailto:"]').length) {
     console.error(`dc-compile: DEAD FORM in "${file}": <form action="mailto:...">`);
@@ -1492,6 +1520,7 @@ export function compileDesign(full, override) {
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
   enforceLoginStyle($, root);
+  checkKnownRegressions($, root, full);
   checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
 
@@ -1569,6 +1598,7 @@ for (const page of PAGES) {
   normalizeCrops($, root, ctx);
   enforceLogo($, root, ctx);
   enforceLoginStyle($, root);
+  checkKnownRegressions($, root, full);
   checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
 
