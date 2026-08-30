@@ -440,6 +440,14 @@ const DESIGN_ROUTES = {
   // v2 pass, 2026-08-29. Same trap as v7: other design files may still link the v2 name.
   "CoachRx Home v2.dc.html": "/",
   "CoachRx Features.dc.html": "/features",
+  // The v2 working copies. Claude Design names its files "<Page> v2.dc.html", and the Updates page
+  // navigates to those names — so without these, Features and Pricing were raw unresolved hrefs on
+  // all three Updates routes (found 2026-08-30). Same trap as the Home v7 rename.
+  "CoachRx Features v2.dc.html": "/features",
+  "CoachRx Pricing v2.dc.html": "/pricing",
+  "CoachRx Home v2.dc.html": "/",
+  "CoachRx Updates v2.dc.html": "/roadmap",
+  "CoachRx About v2.dc.html": "/about",
   "CoachRx Pricing.dc.html": "/pricing",
   "CoachRx Roadmap.dc.html": "/roadmap",
   // Compiled by scripts/build-changelog.mjs, not the CLI loop, because both need real
@@ -546,7 +554,14 @@ function fixLinks($, root, ctx) {
       const file = base.split("/").pop();
       const to = DESIGN_ROUTES[file];
       if (to) { $a.attr("href", to + (href.includes("#") ? href.slice(href.indexOf("#")) : "")); }
-      else { ctx.deadLinks.push(`unmapped design file: ${file}`); }
+      else {
+        // Shipping a raw ".dc.html" href is always a broken link in production. This has happened
+        // twice: the Home v7 rename left 17 pages doing it, and the Updates nav did it again with
+        // the v2 filenames. Fail rather than collect a warning nobody reads.
+        console.error(`dc-compile: UNMAPPED DESIGN FILE in a link: "${file}"`);
+        console.error(`  It would ship as a raw href and 404. Add it to DESIGN_ROUTES.`);
+        process.exit(1);
+      }
       return;
     }
     if (href === "#" || href === "") {
