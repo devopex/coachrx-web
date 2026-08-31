@@ -2,7 +2,7 @@ import { DcRuntime } from "@/components/DcRuntime";
 
 /**
  * Renders a compiled Claude Design page: the design's own stylesheet, its DOM exactly
- * as authored, and its behaviour script.
+ * as authored, and its behavior script.
  *
  * These pages carry their own nav and footer, so they must NOT sit inside the layout
  * that adds site chrome — see the `(chrome)` route group.

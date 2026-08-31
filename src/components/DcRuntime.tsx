@@ -28,7 +28,7 @@ export function DcRuntime({ script }: { script: string }) {
     try {
       // Design files run inside Claude Design, where React is a global. The compiled bundle has no
       // such global, so a single `React.createElement` in renderVals() used to throw and take every
-      // animation and scroll behaviour down with it (2026-08-29). Pass React into the sandbox.
+      // animation and scroll behavior down with it (2026-08-29). Pass React into the sandbox.
       const make = new Function("DCLogic", "React", `${script}\n;return Component;`) as (
         b: unknown,
         r: unknown,
@@ -36,13 +36,13 @@ export function DcRuntime({ script }: { script: string }) {
       const Component = make(DCLogic, React);
       inst = new Component({});
 
-      // renderVals() only supplies click handlers. If it fails, behaviour must still start —
+      // renderVals() only supplies click handlers. If it fails, behavior must still start —
       // previously one bad line here silently disabled the entire page.
       let vals: Record<string, unknown> = {};
       try {
         vals = typeof inst.renderVals === "function" ? inst.renderVals() : {};
       } catch (err) {
-        console.error("DcRuntime: renderVals() failed, handlers skipped but behaviour continues:", err);
+        console.error("DcRuntime: renderVals() failed, handlers skipped but behavior continues:", err);
       }
 
       const at = (path: string): unknown =>

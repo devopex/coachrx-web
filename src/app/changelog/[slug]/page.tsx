@@ -14,7 +14,7 @@ import { fill, renderBody } from "@/lib/dc";
  * (no Next link, a disabled placeholder instead) and the other 43. build-changelog.mjs emits
  * both and this picks per release.
  *
- * Releases are ordered newest first, so "previous" is the older neighbour at index + 1.
+ * Releases are ordered newest first, so "previous" is the older neighbor at index + 1.
  */
 export const dynamicParams = false;
 
@@ -57,7 +57,7 @@ export default async function ChangelogEntry({ params }: { params: Promise<{ slu
     dateLabel: longDate(release.date),
     description: release.description,
     BODY: renderBody(release.body),
-    // The oldest release has no previous neighbour. The design always renders the Previous
+    // The oldest release has no previous neighbor. The design always renders the Previous
     // slot, so point it back at the index rather than leaving a link to nowhere.
     prevMonth: prev ? monthName(prev.date) : "All releases",
     prevHref: prev ? `/changelog/${prev.slug}` : "/changelog",

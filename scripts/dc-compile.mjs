@@ -327,6 +327,201 @@ function stripComments($, root) {
   return removed;
 }
 
+/**
+ * The oversized cropped CoachRx wordmark is removed from the footer on every page.
+ * Carl killed it on 2026-08-31 ("i removed the big COACHRX all together, make sure this is
+ * persistent across each page").
+ *
+ * It only ever existed on Home, where it rendered 311px tall inside a 150px container with
+ * overflow:hidden, so it shipped with the bottoms of the C, R and x sliced off.
+ *
+ * This lives in the compiler rather than the design file on purpose. The footer is compiler-owned
+ * chrome, and a design-file fix lasts exactly until the next export: the RxBot line on /pricing
+ * came back this way twice. Stripping it here means no future export can reintroduce it on any
+ * page. The small 20px wordmark at the top of the footer column is untouched.
+ */
+function stripFooterWordmark($, root) {
+  const n = root.find("[data-fmark]").length;
+  root.find("[data-fmark]").remove();
+  return n;
+}
+
+/** Drop the companion CSS so the stripped node leaves no dead rules behind. */
+function stripWordmarkCss(css) {
+  return css.replace(/[^{}]*\[data-fmark\][^{}]*\{[^}]*\}/g, "");
+}
+
+/**
+ * US spelling only, everywhere a reader can see it. Carl's ruling, 2026-08-30.
+ * Twelve British spellings shipped on /features inside the comparison section: "periodisation"
+ * twice, "help centre" four times, "organised", "licence", all in copy we wrote about rivals.
+ *
+ * Deliberately conservative. A noisy gate gets switched off, so this list only contains forms
+ * that are unambiguously British. NOT included, because they are correct US spellings and an
+ * earlier draft of this list flagged them by mistake:
+ *   analysis, specialist, fulfilling, fulfilled, programmed, programming, practice (noun)
+ * Also excluded: "grey", which is legal CSS and would fire on stylesheets.
+ *
+ * <blockquote> is exempt. Testimonials and coach quotes ship verbatim, British spelling included
+ * (see the archived blog posts, where all four hits are inside real coaches' words). Correcting a
+ * person's quote to house style is still rewriting what they said.
+ */
+const BRITISH_SPELLINGS = [
+  [/\bperiodis(ation|ed|es|e|ing)\b/i, "periodiz-"],
+  [/\borganis(ation|ational|ed|es|e|ing)\b/i, "organiz-"],
+  [/\bpersonalis(ation|ed|es|e|ing)\b/i, "personaliz-"],
+  [/\bindividualis(ation|ed|es|e|ing)\b/i, "individualiz-"],
+  [/\bcustomis(ation|ed|es|e|ing)\b/i, "customiz-"],
+  [/\boptimis(ation|ed|es|e|ing)\b/i, "optimiz-"],
+  [/\bprioritis(ation|ed|es|e|ing)\b/i, "prioritiz-"],
+  [/\bsummaris(ed|es|e|ing)\b/i, "summariz-"],
+  [/\banalys(ed|es|e|ing)\b/i, "analyz-"],
+  [/\brealis(ed|es|e|ing)\b/i, "realiz-"],
+  [/\brecognis(ed|es|e|ing)\b/i, "recogniz-"],
+  [/\butilis(ation|ed|es|e|ing)\b/i, "utiliz-"],
+  [/\bvisualis(ation|ed|es|e|ing)\b/i, "visualiz-"],
+  [/\bstandardis(ation|ed|es|e|ing)\b/i, "standardiz-"],
+  [/\bminimis(ed|es|e|ing)\b/i, "minimiz-"],
+  [/\bmaximis(ed|es|e|ing)\b/i, "maximiz-"],
+  [/\bemphasis(ed|es|e|ing)\b/i, "emphasiz-"],
+  [/\bspecialis(ed|es|e|ing)\b/i, "specializ-"],
+  [/\bcentre(s|d)?\b/i, "center"],
+  [/\bcolour(s|ed|ing|ful)?\b/i, "color"],
+  [/\bbehaviour(s|al|ally)?\b/i, "behavior"],
+  [/\bfavour(s|ed|ing|ite|ites)?\b/i, "favor"],
+  [/\blabour(s|ed|ing)?\b/i, "labor"],
+  [/\bhonour(s|ed|ing)?\b/i, "honor"],
+  [/\bflavour(s|ed|ing|ful)?\b/i, "flavor"],
+  [/\bneighbour(s|hood|ing)?\b/i, "neighbor"],
+  [/\brigour\b/i, "rigor"],
+  [/\bvigour\b/i, "vigor"],
+  [/\bfibre(s)?\b/i, "fiber"],
+  [/\bmetre(s)?\b/i, "meter"],
+  [/\blitre(s)?\b/i, "liter"],
+  [/\btheatre\b/i, "theater"],
+  [/\bprogramme(s)?\b/i, "program"],
+  [/\bwhilst\b/i, "while"],
+  [/\bamongst\b/i, "among"],
+  [/\benrolment(s)?\b/i, "enrollment"],
+  [/\bfulfil\b/i, "fulfill"],
+  [/\bfulfilment\b/i, "fulfillment"],
+  [/\bskilful\b/i, "skillful"],
+  [/\binstalment(s)?\b/i, "installment"],
+  [/\blicence(s|d)?\b/i, "license"],
+  [/\bdefence\b/i, "defense"],
+  [/\boffence(s)?\b/i, "offense"],
+  [/\bpractis(ed|es|e|ing)\b/i, "practic-"],
+  [/\bcatalogue(s|d)?\b/i, "catalog"],
+  [/\bjudgement(s)?\b/i, "judgment"],
+  [/\bageing\b/i, "aging"],
+  [/\bsceptic(al|ism)?\b/i, "skeptic-"],
+  [/\btravell(ed|ing)\b/i, "travel-"],
+  [/\bmodelling\b/i, "modeling"],
+  [/\blabel(led|ling)\b/i, "label-"],
+  [/\bcounsellor(s)?\b/i, "counselor"],
+  [/\blearnt\b/i, "learned"],
+  [/\bspelt\b/i, "spelled"],
+  [/\bburnt\b/i, "burned"],
+  [/\bmanoeuvre(s|d)?\b/i, "maneuver"],
+  [/\boestrogen\b/i, "estrogen"],
+  [/\banaemi(a|c)\b/i, "anemi-"],
+  [/\bpaediatric(s)?\b/i, "pediatric"],
+  [/\borthopaedic(s)?\b/i, "orthopedic"],
+  [/\bhaemoglobin\b/i, "hemoglobin"],
+  [/\boedema\b/i, "edema"],
+];
+
+function checkSpelling($, root, file, scriptSrc = "") {
+  const clone = root.clone();
+  clone.find("blockquote").remove();   // quotes ship verbatim, see note above
+  // The design files' own <script type="text/x-dc"> blocks hold placeholder POSTS arrays that
+  // survive into the shipped JS as dead code. Six British spellings hid there (behaviour x3,
+  // judgement x4, travelled x2 across Blog Index and Tag Archive) because the first version of
+  // this gate only read rendered prose. Scan the script source too: strings in it ship, whether
+  // or not they render.
+  const text = (clone.text() || "") + "\n" + scriptSrc;
+  // Report EVERY hit before exiting. The first version bailed on the first match, which would
+  // have made the twelve hits on /features a twelve-round game of whack-a-mole.
+  const hits = [];
+  for (const [re, us] of BRITISH_SPELLINGS) {
+    const all = new RegExp(re.source, "gi");
+    let m;
+    while ((m = all.exec(text)) !== null) {
+      hits.push({ word: m[0], us, ctx: text.slice(Math.max(0, m.index - 70), m.index + 70).replace(/\s+/g, " ") });
+    }
+  }
+  if (!hits.length) return;
+  console.error(`\ndc-compile: ${hits.length} BRITISH SPELLING(S) in "${file}". This site is US English throughout (Carl, 2026-08-30).`);
+  for (const h of hits) {
+    console.error(`  "${h.word}" -> "${h.us}"`);
+    console.error(`      ...${h.ctx}...`);
+  }
+  console.error(`  Fix the design file, not the compiled output.`);
+  console.error(`  Verbatim quotes are exempt: wrap them in <blockquote>.\n`);
+  process.exit(1);
+}
+
+/**
+ * The Kyle Krancher testimonial must ship as his actual words.
+ *
+ * A design pass rewrote it into "CoachRx cut my software expenses by $200 a month". That figure
+ * appears in no source. It was caught and fixed on 2026-08-30, then came straight back in the
+ * 2026-08-31 export because the fabricated version is still live in Claude Design. Twice is a
+ * pattern, so it becomes a gate.
+ *
+ * The approved text is the archived CMS original with one clause removed: the original said "the
+ * subscription is more affordable than TrueCoach", and we do not publish rival pricing.
+ * See the no-competitor-pricing rule.
+ */
+const APPROVED_TESTIMONIAL = "improved my business drastically by streamlining operations";
+const FABRICATED_TESTIMONIAL = /cut my software expenses by \$?\d+/i;
+
+function checkTestimonial(root, file) {
+  const text = root.text() || "";
+  if (FABRICATED_TESTIMONIAL.test(text)) {
+    const m = text.match(FABRICATED_TESTIMONIAL);
+    console.error(`\ndc-compile: FABRICATED TESTIMONIAL in "${file}": "${m[0]}"`);
+    console.error(`  That dollar figure appears in no source and is attributed to a real, named coach.`);
+    console.error(`  Kyle Krancher's actual words, from the archived CMS:`);
+    console.error(`    "CoachRx has improved my business drastically by streamlining operations. Not to`);
+    console.error(`     mention, it has cut down on my expenses. The app has made both front and back of`);
+    console.error(`     house more robust without added complexity."`);
+    console.error(`  Fix this in Claude Design, not just the repo. It has already regressed once.\n`);
+    process.exit(1);
+  }
+  if (/Krancher/.test(text) && !text.includes(APPROVED_TESTIMONIAL)) {
+    console.error(`\ndc-compile: ALTERED TESTIMONIAL in "${file}".`);
+    console.error(`  Kyle Krancher is credited but his approved quote is missing. Testimonials ship verbatim.\n`);
+    process.exit(1);
+  }
+}
+
+/**
+ * No em dashes. Carl's standing rule, and it applies to site copy as well as to writing.
+ * Two shipped inside the app replica's sample messages ("8/10 — best week of the cycle so far").
+ * <blockquote> is exempt for the same reason the spelling gate exempts it: a quote is a record of
+ * what someone said, punctuation included.
+ */
+function checkEmDash($, root, file) {
+  // Marketing pages only. The blog and changelog templates get real archived article titles and
+  // excerpts injected at build time: 340 posts written over years, many quoting coaches directly.
+  // The Blog Index source contains zero em dashes; the 36 this gate first reported were all in
+  // that injected content. Rewriting a published article's punctuation to house style is the same
+  // mistake as correcting a quote, so those routes are out of scope.
+  if (/(Blog|Changelog|Tag Archive)/i.test(file)) return;
+  const clone = root.clone();
+  clone.find("blockquote").remove();
+  const text = clone.text() || "";
+  const hits = [...text.matchAll(/—/g)];
+  if (!hits.length) return;
+  console.error(`\ndc-compile: ${hits.length} EM DASH(ES) in visible copy in "${file}". Carl does not use them.`);
+  for (const m of hits) {
+    console.error(`      ...${text.slice(Math.max(0, m.index - 70), m.index + 60).replace(/\s+/g, " ")}...`);
+  }
+  console.error(`  Use a comma, a period, or a colon. Verbatim quotes are exempt: wrap them in <blockquote>.\n`);
+  process.exit(1);
+}
+
 const RETIRED_FEATURES = [/\bRxBot\b/i];
 const RETIRED_EXEMPT = /(Blog|Changelog|Tag Archive)/i;
 
@@ -1414,6 +1609,22 @@ function normalizeCrops($, root, ctx, label = "") {
  * normalised. A column heading the design does not have is left alone rather than invented.
  */
 const FOOTER_COLUMNS = {
+  // The five-pillar column was the one footer column NOT normalized here, so every design file
+  // kept whatever it happened to author and the three variants shipped side by side (2026-08-31):
+  //   most pages   /features#assess ...            correct
+  //   /features    #assess ...                     same-page fragments, works but drifts
+  //   /404         href="CoachRx Features.dc.html" x5, which fixLinks collapsed to /features x5,
+  //                so the 404 page shipped five differently-labelled links all going to one place
+  // Anchors verified present on the Features page: assess, consult, design, operate,
+  // client-experience. Absolute hrefs on every page, including /features itself, so the footer is
+  // byte-identical everywhere. check-footer.mjs enforces that.
+  Features: [
+    ["Assess", "/features#assess"],
+    ["Consult", "/features#consult"],
+    ["Design", "/features#design"],
+    ["Operate", "/features#operate"],
+    ["Client Experience", "/features#client-experience"],
+  ],
   Resources: [
     ["Articles", "/articles"],
     ["Podcasts", "/podcasts"],
@@ -1642,7 +1853,7 @@ function enforceLogo($, root, ctx) {
  */
 export function compileDesign(full, override) {
   const $ = cheerio.load(fs.readFileSync(full, "utf8"), { xmlMode: false });
-  const css = $("helmet style").map((_, s2) => $(s2).html()).get().join("\n");
+  const css = stripWordmarkCss($("helmet style").map((_, s2) => $(s2).html()).get().join("\n"));
   const scriptSrc = $('script[type="text/x-dc"]').html() || "";
   let data = extractData(scriptSrc, defaultProps($));
   if (typeof override === "function") data = override(data);
@@ -1661,6 +1872,7 @@ export function compileDesign(full, override) {
   ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
   normalizeFooterLinks($, root, ctx);
+  stripFooterWordmark($, root);
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
@@ -1674,6 +1886,9 @@ export function compileDesign(full, override) {
   checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
   checkRetired(root, full);
+  checkSpelling($, root, full, scriptSrc);
+  checkTestimonial(root, full);
+  checkEmDash($, root, full);
 
   ensureImageAlts($, root);
   ensureLazyImages($, root);
@@ -1730,7 +1945,7 @@ for (const page of PAGES) {
 
   const $ = cheerio.load(fs.readFileSync(full, "utf8"), { xmlMode: false });
 
-  const css = $("helmet style").map((_, s) => $(s).html()).get().join("\n");
+  const css = stripWordmarkCss($("helmet style").map((_, s) => $(s).html()).get().join("\n"));
   const scriptSrc = $('script[type="text/x-dc"]').html() || "";
   const data = extractData(scriptSrc, defaultProps($));
 
@@ -1746,6 +1961,7 @@ for (const page of PAGES) {
   ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
   normalizeFooterLinks($, root, ctx);
+  stripFooterWordmark($, root);
   normalizeNav($, root, ctx);
   ensureMobileNav($, root, ctx);
   renderImageSlots($, root, ctx);
@@ -1759,6 +1975,9 @@ for (const page of PAGES) {
   checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
   checkRetired(root, page.file);
+  checkSpelling($, root, page.file, scriptSrc);
+  checkTestimonial(root, page.file);
+  checkEmDash($, root, page.file);
 
   ensureImageAlts($, root);
   ensureLazyImages($, root);
