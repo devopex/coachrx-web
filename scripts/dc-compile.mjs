@@ -1618,10 +1618,19 @@ const FOOTER_COLUMNS = {
   // Anchors verified present on the Features page: assess, consult, design, operate,
   // client-experience. Absolute hrefs on every page, including /features itself, so the footer is
   // byte-identical everywhere. check-footer.mjs enforces that.
+  // Consult became Communicate and Design became Program on 2026-09-01. Consult described 18% of
+  // its own contents: of the 22 shipped features filed under it in the Feature Hub, only 4 were
+  // consultation features and 18 were messaging, dashboard awareness and notes. Design was renamed
+  // because it reads as visual design next to Custom Theming and Client Experience, so a visitor
+  // understands the word and points it at the wrong feature.
+  //
+  // These hrefs must match the section ids on the Features page. Both move in the same commit,
+  // and checkPillars() below fails the build if a page still says Consult or Design outside a
+  // footer, or if a footer link points at an anchor the Features page does not define.
   Features: [
     ["Assess", "/features#assess"],
-    ["Consult", "/features#consult"],
-    ["Design", "/features#design"],
+    ["Communicate", "/features#communicate"],
+    ["Program", "/features#program"],
     ["Operate", "/features#operate"],
     ["Client Experience", "/features#client-experience"],
   ],

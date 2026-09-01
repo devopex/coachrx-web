@@ -48,10 +48,22 @@ const DATA = path.join(ROOT, "src", "data", "roadmap.json");
 let override;
 if (fs.existsSync(DATA)) {
   const d = JSON.parse(fs.readFileSync(DATA, "utf8"));
-  const rows = (d.items || d.rows || []).filter((r) => r.publicRoadmap !== false);
-  const pick = (status) =>
+  // roadmap.json nests the rows under columns[].items. This used to read d.items at the top level,
+  // which is never present, so `rows` was always empty, the override never applied, and /roadmap
+  // silently shipped the design file's SAMPLE features for weeks: "Wearable trends v2", "Consult
+  // scheduling upgrades", "Program comparison view", "Client report scheduling", "Check-in
+  // templates". None of those are real Feature Hub rows. Found 2026-09-01 by the pillar gate,
+  // which noticed the placeholders still said "Consult" and "Design" after the rename.
+  const rows = [
+    ...(d.items || []),
+    ...(d.rows || []),
+    ...(d.columns || []).flatMap((c) => c.items || []),
+  ].filter((r) => r.publicRoadmap !== false);
+  // Match on label first ("Building now", "Up next"), falling back to status ("In Progress"),
+  // because the two do not use the same words.
+  const pick = (needle) =>
     rows
-      .filter((r) => (r.status || "").toLowerCase().includes(status))
+      .filter((r) => `${r.label || ""} ${r.status || ""}`.toLowerCase().includes(needle))
       .map((r) => ({ feature: r.feature || r.name, pillar: r.pillar || "", summary: r.summary || "" }));
   const building = pick("building");
   const upnext = pick("up next");
