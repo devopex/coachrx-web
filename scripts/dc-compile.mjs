@@ -762,16 +762,42 @@ function ensureImageAlts($, root) {
 
 /**
  * Lazy-load below-the-fold images. Home was fetching 30 images on first paint, most of them far
- * down the page. The first EAGER_COUNT stay eager so the hero still paints immediately.
+ * down the page.
+ *
+ * Eagerness is decided by POSITION, not by DOM order. The first version marked the first four
+ * images in the document eager whatever they were, and on 2026-09-06 that meant a 2.8 MB
+ * zoar-splash.png from the theming section, eight screens down the page, was blocking first paint
+ * on the home page. Document order is not visual order: the nav logo, a hero frame and a section
+ * that happens to be authored early all compete for the same four slots.
+ *
+ * An image is eager only if it is inside the nav or the first section. Everything else is lazy,
+ * however early it appears in the markup.
  */
-const EAGER_COUNT = 4;
 function ensureLazyImages($, root) {
-  root.find("img").each((i, el) => {
+  // The above-the-fold region: the nav, plus the first <section> or <main> on the page.
+  const $fold = root.find("nav").first().add(root.find("section, main").first());
+  const foldImgs = new Set($fold.find("img").toArray());
+
+  let eager = 0, lazy = 0, demoted = 0;
+  root.find("img").each((_, el) => {
     const $img = $(el);
-    if ($img.attr("loading")) return;
-    $img.attr("loading", i < EAGER_COUNT ? "eager" : "lazy");
-    if (i >= EAGER_COUNT && !$img.attr("decoding")) $img.attr("decoding", "async");
+    if (foldImgs.has(el)) {
+      if (!$img.attr("loading")) { $img.attr("loading", "eager"); }
+      eager++;
+      return;
+    }
+    // Below the fold. An explicit eager or fetchpriority="high" here is always a mistake, and the
+    // design files keep making it: the theming section's splash screen ships
+    // loading="eager" fetchpriority="high" eight screens down the page, which told the browser to
+    // fetch it ahead of the hero. Override rather than respect it; a re-export would only bring it
+    // back. Author intent is honoured above the fold, where it can be right.
+    if ($img.attr("loading") === "eager" || $img.attr("fetchpriority") === "high") demoted++;
+    $img.attr("loading", "lazy");
+    $img.removeAttr("fetchpriority");
+    if (!$img.attr("decoding")) $img.attr("decoding", "async");
+    lazy++;
   });
+  return { eager, lazy, demoted };
 }
 
 function checkDeadForms($, root, file) {
@@ -1043,6 +1069,49 @@ function ensureNavItems($, root, ctx) {
  *
  * Runs BEFORE ensureLegalLinks(), which then finds Privacy/Terms already present and no-ops.
  */
+/**
+ * Social links, in the footer, on every page.
+ *
+ * Stroke icons rather than the filled brand glyphs on purpose. The footer's link colour is
+ * rgba(255,255,255,.6); a solid Instagram or YouTube mark at that weight reads as a logo dropped
+ * onto the page, and two competing logos sit badly next to the CoachRx wordmark two columns away.
+ * Stroked at 1.6px they read as part of the same set as everything else down there.
+ *
+ * Inline SVG, so there is no icon font, no sprite sheet and no extra request. 44px tap targets on
+ * every device, because check-mobile enforces that and because they are the smallest thing in the
+ * footer.
+ *
+ * Added 2026-09-06 at Carl's request. YouTube is the OPEX Fitness channel, not a CoachRx one;
+ * that is deliberate, the footer already says "Built by OPEX Fitness".
+ */
+const SOCIALS = [
+  [
+    "Instagram",
+    "https://www.instagram.com/coachrx.app/",
+    `<rect x="3" y="3" width="18" height="18" rx="5"></rect>` +
+      `<circle cx="12" cy="12" r="4"></circle>` +
+      `<circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle>`,
+  ],
+  [
+    "YouTube",
+    "https://www.youtube.com/@OPEXFitness",
+    `<rect x="2" y="5" width="20" height="14" rx="4.5"></rect>` +
+      `<path d="M10.2 9.3v5.4l4.6-2.7z" fill="currentColor" stroke="none"></path>`,
+  ],
+];
+
+const SOCIAL_ROW =
+  `<span data-social style="display:flex;align-items:center;gap:4px">` +
+  SOCIALS.map(
+    ([name, href, body]) =>
+      `<a href="${href}" target="_blank" rel="noreferrer noopener" aria-label="CoachRx on ${name}" ` +
+      `class="crx-social" style="display:inline-flex;align-items:center;justify-content:center;` +
+      `width:44px;height:44px;color:rgba(255,255,255,.45);transition:color .2s">` +
+      `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" ` +
+      `stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg></a>`,
+  ).join("") +
+  `</span>`;
+
 const FOOTER_COL = (head, links) =>
   `<div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">${head}</span>` +
   links.map(([t, h]) => `<a href="${h}" style="font-size:13.5px;color:rgba(255,255,255,.6)">${t}</a>`).join("") +
@@ -1055,13 +1124,14 @@ const CANONICAL_FOOTER =
   `<img loading="lazy" decoding="async" src="${"/design/assets/coachrx-primary-whiteblue.png"}" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">` +
   `<p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.45);max-width:240px">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>` +
   `</div>` +
-  FOOTER_COL("Features", [["Assess", "/features#assess"], ["Consult", "/features#consult"], ["Design", "/features#design"], ["Operate", "/features#operate"], ["Client Experience", "/features#client-experience"]]) +
+  FOOTER_COL("Features", [["Assess", "/features#assess"], ["Communicate", "/features#communicate"], ["Program", "/features#program"], ["Operate", "/features#operate"], ["Client Experience", "/features#client-experience"]]) +
   FOOTER_COL("Resources", [["Articles", "/articles"], ["Podcasts", "/podcasts"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"]]) +
   FOOTER_COL("Company", [["Log in", "https://dashboard.coachrx.app/login"], ["About", "/about"], ["Pricing", "/pricing"], ["Contact", "mailto:coachrx@opexfit.com"]]) +
   `</div>` +
   `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">` +
   `<span style="font-size:12.5px;color:rgba(255,255,255,.35)">© ${new Date().getFullYear()} OPEX Fitness LLC. All rights reserved.</span>` +
-  `<span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>` +
+  `<span style="display:flex;align-items:center;gap:20px">` + SOCIAL_ROW +
+  `<a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>` +
   `</div></div>`;
 
 const FOOTER_STYLE = "border-top:1px solid rgba(255,255,255,.08);padding:72px 32px 32px;background:#08090E";
@@ -1106,6 +1176,47 @@ function ensureLegalLinks($, root, ctx) {
     added++;
   });
   if (added) ctx.legalInjected = added;
+}
+
+/**
+ * Put the social links in every footer.
+ *
+ * ensureFooter() returns early on any page that already has a real designed footer, which is all
+ * of them, so the SOCIAL_ROW baked into the CANONICAL_FOOTER template only ever reaches a
+ * synthesised footer. This does for social what ensureLegalLinks() does for Privacy and Terms:
+ * finds the bottom bar and puts the icons in it, on all 24 routes, so check-footer still sees one
+ * byte-identical footer everywhere.
+ *
+ * Placed before Privacy and Terms in the same row. Idempotent: if [data-social] is already there,
+ * it does nothing, so re-running the compiler cannot stack two copies.
+ */
+function ensureSocialLinks($, root, ctx) {
+  const footers = root.find("footer");
+  if (!footers.length) return;
+  let added = 0;
+  footers.each((_, el) => {
+    const $f = $(el);
+    if ($f.find("[data-social]").length) return;
+    // The bottom bar is the row that holds the copyright line.
+    let $bar = $f
+      .find("div")
+      .filter((_, d) => /All rights reserved/i.test($(d).text() || "") && $(d).children().length <= 4)
+      .last();
+    if (!$bar.length) $bar = $f.find("> div").last();
+    if (!$bar.length) return;
+    const $legal = $bar.find("a").filter((_, a) => /^(Privacy|Terms)$/.test($(a).text().trim())).first();
+    const $target = $legal.length ? $legal.parent() : $bar;
+    if ($legal.length) {
+      // Sit inside the same span as Privacy/Terms, ahead of them, and centre the row.
+      $target.prepend(SOCIAL_ROW);
+      const st = $target.attr("style") || "";
+      if (!/align-items/.test(st)) $target.attr("style", st + ";align-items:center");
+    } else {
+      $bar.append(SOCIAL_ROW);
+    }
+    added++;
+  });
+  if (added) ctx.socialInjected = added;
 }
 
 function ensureRoadmapNav($, root, ctx) {
@@ -1638,6 +1749,24 @@ function resolveMissingImages($, root, ctx, label = "") {
     if (fs.existsSync(path.join(pub, decodeURIComponent(src)))) return;
     const file = src.split("/").pop();
 
+    // A design file asking for a PNG we have since converted to WebP.
+    //
+    // On 2026-09-06 the 32 product screenshots and theming images were converted: 9.95 MB down to
+    // 1.27 MB, an 87% saving, with a single 2.8 MB zoar-splash.png becoming 190 KB. The design
+    // files still say .png and always will, because they are re-exported from Claude Design and
+    // any rewrite in the repo is undone by the next export. Resolving the extension here means the
+    // saving survives every future export without anyone remembering it.
+    //
+    // Only fires when the .png is genuinely absent, so a PNG that is still on disk is untouched.
+    if (/\.png$/i.test(file)) {
+      const webp = src.replace(/\.png$/i, ".webp");
+      if (fs.existsSync(path.join(pub, decodeURIComponent(webp)))) {
+        $img.attr("src", webp);
+        (ctx.imgToWebp = ctx.imgToWebp || []).push(file);
+        return;
+      }
+    }
+
     const unsuffixed = stripUploadSuffix(file);
     if (unsuffixed !== file && fs.existsSync(path.join(pub, decodeURIComponent(src.replace(file, unsuffixed))))) {
       $img.attr("src", src.replace(file, unsuffixed));
@@ -1883,14 +2012,23 @@ function normalizeFooterLinks($, root, ctx) {
   }
 
   // Whole-footer duplicate check: the same label twice is always a mistake.
-  const labels = $footer.find("a").map((_, a) => $(a).text().trim()).get();
+  //
+  // Identity is text, falling back to aria-label and then href. An icon-only link has no text at
+  // all, so keying on text alone made every icon link identical to every other one: the Instagram
+  // and YouTube icons added on 2026-09-06 both hashed to "" and this quietly deleted YouTube from
+  // all 24 footers. The gate was right, the key was too narrow.
+  const idOf = (a) => {
+    const $a = $(a);
+    return $a.text().trim() || $a.attr("aria-label") || $a.attr("href") || "";
+  };
+  const labels = $footer.find("a").map((_, a) => idOf(a)).get();
   const dupes = [...new Set(labels.filter((t, i) => labels.indexOf(t) !== i))];
   if (dupes.length) {
     // Keep the first occurrence of each, drop later ones, but never touch the legal row.
     const seen = new Set();
     $footer.find("a").each((_, a) => {
       const $a = $(a);
-      const t = $a.text().trim();
+      const t = idOf(a);
       if (/privacy|terms/i.test(t)) return;
       if (seen.has(t)) { $a.remove(); changed++; return; }
       seen.add(t);
@@ -2078,6 +2216,7 @@ export function compileDesign(full, override) {
   ensureNavItems($, root, ctx);
   ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
+  ensureSocialLinks($, root, ctx);
   normalizeFooterLinks($, root, ctx);
   stripFooterWordmark($, root);
   normalizeNav($, root, ctx);
@@ -2169,6 +2308,7 @@ for (const page of PAGES) {
   ensureNavItems($, root, ctx);
   ensureFooter($, root, ctx);
   ensureLegalLinks($, root, ctx);
+  ensureSocialLinks($, root, ctx);
   normalizeFooterLinks($, root, ctx);
   stripFooterWordmark($, root);
   normalizeNav($, root, ctx);

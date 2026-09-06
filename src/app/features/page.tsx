@@ -6,7 +6,7 @@ import { DcPage } from "@/components/DcPage";
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Assess, consult, design, operate, and deliver. Every part of your practice in one place, so nothing gets missed and nothing slows you down.",
+    "Assess, communicate, program, operate and deliver the client experience. Every part of your practice in one place, so nothing gets missed and nothing slows you down.",
   alternates: { canonical: "/features" },
 };
 

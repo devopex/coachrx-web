@@ -24,7 +24,7 @@ export const HERO = {
   overline: "Features",
   headline: ["One system", "for the way you actually coach."] as [string, string],
   lede:
-    "Assess, consult, design, operate, and deliver. Every part of your practice in one place, so nothing gets missed and nothing slows you down.",
+    "Assess, communicate, program, operate and deliver the client experience. Every part of your practice in one place, so nothing gets missed and nothing slows you down.",
   fine:
     "Full access, free for 14 days. No credit card required. Free onboarding and transition support included.",
   proof:

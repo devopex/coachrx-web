@@ -57,6 +57,55 @@ if (stale.length) {
   failed = true;
 }
 
+/**
+ * 1b. The pillar list, written out as a sentence, with retired names in it.
+ *
+ * Rule 1 above only looks at standalone element text (`>Consult<`), which is right for labels and
+ * is what stops "Program calendar" and "design" from failing. It cannot see the list written as
+ * prose, and two of those shipped to staging on 2026-09-06:
+ *
+ *   /404 body copy:  "Assess, consult, design, operate, and the client app, in one place."
+ *   /features <meta description> and og:description:
+ *                    "Assess, consult, design, operate, and deliver."
+ *
+ * The meta description is what Google shows in results and what every social share renders, and no
+ * gate looked at it at all, because it lives in src/app/features/page.tsx rather than in any
+ * compiled page.
+ *
+ * The signature is unambiguous and does not fire on ordinary prose: "assess" followed by "consult"
+ * or "design" followed by "operate", all within about 60 characters. That is the pillar list and
+ * nothing else.
+ */
+const SEQ = /assess[^.]{0,30}\b(consult|design)\b[^.]{0,30}\boperate\b/i;
+const PROSE_SOURCES = [];
+for (const f of files) {
+  PROSE_SOURCES.push([`generated/${f}`, htmlOf(fs.readFileSync(path.join(GEN, f), "utf8"))]);
+}
+for (const dir of ["src/app", "src/data"]) {
+  const walk = (d) => {
+    if (!fs.existsSync(d)) return;
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (/\.(tsx?|json)$/.test(e.name)) PROSE_SOURCES.push([p, fs.readFileSync(p, "utf8")]);
+    }
+  };
+  walk(path.join(process.cwd(), dir));
+}
+const seqHits = [];
+for (const [name, src] of PROSE_SOURCES) {
+  const m = src.match(SEQ);
+  if (m) seqHits.push({ name, text: m[0].replace(/\s+/g, " ").slice(0, 90) });
+}
+if (seqHits.length) {
+  console.error(`\ncheck-pillars: the five pillars listed in prose using a retired name:`);
+  for (const h of seqHits) console.error(`  ${h.name}\n     "...${h.text}..."`);
+  console.error(`  Consult is now Communicate. Design is now Program (renamed 2026-09-01).`);
+  console.error(`  This covers <meta> descriptions too, which are what search results and social`);
+  console.error(`  shares display and which no other gate reads.\n`);
+  failed = true;
+}
+
 // 2 and 3. the Features page must define every anchor the footers point at
 const featPath = path.join(GEN, "features.ts");
 if (fs.existsSync(featPath)) {

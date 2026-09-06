@@ -4,15 +4,28 @@
    ============================================================ */
 
 /* ---------- FONT FACES ---------- */
-@font-face { font-family: "Geist"; src: url("fonts/Geist-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
-@font-face { font-family: "Geist"; src: url("fonts/Geist-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; font-display: swap; }
+/* Mona Sans, the brand face (Carl, 2026-09-01; installed 2026-09-06).
+   Two variable files cover every weight 200 to 900 in 258 KB. The nine static Geist TTFs they
+   replace were 720 KB on disk and 385 KB per page load, and Geist was the typeface named in the
+   CTO's original "this reads as AI-generated" note. Variable rather than five static weights:
+   134 KB against 296 KB, and it can hit any weight the design asks for.
+   Enforced by scripts/check-fonts.mjs. */
+@font-face {
+  font-family: "Mona Sans";
+  src: url("fonts/MonaSansVF.woff2") format("woff2-variations");
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mona Sans";
+  src: url("fonts/MonaSansVF-Italic.woff2") format("woff2-variations");
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+}
 
 :root {
   /* ---------- BRAND COLORS (from Color Palette.png) ---------- */
@@ -65,9 +78,9 @@
   --gradient-blue-wash:   linear-gradient(180deg, rgba(6,22,54,0) 0%, rgba(6,22,54,0.85) 100%); /* @kind color */
 
   /* ---------- TYPOGRAPHY ---------- */
-  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; /* no webfont: nothing on the site uses monospace, see check-system */
 
   /* Weights */
   --fw-thin: 100; /* @kind font */

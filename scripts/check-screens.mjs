@@ -24,10 +24,10 @@ const SCREENS = path.join(process.cwd(), "public", "design", "assets", "screens"
 
 const BLOCKED = [
   {
-    file: "calendar.png",
-    sha: "c83493935947da66354f29bb19f396438ff4077a83b5e4dfe65eec260c4a2952",
+    file: "calendar.webp",
+    sha: "dac9b670c927d67c0672b3105d49fd18e5e6c83ec88ba1f053e6fc8291fae248",
     why: 'toolbar shows an "RxBot" button. RxBot was retired 2026-08-19.',
-    fix: "Retake the program design calendar with the current toolbar, same crop, 1677x1232.",
+    fix: "Retake the program design calendar with the current toolbar, same crop, 1677x1232, and save as WebP.",
     // Carl, 2026-09-05: "rxbot in the screen is fine for now." Accepted so v3.2 can be built
     // and reviewed. This does NOT clear the item, it defers it. Remove `accepted` to make it
     // block again, which is the right move before the DNS cutover: this image is the hero on
@@ -43,8 +43,8 @@ const BLOCKED = [
  */
 const PRIVACY_NOTES = [
   {
-    file: "messages.png",
-    sha: "5176340a4abeb9e0ff864bbaa5efd885d5e08c87db856822a09ce0c4aaa0272e",
+    file: "messages.webp",
+    sha: "8881b514e36f86fbcce58e221cdeb366899773afc2845bf760d74d58c59ca658",
     why: 'shows "Ken Hardaway", age, height, body weight and a client-since date.',
   },
 ];
