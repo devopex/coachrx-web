@@ -2,7 +2,7 @@
  "about": {
   "mobileBlocks": 4,
   "tallCollapsed": 2,
-  "objectFitImgs": 0,
+  "objectFitImgs": 17,
   "burger": 1,
   "sheet": 1,
   "burgerJS": 1,
@@ -15,7 +15,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "blog-index": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -30,7 +30,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "blog-post": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 2,
   "burger": 1,
@@ -45,7 +45,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "changelog-entry-latest": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 6,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -60,7 +60,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "changelog-entry": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 6,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -75,7 +75,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "changelog-index": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 6,
   "tallCollapsed": 2,
   "objectFitImgs": 0,
   "burger": 1,
@@ -90,9 +90,9 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "features": {
-  "mobileBlocks": 4,
-  "tallCollapsed": 10,
-  "objectFitImgs": 1,
+  "mobileBlocks": 5,
+  "tallCollapsed": 9,
+  "objectFitImgs": 4,
   "burger": 1,
   "sheet": 1,
   "burgerJS": 1,
@@ -105,9 +105,9 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "home": {
-  "mobileBlocks": 7,
-  "tallCollapsed": 12,
-  "objectFitImgs": 49,
+  "mobileBlocks": 9,
+  "tallCollapsed": 20,
+  "objectFitImgs": 65,
   "burger": 1,
   "sheet": 1,
   "burgerJS": 1,
@@ -120,7 +120,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "notFound": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
@@ -135,7 +135,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "podcasts": {
-  "mobileBlocks": 3,
+  "mobileBlocks": 4,
   "tallCollapsed": 2,
   "objectFitImgs": 22,
   "burger": 1,
@@ -150,9 +150,9 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "pricing": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 5,
-  "objectFitImgs": 0,
+  "objectFitImgs": 4,
   "burger": 1,
   "sheet": 1,
   "burgerJS": 1,
@@ -165,7 +165,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "roadmap": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 2,
   "objectFitImgs": 0,
   "burger": 1,
@@ -180,7 +180,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-ama-challenge": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -195,7 +195,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-case-study": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -210,7 +210,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-coach-spotlight": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -225,7 +225,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-community-call": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -240,7 +240,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-feature-highlight": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -255,7 +255,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-frameworks": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -270,7 +270,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-marketing-for-fitness-coaches": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -285,7 +285,7 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-program-design-pro-tip": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
@@ -300,8 +300,53 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-program-design": {
-  "mobileBlocks": 4,
+  "mobileBlocks": 5,
   "tallCollapsed": 1,
+  "objectFitImgs": 0,
+  "burger": 1,
+  "sheet": 1,
+  "burgerJS": 1,
+  "overflowGuard": 1,
+  "marginCrops": 0,
+  "unsafeCollapsed": 0,
+  "carouselAsGrid": 0,
+  "cardsWithMinWidth": 0,
+  "stateHandlers": 0,
+  "imgWithIntrinsicOnCrop": 0
+ },
+ "updates-changelog": {
+  "mobileBlocks": 5,
+  "tallCollapsed": 0,
+  "objectFitImgs": 0,
+  "burger": 1,
+  "sheet": 1,
+  "burgerJS": 1,
+  "overflowGuard": 1,
+  "marginCrops": 0,
+  "unsafeCollapsed": 0,
+  "carouselAsGrid": 0,
+  "cardsWithMinWidth": 0,
+  "stateHandlers": 0,
+  "imgWithIntrinsicOnCrop": 0
+ },
+ "updates-requests": {
+  "mobileBlocks": 5,
+  "tallCollapsed": 0,
+  "objectFitImgs": 0,
+  "burger": 1,
+  "sheet": 1,
+  "burgerJS": 1,
+  "overflowGuard": 1,
+  "marginCrops": 0,
+  "unsafeCollapsed": 0,
+  "carouselAsGrid": 0,
+  "cardsWithMinWidth": 0,
+  "stateHandlers": 0,
+  "imgWithIntrinsicOnCrop": 0
+ },
+ "updates-roadmap": {
+  "mobileBlocks": 5,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
   "sheet": 1,

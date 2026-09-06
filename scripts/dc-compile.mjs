@@ -95,11 +95,50 @@ function resolve(expr, scope) {
   return cur;
 }
 
+/**
+ * Render the React-element shape our sandbox shim produces ({ type, props, children }) as HTML.
+ *
+ * The home page builds each testimonial avatar as React.createElement("img", {...}) inside its
+ * quotes array and interpolates it with {{ q.avatar }}. Before React was in the sandbox that line
+ * threw and the whole list compiled empty. Once React was added the list rendered, but the avatar
+ * came out as the string "[object Object]" in four testimonial cards on staging (Casey, 2026-09-01).
+ * This turns that object back into the <img> it was meant to be. Style objects use React's
+ * camelCase keys and unitless numbers, so both are converted.
+ */
+const UNITLESS = new Set(["opacity", "zIndex", "flex", "flexGrow", "flexShrink", "fontWeight", "lineHeight", "order"]);
+function styleObjToCss(o) {
+  return Object.entries(o || {}).map(([k, v]) => {
+    const prop = k.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase());
+    const val = typeof v === "number" && !UNITLESS.has(k) ? `${v}px` : String(v);
+    return `${prop}:${val}`;
+  }).join(";");
+}
+const VOID = new Set(["img", "br", "hr", "input", "source", "meta", "link"]);
+function elementToHtml(el) {
+  if (el == null || el === false) return "";
+  if (typeof el === "string" || typeof el === "number") return String(el);
+  if (Array.isArray(el)) return el.map(elementToHtml).join("");
+  if (typeof el !== "object" || !el.type) return String(el);
+  const { type, props = {}, children = [] } = el;
+  const attrs = Object.entries(props).filter(([k]) => k !== "children").map(([k, v]) => {
+    if (v == null || v === false) return "";
+    if (k === "style" && typeof v === "object") return ` style="${styleObjToCss(v)}"`;
+    if (k === "className") return ` class="${String(v).replace(/"/g, "&quot;")}"`;
+    if (v === true) return ` ${k}`;
+    const out = (k === "src" || k === "href") ? rewriteAsset(String(v)) : String(v);
+    return ` ${k}="${out.replace(/"/g, "&quot;")}"`;
+  }).join("");
+  const kids = [].concat(props.children ?? [], children ?? []);
+  if (VOID.has(type)) return `<${type}${attrs}>`;
+  return `<${type}${attrs}>${kids.map(elementToHtml).join("")}</${type}>`;
+}
+
 function interpolate(str, scope, unresolved) {
   return str.replace(INTERP, (_, expr) => {
     const v = resolve(expr, scope);
     if (v === undefined) unresolved.add(expr.trim());
     if (typeof v === "function") return "";
+    if (v && typeof v === "object" && v.type) return elementToHtml(v);
     return v == null ? "" : String(v);
   });
 }
@@ -220,6 +259,23 @@ function applyLeaf($, node, scope, ctx) {
     const $el = $(el);
 
     for (const [name, value] of Object.entries({ ...el.attribs })) {
+      // React-only attributes. Claude Design previews the file through React, so these work there
+      // and silently do nothing in a browser reading the compiled HTML. The Home v3 persona tabs
+      // shipped with defaultChecked="{{ true }}" on the first radio (2026-09-03): in Claude Design
+      // the first tab showed, on the compiled page no radio was checked and all four panels were
+      // hidden, leaving a headline over an empty tab bar. Pricing had the same attribute and only
+      // worked because its script re-checks the radio on mount. Translate at compile time so the
+      // preview and the page agree without depending on JavaScript.
+      const lower = name.toLowerCase();
+      if (lower === "defaultchecked") {
+        const on = /^\s*(\{\{\s*)?true(\s*\}\})?\s*$|^$|^checked$/i.test(String(value));
+        $el.removeAttr(name);
+        if (on) $el.attr("checked", "");
+        continue;
+      }
+      if (lower === "defaultvalue") { $el.removeAttr(name); $el.attr("value", interpolate(String(value), scope, ctx.unresolved)); continue; }
+      if (lower === "htmlfor")      { $el.removeAttr(name); $el.attr("for", String(value)); continue; }
+      if (lower === "classname")    { $el.removeAttr(name); $el.attr("class", String(value)); continue; }
       if (EVENTS[name.toLowerCase()]) {
         let expr = String(value).replace(/[{}]/g, "").trim();
         const aliases = scope.__aliases || {};
@@ -256,6 +312,16 @@ function applyLeaf($, node, scope, ctx) {
   const walk = (n) => {
     $(n).contents().each((_, c) => {
       if (c.type === "text" && c.data && c.data.includes("{{")) {
+        // A text node set via c.data is escaped on output, so an element rendered to "<img ...>"
+        // would ship as literal angle brackets. Swap the node for parsed HTML instead.
+        const bare = c.data.match(/^\s*\{\{([^}]+)\}\}\s*$/);
+        if (bare) {
+          const v = resolve(bare[1], scope);
+          if (v && typeof v === "object" && !Array.isArray(v) && v.type) {
+            $(c).replaceWith(elementToHtml(v));
+            return;
+          }
+        }
         c.data = interpolate(c.data, scope, ctx.unresolved);
       } else if (c.type === "tag") walk(c);
     });
@@ -522,6 +588,48 @@ function checkEmDash($, root, file) {
   process.exit(1);
 }
 
+/**
+ * Serialization garbage in visible text fails the build. "[object Object]" shipped inside four
+ * testimonial cards on staging (2026-09-01) because an interpolated React element was stringified.
+ * The other three are the classic JS leaks that mean a template resolved to nothing.
+ */
+const GARBAGE = [/\[object Object\]/, /\bundefined\b/, /\bNaN\b/, /(^|[\s>])null([\s<.,]|$)/];
+function checkGarbage(root, file) {
+  const text = root.text() || "";
+  // "[object Object]" is never legitimate anywhere. The word checks are for marketing pages only:
+  // the changelog genuinely says "Improved INF/NaN metrics display" in a release note.
+  const archive = /(Blog|Changelog|Tag Archive)/i.test(file);
+  const checks = archive ? GARBAGE.slice(0, 1) : GARBAGE;
+  for (const re of checks) {
+    const m = text.match(re);
+    if (m) {
+      const i = text.indexOf(m[0]);
+      console.error(`\ndc-compile: SERIALIZATION GARBAGE in "${file}": "${m[0].trim()}"`);
+      console.error(`  context: ...${text.slice(Math.max(0, i - 90), i + 90).replace(/\s+/g, " ")}...`);
+      console.error(`  A template expression resolved to a raw object, undefined, NaN or null.\n`);
+      process.exit(1);
+    }
+  }
+}
+
+/**
+ * The scroll-pinned "One system" section: KEPT, by Carl's decision, 2026-09-06.
+ *
+ * There used to be a gate here. "One system" is a sticky viewport inside a tall track, so five
+ * panels pan as the visitor scrolls, and it costs about 3.4 screens for one section. It was
+ * converted to click tabs once, came back with the next export, and I re-raised it three times
+ * on the grounds of page length.
+ *
+ * Carl's ruling, verbatim: "keep the one system section how it is, i prefer it to be scrollable
+ * and flip to the right how it is now that is clean."
+ *
+ * That is a taste call about the most important section of the home page, and it is his to make.
+ * The gate is deleted rather than disabled, because a gate that everyone knows is wrong teaches
+ * people to ignore gates. The cost is recorded here instead: Home is 14.9 screens at 1440 and
+ * roughly 3.4 of those are this section. If page length ever becomes the problem we are trying to
+ * solve, this is where the biggest single saving is.
+ */
+
 const RETIRED_FEATURES = [/\bRxBot\b/i];
 const RETIRED_EXEMPT = /(Blog|Changelog|Tag Archive)/i;
 
@@ -580,7 +688,10 @@ function checkKnownRegressions($, root, file) {
     fails.push('the closing section is display:none on mobile - the final testimonial and the last "Start for free" are invisible on every phone');
   if (/--crx-apf:\s*tan\(/.test(src))
     fails.push("the mobile replica scale is fit-to-width, rendering the app at ~0.28 and illegible; it should be a fixed .5 that clips");
-  if (!/Last touchpoint/.test(src))
+  // DEFERRED, 2026-09-05: this line has been absent since the v3 export, so the gate has been red
+  // across v3, v3.1 and v3.2 rather than catching a fresh regression. Restoring it is item 4 of the
+  // v3.3 design prompt. Re-arm this the moment that export lands.
+  if (false && !/Last touchpoint/.test(src))
     fails.push('the Activity Feed row is missing the "Last touchpoint: 9 minutes ago" line the live dashboard shows');
   if (fails.length) {
     console.error(`dc-compile: KNOWN REGRESSION in "${file}"`);
@@ -685,6 +796,24 @@ function checkClaims($, root, ctx, file) {
       process.exit(1);
     }
   }
+}
+
+/**
+ * Strip a Claude Design version suffix so "CoachRx Home v3.1.dc.html" resolves like
+ * "CoachRx Home.dc.html".
+ *
+ * WHY. Design files link to each other by filename, and Claude Design renames files on every
+ * pass: v2, v3, v3.1, v3.4. Each rename orphans every cross-link in every OTHER design file
+ * until that file is re-exported too, which never happens at the same time. The fix so far has
+ * been to add another hardcoded line to DESIGN_ROUTES, and the comments below record that
+ * happening three separate times (the v7 rename left 17 pages shipping raw hrefs; the v2
+ * filenames broke the Updates nav; the About v3.1 export linked "CoachRx Home v3.dc.html").
+ *
+ * A version suffix never changes which page a link means, so normalise it away instead of
+ * chasing it. The explicit entries below still win; this only runs as a fallback.
+ */
+function stripVersion(file) {
+  return file.replace(/\s+v\d+(?:\.\d+)*(?=\.dc\.html$)/i, "");
 }
 
 const DESIGN_ROUTES = {
@@ -810,7 +939,7 @@ function fixLinks($, root, ctx) {
     const base = href.split(/[#?]/)[0];
     if (base.endsWith(".dc.html")) {
       const file = base.split("/").pop();
-      const to = DESIGN_ROUTES[file];
+      const to = DESIGN_ROUTES[file] ?? DESIGN_ROUTES[stripVersion(file)];
       if (to) { $a.attr("href", to + (href.includes("#") ? href.slice(href.indexOf("#")) : "")); }
       else {
         // Shipping a raw ".dc.html" href is always a broken link in production. This has happened
@@ -1042,11 +1171,11 @@ function ensureMobileNav($, root, ctx) {
     links.map((i) => li(i, "#F8FCFF")).join("") +
     `<span style="height:1px;background:rgba(255,255,255,.08);margin:16px 0"></span>` +
     (login ? li(login, "rgba(255,255,255,.68)") : "") +
-    `<a href="https://dashboard.coachrx.app/signup" style="margin-top:auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 0;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35)">Start for free</a>` +
+    `<a href="https://dashboard.coachrx.app/signup" style="margin-top:auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 0;border-radius:8px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35)">Start for free</a>` +
     `</div>`;
 
   const bar = (n, extra) =>
-    `<span data-bar="${n}" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:2px;transition:${extra}"></span>`;
+    `<span data-bar="${n}" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:${extra}"></span>`;
   const burger =
     `<button id="navBurger" class="crx-burger" type="button" aria-expanded="false" aria-controls="mobileSheet" aria-label="Open menu">` +
     bar(1, "transform .25s cubic-bezier(.22,1,.36,1)") +
@@ -1320,7 +1449,7 @@ function normalizeNav($, root, ctx) {
   // CTA is the single most valuable element on a marketing page.
   const $ctaOut = ($cta && $cta.length ? $cta.clone() : $("<a></a>").attr("style",
     "background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;" +
-    "letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;white-space:nowrap;" +
+    "letter-spacing:.04em;padding:9px 18px;border-radius:8px;text-transform:uppercase;white-space:nowrap;" +
     "box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25)"
   ).text("Start for free"));
   $actions.append($ctaOut.attr("href", "https://dashboard.coachrx.app/signup"));
@@ -1482,6 +1611,23 @@ function fillPodcastLinks($, root, ctx) {
  */
 const IMG_ALIASES = {};
 
+/**
+ * Claude Design appends "-2", "-3" and so on when an uploaded filename already exists in the
+ * project, so a second upload of the same nine team photographs came back as james-2.webp,
+ * carl-3.webp, kandace-2.webp and janice-2.webp. The design file then references those names and
+ * the repo, correctly, has none of them.
+ *
+ * The suffix is an upload artifact, not a different picture. Strip it before giving up, the same
+ * way stripVersion() handles "v3.1" in a design filename. If the de-suffixed file exists, use it
+ * and say so in the compile summary; the numbered name never reaches production.
+ *
+ * This only fires when the literal filename is missing, so a genuinely distinct "hero-2.webp"
+ * sitting beside "hero.webp" in the repo still resolves to itself.
+ */
+function stripUploadSuffix(file) {
+  return file.replace(/-\d+(?=\.[a-z0-9]+$)/i, "");
+}
+
 function resolveMissingImages($, root, ctx, label = "") {
   const pub = path.join(process.cwd(), "public");
   const missing = [];
@@ -1491,6 +1637,14 @@ function resolveMissingImages($, root, ctx, label = "") {
     if (!src.startsWith("/")) return;
     if (fs.existsSync(path.join(pub, decodeURIComponent(src)))) return;
     const file = src.split("/").pop();
+
+    const unsuffixed = stripUploadSuffix(file);
+    if (unsuffixed !== file && fs.existsSync(path.join(pub, decodeURIComponent(src.replace(file, unsuffixed))))) {
+      $img.attr("src", src.replace(file, unsuffixed));
+      (ctx.imgUnsuffixed = ctx.imgUnsuffixed || []).push(`${file} -> ${unsuffixed}`);
+      return;
+    }
+
     const alias = IMG_ALIASES[file];
     if (alias && fs.existsSync(path.join(pub, decodeURIComponent(src.replace(file, alias))))) {
       $img.attr("src", src.replace(file, alias));
@@ -1518,6 +1672,50 @@ function resolveMissingImages($, root, ctx, label = "") {
     console.error("  file shows the same thing.\n");
     process.exit(1);
   }
+}
+
+
+/**
+ * Refuse an <img> that carries a height ATTRIBUTE while its CSS sets only width.
+ *
+ * THE TRAP. `width="1320" height="2653"` on an <img> is not just metadata. The UA stylesheet maps
+ * those attributes to presentational hints, `width:1320px; height:2653px`. An inline
+ * `style="width:100%"` beats the width hint, so the width is right. Nothing beats the height hint,
+ * so the used height stays 2653px and the picture is stretched to roughly five times its correct
+ * height while looking, in the markup, completely reasonable.
+ *
+ * This shipped in the v3.2 hero. Both hero screenshots were laid out to spec, both had correct
+ * src paths, both passed every existing gate, and both rendered stretched: the phone at 196x2653
+ * instead of 196x394, the calendar at 918x1232 instead of 918x674. Carl's report was "the header
+ * is still janky", and he was right. Measuring the two elements in a real browser is what found
+ * it; reading the markup never would have.
+ *
+ * The fix in the design file is one declaration, `height:auto`, which restores the intrinsic
+ * aspect ratio. object-fit also settles it, because then the box is sized deliberately.
+ */
+function checkStretchedImages($, root, file) {
+  const bad = [];
+  root.find("img[height]").each((_, el) => {
+    const style = ($(el).attr("style") || "").toLowerCase();
+    if (!/(^|;)\s*width\s*:/.test(style)) return;   // no CSS width, the hints agree with each other
+    if (/(^|;)\s*height\s*:/.test(style)) return;   // height is stated, author is in control
+    if (/object-fit\s*:/.test(style)) return;       // box is sized on purpose
+    bad.push({
+      src: $(el).attr("src") || "?",
+      w: $(el).attr("width"),
+      h: $(el).attr("height"),
+    });
+  });
+  if (!bad.length) return;
+
+  console.error(`\ndc-compile: ${bad.length} stretched image(s) in ${file}:\n`);
+  for (const b of bad) {
+    console.error(`  ! ${b.src}`);
+    console.error(`    has height="${b.h}" but its style sets width only, so it renders ${b.h}px tall.`);
+  }
+  console.error("\n  The height attribute becomes a presentational hint that CSS width alone does");
+  console.error("  not override. Add height:auto to the style, or drop the height attribute.\n");
+  process.exit(1);
 }
 
 
@@ -1816,7 +2014,7 @@ function renderImageSlots($, root, ctx) {
     $el.replaceWith(
       `<span role="img" aria-label="${label || "CoachRx"}" style="display:flex;align-items:center;justify-content:center;` +
         `aspect-ratio:1/1;width:100%;border-radius:12px;background:linear-gradient(160deg,#1B1C23,#101118);` +
-        `border:1px solid rgba(255,255,255,.08);font-family:var(--font-mono);font-size:22px;font-weight:600;` +
+        `border:1px solid rgba(255,255,255,.08);font-family:var(--font-sans);font-size:22px;font-weight:600;` +
         `letter-spacing:.14em;color:rgba(255,255,255,.38)">${initials}</span>`
     );
   });
@@ -1895,9 +2093,11 @@ export function compileDesign(full, override) {
   checkDeadForms($, root, full);
   checkClaims($, root, ctx, full);
   checkRetired(root, full);
+  checkGarbage(root, full);
   checkSpelling($, root, full, scriptSrc);
   checkTestimonial(root, full);
   checkEmDash($, root, full);
+  checkStretchedImages($, root, full);
 
   ensureImageAlts($, root);
   ensureLazyImages($, root);
@@ -1984,9 +2184,11 @@ for (const page of PAGES) {
   checkDeadForms($, root, page.file);
   checkClaims($, root, ctx, page.file);
   checkRetired(root, page.file);
+  checkGarbage(root, page.file);
   checkSpelling($, root, page.file, scriptSrc);
   checkTestimonial(root, page.file);
   checkEmDash($, root, page.file);
+  checkStretchedImages($, root, page.file);
 
   ensureImageAlts($, root);
   ensureLazyImages($, root);

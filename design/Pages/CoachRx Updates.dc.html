@@ -22,7 +22,7 @@
     .crx-tab.is-active{color:#F8FCFF;border-bottom-color:#58FF7A}
     .crx-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;transition:border-color .18s}
     .crx-card:hover{border-color:rgba(255,255,255,.14)}
-    .crx-chip{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:4px 8px;white-space:nowrap}
+    .crx-chip{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:4px 8px;white-space:nowrap}
     .crx-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px}
     .crx-logrow{display:grid;grid-template-columns:72px 100px 1fr auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)}
     .crx-reqrow{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);min-height:44px;box-sizing:border-box}
@@ -56,7 +56,7 @@
       <a href="CoachRx Pricing v2.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
       <a href="CoachRx About.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
     </div>
-    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:10px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:8px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
   </nav>
 
   <!-- ══════════ ROUTE /roadmap ══════════ -->
@@ -70,14 +70,14 @@
     </div>
 
     <div data-reveal="120" style="margin-top:40px">
-      <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)">Updated {{ updated }}</span>
+      <span style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)">Updated {{ updated }}</span>
     </div>
 
     <div class="crx-cols" style="margin-top:28px">
       <div>
         <div data-reveal="0" style="display:flex;align-items:baseline;gap:8px;padding-bottom:18px">
-          <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#58FF7A">Building now</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· {{ buildingCount }}</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)">Building now</span>
+          <span style="font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.45)">· {{ buildingCount }}</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ building }}" as="it" hint-placeholder-count="4">
@@ -93,8 +93,8 @@
       </div>
       <div class="crx-col2">
         <div data-reveal="0" style="display:flex;align-items:baseline;gap:8px;padding-bottom:18px">
-          <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Up next</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· {{ upnextCount }}</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)">Up next</span>
+          <span style="font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.45)">· {{ upnextCount }}</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ upnext }}" as="it" hint-placeholder-count="3">
@@ -112,7 +112,7 @@
   </section>
 
   <!-- ══════════ ROUTE /changelog ══════════ -->
-  <div class="crx-route"><span style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)">Build preview · direct route /changelog</span></div>
+  <div class="crx-route"><span style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35)">Build preview · direct route /changelog</span></div>
   <section data-screen-label="Route /changelog" class="crx-pad crx-panel" style="max-width:1150px;margin:0 auto;padding-top:120px;padding-bottom:120px">
     <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.03;letter-spacing:-0.03em;color:#F8FCFF">Product updates</h1>
     <p data-reveal="40" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:560px;text-wrap:pretty">What we are building, what we shipped, and what you have asked for.</p>
@@ -127,8 +127,8 @@
     <div data-reveal="140" style="margin-top:20px;border-bottom:1px solid rgba(255,255,255,.08)">
       <sc-for list="{{ releases }}" as="r" hint-placeholder-count="8">
         <div class="crx-logrow">
-          <span style="font-family:var(--font-mono);font-size:13px;font-weight:600;color:#F8FCFF">{{ r.version }}</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ r.date }}</span>
+          <span style="font-size:13px;font-weight:600;color:#F8FCFF">{{ r.version }}</span>
+          <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ r.date }}</span>
           <span style="font-size:15px;line-height:1.55;color:rgba(255,255,255,.62);text-wrap:pretty">{{ r.summary }}</span>
           <a href="CoachRx Changelog Entry.dc.html" style="font-size:13px;font-weight:600;color:#FFFFFF;white-space:nowrap" style-hover="color:#FFFFFF;opacity:.75">Read →</a>
         </div>
@@ -137,7 +137,7 @@
   </section>
 
   <!-- ══════════ ROUTE /feature-requests ══════════ -->
-  <div class="crx-route"><span style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)">Build preview · direct route /feature-requests</span></div>
+  <div class="crx-route"><span style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35)">Build preview · direct route /feature-requests</span></div>
   <section data-screen-label="Route /feature-requests" class="crx-pad crx-panel" style="max-width:1150px;margin:0 auto;padding-top:120px;padding-bottom:120px">
     <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.03;letter-spacing:-0.03em;color:#F8FCFF">Product updates</h1>
     <p data-reveal="40" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:560px;text-wrap:pretty">What we are building, what we shipped, and what you have asked for.</p>
@@ -151,9 +151,9 @@
       <h3 style="margin:0;font-size:22px;font-weight:600;line-height:1.3;color:#F8FCFF">Tell us what to build.</h3>
       <p style="margin:12px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);text-wrap:pretty">Every request is read. Plenty of what is on this roadmap started as one.</p>
       <div style="margin-top:28px">
-        <a href="https://opexfitness.notion.site/3880519a8d5280bda54ed97f81a8ae3c" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#58FF7A;border-radius:10px;color:#04310F;padding:15px 32px;min-height:44px;box-sizing:border-box;transition:opacity .2s" style-hover="opacity:.88;color:#04310F">Submit a feature request</a>
+        <a href="https://opexfitness.notion.site/3880519a8d5280bda54ed97f81a8ae3c" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#58FF7A;border-radius:8px;color:#04310F;padding:15px 32px;min-height:44px;box-sizing:border-box;transition:opacity .2s" style-hover="opacity:.88;color:#04310F">Submit a feature request</a>
       </div>
-      <p style="margin:16px 0 0;font-family:var(--font-mono);font-size:11px;line-height:1.6;color:rgba(255,255,255,.42);text-wrap:pretty">Takes a minute. We ask for your name, the email on your CoachRx account, which platform it is for, and what you want it to do.</p>
+      <p style="margin:16px 0 0;font-size:11px;line-height:1.6;color:rgba(255,255,255,.42);text-wrap:pretty">Takes a minute. We ask for your name, the email on your CoachRx account, which platform it is for, and what you want it to do.</p>
     </div>
 
     <div data-reveal="0" style="margin-top:88px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-wrap:wrap;column-gap:48px;row-gap:4px;padding-top:16px">
@@ -194,12 +194,12 @@ class Component extends DCLogic {
       releases: [
         { version: "v5.8", date: "Aug 2026", summary: "Google and Apple sign-in, plus a new billing experience." },
         { version: "v5.7", date: "Jul 2026", summary: "Program library search spans the CoachRx Index, your exercise library and every saved template." },
-        { version: "v5.6", date: "Jun 2026", summary: "Client Effort and Training Load — session ratings roll up on the profile." },
+        { version: "v5.6", date: "Jun 2026", summary: "Client Effort and Training Load: session ratings roll up on the profile." },
         { version: "v5.5", date: "May 2026", summary: "TrueMed HSA/FSA payments and online indicators." },
-        { version: "v5.4", date: "Apr 2026", summary: "Scheduled messages — write now, send at the moment it lands best." },
+        { version: "v5.4", date: "Apr 2026", summary: "Scheduled messages: write now, send at the moment it lands best." },
         { version: "v5.3", date: "Mar 2026", summary: "Custom theming across the client app, splash to home." },
         { version: "v5.2", date: "Feb 2026", summary: "Voice notes inside any client thread." },
-        { version: "v5.1", date: "Jan 2026", summary: "Wearable trends — WHOOP and Oura insights on client profiles." }
+        { version: "v5.1", date: "Jan 2026", summary: "Wearable trends: WHOOP and Oura insights on client profiles." }
       ]
     };
   }

@@ -21,7 +21,7 @@
     .crx-body h4{margin:36px 0 12px;font-size:20px;font-weight:600;line-height:1.35;letter-spacing:-0.01em;color:#F8FCFF}
     .crx-body ul{margin:0 0 24px;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
     .crx-body li{position:relative;padding-left:22px;font-size:18px;line-height:1.7;color:rgba(255,255,255,.82)}
-    .crx-body li::before{content:"";position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:99px;background:rgba(255,255,255,.5)}
+    .crx-body li::before{content:"";position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:9999px;background:rgba(255,255,255,.5)}
     .crx-body blockquote{margin:32px 0;padding:2px 0 2px 24px;border-left:1px solid rgba(255,255,255,.18);font-style:italic;font-size:18px;line-height:1.7;color:rgba(255,255,255,.65)}
     .crx-body blockquote p{margin:0;font-size:18px;line-height:1.7;color:inherit;font-style:italic}
     .crx-body strong{font-weight:600;color:#F8FCFF}
@@ -73,13 +73,13 @@
       <a href="CoachRx Pricing.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
       <a href="CoachRx About.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
     </div>
-    <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:10px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+    <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:8px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
   </nav>
 
   <!-- POST HEADER -->
   <article data-screen-label="Post" style="padding:104px 0 0">
     <header class="crx-col" style="max-width:680px;margin:0 auto;padding:0 32px">
-      <a data-reveal="0" href="{{ post.tagHref }}" style="display:inline-block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)" style-hover="color:#8CFFA4">{{ post.tag }}</a>
+      <a data-reveal="0" href="{{ post.tagHref }}" style="display:inline-block;font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)" style-hover="color:#8CFFA4">{{ post.tag }}</a>
       <h1 data-reveal="60" style="margin:16px 0 0;font-size:clamp(30px,4vw,44px);font-weight:700;line-height:1.15;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">{{ post.title }}</h1>
       <div data-reveal="110" style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.55)">
         <span>{{ post.author }}</span><span style="color:rgba(255,255,255,.3)">·</span><span>{{ post.date }}</span><span style="color:rgba(255,255,255,.3)">·</span><span>{{ post.readingTime }}</span>
@@ -92,7 +92,7 @@
       <figure class="crx-figure" style="margin:0">
         <div class="crx-bleed" style="position:relative;height:382px;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;background:#101118">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px)">
-            <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Featured image</span>
+            <span style="font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Featured image</span>
           </div>
           <img src="{{ post.img }}" alt="{{ post.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
         </div>
@@ -125,7 +125,7 @@
       </figure>
 
       <h3 data-reveal="0">Reading the week, not the month</h3>
-      <p data-reveal="0">Each client carries a weekly status: reached, or not yet. It resets Monday. That reset is the whole mechanism. A monthly view lets you feel productive while three people quietly go a month without hearing from you, and a weekly view puts the same information in front of you while there is still week left to fix it.</p>
+      <p data-reveal="0">Each client carries a weekly status: reached, or not yet. It resets Monday. That reset is the whole mechanism — a monthly view lets you feel productive while three people quietly go a month without hearing from you, and a weekly view puts the same information in front of you while there is still week left to fix it.</p>
       <p data-reveal="0">In practice most coaches work it backwards. Open the roster on Thursday, filter to <strong>not yet reached</strong>, and work down the list. It takes twenty minutes and it is the highest-leverage twenty minutes in the week.</p>
 
       <h4 data-reveal="0">Pairing touchpoints with compliance</h4>
@@ -156,7 +156,7 @@
       </figure>
 
       <h4 data-reveal="0">Scheduled messages, when timing is the point</h4>
-      <p data-reveal="0">Write it now, send it Sunday night. Useful for the message you know you'll want to send at a moment you know you'll be busy: the morning of a competition, the first day of a new phase, the week you're traveling.</p>
+      <p data-reveal="0">Write it now, send it Sunday night. Useful for the message you know you'll want to send at a moment you know you'll be busy — the morning of a competition, the first day of a new phase, the week you're traveling.</p>
 
       <h3 data-reveal="0">Making it a habit instead of a project</h3>
       <p data-reveal="0">None of this works as a one-off audit. The coaches who hold retention above ninety percent do a version of the same small routine, and it fits in the gaps of a normal week.</p>
@@ -172,16 +172,16 @@
 
     <!-- AUTHOR CARD -->
     <div data-reveal="0" class="crx-col" style="max-width:680px;margin:64px auto 0;padding:0 32px">
-      <div style="display:flex;gap:16px;align-items:center;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))">
-        <div style="width:52px;height:52px;border-radius:99px;flex:none;background:#14151A;border:1px solid rgba(255,255,255,.1);overflow:hidden;position:relative">
+      <div style="display:flex;gap:16px;align-items:center;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))">
+        <div style="width:52px;height:52px;border-radius:9999px;flex:none;background:#14151A;border:1px solid rgba(255,255,255,.1);overflow:hidden;position:relative">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px)">
-            <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.4)">{{ author.initials }}</span>
+            <span style="font-family:var(--font-sans);font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.4)">{{ author.initials }}</span>
           </div>
           <img src="{{ author.avatar }}" alt="{{ author.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
         </div>
         <div style="display:flex;flex-direction:column;gap:4px">
           <span style="font-size:15px;font-weight:600;color:#F8FCFF">{{ author.name }}</span>
-          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ author.role }}</span>
+          <span style="font-family:var(--font-sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ author.role }}</span>
           <span style="font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.6)">{{ author.bio }}</span>
         </div>
       </div>
@@ -189,17 +189,17 @@
 
     <!-- RELATED -->
     <div data-reveal="0" style="max-width:1100px;margin:0 auto;padding:88px 32px 0">
-      <span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">More in {{ post.tag }}</span>
+      <span style="display:block;font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">More in {{ post.tag }}</span>
       <div style="margin-top:22px;border-bottom:1px solid rgba(255,255,255,.08)">
         <sc-for list="{{ related }}" as="rel" hint-placeholder-count="3">
           <a href="{{ rel.href }}" class="crx-row" style="display:grid;grid-template-columns:150px 1fr auto;gap:24px;align-items:start;padding:26px 14px;margin:0 -14px;color:inherit">
             <span class="crx-rail" style="display:flex;align-items:center;width:150px">
-              <span style="font-family:var(--font-mono);font-size:10.5px;line-height:1.35;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ rel.tag }}</span>
+              <span style="font-family:var(--font-sans);font-size:10.5px;line-height:1.35;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">{{ rel.tag }}</span>
             </span>
             <span class="crx-mid" style="display:flex;flex-direction:column;gap:7px;min-width:0">
               <span class="crx-clamp2" style="font-size:20px;font-weight:600;line-height:1.35;letter-spacing:-0.012em;color:#F8FCFF">{{ rel.title }}</span>
             </span>
-            <span class="crx-right" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;text-align:right;white-space:nowrap;padding-top:4px">
+            <span class="crx-right" style="font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;text-align:right;white-space:nowrap;padding-top:4px">
               <span class="crx-date" style="color:rgba(255,255,255,.4)">{{ rel.date }}</span>
               <span class="crx-arrow" style="color:#58FF7A;font-size:14px;letter-spacing:0">&#8594;</span>
             </span>
@@ -210,18 +210,18 @@
 
     <!-- CLOSING CTA -->
     <section data-screen-label="Closing CTA" style="position:relative;margin-top:96px;padding:96px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 45%,#0A0B0F 100%)">
-      <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:900px;height:460px;background:radial-gradient(ellipse at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+      <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:900px;height:460px;background:radial-gradient(ellipse closest-side at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,.05) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
       <div style="position:relative;max-width:720px;margin:0 auto;text-align:center">
         <h2 data-reveal="0" style="margin:0;font-size:clamp(28px,3.6vw,42px);font-weight:700;line-height:1.1;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Deliver the coaching</span> <span style="color:rgba(255,255,255,.55)">you're capable of.</span></h2>
         <div data-reveal="80" style="margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:12px">
-          <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+          <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
           <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
         </div>
       </div>
     </section>
   </article>
 
-  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:#08090E">
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:linear-gradient(180deg,#08090E 0%,#07080D 45%,#030409 100%)">
     <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
       <img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
       <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
@@ -290,7 +290,7 @@ class Component extends DCLogic {
       d.setAttribute("data-slotlabel", "");
       d.style.cssText = "position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;padding:12px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px)";
       const name = document.createElement("span");
-      name.style.cssText = "font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase;line-height:1.5";
+      name.style.cssText = "font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase;line-height:1.5";
       name.textContent = label;
       d.appendChild(name);
       if (el.offsetHeight > 90) {

@@ -131,7 +131,7 @@ for (const r of ROUTES) {
   const $h1 = $$("h1").first();
   if ($h1.length && r.h1) {
     $h1.before(
-      `<span style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;` +
+      `<span style="display:block;font-family:var(--font-sans);font-size:11px;font-weight:600;` +
         `letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px">` +
         `${$h1.text().trim()}</span>`,
     );

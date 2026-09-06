@@ -17,13 +17,13 @@
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
     @keyframes crxRise{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .crx-card{background:#101118;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;transition:border-color .18s,background .18s}
+    .crx-card{background:#101118;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;transition:border-color .18s,background .18s}
     .crx-card:hover{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.015)}
     .crx-rm.is-filter-coach-web .crx-card:not(.p-coach-web){display:none}
     .crx-rm.is-filter-coach-mobile .crx-card:not(.p-coach-mobile){display:none}
     .crx-rm.is-filter-client-app .crx-card:not(.p-client-app){display:none}
     .crx-col[data-col="exploring"]:not(.is-open) .crx-stack > .crx-card:nth-child(n+6){display:none}
-    .crx-fpill{font-family:inherit;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 18px;transition:color .2s,background .2s,border-color .2s}
+    .crx-fpill{font-family:inherit;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:9999px;padding:8px 18px;transition:color .2s,background .2s,border-color .2s}
     .crx-fpill:hover{color:#F8FCFF;border-color:rgba(255,255,255,.25)}
     .crx-fpill.is-on{background:rgba(88,255,122,.09);color:#F8FCFF;border-color:rgba(88,255,122,.25)}
     .crx-more{font-family:inherit;cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,.6);background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:11px 16px;width:100%;transition:color .2s,border-color .2s}
@@ -66,17 +66,17 @@
       <a href="CoachRx Pricing.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
       <a href="CoachRx About.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
     </div>
-    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:10px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:8px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
   </nav>
 
   <!-- HEADER -->
   <header data-screen-label="Header" style="position:relative;overflow:hidden;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
-    <div style="position:absolute;top:-80px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;top:-80px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse closest-side at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,.04) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
     <div class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:200px 32px 0">
       <h1 data-reveal="0" style="margin:0;font-size:clamp(40px,5vw,64px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#F8FCFF">Roadmap</h1>
       <p data-reveal="60" style="margin:20px 0 0;font-size:17.5px;line-height:1.62;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">What we are building next, and why. Shaped by the coaches who use CoachRx every day.</p>
-      <span data-reveal="100" style="display:block;margin-top:22px;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)">Updated {{ updated }}</span>
-      <div data-reveal="140" style="margin-top:36px;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 18px;max-width:640px">
+      <span data-reveal="100" style="display:block;margin-top:22px;font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)">Updated {{ updated }}</span>
+      <div data-reveal="140" style="margin-top:36px;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:13px 18px;max-width:640px">
         <span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.6)">This is a direction, not a delivery schedule. Things move, and some things get cut.</span>
       </div>
     </div>
@@ -94,8 +94,8 @@
     <div data-rm="" class="crx-rm crx-cols">
       <div class="crx-col" data-col="building">
         <div class="crx-colhead">
-          <span class="crx-collabel" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase">{{ columns.0.label }}</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· <span data-colcount="0">{{ columns.0.count }}</span></span>
+          <span class="crx-collabel" style="font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase">{{ columns.0.label }}</span>
+          <span style="font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· <span data-colcount="0">{{ columns.0.count }}</span></span>
         </div>
         <sc-if value="{{ columns.0.isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:rgba(255,255,255,.4)">Nothing here right now.</span></sc-if>
         <div class="crx-stack" style="display:flex;flex-direction:column;gap:14px">
@@ -103,12 +103,12 @@
             <div class="crx-card {{ it.platformCls }}">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <span style="font-size:15.5px;font-weight:600;color:#F8FCFF;line-height:1.4">{{ it.feature }}</span>
-                <span style="flex:none;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.3);padding-top:3px">{{ it.pillar }}</span>
+                <span style="flex:none;font-family:var(--font-sans);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.3);padding-top:3px">{{ it.pillar }}</span>
               </div>
               <p class="crx-clamp3" style="margin:8px 0 0;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">{{ it.summary }}</p>
               <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:14px">
                 <sc-for list="{{ it.platform }}" as="p" hint-placeholder-count="2">
-                  <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:4px 9px">{{ p }}</span>
+                  <span style="font-family:var(--font-sans);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.1);border-radius:9999px;padding:4px 9px">{{ p }}</span>
                 </sc-for>
               </div>
             </div>
@@ -118,8 +118,8 @@
 
       <div class="crx-col" data-col="upnext">
         <div class="crx-colhead">
-          <span class="crx-collabel" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">{{ columns.1.label }}</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· <span data-colcount="1">{{ columns.1.count }}</span></span>
+          <span class="crx-collabel" style="font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">{{ columns.1.label }}</span>
+          <span style="font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· <span data-colcount="1">{{ columns.1.count }}</span></span>
         </div>
         <sc-if value="{{ columns.1.isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:rgba(255,255,255,.4)">Nothing here right now.</span></sc-if>
         <div class="crx-stack" style="display:flex;flex-direction:column;gap:14px">
@@ -127,12 +127,12 @@
             <div class="crx-card {{ it.platformCls }}">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <span style="font-size:15.5px;font-weight:600;color:#F8FCFF;line-height:1.4">{{ it.feature }}</span>
-                <span style="flex:none;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.3);padding-top:3px">{{ it.pillar }}</span>
+                <span style="flex:none;font-family:var(--font-sans);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.3);padding-top:3px">{{ it.pillar }}</span>
               </div>
               <p class="crx-clamp3" style="margin:8px 0 0;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">{{ it.summary }}</p>
               <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:14px">
                 <sc-for list="{{ it.platform }}" as="p" hint-placeholder-count="2">
-                  <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:4px 9px">{{ p }}</span>
+                  <span style="font-family:var(--font-sans);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.1);border-radius:9999px;padding:4px 9px">{{ p }}</span>
                 </sc-for>
               </div>
             </div>
@@ -142,8 +142,8 @@
 
       <div class="crx-col" data-col="exploring">
         <div class="crx-colhead">
-          <span class="crx-collabel" style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">{{ columns.2.label }}</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· <span data-colcount="2">{{ columns.2.count }}</span></span>
+          <span class="crx-collabel" style="font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">{{ columns.2.label }}</span>
+          <span style="font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45)">· <span data-colcount="2">{{ columns.2.count }}</span></span>
         </div>
         <sc-if value="{{ columns.2.isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:rgba(255,255,255,.4)">Nothing here right now.</span></sc-if>
         <div class="crx-stack" style="display:flex;flex-direction:column;gap:14px">
@@ -151,12 +151,12 @@
             <div class="crx-card {{ it.platformCls }}">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <span style="font-size:15.5px;font-weight:600;color:#F8FCFF;line-height:1.4">{{ it.feature }}</span>
-                <span style="flex:none;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.3);padding-top:3px">{{ it.pillar }}</span>
+                <span style="flex:none;font-family:var(--font-sans);font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.3);padding-top:3px">{{ it.pillar }}</span>
               </div>
               <p class="crx-clamp3" style="margin:8px 0 0;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.62)">{{ it.summary }}</p>
               <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:14px">
                 <sc-for list="{{ it.platform }}" as="p" hint-placeholder-count="2">
-                  <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:4px 9px">{{ p }}</span>
+                  <span style="font-family:var(--font-sans);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.1);border-radius:9999px;padding:4px 9px">{{ p }}</span>
                 </sc-for>
               </div>
             </div>
@@ -171,14 +171,14 @@
   <sc-if value="{{ hasShipped }}" hint-placeholder-val="{{ true }}">
   <section data-screen-label="Recently shipped" style="position:relative;margin-top:140px;padding:100px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
     <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 64px));height:1px;background:rgba(255,255,255,.06)"></div>
-    <div style="position:absolute;top:-80px;right:-120px;width:760px;height:560px;background:radial-gradient(ellipse at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,0) 65%);pointer-events:none"></div>
+    <div style="position:absolute;top:-80px;right:-120px;width:760px;height:560px;background:radial-gradient(ellipse closest-side at center, rgba(31,148,234,.08) 0%, rgba(31,148,234,.04) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
     <div style="position:relative;max-width:1200px;margin:0 auto">
-      <span data-reveal="0" style="display:block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Recently shipped</span>
+      <span data-reveal="0" style="display:block;font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">Recently shipped</span>
       <div data-reveal="60" style="margin-top:26px;border-bottom:1px solid rgba(255,255,255,.08)">
         <sc-for list="{{ shipped }}" as="s" hint-placeholder-count="8">
           <div class="crx-shiprow" style="display:grid;grid-template-columns:220px 90px 1fr;gap:24px;align-items:baseline;padding:16px 0;border-top:1px solid rgba(255,255,255,.08)">
             <span style="font-size:14.5px;font-weight:600;color:#F8FCFF">{{ s.feature }}</span>
-            <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.4)">{{ s.month }}</span>
+            <span style="font-family:var(--font-sans);font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.4)">{{ s.month }}</span>
             <span class="crx-clamp2" style="font-size:13px;line-height:1.55;color:rgba(255,255,255,.6)">{{ s.summary }}</span>
           </div>
         </sc-for>
@@ -193,11 +193,11 @@
     <h2 data-reveal="0" style="margin:0;font-size:clamp(26px,3vw,38px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF">Something missing?</h2>
     <p data-reveal="40" style="margin:14px auto 0;font-size:16px;line-height:1.6;color:rgba(255,255,255,.6);max-width:440px;text-wrap:pretty">The roadmap is shaped by coach feedback. Tell us what you need.</p>
     <div data-reveal="80" style="margin-top:28px">
-      <a href="mailto:coachrx@opexfit.com?subject=Feature%20request" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(88,255,122,.45);border-radius:10px;color:#F8FCFF;padding:15px 32px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(88,255,122,.8);background:rgba(88,255,122,.06);color:#F8FCFF">Request a feature</a>
+      <a href="mailto:coachrx@opexfit.com?subject=Feature%20request" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(88,255,122,.45);border-radius:8px;color:#F8FCFF;padding:15px 32px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(88,255,122,.8);background:rgba(88,255,122,.06);color:#F8FCFF">Request a feature</a>
     </div>
   </section>
 
-  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:#08090E">
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:linear-gradient(180deg,#08090E 0%,#07080D 45%,#030409 100%)">
     <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
       <img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
       <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
