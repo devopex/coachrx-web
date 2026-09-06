@@ -67,6 +67,32 @@ if (nonWoff2.length) {
   );
 }
 
+/**
+ * The Tailwind config has to agree with the design system.
+ *
+ * Tailwind's preflight emits `html, :host { font-family: <theme sans> }` and the body carries
+ * .font-sans, so this file decides what every element the design CSS does not explicitly reach
+ * renders in. On 2026-09-06 colors_and_type.css moved to Mona Sans, tailwind.config.ts still said
+ * Geist, and the Geist files had been deleted, so `html` resolved to a 404'd font and fell through
+ * to the OS default. The marketing copy looked right because the compiled pages set
+ * var(--font-sans) on their own containers; everything else did not.
+ *
+ * Checking one of the two files is checking half the site.
+ */
+const TW = ["tailwind.config.ts", "tailwind.config.js", "tailwind.config.mjs"]
+  .map((f) => path.join(process.cwd(), f))
+  .find((f) => fs.existsSync(f));
+if (TW) {
+  const tw = fs.readFileSync(TW, "utf8");
+  const sans = /sans\s*:\s*\[\s*["']([^"']+)["']/.exec(tw);
+  if (!sans) problems.push(`${path.basename(TW)} does not set theme.fontFamily.sans`);
+  else if (!APPROVED.includes(sans[1]))
+    problems.push(`${path.basename(TW)} sets fontFamily.sans to "${sans[1]}", not the brand face`);
+  const twMono = /mono\s*:\s*\[\s*["']([^"']+)["']/.exec(tw);
+  if (twMono && /geist|mona/i.test(twMono[1]))
+    problems.push(`${path.basename(TW)} still names a webfont for fontFamily.mono ("${twMono[1]}"); nothing on the site uses monospace`);
+}
+
 if (problems.length) {
   console.error(`\ncheck-fonts: the site is not set in the brand typeface.\n`);
   for (const p of problems) console.error(`  ! ${p}`);

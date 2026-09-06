@@ -21,9 +21,15 @@ export default {
         tertiary: "rgba(255,255,255,0.50)",
         body: "rgba(255,255,255,0.82)",
       },
+      // Must match --font-sans / --font-mono in public/design/_ds/colors_and_type.css.
+      // Tailwind's preflight sets `html, :host { font-family: <sans> }` and body carries
+      // .font-sans, so a stale value here leaves every element the design CSS does not reach
+      // rendering in a font that no longer exists on the server. That is what happened on
+      // 2026-09-06: the design system moved to Mona Sans, this file still said Geist, the Geist
+      // files were deleted, and body fell through to the OS default. Enforced by check-fonts.mjs.
       fontFamily: {
-        sans: ["Geist", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["Geist Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["Mona Sans", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       maxWidth: { prose: "680px", shell: "1200px" },
       transitionTimingFunction: { crx: "cubic-bezier(.22,1,.36,1)" },
