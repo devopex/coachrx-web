@@ -1471,7 +1471,12 @@ const NAV_MENUS = [
   { label: "Resources", items: [["Articles", "/articles"], ["Podcasts", "/podcasts"]] },
   { label: "Updates", items: [["Roadmap", "/roadmap"], ["Changelog", "/changelog"], ["Feature requests", "/feature-requests"]] },
 ];
-const NAV_ORDER = ["Features", "Resources", "Updates", "Pricing"];
+// About sits second, next to Features, added 2026-09-06 at Carl's request.
+//
+// The reason it earns a top-level slot: every competitor can list features, none of them can
+// claim 1999. That argument lived one click below the fold in the footer while the mobile menu
+// already had it, so desktop and mobile disagreed. Five items is still comfortable.
+const NAV_ORDER = ["Features", "About", "Resources", "Updates", "Pricing"];
 
 function normalizeNav($, root, ctx) {
   const $nav = root.find("nav").first();

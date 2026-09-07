@@ -28,26 +28,25 @@ const BLOCKED = [
     sha: "dac9b670c927d67c0672b3105d49fd18e5e6c83ec88ba1f053e6fc8291fae248",
     why: 'toolbar shows an "RxBot" button. RxBot was retired 2026-08-19.',
     fix: "Retake the program design calendar with the current toolbar, same crop, 1677x1232, and save as WebP.",
-    // Carl, 2026-09-05: "rxbot in the screen is fine for now." Accepted so v3.2 can be built
-    // and reviewed. This does NOT clear the item, it defers it. Remove `accepted` to make it
-    // block again, which is the right move before the DNS cutover: this image is the hero on
-    // Home (4 uses) and Features (2 uses), so it is the most-seen picture on the whole site.
-    accepted: "Carl, 2026-09-05, pre-launch only",
+    // Carl, 2026-09-06: "this is fine, stop mentioning". Accepted for good, not deferred.
+    // Kept as an entry rather than deleted so that if the screenshot is ever retaken the hash
+    // changes, this stops matching, and the next person does not have to rediscover why a
+    // retired feature was visible in the hero image on Home and Features.
+    accepted: "Carl, 2026-09-06, accepted permanently",
   },
 ];
 
 /**
- * Advisory, not blocking: screenshots that show a named individual's personal data.
- * Flagged on every build so it stays visible, but it does not fail the build because
- * whether the account is a real client or a demo profile is Carl's call, not a script's.
+ * Advisory, not blocking: screenshots showing a named individual's personal data.
+ *
+ * Empty since 2026-09-06. messages.webp shows "Ken Hardaway" with age, height and body weight;
+ * Carl confirmed that is a dummy client, not a real one, so there is nothing to protect and the
+ * note came off rather than printing on every build forever.
+ *
+ * Add an entry if a screenshot ever shows a real client. A build that warns about something
+ * nobody intends to fix trains people to skim the output.
  */
-const PRIVACY_NOTES = [
-  {
-    file: "messages.webp",
-    sha: "8881b514e36f86fbcce58e221cdeb366899773afc2845bf760d74d58c59ca658",
-    why: 'shows "Ken Hardaway", age, height, body weight and a client-since date.',
-  },
-];
+const PRIVACY_NOTES = [];
 
 const sha256 = (p) => crypto.createHash("sha256").update(fs.readFileSync(p)).digest("hex");
 
