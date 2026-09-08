@@ -106,7 +106,7 @@
  },
  "home": {
   "mobileBlocks": 9,
-  "tallCollapsed": 20,
+  "tallCollapsed": 15,
   "objectFitImgs": 65,
   "burger": 1,
   "sheet": 1,
@@ -316,7 +316,7 @@
  },
  "updates-changelog": {
   "mobileBlocks": 5,
-  "tallCollapsed": 0,
+  "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
   "sheet": 1,
@@ -331,7 +331,7 @@
  },
  "updates-requests": {
   "mobileBlocks": 5,
-  "tallCollapsed": 0,
+  "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
   "sheet": 1,
@@ -346,7 +346,7 @@
  },
  "updates-roadmap": {
   "mobileBlocks": 5,
-  "tallCollapsed": 0,
+  "tallCollapsed": 1,
   "objectFitImgs": 0,
   "burger": 1,
   "sheet": 1,

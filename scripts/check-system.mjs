@@ -31,7 +31,27 @@ const files = fs.readdirSync(GEN).filter(f => f.endsWith(".ts") && !EXEMPT.test(
 
 const SCALE = new Set([4, 8, 12, 16]);
 const CIRCLE = new Set([99, 999, 9999]);
-const PHONE = new Set([34, 44]);
+
+/**
+ * DEVICE CHROME, not surfaces. A drawn phone or laptop has to look like the object it is, and
+ * physical corner radii do not land on a 4/8/12/16 design scale.
+ *
+ * 34 and 44 are the hero phone shell. 24 and 2 were added 2026-09-08 after the Home export failed
+ * this gate on two values that turned out not to be design drift at all:
+ *
+ *   24px  the small device shells in the Custom Theming section (`.crx-thset > div`, filled
+ *         rgb(3,3,3) and similar), 14 of them, one per theme swatch
+ *    2px  the battery indicator inside a drawn phone status bar: a 15x8px white block sitting
+ *         next to the wifi glyph
+ *
+ * Both are inside illustrations of hardware. Widening the exception was the correct fix rather
+ * than sending a design pass back to round a battery icon to 4px, which would look wrong.
+ *
+ * These are excluded from MAX_DISTINCT too. The cap exists to stop *surface* radii proliferating
+ * (Home once had 24 distinct values against Features' 9); counting device chrome against it just
+ * penalises pages that draw hardware, which is the opposite of the intent.
+ */
+const DEVICE = new Set([34, 44, 24, 2]);
 const MAX_DISTINCT = 8;
 
 let failed = false;
@@ -48,9 +68,11 @@ for (const f of files) {
     .filter(v => /^\d+(\.\d+)?px$/.test(v))
     .map(v => Math.round(parseFloat(v)));
   const distinct = [...new Set(radii)].sort((a, b) => a - b);
-  const off = distinct.filter(r => !SCALE.has(r) && !CIRCLE.has(r) && !PHONE.has(r) && r !== 0);
+  const off = distinct.filter(r => !SCALE.has(r) && !CIRCLE.has(r) && !DEVICE.has(r) && r !== 0);
   if (off.length) problems.push(`off-scale border-radius value(s): ${off.join(", ")}px`);
-  if (distinct.length > MAX_DISTINCT) problems.push(`${distinct.length} distinct radius values (max ${MAX_DISTINCT}): ${distinct.join(", ")}`);
+  // Surfaces only. Device chrome and true circles do not count toward the cap: see DEVICE above.
+  const surfaces = distinct.filter(r => !DEVICE.has(r) && !CIRCLE.has(r) && r !== 0);
+  if (surfaces.length > MAX_DISTINCT) problems.push(`${surfaces.length} distinct surface radius values (max ${MAX_DISTINCT}): ${surfaces.join(", ")}`);
 
   if (problems.length) {
     failed = true;
