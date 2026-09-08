@@ -1725,7 +1725,22 @@ function fillPodcastLinks($, root, ctx) {
  * extensions, so a rename in Finder can leave a double extension that looks correct on screen.
  * Worth checking the literal filename when an asset seems missing but the user says it is there.
  */
-const IMG_ALIASES = {};
+const IMG_ALIASES = {
+  /**
+   * 2026-09-08. The Home v3.1(8) export renamed this slot's image from `session-complete.png` to
+   * `session-complete-fit.png` and no such file was supplied.
+   *
+   * Aliased rather than dropped because it is provably the same screen, not merely similar: the
+   * previous export used `session-complete.png` in the identical element (the `data-rfx-ovl`
+   * overlay inside The platform section) with the identical alt text, "Great session! Workout
+   * complete recap". Only the filename changed.
+   *
+   * The "-fit" almost certainly means a tighter re-crop that Design produced and did not export.
+   * So this renders the correct screenshot at the older, looser crop. If the framing looks off in
+   * that overlay, the fix is the real asset from Design, not a different alias.
+   */
+  "session-complete-fit.png": "session-complete.webp",
+};
 
 /**
  * Claude Design appends "-2", "-3" and so on when an uploaded filename already exists in the
