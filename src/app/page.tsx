@@ -10,7 +10,7 @@ import { DcPage } from "@/components/DcPage";
  * search result and browser tab still showed the old positioning.
  */
 export const metadata: Metadata = {
-  title: "CoachRx — Program every client in minutes, not hours",
+  title: "CoachRx: Program every client in minutes, not hours",
   description:
     "Assess, design, communicate and run your business in one place. The coaching platform built by coaches, used by thousands in 40+ countries.",
   alternates: { canonical: "/" },

@@ -97,6 +97,44 @@ for (const [name, src] of PROSE_SOURCES) {
   const m = src.match(SEQ);
   if (m) seqHits.push({ name, text: m[0].replace(/\s+/g, " ").slice(0, 90) });
 }
+/**
+ * EM DASHES IN PAGE METADATA.
+ *
+ * "No em dashes" is a standing copy rule and it is checked nowhere, because every existing gate
+ * reads either compiled page bodies or the design system files. Page titles and descriptions live
+ * in `src/app/**\/page.tsx` as plain TypeScript and no gate has ever looked at them.
+ *
+ * That is how the homepage shipped with:
+ *
+ *   src/app/page.tsx  title: "CoachRx — Program every client in minutes, not hours"
+ *
+ * which Next.js renders into `<title>`, `og:title` and `twitter:title`. The page body had none,
+ * so a body scan came back clean while the single most-seen string on the site, the one in every
+ * Google result, every browser tab and every Slack and iMessage share, carried one.
+ *
+ * Same shape of hole as the meta-description case above: the copy that reaches the most people is
+ * the copy that lives outside the compiled page.
+ *
+ * Scans only metadata string literals, never comments, so the em dashes in the explanatory
+ * comments throughout src/ do not fire it.
+ */
+const META_STR = /\b(title|description|siteName|alt)\s*:\s*(?:\n\s*)?"((?:[^"\\]|\\.)*)"/g;
+const dashHits = [];
+for (const [name, src] of PROSE_SOURCES) {
+  if (!name.startsWith("src/") && !name.includes("/src/")) continue; // compiled pages are covered elsewhere
+  for (const m of src.matchAll(META_STR)) {
+    if (m[2].includes("—"))
+      dashHits.push({ name, key: m[1], text: m[2].replace(/\s+/g, " ").slice(0, 90) });
+  }
+}
+if (dashHits.length) {
+  console.error(`\ncheck-pillars: em dash in page metadata. This is what search results, browser`);
+  console.error(`tabs and social shares display, so it is the most visible copy on the site.\n`);
+  for (const h of dashHits) console.error(`  ${h.name}  (${h.key})\n     "${h.text}"`);
+  console.error(`\n  Use a colon, a period or a pipe. The site's own title template already uses "|".\n`);
+  failed = true;
+}
+
 if (seqHits.length) {
   console.error(`\ncheck-pillars: the five pillars listed in prose using a retired name:`);
   for (const h of seqHits) console.error(`  ${h.name}\n     "...${h.text}..."`);
