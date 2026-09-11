@@ -16,8 +16,29 @@
     section,footer{overflow-x:clip}
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
-    [data-migchip]{opacity:.62;transition:opacity .35s}
-    .crx-migvert{display:none;position:absolute;left:50%;top:0;bottom:6px;width:1px;background:rgba(255,255,255,.14)}
+    /* Migration: the finished (complete) state is the default. .is-live runs the transfer once on first view, then returns to complete. */
+    .crx-mig-dst{box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 0 0 1px rgba(88,255,122,.5),0 0 36px rgba(88,255,122,.14),0 24px 60px rgba(0,0,0,.5)!important;transition:box-shadow .7s cubic-bezier(.22,1,.36,1)}
+    .is-live .crx-mig-dst{box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.5)!important}
+    .is-live .crx-mig-done{display:none!important}
+    .is-live .crx-mig-busy{display:inline-flex!important}
+    .crx-mig-spin{width:10px;height:10px;border-radius:9999px;border:1.5px solid rgba(255,255,255,.18);border-top-color:#58FF7A;animation:crxMigSpin .9s linear infinite}
+    @keyframes crxMigSpin{to{transform:rotate(360deg)}}
+    .crx-mig-dot{offset-distance:0%;offset-rotate:0deg;display:none}
+    .crx-mig-dot:nth-of-type(1){offset-path:path("M0 34 C 96 34, 120 118, 240 118")}
+    .crx-mig-dot:nth-of-type(2){offset-path:path("M0 118 C 96 118, 120 118, 240 118");animation-delay:-.9s}
+    .crx-mig-dot:nth-of-type(3){offset-path:path("M0 202 C 96 202, 120 118, 240 118");animation-delay:-1.7s}
+    @keyframes crxMigDot{from{offset-distance:0%}to{offset-distance:100%}}
+    @media (prefers-reduced-motion:no-preference){.is-live .crx-mig-dot{display:block;animation:crxMigDot 2.6s ease-in-out infinite}}
+    @media (max-width:1000px){
+      .crx-mig-grid{grid-template-columns:1fr!important;gap:18px!important}
+      .crx-mig-pipe{height:90px!important}
+      .crx-mig-svg{inset:auto!important;left:50%!important;top:50%!important;width:90px!important;height:240px!important;transform:translate(-50%,-50%) rotate(90deg)}
+      .crx-mig-caps{grid-template-columns:1fr!important;gap:14px!important}
+      .crx-mig-from{margin-left:0!important;flex-basis:100%}
+    }
+    .crx-cta{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:13px 20px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s,background .25s,color .25s,border-color .25s}
+    .crx-cta:hover{color:#F8FCFF;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.04)}
+    .crx-cta.is-fill{color:#0A0B0F;border-color:transparent;background:linear-gradient(180deg,#7BFF96,#58FF7A);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 28px rgba(88,255,122,.24)}
     @keyframes crxTyping{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-3px);opacity:1}}
     @keyframes crxPop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}
     @keyframes crxPulse{0%{box-shadow:0 0 0 0 rgba(88,255,122,.45)}100%{box-shadow:0 0 0 12px rgba(88,255,122,0)}}
@@ -57,15 +78,6 @@
     @media (max-width:760px){
       #pillarBar{display:none!important}
       section{padding-left:20px!important;padding-right:20px!important;margin:0!important}
-      .crx-miggrid{display:flex!important;flex-direction:column;gap:18px}
-      [data-migsrc]{order:1;flex-direction:row!important;flex-wrap:wrap;justify-content:center;gap:8px!important}
-      [data-migcap="1"]{order:2;margin-top:0!important;text-align:center}
-      .crx-migzb{order:3;height:56px!important}
-      [data-migcap="2"]{order:4;margin-top:0!important;text-align:center}
-      [data-migcard]{order:5}
-      [data-migcap="3"]{order:6;margin-top:0!important;text-align:center}
-      .crx-migfan{display:none}
-      .crx-migvert{display:block}
       .crx-cmptabs > button{min-height:44px}
       section:not([data-screen-label="01 Hero"]){padding-top:72px!important;padding-bottom:72px!important}
       div[style*="gap:7px"][style*="padding:11px 14px"],div[style*="gap: 7px"][style*="padding: 11px 14px"],div[style*="gap: 7px"][style*="padding: 11px 14px"],div[style*="gap: 7px"][style*="padding: 11px 14px"]{display:none!important}
@@ -142,8 +154,7 @@
   <section data-screen-label="01 Hero" style="position:relative;padding:120px 32px 0;overflow:hidden;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
     <div style="position:absolute;top:220px;left:50%;transform:translateX(-50%);width:1200px;height:700px;background:radial-gradient(ellipse closest-side at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,.05) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
     <div style="position:relative;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center">
-      <span data-hcta="0" style="font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">Features</span>
-      <h1 data-hcta="1" style="margin:18px 0 0;font-size:clamp(36px,4.8vw,66px);font-weight:700;line-height:1.06;letter-spacing:-0.03em;max-width:900px;text-wrap:balance"><span style="color:#F8FCFF">Every tool individual design asks for.</span> <span style="color:rgba(248,252,255,.55)">In one system.</span></h1>
+      <h1 data-hcta="1" style="margin:0;font-size:clamp(36px,4.8vw,66px);font-weight:700;line-height:1.06;letter-spacing:-0.03em;max-width:900px;text-wrap:balance"><span style="color:#F8FCFF">Every tool individual design asks for.</span> <span style="color:rgba(248,252,255,.55)">In one system.</span></h1>
       <p data-hcta="2" style="margin:18px 0 0;font-size:18px;line-height:1.6;color:rgba(255,255,255,.66);max-width:640px;text-wrap:pretty">Assess, Communicate, Program, Operate and Client Experience. Every part of your practice in one place, so nothing gets missed and nothing slows you down.</p>
       <div data-hcta="3" style="margin:32px 0 0;display:flex;flex-direction:column;align-items:center;gap:12px">
         <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
@@ -175,8 +186,7 @@
   <!-- 02 PILLAR NAVIGATOR -->
   <section id="pillar-nav" data-screen-label="02 Pillar navigator" style="position:relative;padding:72px 32px 56px">
     <div style="max-width:1200px;margin:0 auto">
-      <span data-reveal="0" style="display:block;text-align:center;font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">The Pillars</span>
-      <h2 data-reveal="60" style="margin:18px 0 0;text-align:center;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">The five Pillars of a coaching practice.</h2>
+      <h2 data-reveal="60" style="margin:0;text-align:center;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">The five Pillars of a coaching practice.</h2>
       <p data-reveal="120" style="margin:14px auto 0;text-align:center;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.6);max-width:520px;text-wrap:pretty">Every one of them, connected to the others.</p>
       <div class="crx-pillarrow" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0 24px;margin-top:36px;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
         <div data-reveal="0" onClick="{{ goAssess }}" style="padding:24px 0;cursor:pointer;display:flex;flex-direction:column;gap:8px">
@@ -217,8 +227,7 @@
   <section data-screen-label="04 The system" style="position:relative;padding:120px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 22%,#0C0E14 78%,#0A0B0F 100%)">
     <div style="max-width:820px;margin:0 auto">
       <div>
-        <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">The system</span>
-        <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Five parts of one job.</span></h2>
+        <h2 data-reveal="60" style="margin-top:0;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Five parts of one job.</span></h2>
         <p data-reveal="120" style="margin-top:22px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:520px;text-wrap:pretty">Most coaches run a practice across a programming app, a spreadsheet, a messaging thread, a payment processor and a notes doc. The work still gets done, the context is what gets lost.</p>
         <p data-reveal="180" style="margin-top:14px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:520px;text-wrap:pretty">In CoachRx, what you learn in an assessment is there when you design, and what a client logs is there before your next conversation. One system, so every decision has the full picture behind it.</p>
       </div>
@@ -930,8 +939,7 @@
   <!-- 11 EVERY FEATURE, DAY ONE -->
   <section data-screen-label="11 Every feature day one" style="padding:120px 32px">
     <div style="max-width:1200px;margin:0 auto">
-      <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">Included</span>
-      <h2 data-reveal="60" style="margin:18px 0 0;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">Every feature, day one.</h2>
+      <h2 data-reveal="60" style="margin:0;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">Every feature, day one.</h2>
       <p data-reveal="120" style="margin:16px 0 0;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.62);max-width:560px;text-wrap:pretty">Every feature on this page is included on every plan. Pricing scales with the size of your roster, not with what you're allowed to use.</p>
       <div data-reveal="150" style="margin-top:16px"><a href="CoachRx Pricing.dc.html" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">See plans and pricing ›</a></div>
       <div data-reveal="180" class="crx-strip" style="display:grid;grid-template-columns:1fr;gap:0;margin-top:44px;border-top:1px solid rgba(255,255,255,.06)">
@@ -955,8 +963,7 @@
   <!-- 12 COMPARISON -->
   <section data-screen-label="12 Comparison" style="position:relative;padding:120px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
     <div style="max-width:1100px;margin:0 auto">
-      <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">The difference</span>
-      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:720px;text-wrap:balance"><span style="color:#F8FCFF">Built for coaching,</span> <span style="color:#F8FCFF">not for workout delivery.</span></h2>
+      <h2 data-reveal="60" style="margin-top:0;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:720px;text-wrap:balance"><span style="color:#F8FCFF">Built for coaching,</span> <span style="color:#F8FCFF">not for workout delivery.</span></h2>
       <p data-reveal="120" style="margin-top:18px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:600px;text-wrap:pretty">Most coaching platforms were built to send workouts and take payments. That's a fine job. It just isn't the whole job.</p>
 
       <div data-reveal="150" class="crx-cmptabs" style="display:inline-flex;gap:2px;padding:4px;margin-top:32px;max-width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow-x:auto;scrollbar-width:none">
@@ -1108,51 +1115,55 @@
   </section>
 
   <!-- 13 MAKE THE SWITCH -->
-  <section data-screen-label="13 Make the switch" style="position:relative;padding:120px 32px">
+  <section id="transition-assistance" data-screen-label="13 Make the switch" style="position:relative;padding:120px 32px">
     <div style="max-width:1150px;margin:0 auto">
-      <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">Make the switch</span>
-      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,46px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;max-width:700px;text-wrap:balance"><span style="color:#F8FCFF">The easiest move</span> <span style="color:rgba(255,255,255,.55)">you'll ever make.</span></h2>
-      <p data-reveal="100" style="margin-top:14px;font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.62);max-width:520px;text-wrap:pretty">Your clients, their history, every program. Our transition team moves it all for you.</p>
-      <div data-vig="migrate" style="margin-top:40px">
-        <div class="crx-miggrid" style="display:grid;grid-template-columns:30fr 14fr 56fr;align-items:center;gap:0">
-          <div data-migsrc="" style="display:flex;flex-direction:column;gap:5px;align-items:flex-start">
-            <span data-migchip="0" style="display:inline-flex;align-items:center;transform:rotate(-1.5deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 22px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">Spreadsheets</span>
-            <span data-migchip="1" style="display:inline-flex;align-items:center;transform:rotate(1.2deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 16px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">TrueCoach</span>
-            <span data-migchip="2" style="display:inline-flex;align-items:center;transform:rotate(-0.8deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 26px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">Trainerize</span>
-            <span data-migchip="3" style="display:inline-flex;align-items:center;transform:rotate(1.5deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 18px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">Email threads</span>
-            <span data-migchip="4" style="display:inline-flex;align-items:center;transform:rotate(-1.2deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 16px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">Google Sheets</span>
-            <span data-migchip="5" style="display:inline-flex;align-items:center;transform:rotate(0.9deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 30px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">PDFs</span>
-            <span data-migchip="6" style="display:inline-flex;align-items:center;transform:rotate(-1.4deg);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:7px 20px 7px 16px;font-size:13px;line-height:18px;color:rgba(255,255,255,.85);background:#101118">Paper notes</span>
-          </div>
-          <div class="crx-migzb" style="position:relative;height:256px">
-            <svg class="crx-migfan" viewBox="0 0 120 260" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><defs><linearGradient id="miggrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,.18)"></stop><stop offset="1" stop-color="rgba(88,255,122,.5)"></stop></linearGradient></defs><path d="M0 16 C55 16 78 109 120 109" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 53 C55 53 78 116 120 116" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 90 C55 90 78 123 120 123" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 127 C55 127 78 130 120 130" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 164 C55 164 78 137 120 137" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 201 C55 201 78 144 120 144" fill="none" stroke="url(#miggrad)" stroke-width="1"></path><path d="M0 238 C55 238 78 151 120 151" fill="none" stroke="url(#miggrad)" stroke-width="1"></path></svg>
-            <span class="crx-migvert" aria-hidden="true"></span>
-          </div>
-          <div data-migcard="" style="background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.45);overflow:hidden">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07)">
-              <span style="display:flex;align-items:center;gap:10px"><img loading="lazy" decoding="async" width="7568" height="1959" src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:13px;width:auto"><span style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)">Client roster</span></span>
-            </div>
-            <div data-migrow="" style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/brian-otto.png" alt="Brian Otto" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:14px;font-weight:600;color:#F8FCFF">Brian Otto</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">5k Run Program &middot; Wk 3</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">92%</span></div>
-            <div data-migrow="" style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/sasha-barkley.png" alt="Sasha Barkley" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:14px;font-weight:600;color:#F8FCFF">Sasha Barkley</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">Motor Control &middot; Wk 4</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">95%</span></div>
-            <div data-migrow="" style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/danny-henderson.png" alt="Danny Henderson" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:14px;font-weight:600;color:#F8FCFF">Danny Henderson</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">5k Run Program &middot; Wk 3</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">88%</span></div>
-            <div data-migrow="" style="display:flex;align-items:center;gap:12px;padding:13px 18px"><img loading="lazy" decoding="async" src="assets/avatars/jon-webber.png" alt="Jon Webber" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:14px;font-weight:600;color:#F8FCFF">Jon Webber</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">Strength Base &middot; Wk 6</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">91%</span></div>
-          </div>
-          <p data-migcap="1" style="margin:18px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.55);text-wrap:pretty">Tell us where you're coming from.</p>
-          <p data-migcap="2" style="margin:18px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.55);text-wrap:pretty;text-align:center;padding:0 6px">We move programs, client data and workflows.</p>
-          <p data-migcap="3" style="margin:18px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.55);text-wrap:pretty">You log in. Everything is waiting.</p>
+      <h2 data-reveal="0" style="margin:0;font-size:clamp(30px,3.4vw,46px);font-weight:700;line-height:1.1;letter-spacing:-0.025em;color:#F8FCFF">Switch without stress.</h2>
+      <p data-reveal="60" style="margin:14px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:480px;text-wrap:pretty">Whatever you have comes in. We clean it up. You do nothing.</p>
+      <!-- Five files converge into one roster. Static markup is complete; only the three dots move. -->
+      <div class="crx-mig-grid" style="margin-top:56px;display:grid;grid-template-columns:296px 240px 1fr;align-items:center;gap:0">
+        <div class="crx-mig-src" style="align-self:stretch;display:flex;flex-direction:column;background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 20px 50px rgba(0,0,0,.45);overflow:hidden">
+          <div style="padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)">What you send us</div>
+          <div style="flex:1;display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07)"><span style="flex:none;width:22px;height:22px;border-radius:4px;background:rgba(52,168,83,.16);color:#5FD07E;font-size:8.5px;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center">XLS</span><span style="font-size:13px;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">programs_v7_FINAL.xlsx</span><span style="margin-left:auto;flex:none;font-size:11.5px;color:rgba(255,255,255,.34)">1.2 MB</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07)"><span style="flex:none;width:22px;height:22px;border-radius:4px;background:rgba(66,133,244,.16);color:#6FA5F5;font-size:8.5px;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center">CSV</span><span style="font-size:13px;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">client_roster_export.csv</span><span style="margin-left:auto;flex:none;font-size:11.5px;color:rgba(255,255,255,.34)">148 KB</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07)"><span style="flex:none;width:22px;height:22px;border-radius:4px;background:rgba(234,67,53,.16);color:#F0736A;font-size:8.5px;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center">PDF</span><span style="font-size:13px;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Q3 program templates.pdf</span><span style="margin-left:auto;flex:none;font-size:11.5px;color:rgba(255,255,255,.34)">4.8 MB</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07)"><span style="flex:none;width:22px;height:22px;border-radius:4px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:8.5px;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center">GS</span><span style="font-size:13px;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Nutrition tracker (Sheets)</span><span style="margin-left:auto;flex:none;font-size:11.5px;color:rgba(255,255,255,.34)">link</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:10px;padding:11px 14px;"><span style="flex:none;width:22px;height:22px;border-radius:4px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:8.5px;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center">TC</span><span style="font-size:13px;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">TrueCoach data export</span><span style="margin-left:auto;flex:none;font-size:11.5px;color:rgba(255,255,255,.34)">2.1 MB</span></div>
         </div>
-        <p data-migline="" style="text-align:center;margin:38px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.78)"><span data-migloading="">Switching from another coaching app...</span><span data-migdone="" style="display:none">Done. Your clients, their history, every program. Moved <span style="color:#58FF7A;font-weight:600">for free</span>.</span></p>
-        <div style="display:flex;justify-content:center;align-items:center;gap:22px;margin-top:24px;flex-wrap:wrap">
-          <span style="font-size:14px;color:rgba(255,255,255,.62)">We do the migration</span>
-          <span style="width:1px;height:14px;background:rgba(255,255,255,.16)"></span>
-          <span style="font-size:14px;color:rgba(255,255,255,.62)">Nothing is lost</span>
-          <span style="width:1px;height:14px;background:rgba(255,255,255,.16)"></span>
-          <span style="font-size:14px;color:rgba(255,255,255,.62)">No charge, ever</span>
+        <div class="crx-mig-pipe" style="position:relative;height:236px">
+          <svg class="crx-mig-svg" viewBox="0 0 240 236" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:236px;overflow:visible;display:block">
+            <defs><linearGradient id="crxMigGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,.16)"></stop><stop offset=".55" stop-color="rgba(88,255,122,.42)"></stop><stop offset="1" stop-color="rgba(88,255,122,.62)"></stop></linearGradient></defs>
+            <path d="M0 34 C 96 34, 120 118, 240 118" fill="none" stroke="url(#crxMigGrad)" stroke-width="1.25"></path>
+            <path d="M0 78 C 96 78, 120 118, 240 118" fill="none" stroke="url(#crxMigGrad)" stroke-width="1.25"></path>
+            <path d="M0 118 C 96 118, 120 118, 240 118" fill="none" stroke="url(#crxMigGrad)" stroke-width="1.25"></path>
+            <path d="M0 158 C 96 158, 120 118, 240 118" fill="none" stroke="url(#crxMigGrad)" stroke-width="1.25"></path>
+            <path d="M0 202 C 96 202, 120 118, 240 118" fill="none" stroke="url(#crxMigGrad)" stroke-width="1.25"></path>
+            <circle class="crx-mig-dot" r="2.6" fill="#7BFF96"></circle>
+            <circle class="crx-mig-dot" r="2.6" fill="#7BFF96"></circle>
+            <circle class="crx-mig-dot" r="2.6" fill="#7BFF96"></circle>
+          </svg>
         </div>
-        <div style="display:flex;justify-content:center;align-items:center;gap:22px;margin-top:28px;flex-wrap:wrap">
-          <a href="#" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
-          <a href="#" style="font-size:13.5px;font-weight:600;color:rgba(255,255,255,.55)" style-hover="color:#8CFFA4">Talk to the transition team &#8250;</a>
+        <div class="crx-mig-dst" style="align-self:stretch;display:flex;flex-direction:column;background:#101112;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 60px rgba(0,0,0,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))"><img loading="lazy" decoding="async" width="7568" height="1959" src="assets/coachrx-primary-white.png" alt="CoachRx" style="height:13px;width:auto"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.42)">Client roster</span><span class="crx-mig-busy" style="margin-left:auto;display:none;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)"><span class="crx-mig-spin" aria-hidden="true"></span>Migrating</span><span class="crx-mig-done" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#58FF7A;background:rgba(88,255,122,.1);border:1px solid rgba(88,255,122,.3);border-radius:4px;padding:4px 9px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"></path></svg>Migration complete</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/brian-otto.png" alt="Brian Otto" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:13.5px;font-weight:600;color:#F8FCFF">Brian Otto</span><span style="font-size:12px;color:rgba(255,255,255,.42)">5k Run Program &middot; Wk 3</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">92%</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/sasha-barkley.png" alt="Sasha Barkley" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:13.5px;font-weight:600;color:#F8FCFF">Sasha Barkley</span><span style="font-size:12px;color:rgba(255,255,255,.42)">Motor Control &middot; Wk 4</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">95%</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/danny-henderson.png" alt="Danny Henderson" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:13.5px;font-weight:600;color:#F8FCFF">Danny Henderson</span><span style="font-size:12px;color:rgba(255,255,255,.42)">5k Run Program &middot; Wk 3</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">88%</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.07)"><img loading="lazy" decoding="async" src="assets/avatars/jon-webber.png" alt="Jon Webber" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:13.5px;font-weight:600;color:#F8FCFF">Jon Webber</span><span style="font-size:12px;color:rgba(255,255,255,.42)">Strength Base &middot; Wk 6</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">91%</span></div>
+          <div style="flex:1;display:flex;align-items:center;gap:12px;padding:13px 16px;"><img loading="lazy" decoding="async" src="assets/avatars/jenna-jeffries.png" alt="Mia Calderon" width="28" height="28" style="width:28px;height:28px;border-radius:9999px;flex:none;object-fit:cover"><span style="flex:1;font-size:13.5px;font-weight:600;color:#F8FCFF">Mia Calderon</span><span style="font-size:12px;color:rgba(255,255,255,.42)">Return to Sport &middot; Wk 2</span><span style="width:44px;text-align:right;font-size:13px;font-weight:600;color:#F8FCFF;font-feature-settings:'tnum' 1">97%</span></div>
         </div>
+      </div>
+      <div class="crx-mig-caps" style="margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+        <div style="padding-top:20px;border-top:1px solid rgba(255,255,255,.1)"><span style="display:block;font-size:56px;font-weight:700;line-height:1;letter-spacing:-.04em;color:#F8FCFF;font-variant-numeric:tabular-nums">01</span><span style="display:block;margin-top:14px;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#F8FCFF">Start your free trial</span><span style="display:block;margin-top:6px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);text-wrap:pretty">Your account is where the data lands, so the trial is where the migration begins.</span></div>
+        <div style="padding-top:20px;border-top:1px solid rgba(255,255,255,.1)"><span style="display:block;font-size:56px;font-weight:700;line-height:1;letter-spacing:-.04em;color:#F8FCFF;font-variant-numeric:tabular-nums">02</span><span style="display:block;margin-top:14px;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#F8FCFF">Send us what you have</span><span style="display:block;margin-top:6px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);text-wrap:pretty">Spreadsheets, exports, PDFs, whatever you have. No format rules. We migrate programs, client data and history.</span></div>
+        <div style="padding-top:20px;border-top:1px solid rgba(255,255,255,.1)"><span style="display:block;font-size:56px;font-weight:700;line-height:1;letter-spacing:-.04em;color:#F8FCFF;font-variant-numeric:tabular-nums">03</span><span style="display:block;margin-top:14px;font-size:17px;font-weight:600;letter-spacing:-.01em;color:#F8FCFF">Log in and coach</span><span style="display:block;margin-top:6px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.55);text-wrap:pretty">Your practice is already there, on day one.</span></div>
+      </div>
+      <div class="crx-mig-cta" style="margin-top:36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:22px 26px;border-radius:12px;background:#101112;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 0 0 1px rgba(88,255,122,.22),0 24px 60px rgba(0,0,0,.45)">
+        <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600;color:#F8FCFF">Step one is the trial.</span><span style="font-size:14px;line-height:1.5;color:rgba(255,255,255,.55)">Start free, send us your files, and we take it from there. No charge for the migration, ever.</span></span>
+        <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill" style="padding:15px 30px;font-size:14px;flex:none">Start for free</a>
+      </div>
+      <div class="crx-mig-proof" style="margin-top:28px;padding-top:0;border-top:none;display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(255,255,255,.72)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M5 13l4 4L19 7"></path></svg>We do the migration</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(255,255,255,.72)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M5 13l4 4L19 7"></path></svg>Nothing is lost</span>
+                <span class="crx-mig-from" style="margin-left:auto;font-size:13px;line-height:1.5;color:rgba(255,255,255,.45)">Coming from TrueCoach, Trainerize or Everfit? Export and send it. We take it from there.</span>
       </div>
     </div>
   </section>
@@ -1160,8 +1171,7 @@
   <!-- 14 FAQ -->
   <section data-screen-label="14 FAQ" style="position:relative;padding:120px 32px;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 18%,#0C0E14 82%,#0A0B0F 100%)">
     <div style="max-width:860px;margin:0 auto">
-      <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.45);text-transform:uppercase">FAQ</span>
-      <h2 data-reveal="60" style="margin-top:18px;font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">Frequently asked questions</h2>
+      <h2 data-reveal="60" style="margin-top:0;font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.12;letter-spacing:-0.025em;color:#F8FCFF;text-wrap:balance">Frequently asked questions</h2>
       <div data-reveal="120" style="margin-top:32px;display:flex;flex-direction:column">
         <div style="border-top:1px solid rgba(255,255,255,.08)">
           <div data-faqbtn="0" style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px 0;cursor:pointer"><span style="font-size:16.5px;font-weight:600;color:#F8FCFF">Do I have to use all of it?</span><span data-faqplus="0" style="font-size:20px;font-weight:400;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.22,1,.36,1);flex:none">+</span></div>
@@ -1198,7 +1208,7 @@
   <!-- 15 FINAL CTA -->
   <section data-screen-label="15 Final CTA" style="position:relative;padding:120px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0D1120 60%,#0F1526 100%)">
     <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:1100px;height:620px;background:radial-gradient(ellipse closest-side at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,.05) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
-    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.18) 18%,rgba(0,0,0,.6) 36%,#000 52%,#000 76%,rgba(0,0,0,.4) 90%,transparent 100%),radial-gradient(130% 120% at 50% 55%,#000 0%,#000 50%,rgba(0,0,0,.5) 75%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.18) 18%,rgba(0,0,0,.6) 36%,#000 52%,#000 76%,rgba(0,0,0,.4) 90%,transparent 100%),radial-gradient(130% 120% at 50% 55%,#000 0%,#000 50%,rgba(0,0,0,.5) 75%,transparent 100%);mask-composite:intersect"></div>
     <div style="position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(180deg,rgba(8,9,14,0) 0%,#08090E 100%);pointer-events:none"></div>
     <div style="position:relative;max-width:1200px;margin:0 auto;text-align:center">
       <h2 data-reveal="0" style="font-size:clamp(38px,5vw,68px);font-weight:800;line-height:1.04;letter-spacing:-0.03em;text-wrap:balance"><span style="color:#F8FCFF">Deliver the coaching</span> <span style="color:rgba(255,255,255,.55)">you're capable of.</span></h2>
@@ -1246,7 +1256,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
-    setTimeout(() => { this.heroSequence(); this.setupReveals(); this.setupVignettes(); this.setupStickyNav(); this.setupCmpRail(); this.setupCmpTabs(); this.setupVigAnim(); this.setupFaq(); this.setupSlots(); }, 60);
+    setTimeout(() => { this.heroSequence(); this.setupReveals(); this.setupMigration(); this.setupVignettes(); this.setupStickyNav(); this.setupCmpRail(); this.setupCmpTabs(); this.setupVigAnim(); this.setupFaq(); this.setupSlots(); }, 60);
   }
 
   q(sel) { return Array.from(document.querySelectorAll(sel)); }
@@ -1256,6 +1266,20 @@ class Component extends DCLogic {
     if (!el) return;
     const top = el.getBoundingClientRect().top + (document.scrollingElement ? document.scrollingElement.scrollTop : window.scrollY) - 118;
     window.scrollTo({ top, behavior: this.rm ? "auto" : "smooth" });
+  }
+
+  setupMigration() {
+    // Transfer plays once on first view (dots run, roster outline off), then settles into the complete state that is also the no-JS default.
+    const sec = document.querySelector("#transition-assistance");
+    const grid = sec && sec.querySelector(".crx-mig-grid");
+    if (!sec || !grid || this.rm) return;
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      sec.classList.add("is-live");
+      setTimeout(() => sec.classList.remove("is-live"), 4200);
+    }), { threshold: 0.35 });
+    io.observe(grid);
   }
 
   heroSequence() {
@@ -1281,7 +1305,7 @@ class Component extends DCLogic {
   }
 
   setupVignettes() {
-    if (this.rm) { const l = document.querySelector("[data-migloading]"), d = document.querySelector("[data-migdone]"); if (l) l.style.display = "none"; if (d) d.style.display = "inline"; return; }
+    if (this.rm) return;
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
@@ -1337,38 +1361,6 @@ class Component extends DCLogic {
       el.style.animation = `crxRise .5s ${ease} 350ms both`;
       const pill = el.querySelector("[data-pill]");
       if (pill) { pill.style.opacity = "0"; setTimeout(() => { pill.style.animation = "crxPop .35s forwards"; pill.style.opacity = "1"; }, 950); }
-    } else if (name === "migrate") {
-      // A pulse travels each hairline into the roster; its chip brightens, the rows settle. Once, never replays.
-      const chips = sub("[data-migchip]");
-      const lines = sub(".crx-migfan path");
-      const rows = sub("[data-migrow]");
-      const svg = el.querySelector(".crx-migfan");
-      const loading = el.querySelector("[data-migloading]"), done = el.querySelector("[data-migdone]");
-      const resolve = () => {
-        if (loading) loading.style.display = "none";
-        if (done) { done.style.display = "inline"; done.style.animation = `crxRise .4s ${ease} both`; }
-      };
-      chips.forEach((c, i) => setTimeout(() => {
-        const l = lines[i];
-        c.style.opacity = "1";
-        if (l) { l.style.transition = "stroke .25s"; l.style.stroke = "rgba(88,255,122,.6)"; }
-        if (svg && l && l.getTotalLength) {
-          const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-          dot.setAttribute("r", "2.5"); dot.setAttribute("fill", "#58FF7A");
-          svg.appendChild(dot);
-          const len = l.getTotalLength(), t0 = performance.now();
-          const step = (t) => {
-            const p = Math.min(1, (t - t0) / 700);
-            const pt = l.getPointAtLength(len * (1 - Math.pow(1 - p, 2)));
-            dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
-            if (p < 1) requestAnimationFrame(step); else dot.remove();
-          };
-          requestAnimationFrame(step);
-        }
-        setTimeout(() => { c.style.opacity = ""; if (l) l.style.stroke = ""; }, 780);
-      }, i * 45));
-      rows.forEach((r, i) => { r.style.animation = `crxRise .45s ${ease} ${480 + i * 90}ms both`; });
-      setTimeout(resolve, 6 * 45 + 700 + 250);
     } else if (name === "sysdiag") {
       const spine = document.querySelector("[data-sysspine]");
       const ret = document.querySelector("[data-sysreturn]");
