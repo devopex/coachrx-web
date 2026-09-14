@@ -31,6 +31,8 @@
     @media (max-width:760px){:root{--crx-launcher-clear:84px}}
     .crx-ovw{position:fixed;border:none;right:24px;bottom:calc(24px + var(--crx-launcher-clear));z-index:80;overflow:hidden;padding:0;margin:0;cursor:pointer;text-align:left;font-family:inherit;color:#F8FCFF;background:rgba(20,21,26,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 52px rgba(0,0,0,.55);will-change:width,height;transition:width .42s cubic-bezier(.22,1,.36,1),height .42s cubic-bezier(.22,1,.36,1),border-radius .42s cubic-bezier(.22,1,.36,1),transform .42s cubic-bezier(.22,1,.36,1),opacity .3s,border-color .25s}
     .crx-ovw:focus-visible{outline:2px solid #58FF7A;outline-offset:2px}
+    .crx-ovw.is-in.is-watched{opacity:.72}
+    .crx-ovw.is-in.is-watched:hover,.crx-ovw.is-in.is-watched:focus-visible{opacity:1}
     .crx-ovw.is-card{width:232px;height:212px;border-radius:12px}
     .crx-ovw.is-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.14)}
     .crx-ovw.is-pill{width:168px;height:44px;border-radius:4px}
@@ -1762,7 +1764,7 @@ class Component extends DCLogic {
   setupOverview() {
     let stored = null;
     try { stored = localStorage.getItem("crx.overviewVideo"); } catch (err) {}
-    if (stored === "dismissed" || stored === "watched") {
+    if (stored === "dismissed") {
       document.getElementById("ovwBtn")?.classList.add("is-gone");
       document.getElementById("ovwModal")?.classList.add("is-gone");
       return;
@@ -1771,6 +1773,9 @@ class Component extends DCLogic {
     this.heroRatio = 1;
     this.ovwProg = 0;
     this.ovwOpen = false;
+    // "watched" keeps the pill, quieter, labeled Watch again. Only a dismiss hides it.
+    this.ovwWatched = stored === "watched";
+    if (this.ovwWatched) this.markWatched();
     if (this.rm) document.getElementById("ovwBtn")?.classList.add("is-rm");
 
     // maxresdefault → hqdefault fallback; also swap-in point for a new video ID's poster
@@ -1838,7 +1843,7 @@ class Component extends DCLogic {
         durEl.textContent = durLabel;
         document.getElementById("ovwBtn")?.setAttribute("aria-label", "Play a quick CoachRx overview, " + durLabel.toLowerCase().replace(" min", " minutes"));
       }
-      if (prog >= 0.6 && !this.ovwWatched) { this.ovwWatched = true; try { localStorage.setItem("crx.overviewVideo", "watched"); } catch (err) {} }
+      if (prog >= 0.6 && !this.ovwWatched) { this.ovwWatched = true; try { localStorage.setItem("crx.overviewVideo", "watched"); } catch (err) {} this.markWatched(); }
     });
 
     this.ovwKeys = (e) => {
@@ -1905,20 +1910,21 @@ class Component extends DCLogic {
     modal?.querySelector("[role=dialog]")?.setAttribute("aria-label", "Testimonial from " + name);
     modal?.classList.add("is-open");
     document.querySelector("[data-marq]")?.classList.add("is-hold");
+    // Iframe is created synchronously in the click's call stack so unmuted autoplay keeps the user gesture (iOS Safari).
+    const host = document.getElementById("tstHost");
+    if (!host) return;
+    host.innerHTML = "";
+    const fr = document.createElement("iframe");
+    fr.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
+    fr.title = name + " on CoachRx";
+    fr.setAttribute("frameborder", "0");
+    fr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    fr.referrerPolicy = "strict-origin-when-cross-origin";
+    fr.allowFullscreen = true;
+    fr.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
+    fr.addEventListener("load", () => setTimeout(() => { if (fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "crxTile" }), "*"); }, 300));
+    host.appendChild(fr);
     requestAnimationFrame(() => {
-      const host = document.getElementById("tstHost");
-      if (!host) return;
-      host.innerHTML = "";
-      const fr = document.createElement("iframe");
-      fr.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
-      fr.title = name + " on CoachRx";
-      fr.setAttribute("frameborder", "0");
-      fr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      fr.referrerPolicy = "strict-origin-when-cross-origin";
-      fr.allowFullscreen = true;
-      fr.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
-      fr.addEventListener("load", () => setTimeout(() => { if (fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "crxTile" }), "*"); }, 300));
-      host.appendChild(fr);
       this.tstFlip(tile, false);
       document.getElementById("tstClose")?.focus({ preventScroll: true });
       // Guard against YouTube error cards (e.g. 153): no readiness signal in 4s, or onError → our fallback.
@@ -2015,6 +2021,12 @@ class Component extends DCLogic {
     }
   }
 
+  markWatched() {
+    document.getElementById("ovwBtn")?.classList.add("is-watched");
+    const label = document.querySelector("[data-ovw-label]");
+    if (label) label.textContent = "Watch again";
+  }
+
   ovwFlip(reverse) {
     this.morph(document.getElementById("ovwBtn"), document.getElementById("ovwFrame"), reverse);
   }
@@ -2024,26 +2036,27 @@ class Component extends DCLogic {
     this.ovwOpen = true;
     this.ovwLastFocus = document.getElementById("ovwBtn");
     document.getElementById("ovwModal")?.classList.add("is-open");
+    // Iframe is created synchronously in the click's call stack so unmuted autoplay keeps the user gesture (iOS Safari).
+    const host = document.getElementById("ovwHost");
+    if (host && !host.querySelector("iframe") && !this.ovwFailed) {
+      const fr = document.createElement("iframe");
+      fr.src = "https://www.youtube.com/embed/" + OVERVIEW_VIDEO_ID + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
+      fr.title = "A quick CoachRx Overview";
+      fr.setAttribute("frameborder", "0");
+      fr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      fr.referrerPolicy = "strict-origin-when-cross-origin";
+      fr.allowFullscreen = true;
+      fr.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
+      fr.addEventListener("load", () => {
+        setTimeout(() => { if (fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "crxOvw" }), "*"); }, 300);
+      });
+      host.appendChild(fr);
+      this.ovwOk = false;
+      setTimeout(() => { if (!this.ovwOk) this.failOvw(); }, 4000);
+    } else if (!this.ovwFailed) {
+      this.ovwPost("playVideo");
+    }
     requestAnimationFrame(() => {
-      const host = document.getElementById("ovwHost");
-      if (host && !host.querySelector("iframe") && !this.ovwFailed) {
-        const fr = document.createElement("iframe");
-        fr.src = "https://www.youtube.com/embed/" + OVERVIEW_VIDEO_ID + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
-        fr.title = "A quick CoachRx Overview";
-        fr.setAttribute("frameborder", "0");
-        fr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        fr.referrerPolicy = "strict-origin-when-cross-origin";
-        fr.allowFullscreen = true;
-        fr.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
-        fr.addEventListener("load", () => {
-          setTimeout(() => { if (fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "crxOvw" }), "*"); }, 300);
-        });
-        host.appendChild(fr);
-        this.ovwOk = false;
-        setTimeout(() => { if (!this.ovwOk) this.failOvw(); }, 4000);
-      } else if (!this.ovwFailed) {
-        this.ovwPost("playVideo");
-      }
       this.ovwFlip(false);
       const c = document.getElementById("ovwClose");
       if (c) c.focus();
@@ -2057,8 +2070,8 @@ class Component extends DCLogic {
     setTimeout(() => {
       this.ovwOpen = false;
       document.getElementById("ovwModal")?.classList.remove("is-open");
-      const label = document.querySelector("[data-ovw-label]");
-      if (label) label.textContent = (this.ovwProg || 0) > 0 ? "Resume" : "Overview";
+      if (this.ovwWatched) this.markWatched();
+      else { const label = document.querySelector("[data-ovw-label]"); if (label) label.textContent = (this.ovwProg || 0) > 0 ? "Resume" : "Overview"; }
       if (this.ovwLastFocus) this.ovwLastFocus.focus({ preventScroll: true });
     }, this.rm ? 0 : 540);
   }
