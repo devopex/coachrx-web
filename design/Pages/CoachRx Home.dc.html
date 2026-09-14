@@ -50,8 +50,14 @@
     .crx-ovw.is-rm,.crx-ovw.is-rm .crx-ovw-cardc,.crx-ovw.is-rm .crx-ovw-pillc{transition:none}
     #ovwModal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;visibility:hidden;pointer-events:none}
     #ovwModal.is-open{visibility:visible;pointer-events:auto}
-    #ovwModal [data-ovw-bg]{opacity:0;transition:opacity .24s}
+    #ovwModal [data-ovw-bg]{opacity:0;transition:opacity .42s cubic-bezier(.32,.72,0,1)}
     #ovwModal.is-open [data-ovw-bg]{opacity:1}
+    #ovwModal:not(.is-open) [data-ovw-bg]{transition-delay:.1s}
+    #tstModal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;visibility:hidden;pointer-events:none}
+    #tstModal.is-open{visibility:visible;pointer-events:auto}
+    #tstModal [data-tst-bg]{opacity:0;transition:opacity .42s cubic-bezier(.32,.72,0,1)}
+    #tstModal.is-open [data-tst-bg]{opacity:1}
+    #tstModal:not(.is-open) [data-tst-bg]{transition-delay:.1s}
     @media (orientation:landscape) and (max-height:420px){.crx-ovw,#ovwModal{display:none!important}}
     @keyframes crxBulb{0%{box-shadow:0 0 12px rgba(255,194,51,.35)}45%{box-shadow:0 0 22px rgba(255,194,51,.7)}100%{box-shadow:0 0 12px rgba(255,194,51,.35)}}
     [data-bulb].is-lit{animation:crxBulb 1s cubic-bezier(.22,1,.36,1) 1}
@@ -604,6 +610,21 @@
           </div>
           <div id="ovwFrame" style="position:relative;width:100%;aspect-ratio:16/9;max-height:82vh;border-radius:16px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 40px 120px rgba(0,0,0,.7);background:#0A0B0F">
             <div id="ovwHost" style="position:absolute;inset:0"></div>
+          </div>
+        </div>
+      </div>
+      <div id="tstModal">
+        <div data-tst-bg="" onClick="{{ closeTile }}" style="position:absolute;inset:0;background:rgba(6,7,10,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)"></div>
+        <div role="dialog" aria-modal="true" aria-label="Coach testimonial" style="position:relative;width:min(440px,92vw,calc((100vh - 140px) * 0.5625))">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px">
+            <span style="display:flex;flex-direction:column;gap:5px;min-width:0">
+              <span data-tst-meta="" style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62)">Coach story</span>
+              <span data-tst-name="" style="font-size:16px;font-weight:600;color:#F8FCFF">Testimonial</span>
+            </span>
+            <button id="tstClose" onClick="{{ closeTile }}" aria-label="Close testimonial" style="width:28px;height:28px;flex:none;border-radius:9999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.85);font-size:15px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s" style-hover="background:rgba(255,255,255,.12)">×</button>
+          </div>
+          <div id="tstFrame" style="position:relative;width:100%;aspect-ratio:9/16;border-radius:16px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 40px 120px rgba(0,0,0,.7);background:#0A0B0F">
+            <div id="tstHost" style="position:absolute;inset:0"></div>
           </div>
         </div>
       </div>
@@ -1415,7 +1436,7 @@
     <div data-reveal="120" data-marq="" class="crx-marqwrap" style="padding:0 20px">
       <div class="crx-marqtrack">
         <sc-for list="{{ vidTiles }}" as="t" hint-placeholder-count="6">
-          <div class="crx-vtile {{ t.copyCls }}" data-tile="{{ t.key }}" data-vid="{{ t.vid }}" style="position:relative;width:250px;flex:none;display:flex;flex-direction:column;gap:12px">
+          <div class="crx-vtile {{ t.copyCls }}" data-tile="{{ t.key }}" data-vid="{{ t.vid }}" data-meta="{{ t.meta }}" style="position:relative;width:250px;flex:none;display:flex;flex-direction:column;gap:12px">
             <div class="crx-vposter" style="position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#101118;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 0 0 1px rgba(255,255,255,.07),0 0 0 1px rgba(255,255,255,.06),0 16px 40px rgba(0,0,0,.4);transition:box-shadow .25s cubic-bezier(.22,1,.36,1)">
             <button class="crx-vbtn" onClick="{{ t.onClick }}" aria-label="{{ t.aria }}">
               <img decoding="async" width="1080" height="1920" src="{{ t.poster }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%">
@@ -1674,16 +1695,16 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;showAnnouncement&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;}}">
 const COACHES = [
-  ["Brandon Gallagher", "BG Performance", "USA", "vyE-eEdxOuE"],
-  ["Paulina de Prado", "EmPawer Fitness", "Spain", "CKujjhIThiQ"],
-  ["Blake Scheidt", "Comeback Athlete", "USA", "m-CpGeUsyeo"],
-  ["David O'Brien", "Connected Coaching", "UAE", "ETdTXrVjRuw"],
-  ["Michal Scepko", "Sealtac", "Slovakia", "Wukv33G2JEM"],
   ["Brandon Wilton", "CrossFit South Bend", "USA", "n9nmauhfWfE"],
-  ["Dr. David Skolnik", "DPT", "USA", "mgwSvXDxmMQ"],
+  ["Paulina de Prado", "EmPawer Fitness", "Spain", "CKujjhIThiQ"],
   ["Ben Wise", "ZOAR Fitness", "USA", "Qr9Vc9-Lz4M"],
   ["Ian Kay", "Moveo", "UK", "0P4s4YrEHdI"],
+  ["Brandon Gallagher", "BG Performance", "USA", "vyE-eEdxOuE"],
   ["Edward Geraghty", "Wicklow Strength & Fitness", "Ireland", "liNz43W1AUo"],
+  ["David O'Brien", "Connected Coaching", "UAE", "ETdTXrVjRuw"],
+  ["Dr. David Skolnik", "DPT", "USA", "mgwSvXDxmMQ"],
+  ["Michal Scepko", "Sealtac", "Slovakia", "Wukv33G2JEM"],
+  ["Blake Scheidt", "Comeback Athlete", "USA", "m-CpGeUsyeo"],
   ["Daniel Persson", "Remote Coach", "Sweden", "U7k86TvKynw"]
 ];
 
@@ -1716,6 +1737,7 @@ class Component extends DCLogic {
       openOverview: () => this.openOverview(),
       closeOverview: (e) => { if (e) e.stopPropagation(); this.closeOverview(); },
       dismissOverview: (e) => { e.stopPropagation(); this.dismissOverview(); },
+      closeTile: (e) => { if (e) e.stopPropagation(); this.stopTile(); },
       vidTiles: [0, 1].flatMap(copy => COACHES.map(([name, biz, country, id]) => {
         const key = id + "-" + copy;
         return {
@@ -1820,6 +1842,17 @@ class Component extends DCLogic {
     });
 
     this.ovwKeys = (e) => {
+      if (this.curTile && !this.ovwOpen) {
+        if (e.key === "Escape") { e.preventDefault(); this.stopTile(); }
+        if (e.key === "Tab") {
+          const f = Array.from(document.querySelectorAll("#tstModal button, #tstModal iframe, #tstModal a"));
+          if (!f.length) return;
+          const first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+        return;
+      }
       if (!this.ovwOpen) return;
       if (e.key === "Escape") { e.preventDefault(); this.closeOverview(); }
       if (e.key === "Tab") {
@@ -1837,46 +1870,71 @@ class Component extends DCLogic {
     return Array.from(document.querySelectorAll(".crx-vtile")).find(el => el.getAttribute("data-tile") === key);
   }
 
+  // Testimonial modal: same pop-out device as the overview video, portrait 9:16, flips out of the clicked tile.
+  tstFlip(tile, reverse) {
+    this.morph(tile && tile.querySelector(".crx-vposter"), document.getElementById("tstFrame"), reverse);
+  }
+
   stopTile() {
-    document.querySelectorAll(".crx-vtile.is-play").forEach(el => {
-      el.classList.remove("is-play");
-      const host = el.querySelector(".crx-vframe");
-      if (host) host.innerHTML = "";
-    });
-    clearTimeout(this.tileTimer);
-    document.querySelector("[data-marq]")?.classList.remove("is-hold");
+    if (!this.curTile) return;
+    const key = this.curTile, tile = this.tileEl(key);
     this.curTile = null;
+    clearTimeout(this.tileTimer);
+    const fr = document.querySelector("#tstHost iframe");
+    if (fr && fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: "" }), "*");
+    this.tstFlip(tile, true);
+    setTimeout(() => {
+      document.getElementById("tstModal")?.classList.remove("is-open");
+      const host = document.getElementById("tstHost");
+      if (host) host.innerHTML = "";
+      document.querySelector("[data-marq]")?.classList.remove("is-hold");
+      if (this.tstLastFocus) this.tstLastFocus.focus({ preventScroll: true });
+    }, this.rm ? 0 : 540);
   }
 
   playTile(key, id, name) {
-    if (this.curTile === key) { this.stopTile(); return; }
-    this.stopTile();
+    if (this.curTile) { this.stopTile(); return; }
     const tile = this.tileEl(key);
     if (!tile || tile.classList.contains("is-fail")) return;
-    tile.classList.add("is-play");
-    const host = tile.querySelector(".crx-vframe");
-    const fr = document.createElement("iframe");
-    fr.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
-    fr.title = name + " on CoachRx";
-    fr.setAttribute("frameborder", "0");
-    fr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    fr.referrerPolicy = "strict-origin-when-cross-origin";
-    fr.allowFullscreen = true;
-    fr.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
-    fr.addEventListener("load", () => setTimeout(() => { if (fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "crxTile" }), "*"); }, 300));
-    host.appendChild(fr);
-    document.querySelector("[data-marq]")?.classList.add("is-hold");
     this.curTile = key;
-    // Guard against YouTube error cards (e.g. 153): no readiness signal in 4s, or onError → our fallback.
-    this.tileOk = false;
-    clearTimeout(this.tileTimer);
-    this.tileTimer = setTimeout(() => { if (!this.tileOk && this.curTile === key) this.failTile(key); }, 4000);
+    this.tstLastFocus = tile.querySelector(".crx-vbtn");
+    const nameEl = document.querySelector("[data-tst-name]"), metaEl = document.querySelector("[data-tst-meta]");
+    if (nameEl) nameEl.textContent = name;
+    if (metaEl) metaEl.textContent = tile.getAttribute("data-meta") || "Coach story";
+    const modal = document.getElementById("tstModal");
+    modal?.querySelector("[role=dialog]")?.setAttribute("aria-label", "Testimonial from " + name);
+    modal?.classList.add("is-open");
+    document.querySelector("[data-marq]")?.classList.add("is-hold");
+    requestAnimationFrame(() => {
+      const host = document.getElementById("tstHost");
+      if (!host) return;
+      host.innerHTML = "";
+      const fr = document.createElement("iframe");
+      fr.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
+      fr.title = name + " on CoachRx";
+      fr.setAttribute("frameborder", "0");
+      fr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      fr.referrerPolicy = "strict-origin-when-cross-origin";
+      fr.allowFullscreen = true;
+      fr.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
+      fr.addEventListener("load", () => setTimeout(() => { if (fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "crxTile" }), "*"); }, 300));
+      host.appendChild(fr);
+      this.tstFlip(tile, false);
+      document.getElementById("tstClose")?.focus({ preventScroll: true });
+      // Guard against YouTube error cards (e.g. 153): no readiness signal in 4s, or onError → our fallback.
+      this.tileOk = false;
+      clearTimeout(this.tileTimer);
+      this.tileTimer = setTimeout(() => { if (!this.tileOk && this.curTile === key) this.failTile(key); }, 4000);
+    });
   }
 
   failTile(key) {
-    const tile = this.tileEl(key || this.curTile);
-    this.stopTile();
-    if (tile) tile.classList.add("is-fail");
+    const k = key || this.curTile, tile = this.tileEl(k);
+    const host = document.getElementById("tstHost");
+    if (!tile || !host) return;
+    const watch = tile.getAttribute("data-vid");
+    host.innerHTML = '<img decoding="async" src="' + (tile.querySelector(".crx-vbtn img")?.src || "") + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4">' +
+      '<a href="https://www.youtube.com/watch?v=' + watch + '" target="_blank" rel="noopener" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;white-space:nowrap;padding:12px 22px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(10,11,15,.6);backdrop-filter:blur(8px);color:#F8FCFF;font-size:14px;font-weight:600;text-decoration:none;font-family:var(--font-sans)">Watch on YouTube ↗</a>';
   }
 
   failOvw() {
@@ -1892,7 +1950,7 @@ class Component extends DCLogic {
     window.addEventListener("message", (e) => {
       if (typeof e.data !== "string" || String(e.origin).indexOf("youtube") === -1) return;
       let d; try { d = JSON.parse(e.data); } catch (err) { return; }
-      const tileFr = document.querySelector(".crx-vtile.is-play iframe");
+      const tileFr = document.querySelector("#tstHost iframe");
       const ovwFr = document.querySelector("#ovwHost iframe");
       const isTile = tileFr && e.source === tileFr.contentWindow;
       const isOvw = ovwFr && e.source === ovwFr.contentWindow;
@@ -1911,26 +1969,54 @@ class Component extends DCLogic {
     if (fr && fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "command", func, args: "" }), "*");
   }
 
-  ovwFlip(reverse) {
-    if (this.rm) return;
-    const btn = document.getElementById("ovwBtn"), frame = document.getElementById("ovwFrame");
-    if (!btn || !frame) return;
-    const b = btn.getBoundingClientRect(), f = frame.getBoundingClientRect();
+  // Shared morph: the modal frame grows out of (or settles back into) its source element.
+  // Frame: transform + radius + shadow. Header: fades and rises. Source: dims and drops slightly while open.
+  morph(src, frame, reverse) {
+    if (this.rm || !src || !frame) return;
+    const head = frame.previousElementSibling;
+    const b = src.getBoundingClientRect(), f = frame.getBoundingClientRect();
     if (!b.width || !f.width) return;
     const dx = b.left - f.left, dy = b.top - f.top, sx = b.width / f.width, sy = b.height / f.height;
+    const srcR = getComputedStyle(src).borderTopLeftRadius || "12px";
+    const D = 520, E = "cubic-bezier(.32,.72,0,1)";
+    const small = `translate(${dx}px,${dy}px) scale(${sx},${sy})`;
+    const smallShadow = "inset 0 1px 0 rgba(255,255,255,.09),0 0 0 1px rgba(255,255,255,.06),0 16px 40px rgba(0,0,0,.4)";
+    // Frames carry radius/shadow inline in the template; remember them so the morph can restore, never wipe.
+    if (!frame.dataset.r0) { frame.dataset.r0 = frame.style.borderRadius || "16px"; frame.dataset.s0 = frame.style.boxShadow || "inset 0 1px 0 rgba(255,255,255,.09),0 40px 120px rgba(0,0,0,.7)"; }
+    const r0 = frame.dataset.r0, bigShadow = frame.dataset.s0;
     frame.style.transformOrigin = "top left";
+    const clear = () => { frame.style.transition = ""; frame.style.transform = ""; frame.style.borderRadius = r0; frame.style.boxShadow = bigShadow; if (head) { head.style.transition = ""; head.style.opacity = ""; head.style.transform = ""; } };
+    const bg = frame.closest("[id$=Modal]")?.firstElementChild;
     if (reverse) {
-      frame.style.transition = "transform .38s cubic-bezier(.22,1,.36,1)";
-      frame.style.transform = `translate(${dx}px,${dy}px) scale(${sx},${sy})`;
-      setTimeout(() => { frame.style.transition = ""; frame.style.transform = ""; }, 400);
+      if (bg) { bg.style.transition = `opacity ${D * .8}ms ${E} ${D * .15}ms`; bg.style.opacity = "0"; setTimeout(() => { bg.style.transition = ""; bg.style.opacity = ""; }, D + 60); }
+      frame.style.transition = `transform ${D}ms ${E}, border-radius ${D}ms ${E}, box-shadow ${D}ms ${E}`;
+      frame.style.transform = small;
+      frame.style.borderRadius = `calc(${srcR} / ${Math.min(sx, sy)})`;
+      frame.style.boxShadow = smallShadow;
+      if (head) { head.style.transition = "opacity .2s ease, transform .2s ease"; head.style.opacity = "0"; head.style.transform = "translateY(6px)"; }
+      src.style.transition = `opacity ${D * .5}ms ease ${D * .45}ms, transform ${D * .5}ms ${E} ${D * .45}ms`;
+      src.style.opacity = ""; src.style.transform = "";
+      setTimeout(() => { clear(); src.style.transition = ""; }, D + 40);
     } else {
       frame.style.transition = "none";
-      frame.style.transform = `translate(${dx}px,${dy}px) scale(${sx},${sy})`;
+      frame.style.transform = small;
+      frame.style.borderRadius = `calc(${srcR} / ${Math.min(sx, sy)})`;
+      frame.style.boxShadow = smallShadow;
+      if (head) { head.style.transition = "none"; head.style.opacity = "0"; head.style.transform = "translateY(10px)"; }
       frame.getBoundingClientRect();
-      frame.style.transition = "transform .38s cubic-bezier(.22,1,.36,1)";
+      frame.style.transition = `transform ${D}ms ${E}, border-radius ${D}ms ${E}, box-shadow ${D}ms ${E}`;
       frame.style.transform = "none";
-      setTimeout(() => { frame.style.transition = ""; }, 400);
+      frame.style.borderRadius = r0;
+      frame.style.boxShadow = bigShadow;
+      if (head) { head.style.transition = `opacity .32s ease ${D * .45}ms, transform .42s ${E} ${D * .45}ms`; head.style.opacity = "1"; head.style.transform = "none"; }
+      src.style.transition = `opacity .3s ease, transform .5s ${E}`;
+      src.style.opacity = ".35"; src.style.transform = "scale(.97) translateY(4px)";
+      setTimeout(() => { frame.style.transition = ""; if (head) head.style.transition = ""; }, D + 40);
     }
+  }
+
+  ovwFlip(reverse) {
+    this.morph(document.getElementById("ovwBtn"), document.getElementById("ovwFrame"), reverse);
   }
 
   openOverview() {
@@ -1973,8 +2059,8 @@ class Component extends DCLogic {
       document.getElementById("ovwModal")?.classList.remove("is-open");
       const label = document.querySelector("[data-ovw-label]");
       if (label) label.textContent = (this.ovwProg || 0) > 0 ? "Resume" : "Overview";
-      if (this.ovwLastFocus) this.ovwLastFocus.focus();
-    }, this.rm ? 0 : 380);
+      if (this.ovwLastFocus) this.ovwLastFocus.focus({ preventScroll: true });
+    }, this.rm ? 0 : 540);
   }
 
   dismissOverview() {
