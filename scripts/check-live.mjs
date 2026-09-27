@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import * as cheerio from "cheerio";
 
 const ROOT = process.cwd();
 
@@ -29,8 +30,6 @@ test("land.json covers land and skips ocean", () => {
   assert.ok(!hasPointNear(points, -30, 30, 2.5), "mid-Atlantic");
   assert.ok(!hasPointNear(points, -150, -40, 2.5), "south Pacific");
 });
-
-import * as cheerio from "cheerio";
 
 function loadPlanner() {
   const file = path.join(ROOT, "design/Pages/CoachRx Live.dc.html");
@@ -80,6 +79,12 @@ test("planBatch drops malformed events instead of throwing", () => {
     ev("ok", "2026-09-25T15:04:01Z"),
   ];
   const plan = planBatch(bad, new Set(), 0, 15000);
+  assert.deepEqual(plan.map((p) => p.event.id), ["ok"]);
+});
+
+test("planBatch drops an event whose kind is an Object.prototype key", () => {
+  const { planBatch } = loadPlanner();
+  const plan = planBatch([ev("proto", "2026-09-25T15:04:01Z", { kind: "constructor" }), ev("ok", "2026-09-25T15:04:02Z")], new Set(), 0, 15000);
   assert.deepEqual(plan.map((p) => p.event.id), ["ok"]);
 });
 

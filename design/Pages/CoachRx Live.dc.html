@@ -19,6 +19,7 @@
     #resDD{display:none;position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px}
     #resDD.is-open{display:block}
     .live-stage{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);gap:16px}
+    .live-stage > *{min-width:0}
     .live-card{position:relative;background:#101118;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;aspect-ratio:16/9;min-height:280px}
     .live-card canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
     .live-corner{position:absolute;left:16px;top:14px;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
@@ -34,7 +35,7 @@
     .live-where{color:rgba(255,255,255,.5);font-size:13px;display:block}
     .live-when{color:rgba(255,255,255,.5);font-size:12px;font-variant-numeric:tabular-nums}
     .live-quiet{color:rgba(255,255,255,.5);font-size:14px;padding:12px 0}
-    @media (max-width:860px){.live-stage{grid-template-columns:1fr}}
+    @media (max-width:860px){.live-stage{grid-template-columns:1fr}.live-card{min-height:0;aspect-ratio:4/3}}
     @media (max-width:760px){
       .crx-navlinks{display:none}
       footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
@@ -72,7 +73,7 @@
   <header data-screen-label="Hero" style="padding:140px 32px 40px">
     <div style="max-width:1200px;margin:0 auto">
       <span class="overline" style="display:block;margin-bottom:14px">Live</span>
-      <h1 style="font-size:clamp(36px,4.5vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:800;margin:0 0 14px;max-width:16ch">Coaching, <span style="color:rgba(255,255,255,.55)">happening now.</span></h1>
+      <h1 style="font-size:clamp(36px,4.5vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:800;margin:0 0 14px;max-width:16ch;color:#F8FCFF">Coaching, <span style="color:rgba(255,255,255,.55)">happening now.</span></h1>
       <p style="font-size:18px;line-height:1.55;color:rgba(255,255,255,.65);max-width:60ch;margin:0">Every dot is a real coach and a real client. A message, a comment, a workout written, a workout logged. Locations are approximate cities, and nobody is named.</p>
     </div>
   </header>
@@ -139,7 +140,7 @@ function validPlace(p) {
 }
 
 function validEvent(e) {
-  return !!e && typeof e.id === "string" && typeof e.at === "string" && !!COLORS[e.kind] && validPlace(e.coach) && validPlace(e.client);
+  return !!e && typeof e.id === "string" && typeof e.at === "string" && Object.hasOwn(COLORS, e.kind) && Object.hasOwn(LABELS, e.kind) && validPlace(e.coach) && validPlace(e.client);
 }
 
 function planBatch(events, seenIds, now, intervalMs) {
@@ -176,6 +177,7 @@ class LiveMap {
     this.ctx = canvas.getContext("2d");
     this.panel = panel;
     this.land = [];
+    this.base = null;
     this.events = [];
     this.pending = [];
     this.seen = new Set();
@@ -195,7 +197,7 @@ class LiveMap {
   }
 
   start() {
-    fetch("/live/land.json").then((r) => r.json()).then((pts) => { this.land = pts; this.draw(performance.now()); }).catch(() => {});
+    fetch("/live/land.json").then((r) => r.json()).then((pts) => { this.land = pts; this.renderBase(); this.draw(performance.now()); }).catch(() => {});
     this.poll();
     this.pollSummary();
     this.arm();
@@ -264,10 +266,11 @@ class LiveMap {
     const now = performance.now();
     const plan = planBatch(events, this.seen, now, POLL_INTERVAL_MS);
     pruneSeen(this.seen);
-    if (this.panel.quiet) this.panel.quiet.style.display = plan.length || this.events.length ? "none" : "";
     if (this.reduced) {
       const base = Math.round(now) - 4000;
+      this.events = [];
       plan.forEach((p, i) => this.spawn(p.event, base - (plan.length - 1 - i) * TICKER_MIN_GAP_MS));
+      this.updateQuiet();
       this.draw(now);
       return;
     }
@@ -279,6 +282,14 @@ class LiveMap {
       }, Math.max(0, p.startAt - now));
       this.pending.push(entry);
     }
+    this.updateQuiet();
+  }
+
+  updateQuiet() {
+    const quiet = this.panel.quiet;
+    if (!quiet) return;
+    const listed = !!this.panel.ticker && this.panel.ticker.children.length > 0;
+    quiet.style.display = listed || this.events.length || this.pending.length ? "none" : "";
   }
 
   spawn(e, t0) {
@@ -301,6 +312,7 @@ class LiveMap {
     li.dataset.at = String(t0);
     ul.prepend(li);
     while (ul.children.length > TICKER_ROWS) ul.lastElementChild.remove();
+    this.updateQuiet();
   }
 
   tickTicker(now) {
@@ -308,7 +320,9 @@ class LiveMap {
     if (!ul) return;
     for (const li of ul.children) {
       const s = Math.round((now - Number(li.dataset.at || now)) / 1000);
-      li.querySelector(".live-when").textContent = s < 2 ? "now" : s + "s";
+      const label = s < 2 ? "now" : s > 60 ? Math.round(s / 60) + "m" : s + "s";
+      const when = li.querySelector(".live-when");
+      if (when.textContent !== label) when.textContent = label;
     }
   }
 
@@ -323,7 +337,27 @@ class LiveMap {
     if (mapH > this.h * 0.86) { mapH = this.h * 0.86; mapW = mapH * aspect; }
     this.mapW = mapW; this.mapH = mapH;
     this.mapX = (this.w - mapW) / 2; this.mapY = (this.h - mapH) / 2 + this.h * 0.02;
+    this.renderBase();
     if (this.reduced || !this.raf) this.draw(performance.now());
+  }
+
+  renderBase() {
+    const base = this.base || document.createElement("canvas");
+    const ctx = base.getContext ? base.getContext("2d") : null;
+    if (!ctx) { this.base = null; return; }
+    base.width = this.canvas.width;
+    base.height = this.canvas.height;
+    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    ctx.clearRect(0, 0, this.w, this.h);
+    ctx.strokeStyle = "rgba(255,255,255,0.045)"; ctx.lineWidth = 1;
+    for (let lng = -180; lng <= 180; lng += 30) { const p = this.xy(LAT_TOP, lng), q = this.xy(LAT_BOTTOM, lng); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+    for (let lat = -60; lat <= 60; lat += 30) { const p = this.xy(lat, -180), q = this.xy(lat, 180); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+    const r = Math.max(1.1, this.mapW / 520);
+    ctx.fillStyle = "rgba(152,169,185,0.42)";
+    ctx.beginPath();
+    for (const d of this.land) { const p = this.xy(d[1], d[0]); ctx.moveTo(p.x + r, p.y); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); }
+    ctx.fill();
+    this.base = base;
   }
 
   xy(lat, lng) {
@@ -346,23 +380,18 @@ class LiveMap {
     if (!ctx) return;
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     ctx.clearRect(0, 0, this.w, this.h);
-    ctx.strokeStyle = "rgba(255,255,255,0.045)"; ctx.lineWidth = 1;
-    for (let lng = -180; lng <= 180; lng += 30) { const p = this.xy(LAT_TOP, lng), q = this.xy(LAT_BOTTOM, lng); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
-    for (let lat = -60; lat <= 60; lat += 30) { const p = this.xy(lat, -180), q = this.xy(lat, 180); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
-    const dotR = Math.max(1.1, this.mapW / 520);
-    ctx.fillStyle = "rgba(152,169,185,0.42)";
-    for (const d of this.land) { const p = this.xy(d[1], d[0]); ctx.beginPath(); ctx.arc(p.x, p.y, dotR, 0, Math.PI * 2); ctx.fill(); }
+    if (this.base) ctx.drawImage(this.base, 0, 0, this.w, this.h);
     for (const ev of this.events) this.drawEvent(ctx, ev, now);
   }
 
   drawEvent(ctx, ev, now) {
     const e = ev.e;
-    const t = (now - ev.t0) / ev.dur;
+    const t = this.reduced ? 1 : (now - ev.t0) / ev.dur;
     const fade = t > 1 ? Math.max(0, 1 - (t - 1) / 1.4) : 1;
     const A = this.xy(e.coach.lat, e.coach.lng), B = this.xy(e.client.lat, e.client.lng);
     if (e.same_city) { this.pulse(ctx, A, ev.color, Math.min(t, 1), fade); return; }
     const prog = Math.min(1, easeOut(Math.min(1, t * 1.15)));
-    const tail = t < 0.55 ? 0 : easeOut(Math.min(1, (t - 0.55) / 0.5));
+    const tail = this.reduced || t < 0.55 ? 0 : easeOut(Math.min(1, (t - 0.55) / 0.5));
     const N = 32, pts = [];
     const mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2 - Math.abs(B.x - A.x) * 0.28 - 16;
     for (let i = 0; i <= N; i++) {
@@ -386,7 +415,7 @@ class LiveMap {
       ctx.fillStyle = hexA(ev.color, fade); ctx.beginPath(); ctx.arc(h.x, h.y, 2.2, 0, Math.PI * 2); ctx.fill();
     }
     ctx.fillStyle = hexA(ev.color, 0.9 * fade); ctx.beginPath(); ctx.arc(A.x, A.y, 2, 0, Math.PI * 2); ctx.fill();
-    if (prog >= 0.98) { const lt = Math.min(1, (t - 0.85) / 0.6); if (lt > 0) this.pulse(ctx, B, ev.color, lt, fade); }
+    if (prog >= 0.98) { const lt = this.reduced ? 1 : Math.min(1, (t - 0.85) / 0.6); if (lt > 0) this.pulse(ctx, B, ev.color, lt, fade); }
   }
 
   pulse(ctx, P, color, t, fade) {
@@ -401,8 +430,6 @@ class LiveMap {
     ctx.fillStyle = hexA(color, fade); ctx.beginPath(); ctx.arc(P.x, P.y, 2.4, 0, Math.PI * 2); ctx.fill();
   }
 }
-
-if (typeof window !== "undefined") window.__liveMap = { planBatch };
 
 class Component extends DCLogic {
   renderVals() { return {}; }
