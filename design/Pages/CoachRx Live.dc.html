@@ -183,7 +183,7 @@ class LiveMap {
     this.raf = 0;
     this.stopped = false;
     this.reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    this.lastListed = 0;
+    this.lastListed = -Infinity;
     this.w = 0; this.h = 0; this.dpr = 1;
     this.mapX = 0; this.mapY = 0; this.mapW = 0; this.mapH = 0;
     this.onResize = () => this.resize();
@@ -198,15 +198,25 @@ class LiveMap {
     fetch("/live/land.json").then((r) => r.json()).then((pts) => { this.land = pts; this.draw(performance.now()); }).catch(() => {});
     this.poll();
     this.pollSummary();
+    this.arm();
+    if (!this.reduced) this.loop();
+  }
+
+  arm() {
+    this.disarm();
     this.timers.push(setInterval(() => this.poll(), POLL_INTERVAL_MS));
     this.timers.push(setInterval(() => this.pollSummary(), SUMMARY_INTERVAL_MS));
-    if (!this.reduced) this.loop();
+    if (this.reduced) this.timers.push(setInterval(() => this.tickTicker(performance.now()), 1000));
+  }
+
+  disarm() {
+    this.timers.forEach(clearInterval);
+    this.timers = [];
   }
 
   stop() {
     this.stopped = true;
-    this.timers.forEach(clearInterval);
-    this.timers = [];
+    this.disarm();
     this.pending.forEach((p) => clearTimeout(p.timer));
     this.pending = [];
     cancelAnimationFrame(this.raf);
@@ -215,6 +225,7 @@ class LiveMap {
   }
 
   pause() {
+    this.disarm();
     cancelAnimationFrame(this.raf);
     this.raf = 0;
     this.pending.forEach((p) => clearTimeout(p.timer));
@@ -224,10 +235,13 @@ class LiveMap {
   resume() {
     if (this.stopped) return;
     this.poll();
+    this.pollSummary();
+    this.arm();
     if (!this.reduced && !this.raf) this.loop();
   }
 
   poll() {
+    if (document.hidden || this.stopped) return;
     fetch("/api/live/events", { headers: { accept: "application/json" } })
       .then((r) => r.json())
       .then((body) => this.schedule(body && body.events))
@@ -246,12 +260,14 @@ class LiveMap {
   }
 
   schedule(events) {
+    if (document.hidden || this.stopped) return;
     const now = performance.now();
     const plan = planBatch(events, this.seen, now, POLL_INTERVAL_MS);
     pruneSeen(this.seen);
     if (this.panel.quiet) this.panel.quiet.style.display = plan.length || this.events.length ? "none" : "";
     if (this.reduced) {
-      plan.forEach((p) => this.spawn(p.event, now - 4000));
+      const base = Math.round(now) - 4000;
+      plan.forEach((p, i) => this.spawn(p.event, base - (plan.length - 1 - i) * TICKER_MIN_GAP_MS));
       this.draw(now);
       return;
     }
