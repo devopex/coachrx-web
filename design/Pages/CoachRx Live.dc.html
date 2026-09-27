@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
+  <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    header,section,footer{overflow-x:clip}
+    a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
+    ::selection{background:rgba(88,255,122,.25)}
+    .crx-navlinks a:hover{color:#F8FCFF}
+    #resDD{display:none;position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px}
+    #resDD.is-open{display:block}
+    .live-stage{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);gap:16px}
+    .live-card{position:relative;background:#101118;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;aspect-ratio:16/9;min-height:280px}
+    .live-card canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .live-corner{position:absolute;left:16px;top:14px;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+    .live-dot{width:7px;height:7px;border-radius:50%;background:#FFB020;box-shadow:0 0 0 0 rgba(255,176,32,.45)}
+    .live-panel{background:#101118;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:18px;min-width:0}
+    .live-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .live-k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+    .live-v{font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px}
+    .live-ticker{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.08)}
+    .live-ticker li{display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
+    .live-ticker i{width:8px;height:8px;border-radius:50%;display:inline-block;position:relative;top:-1px}
+    .live-what{color:#F8FCFF;font-weight:500}
+    .live-where{color:rgba(255,255,255,.5);font-size:13px;display:block}
+    .live-when{color:rgba(255,255,255,.5);font-size:12px;font-variant-numeric:tabular-nums}
+    .live-quiet{color:rgba(255,255,255,.5);font-size:14px;padding:12px 0}
+    @media (max-width:860px){.live-stage{grid-template-columns:1fr}}
+    @media (max-width:760px){
+      .crx-navlinks{display:none}
+      footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+      footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}
+    }
+  </style>
+</helmet>
+
+<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+
+  <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <a href="CoachRx Home v3.dc.html" style="display:inline-flex"><img loading="lazy" decoding="async" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div class="crx-navlinks" style="display:flex;align-items:center;gap:28px">
+      <a href="CoachRx Features v2.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Features</a>
+      <div id="resWrap" style="position:relative;display:flex;align-items:center;height:60px">
+        <button id="resBtn" type="button" aria-haspopup="true" aria-expanded="false" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.68);font-size:14px;font-weight:500;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit">Resources<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div id="resDD">
+          <div style="background:#14151A;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:190px;box-shadow:0 24px 56px rgba(0,0,0,.6);display:flex;flex-direction:column">
+            <a href="CoachRx Blog Index.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Articles</a>
+            <a href="CoachRx Podcasts.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Podcasts</a>
+          </div>
+        </div>
+      </div>
+      <a href="CoachRx Roadmap.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Roadmap</a>
+      <a href="CoachRx Pricing v2.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Pricing</a>
+      <a href="CoachRx About v3.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
+    </div>
+    <div class="crx-navcta" style="display:flex;align-items:center;gap:20px">
+      <a href="https://dashboard.coachrx.app/login" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500;padding:10px 0;white-space:nowrap;flex:none" style-hover="color:#F8FCFF">Log in</a>
+      <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:8px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header data-screen-label="Hero" style="padding:140px 32px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <span class="overline" style="display:block;margin-bottom:14px">Live</span>
+      <h1 style="font-size:clamp(36px,4.5vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:800;margin:0 0 14px;max-width:16ch">Coaching, <span style="color:rgba(255,255,255,.55)">happening now.</span></h1>
+      <p style="font-size:18px;line-height:1.55;color:rgba(255,255,255,.65);max-width:60ch;margin:0">Every dot is a real coach and a real client. A message, a comment, a workout written, a workout logged. Locations are approximate cities, and nobody is named.</p>
+    </div>
+  </header>
+
+  <!-- MAP -->
+  <section data-screen-label="Map" style="padding:0 32px 72px">
+    <div class="live-stage" style="max-width:1200px;margin:0 auto">
+      <div class="live-card">
+        <canvas id="liveCanvas"></canvas>
+        <div class="live-corner"><span class="live-dot" id="liveDot"></span>Live</div>
+      </div>
+      <aside class="live-panel">
+        <div class="live-stats">
+          <div><div class="live-k">Past hour</div><div class="live-v" id="liveHour">0</div></div>
+          <div><div class="live-k">Past day</div><div class="live-v" id="liveDay">0</div></div>
+        </div>
+        <ul class="live-ticker" id="liveTicker"></ul>
+        <div class="live-quiet" id="liveQuiet">Quiet right now.</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- WHAT YOU ARE SEEING -->
+  <section data-screen-label="Explainer" style="padding:0 32px 96px">
+    <div style="max-width:1200px;margin:0 auto">
+      <p style="font-size:15px;line-height:1.6;color:rgba(255,255,255,.5);max-width:64ch;margin:0">Events appear a few seconds to a minute after they happen and play out evenly. Blue is a message, amber is a comment or a logged workout, white is a workout a coach just programmed. A pulse means the coach and client are in the same city. An arc runs from the coach to the client.</p>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:72px 32px 32px;background:linear-gradient(180deg,#08090E 0%,#07080D 45%,#030409 100%)">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <img loading="lazy" decoding="async" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto;align-self:flex-start">
+          <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.45);max-width:240px">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Features</span><a href="CoachRx Features.dc.html#assess" style="font-size:13.5px;color:rgba(255,255,255,.6)">Assess</a><a href="CoachRx Features.dc.html#consult" style="font-size:13.5px;color:rgba(255,255,255,.6)">Consult</a><a href="CoachRx Features.dc.html#design" style="font-size:13.5px;color:rgba(255,255,255,.6)">Design</a><a href="CoachRx Features.dc.html#operate" style="font-size:13.5px;color:rgba(255,255,255,.6)">Operate</a><a href="CoachRx Features.dc.html#client-experience" style="font-size:13.5px;color:rgba(255,255,255,.6)">Client Experience</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Resources</span><a href="CoachRx Blog Index.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Articles</a><a href="CoachRx Podcasts.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Podcasts</a><a href="CoachRx Roadmap.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Roadmap</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Company</span><a href="https://dashboard.coachrx.app/login" style="font-size:13.5px;color:rgba(255,255,255,.6)">Log in</a><a href="CoachRx About.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">About</a><a href="CoachRx Pricing.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Pricing</a><a href="mailto:coachrx@opexfit.com" style="font-size:13.5px;color:rgba(255,255,255,.6)">Contact</a></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">
+        <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+        <span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const POLL_INTERVAL_MS = 15000;
+const SUMMARY_INTERVAL_MS = 60000;
+const MAX_ALIVE = 120;
+const SEEN_LIMIT = 5000;
+const TICKER_ROWS = 6;
+const TICKER_MIN_GAP_MS = 350;
+const COLORS = { message_sent: "#1F94EA", comment_created: "#FFB020", workout_created: "#F8FCFF", workout_item_updated: "#FFB020" };
+const LABELS = { message_sent: "Message sent", comment_created: "Comment posted", workout_created: "Workout programmed", workout_item_updated: "Workout logged" };
+const LAT_TOP = 78;
+const LAT_BOTTOM = -58;
+
+function validPlace(p) {
+  return !!p && typeof p.lat === "number" && typeof p.lng === "number" && isFinite(p.lat) && isFinite(p.lng);
+}
+
+function validEvent(e) {
+  return !!e && typeof e.id === "string" && typeof e.at === "string" && !!COLORS[e.kind] && validPlace(e.coach) && validPlace(e.client);
+}
+
+function planBatch(events, seenIds, now, intervalMs) {
+  const fresh = [];
+  for (const e of Array.isArray(events) ? events : []) {
+    if (!validEvent(e) || seenIds.has(e.id)) continue;
+    seenIds.add(e.id);
+    fresh.push(e);
+  }
+  fresh.sort((a, b) => (a.at < b.at ? -1 : a.at > b.at ? 1 : 0));
+  const kept = fresh.length > MAX_ALIVE ? fresh.slice(fresh.length - MAX_ALIVE) : fresh;
+  const gap = kept.length ? intervalMs / kept.length : 0;
+  return kept.map((event, i) => ({ event, startAt: now + Math.round(i * gap) }));
+}
+
+function pruneSeen(seenIds) {
+  if (seenIds.size <= SEEN_LIMIT) return;
+  const drop = seenIds.size - SEEN_LIMIT;
+  let i = 0;
+  for (const id of seenIds) { if (i++ >= drop) break; seenIds.delete(id); }
+}
+
+function hexA(hex, a) {
+  const n = parseInt(hex.slice(1), 16);
+  return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")";
+}
+
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+class LiveMap {
+  constructor(card, canvas, panel) {
+    this.card = card;
+    this.canvas = canvas;
+    this.ctx = canvas.getContext("2d");
+    this.panel = panel;
+    this.land = [];
+    this.events = [];
+    this.pending = [];
+    this.seen = new Set();
+    this.timers = [];
+    this.raf = 0;
+    this.stopped = false;
+    this.reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.lastListed = 0;
+    this.w = 0; this.h = 0; this.dpr = 1;
+    this.mapX = 0; this.mapY = 0; this.mapW = 0; this.mapH = 0;
+    this.onResize = () => this.resize();
+    this.onVisibility = () => (document.hidden ? this.pause() : this.resume());
+    this.ro = new ResizeObserver(this.onResize);
+    this.ro.observe(card);
+    document.addEventListener("visibilitychange", this.onVisibility);
+    this.resize();
+  }
+
+  start() {
+    fetch("/live/land.json").then((r) => r.json()).then((pts) => { this.land = pts; this.draw(performance.now()); }).catch(() => {});
+    this.poll();
+    this.pollSummary();
+    this.timers.push(setInterval(() => this.poll(), POLL_INTERVAL_MS));
+    this.timers.push(setInterval(() => this.pollSummary(), SUMMARY_INTERVAL_MS));
+    if (!this.reduced) this.loop();
+  }
+
+  stop() {
+    this.stopped = true;
+    this.timers.forEach(clearInterval);
+    this.timers = [];
+    this.pending.forEach((p) => clearTimeout(p.timer));
+    this.pending = [];
+    cancelAnimationFrame(this.raf);
+    this.ro.disconnect();
+    document.removeEventListener("visibilitychange", this.onVisibility);
+  }
+
+  pause() {
+    cancelAnimationFrame(this.raf);
+    this.raf = 0;
+    this.pending.forEach((p) => clearTimeout(p.timer));
+    this.pending = [];
+  }
+
+  resume() {
+    if (this.stopped) return;
+    this.poll();
+    if (!this.reduced && !this.raf) this.loop();
+  }
+
+  poll() {
+    fetch("/api/live/events", { headers: { accept: "application/json" } })
+      .then((r) => r.json())
+      .then((body) => this.schedule(body && body.events))
+      .catch(() => {});
+  }
+
+  pollSummary() {
+    fetch("/api/live/summary", { headers: { accept: "application/json" } })
+      .then((r) => r.json())
+      .then((s) => {
+        const hour = this.panel.hour, day = this.panel.day;
+        if (hour) hour.textContent = Number(s.past_hour || 0).toLocaleString();
+        if (day) day.textContent = Number(s.past_day || 0).toLocaleString();
+      })
+      .catch(() => {});
+  }
+
+  schedule(events) {
+    const now = performance.now();
+    const plan = planBatch(events, this.seen, now, POLL_INTERVAL_MS);
+    pruneSeen(this.seen);
+    if (this.panel.quiet) this.panel.quiet.style.display = plan.length || this.events.length ? "none" : "";
+    if (this.reduced) {
+      plan.forEach((p) => this.spawn(p.event, now - 4000));
+      this.draw(now);
+      return;
+    }
+    for (const p of plan) {
+      const entry = { timer: 0 };
+      entry.timer = setTimeout(() => {
+        this.pending = this.pending.filter((x) => x !== entry);
+        this.spawn(p.event, performance.now());
+      }, Math.max(0, p.startAt - now));
+      this.pending.push(entry);
+    }
+  }
+
+  spawn(e, t0) {
+    const dist = Math.hypot(e.coach.lat - e.client.lat, e.coach.lng - e.client.lng);
+    this.events.push({ e, t0, dur: e.same_city ? 2200 : 2600 + dist * 12, color: COLORS[e.kind] });
+    if (this.events.length > MAX_ALIVE) this.events.splice(0, this.events.length - MAX_ALIVE);
+    this.list(e, t0);
+  }
+
+  list(e, t0) {
+    const ul = this.panel.ticker;
+    if (!ul) return;
+    if (t0 - this.lastListed < TICKER_MIN_GAP_MS) return;
+    this.lastListed = t0;
+    const li = document.createElement("li");
+    const where = e.same_city ? e.coach.city + " · coach and client" : e.coach.city + " → " + e.client.city;
+    li.innerHTML = '<i style="background:' + COLORS[e.kind] + '"></i><span><span class="live-what"></span><span class="live-where"></span></span><span class="live-when">now</span>';
+    li.querySelector(".live-what").textContent = LABELS[e.kind];
+    li.querySelector(".live-where").textContent = where;
+    li.dataset.at = String(t0);
+    ul.prepend(li);
+    while (ul.children.length > TICKER_ROWS) ul.lastElementChild.remove();
+  }
+
+  tickTicker(now) {
+    const ul = this.panel.ticker;
+    if (!ul) return;
+    for (const li of ul.children) {
+      const s = Math.round((now - Number(li.dataset.at || now)) / 1000);
+      li.querySelector(".live-when").textContent = s < 2 ? "now" : s + "s";
+    }
+  }
+
+  resize() {
+    const r = this.card.getBoundingClientRect();
+    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.w = r.width; this.h = r.height;
+    this.canvas.width = Math.round(r.width * this.dpr);
+    this.canvas.height = Math.round(r.height * this.dpr);
+    const aspect = 360 / (LAT_TOP - LAT_BOTTOM);
+    let mapW = this.w * 0.94, mapH = mapW / aspect;
+    if (mapH > this.h * 0.86) { mapH = this.h * 0.86; mapW = mapH * aspect; }
+    this.mapW = mapW; this.mapH = mapH;
+    this.mapX = (this.w - mapW) / 2; this.mapY = (this.h - mapH) / 2 + this.h * 0.02;
+    if (this.reduced || !this.raf) this.draw(performance.now());
+  }
+
+  xy(lat, lng) {
+    return { x: ((lng + 180) / 360) * this.mapW + this.mapX, y: ((LAT_TOP - lat) / (LAT_TOP - LAT_BOTTOM)) * this.mapH + this.mapY };
+  }
+
+  loop() {
+    const frame = (now) => {
+      if (this.stopped || document.hidden) { this.raf = 0; return; }
+      this.events = this.events.filter((ev) => now - ev.t0 < ev.dur + 1400);
+      this.tickTicker(now);
+      this.draw(now);
+      this.raf = requestAnimationFrame(frame);
+    };
+    this.raf = requestAnimationFrame(frame);
+  }
+
+  draw(now) {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    ctx.clearRect(0, 0, this.w, this.h);
+    ctx.strokeStyle = "rgba(255,255,255,0.045)"; ctx.lineWidth = 1;
+    for (let lng = -180; lng <= 180; lng += 30) { const p = this.xy(LAT_TOP, lng), q = this.xy(LAT_BOTTOM, lng); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+    for (let lat = -60; lat <= 60; lat += 30) { const p = this.xy(lat, -180), q = this.xy(lat, 180); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+    const dotR = Math.max(1.1, this.mapW / 520);
+    ctx.fillStyle = "rgba(152,169,185,0.42)";
+    for (const d of this.land) { const p = this.xy(d[1], d[0]); ctx.beginPath(); ctx.arc(p.x, p.y, dotR, 0, Math.PI * 2); ctx.fill(); }
+    for (const ev of this.events) this.drawEvent(ctx, ev, now);
+  }
+
+  drawEvent(ctx, ev, now) {
+    const e = ev.e;
+    const t = (now - ev.t0) / ev.dur;
+    const fade = t > 1 ? Math.max(0, 1 - (t - 1) / 1.4) : 1;
+    const A = this.xy(e.coach.lat, e.coach.lng), B = this.xy(e.client.lat, e.client.lng);
+    if (e.same_city) { this.pulse(ctx, A, ev.color, Math.min(t, 1), fade); return; }
+    const prog = Math.min(1, easeOut(Math.min(1, t * 1.15)));
+    const tail = t < 0.55 ? 0 : easeOut(Math.min(1, (t - 0.55) / 0.5));
+    const N = 32, pts = [];
+    const mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2 - Math.abs(B.x - A.x) * 0.28 - 16;
+    for (let i = 0; i <= N; i++) {
+      const u = i / N;
+      pts.push({ x: (1 - u) * (1 - u) * A.x + 2 * (1 - u) * u * mx + u * u * B.x, y: (1 - u) * (1 - u) * A.y + 2 * (1 - u) * u * my + u * u * B.y });
+    }
+    const from = Math.floor(tail * N), to = Math.floor(prog * N);
+    ctx.lineWidth = 1.6; ctx.lineCap = "round";
+    for (let i = from; i < to; i += 4) {
+      const end = Math.min(to, i + 4);
+      ctx.strokeStyle = hexA(ev.color, (0.12 + 0.7 * (i / N)) * fade);
+      ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y);
+      for (let j = i + 1; j <= end; j++) ctx.lineTo(pts[j].x, pts[j].y);
+      ctx.stroke();
+    }
+    if (to > from && prog < 1) {
+      const h = pts[to];
+      const g = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, 9);
+      g.addColorStop(0, hexA(ev.color, 0.9 * fade)); g.addColorStop(1, hexA(ev.color, 0));
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(h.x, h.y, 9, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = hexA(ev.color, fade); ctx.beginPath(); ctx.arc(h.x, h.y, 2.2, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = hexA(ev.color, 0.9 * fade); ctx.beginPath(); ctx.arc(A.x, A.y, 2, 0, Math.PI * 2); ctx.fill();
+    if (prog >= 0.98) { const lt = Math.min(1, (t - 0.85) / 0.6); if (lt > 0) this.pulse(ctx, B, ev.color, lt, fade); }
+  }
+
+  pulse(ctx, P, color, t, fade) {
+    ctx.lineWidth = 1.25;
+    ctx.strokeStyle = hexA(color, (1 - t) * 0.8 * fade);
+    ctx.beginPath(); ctx.arc(P.x, P.y, 4 + 18 * t, 0, Math.PI * 2); ctx.stroke();
+    const t2 = Math.max(0, t - 0.25) / 0.75;
+    if (t2 > 0) { ctx.strokeStyle = hexA(color, (1 - t2) * 0.5 * fade); ctx.beginPath(); ctx.arc(P.x, P.y, 4 + 18 * t2, 0, Math.PI * 2); ctx.stroke(); }
+    const g = ctx.createRadialGradient(P.x, P.y, 0, P.x, P.y, 10);
+    g.addColorStop(0, hexA(color, 0.7 * fade)); g.addColorStop(1, hexA(color, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(P.x, P.y, 10, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = hexA(color, fade); ctx.beginPath(); ctx.arc(P.x, P.y, 2.4, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+if (typeof window !== "undefined") window.__liveMap = { planBatch };
+
+class Component extends DCLogic {
+  renderVals() { return {}; }
+  componentDidMount() {
+    if (typeof document === "undefined" || !document.querySelector) return;
+    const card = document.querySelector(".live-card");
+    const canvas = document.getElementById("liveCanvas");
+    if (!card || !canvas || !canvas.getContext || !canvas.getContext("2d")) return;
+    this.map = new LiveMap(card, canvas, {
+      hour: document.getElementById("liveHour"),
+      day: document.getElementById("liveDay"),
+      ticker: document.getElementById("liveTicker"),
+      quiet: document.getElementById("liveQuiet"),
+    });
+    this.map.start();
+    const wrap = document.getElementById("resWrap"), btn = document.getElementById("resBtn"), dd = document.getElementById("resDD");
+    if (wrap && dd && btn) {
+      const open = (v) => { dd.classList.toggle("is-open", v); btn.setAttribute("aria-expanded", String(v)); };
+      wrap.addEventListener("mouseenter", () => open(true));
+      wrap.addEventListener("mouseleave", () => open(false));
+      btn.addEventListener("click", () => open(!dd.classList.contains("is-open")));
+    }
+  }
+  componentWillUnmount() { if (this.map) this.map.stop(); }
+}
+</script>
+</body>
+</html>
