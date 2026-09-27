@@ -4,7 +4,7 @@ export const PLAYBACK_WINDOW_SECONDS = 60;
 export const EVENTS_CACHE_SECONDS = 10;
 export const SUMMARY_CACHE_SECONDS = 60;
 export const FAILURE_CACHE_SECONDS = 5;
-const DEFAULT_ORIGIN = "https://coachrx.app";
+const DEFAULT_ORIGIN = "https://dashboard.coachrx.app";
 
 type Env = { COACHRX_API_ORIGIN?: string };
 
@@ -34,15 +34,30 @@ export function emptyPayload(base: Record<string, unknown>): string {
 
 export async function proxyJson(path: string, ttl: number, empty: Record<string, unknown>): Promise<Response> {
   const url = `${apiOrigin()}${path}`;
+  const cache = (globalThis as { caches?: { default?: Cache } }).caches?.default;
+  const key = new Request(url, { method: "GET" });
+  if (cache) {
+    try {
+      const hit = await cache.match(key);
+      if (hit) return new Response(hit.body, hit);
+    } catch {}
+  }
   try {
     const upstream = await fetch(url, {
       headers: { accept: "application/json" },
+      signal: AbortSignal.timeout(3000),
       cf: { cacheTtl: ttl, cacheEverything: true },
     } as RequestInit);
     if (!upstream.ok) return jsonResponse(emptyPayload(empty), FAILURE_CACHE_SECONDS);
     const text = await upstream.text();
     JSON.parse(text);
-    return jsonResponse(text, ttl);
+    const response = jsonResponse(text, ttl);
+    if (cache) {
+      try {
+        await cache.put(key, response.clone());
+      } catch {}
+    }
+    return response;
   } catch {
     return jsonResponse(emptyPayload(empty), FAILURE_CACHE_SECONDS);
   }
