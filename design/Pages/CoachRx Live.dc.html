@@ -184,6 +184,7 @@ class LiveMap {
     this.timers = [];
     this.raf = 0;
     this.stopped = false;
+    this.offline = false;
     this.reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.lastListed = -Infinity;
     this.w = 0; this.h = 0; this.dpr = 1;
@@ -246,7 +247,15 @@ class LiveMap {
     if (document.hidden || this.stopped) return;
     fetch("/api/live/events", { headers: { accept: "application/json" } })
       .then((r) => r.json())
-      .then((body) => this.schedule(body && body.events))
+      .then((body) => {
+        if (body && body.offline) {
+          this.offline = true;
+          this.updateQuiet();
+          return;
+        }
+        this.offline = false;
+        this.schedule(body && body.events);
+      })
       .catch(() => {});
   }
 
@@ -254,6 +263,7 @@ class LiveMap {
     fetch("/api/live/summary", { headers: { accept: "application/json" } })
       .then((r) => r.json())
       .then((s) => {
+        if (!s || s.offline) return;
         const hour = this.panel.hour, day = this.panel.day;
         if (hour) hour.textContent = Number(s.past_hour || 0).toLocaleString();
         if (day) day.textContent = Number(s.past_day || 0).toLocaleString();
@@ -288,8 +298,11 @@ class LiveMap {
   updateQuiet() {
     const quiet = this.panel.quiet;
     if (!quiet) return;
+    const text = this.offline ? "Map offline." : "Quiet right now.";
+    if (quiet.textContent !== text) quiet.textContent = text;
     const listed = !!this.panel.ticker && this.panel.ticker.children.length > 0;
-    quiet.style.display = listed || this.events.length || this.pending.length ? "none" : "";
+    const busy = listed || this.events.length || this.pending.length;
+    quiet.style.display = this.offline || !busy ? "" : "none";
   }
 
   spawn(e, t0) {

@@ -29,7 +29,7 @@ function jsonResponse(body: string, maxAge: number): Response {
 }
 
 export function emptyPayload(base: Record<string, unknown>): string {
-  return JSON.stringify({ ...base, server_time: new Date().toISOString() });
+  return JSON.stringify({ ...base, offline: true, server_time: new Date().toISOString() });
 }
 
 export async function proxyJson(path: string, ttl: number, empty: Record<string, unknown>): Promise<Response> {
