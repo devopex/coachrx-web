@@ -151,6 +151,30 @@ function rewriteAsset(v) {
   return v;
 }
 
+/**
+ * Same rewrite, but for url(...) inside CSS and inside inline style attributes.
+ *
+ * WHY THIS EXISTS. rewriteAsset was wired to `src` and `href` only. A designer who sets a
+ * background with `background-image:url("uploads/Texture.png")` gets a RELATIVE path in the
+ * shipped page, which resolves against the current route: /uploads/Texture.png on "/" and
+ * /features/uploads/Texture.png on "/features". Both 404. The page still renders, still passes
+ * every gate, and simply loses the texture — so it reads as "the site does not match the design"
+ * with nothing in the build output to explain why.
+ *
+ * Found 2026-10-02: Kevin's pass set a page-wide background on the root div of all thirteen
+ * pages, `background-color:#030409;background-image:url("uploads/BackgroundNoNoise.png")`, and
+ * every one of them shipped the flat colour with no texture.
+ *
+ * Handles both quoted and unquoted url(), and leaves absolute, data: and http(s): alone.
+ */
+function rewriteCssUrls(css) {
+  if (!css) return css;
+  return css.replace(/url\(\s*(["']?)([^"')]+)\1\s*\)/g, (m, q, v) => {
+    const out = rewriteAsset(v.trim());
+    return out === v.trim() ? m : `url(${q}${out}${q})`;
+  });
+}
+
 /* ------------------------------------------------------- run the file's script */
 
 function extractData(scriptSrc, props) {
@@ -301,10 +325,12 @@ function applyLeaf($, node, scope, ctx) {
           if (typeof v === "function") { $el.removeAttr(name); continue; }
         }
         const next = interpolate(String(value), scope, ctx.unresolved);
-        $el.attr(name, name === "src" || name === "href" ? rewriteAsset(next) : next);
+        $el.attr(name, name === "src" || name === "href" ? rewriteAsset(next)
+          : name === "style" ? rewriteCssUrls(next) : next);
         continue;
       }
       if (name === "src" || name === "href") $el.attr(name, rewriteAsset(String(value)));
+      else if (name === "style") $el.attr(name, rewriteCssUrls(String(value)));
     }
   }
 
@@ -1495,23 +1521,31 @@ const RESPONSIVE_BACKSTOP = `
  * 3. `About` comes out of the nav entirely. Nobody navigates to About from a SaaS nav; it lives
  *    in the footer Company column, where it already is.
  *
- * Final shape:  Features · Resources ▾ · Updates ▾ · Pricing    |   Log in   [Start for free]
- *   Resources ▾  Articles, Podcasts
- *   Updates ▾    Roadmap, Changelog, Feature requests
+ * Final shape:  Features · Resources ▾ · Roadmap · Pricing · About   |  Log in  [Start for free]
+ *   Resources ▾  Articles, Podcasts, Changelog
+ *
+ * REVISED 2026-10-02 to match Kevin's refinement pass. Roadmap comes up to the top level and the
+ * Updates dropdown goes away; Changelog moves into Resources. Carl chose this over the previous
+ * order knowing it reverses his 2026-09-06 call to put About second (see below).
+ *
+ * Kevin's thirteen files carried THREE different navs between them (8 with Changelog inside
+ * Resources, 4 without it, 1 with Resources empty), which is the same drift this function exists
+ * to stop. The 8-file majority is what is encoded here, applied identically to all 24 pages.
+ *
+ * Feature requests is deliberately nav-less: Kevin dropped it and Carl confirmed footer-only on
+ * 2026-10-02, so FOOTER_COLUMNS keeps it reachable and the nav stays at five items.
  *
  * Built here rather than in the design files because each file owns its own nav and this has
  * drifted on every single pass. Doing it once at compile time is the only way it stays identical.
  */
 const NAV_MENUS = [
-  { label: "Resources", items: [["Articles", "/articles"], ["Podcasts", "/podcasts"]] },
-  { label: "Updates", items: [["Roadmap", "/roadmap"], ["Changelog", "/changelog"], ["Feature requests", "/feature-requests"]] },
+  { label: "Resources", items: [["Articles", "/articles"], ["Podcasts", "/podcasts"], ["Changelog", "/changelog"]] },
 ];
-// About sits second, next to Features, added 2026-09-06 at Carl's request.
-//
-// The reason it earns a top-level slot: every competitor can list features, none of them can
-// claim 1999. That argument lived one click below the fold in the footer while the mobile menu
-// already had it, so desktop and mobile disagreed. Five items is still comfortable.
-const NAV_ORDER = ["Features", "About", "Resources", "Updates", "Pricing"];
+// About keeps its top-level slot, added 2026-09-06 at Carl's request: every competitor can list
+// features, none of them can claim 1999, and that argument used to sit one click below the fold.
+// It moves from second to last on 2026-10-02 to match Kevin's pass. Still in the nav, still on
+// desktop and mobile, so the reason it was promoted still holds.
+const NAV_ORDER = ["Features", "Resources", "Roadmap", "Pricing", "About"];
 
 function normalizeNav($, root, ctx) {
   const $nav = root.find("nav").first();
@@ -2253,7 +2287,7 @@ function enforceLogo($, root, ctx) {
  */
 export function compileDesign(full, override) {
   const $ = cheerio.load(fs.readFileSync(full, "utf8"), { xmlMode: false });
-  const css = stripWordmarkCss($("helmet style").map((_, s2) => $(s2).html()).get().join("\n"));
+  const css = rewriteCssUrls(stripWordmarkCss($("helmet style").map((_, s2) => $(s2).html()).get().join("\n")));
   const scriptSrc = $('script[type="text/x-dc"]').html() || "";
   let data = extractData(scriptSrc, defaultProps($));
   if (typeof override === "function") data = override(data);
@@ -2348,7 +2382,7 @@ for (const page of PAGES) {
 
   const $ = cheerio.load(fs.readFileSync(full, "utf8"), { xmlMode: false });
 
-  const css = stripWordmarkCss($("helmet style").map((_, s) => $(s).html()).get().join("\n"));
+  const css = rewriteCssUrls(stripWordmarkCss($("helmet style").map((_, s) => $(s).html()).get().join("\n")));
   const scriptSrc = $('script[type="text/x-dc"]').html() || "";
   const data = extractData(scriptSrc, defaultProps($));
 
