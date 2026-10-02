@@ -170,7 +170,30 @@ function rewriteAsset(v) {
 function rewriteCssUrls(css) {
   if (!css) return css;
   return css.replace(/url\(\s*(["']?)([^"')]+)\1\s*\)/g, (m, q, v) => {
-    const out = rewriteAsset(v.trim());
+    let out = rewriteAsset(v.trim());
+    /**
+     * Serve the WebP when the design names a PNG and only the WebP is in the repo.
+     *
+     * Design files reference uploads by the name they carry inside Claude Design, which is
+     * whatever the designer dragged in. Kevin's two page backgrounds arrived as a 3.9 MB and a
+     * 6.7 MB PNG, 1440x13030 and 1440x21900. The second is 31.5 megapixels, at or over the point
+     * where iOS Safari refuses to decode an image at all, and phones are ~90% of CoachRx traffic.
+     *
+     * Re-encoded at 720px wide, quality 92, they are 30 KB and 51 KB: a 99.2% reduction with a
+     * mean per-channel error of 0.25/255. They are soft gradients with no fine detail, so there
+     * is nothing to lose by halving the width and the browser scales them back up smoothly.
+     *
+     * Rewriting here rather than in the design file means the next export can keep saying .png
+     * and still get the small file. Same reasoning as IMG_ALIASES for <img src>.
+     */
+    if (/\.png$/i.test(out)) {
+      const webp = out.replace(/\.png$/i, ".webp");
+      const onDisk = (rel) => {
+        try { return fs.existsSync(path.join(process.cwd(), "public", decodeURIComponent(rel.replace(/^\//, "")))); }
+        catch { return false; }
+      };
+      if (!onDisk(out) && onDisk(webp)) out = webp;
+    }
     return out === v.trim() ? m : `url(${q}${out}${q})`;
   });
 }
