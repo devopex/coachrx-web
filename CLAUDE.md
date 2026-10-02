@@ -3,9 +3,12 @@
 Marketing site and article library for CoachRx. Replaces the Squarespace site at
 `www.coachrx.app`. Next.js App Router on Cloudflare Workers.
 
+> **New here? Read `CASEY-START-HERE.md` first.** It covers the pipeline, the gates, the
+> launch sequence and what is still open. This file is the detail underneath it.
+
 ## Stack
 
-- **Next.js 15 App Router** + TypeScript + Tailwind
+- **Next.js 16 App Router** + React 19 + TypeScript + Tailwind 3
 - **MDX** article bodies in `content/posts/*.mdx`, rendered with `next-mdx-remote/rsc`
 - **Keystatic** visual editor at `/keystatic`, commits to git. No CMS bill, no database.
 - **Cloudflare Workers** via `@opennextjs/cloudflare`. Not Pages, and not
@@ -17,12 +20,20 @@ Marketing site and article library for CoachRx. Replaces the Squarespace site at
 ## Commands
 
 ```
-npm run dev         # localhost:3000, Keystatic at /keystatic in local mode
-npm run build        # next build
+npm run dev            # localhost:3000, Keystatic at /keystatic in local mode
+npm run dc             # compile design files only, no gates. Fast loop.
+npm run generate       # full chain: 7 build steps + 8 gates. What CI runs.
+npm run build          # next build (prebuild runs generate first)
 npm run typecheck
-npm run preview       # build for Workers and run it locally
-npm run deploy        # build and ship to Cloudflare
+npm run cf:build       # build for Cloudflare Workers
+npm run cf:preview     # build for Workers and run it locally
+npm run cf:deploy      # build and ship to Cloudflare
+npm run mobile:accept  # rebaseline the mobile gate after an intentional change
+npm run roadmap        # refresh Notion roadmap data only
 ```
+
+**`precf:build` is wired to `npm run generate`.** That is the only thing making Cloudflare run
+every gate before it deploys. Do not remove it.
 
 ## Design system — do not drift from this
 
@@ -41,13 +52,48 @@ CoachRx Home v7 Claude Design file, which is the visual source of truth.
 
 Rules that are easy to break and obvious when broken:
 
-- Green is never used in a headline, as decoration, or as a tag colour.
+- Green is never used in a headline, as decoration, or as a tag color.
 - Two-tone headlines: the second clause drops to 55% white.
-- Mono overlines: 11px, `.18em`, uppercase, 50% white. Class `.overline`.
+- **No monospace anywhere.** It was the single strongest "AI-generated" tell in Casey's review.
+  230 usages were removed and `check-system` now fails the build on `var(--font-mono)`.
+  Overlines are 11px, `.18em`, uppercase, 50% white, in the sans face. Class `.overline`.
+- **The typeface is Mona Sans**, declared in *two* files that must agree:
+  `public/design/_ds/colors_and_type.css` and `tailwind.config.ts`. A stale value in either
+  leaves elements rendering in a font that no longer exists on the server. Enforced by
+  `check-fonts`.
+- **Radius scale is 4 / 8 / 12 / 16** for surfaces, 9999 for true circles, and 34 / 44 / 24 / 2
+  for drawn device chrome. Nothing else. Max 8 distinct values per page. Enforced by
+  `check-system`.
+- No pills on rectangles.
 - Motion: `cubic-bezier(.22,1,.36,1)`, rise-and-fade **once** at ~15% visibility.
   Nothing rests at opacity 0 and nothing loops.
 - Sections blend into the base. No hard seams between sections.
 - Article body is a 680px column, 18px/1.75, 82% white. Class `.prose-crx`.
+
+## The eight gates
+
+`npm run generate` runs seven build steps then eight verification gates, and `precf:build`
+means Cloudflare runs all of it before every deploy. **Each gate was added after something
+shipped broken that no existing check caught.** Full rationale for each is in the header comment
+of its own script, and a summary is in `CASEY-START-HERE.md`.
+
+| Gate | Catches |
+|---|---|
+| `check-runtime` | A compiled design script that throws, killing every animation on a page silently |
+| `check-mobile` | Mobile regressions, measured against `src/data/mobile-baseline.json` |
+| `check-footer` | Footer drift between pages; the retired oversized wordmark |
+| `check-pillars` | Partial pillar renames; em dashes in page metadata |
+| `check-system` | Monospace; off-scale corner radii; radius proliferation |
+| `check-screens` | Pinned SHA-256 of screenshots containing something retired (RxBot in `calendar.webp`) |
+| `check-quotes` | A coach quote that differs between pages, or that names a competitor |
+| `check-fonts` | A non-brand typeface in the design system, or a non-woff2 font file |
+
+**Do not weaken a gate to make a build pass.** The two legitimate exceptions:
+
+- `check-mobile` after an intentional mobile change: run `npm run mobile:accept` to rebaseline
+  and say so in the commit message.
+- `check-screens` when the screenshot has genuinely been retaken: the hash changes and the entry
+  stops matching on its own. Never delete the entry to silence it.
 
 ## Content model
 
@@ -66,8 +112,9 @@ readingTime, wordCount, draft, legacyUrl`.
 
 ## Migration facts worth knowing
 
-- 340 posts survived triage from 446. 265 URLs are 301'd in `next.config.mjs`
-  (source of truth and rationale: `site-migration/redirect-map.csv`).
+- 340 posts survived triage from 446. **299 URLs** are 301'd via `src/data/redirects.json`,
+  loaded in `next.config.mjs` (source of truth and rationale:
+  `../site-migration/redirect-map.csv`, which sits in the project folder, not the repo).
 - 22 of those redirects go to a specific replacement article; the rest go to a
   topic archive. Each was reviewed by hand. A wrong specific 301 is worse than a
   correct topic archive, so when in doubt the map points at the topic.
@@ -142,16 +189,25 @@ see. `populateCache` copies it to `.open-next/assets/cdn-cgi/_next_cache/`.
 
 ## Page inventory
 
-| Route | Source of truth |
-|---|---|
-| `/` | Home v7 design file. Copy in `src/data/home.ts` |
-| `/features` | Features design file. Copy in `src/data/features.ts` |
-| `/pricing` | Real tiers recovered from the archived Squarespace page, `src/data/pricing.ts` |
-| `/why-coachrx` | Built from approved Features copy (comparison + loop) plus archived testimonials |
-| `/about` | **Needs Carl's copy.** Limited to claims sourced from approved copy elsewhere |
-| `/articles`, `/topics/[topic]`, `/articles/[slug]` | Blog Index / Tag Archive / Blog Post design files |
-| `/changelog`, `/changelog/[slug]` | 44 releases extracted from the archived change log into `content/changelog/*.mdx` |
-| 404 | 404 design file |
+All 24 routes are compiled from one of the thirteen design files in `design/Pages/`.
+
+| Route | Design file | Notes |
+|---|---|---|
+| `/` | CoachRx Home | Copy in `src/data/home.ts` |
+| `/features` | CoachRx Features | Copy in `src/data/features.ts`. Defines the five pillar anchors every footer links to |
+| `/pricing` | CoachRx Pricing | Real tiers recovered from the archived Squarespace page, `src/data/pricing.ts` |
+| `/about` | CoachRx About | |
+| `/podcasts` | CoachRx Podcasts | Covers in `src/data/podcast-covers.json` |
+| `/articles` | CoachRx Blog Index | All 340 posts as rows |
+| `/topics/[topic]` | CoachRx Tag Archive | 10 topic pages, one compiled module each |
+| `/articles/[slug]` | CoachRx Blog Post | Compiled once with `@@token@@` placeholders, filled per post |
+| `/changelog`, `/changelog/[slug]` | CoachRx Changelog, Changelog Entry | 44 releases in `content/changelog/*.mdx` |
+| `/roadmap` | CoachRx Roadmap | Built from Notion at build time via `NOTION_TOKEN` |
+| `/feature-requests` | CoachRx Updates | |
+| 404 | CoachRx 404 | Article count substituted at render |
+| `/keystatic` | n/a | The CMS editor. The only client-rendered route |
+
+`/why-coachrx` was removed. Its content was folded into `/features`.
 
 ## Headline levels
 
@@ -159,17 +215,19 @@ see. `populateCache` copies it to `.open-next/assets/cdn-cgi/_next_cache/`.
 must pass `as="h1"`. Home, Features and Why CoachRx shipped with **zero** h1 tags on
 the first pass because of this — check `<h1>` count is exactly 1 on any new page.
 
-## Redirects: 298 rules
+## Redirects: 299 rules
 
-`site-migration/redirect-map.csv` is the source of truth and carries a reason per row.
+`../site-migration/redirect-map.csv` is the source of truth and carries a reason per row.
 They emit **301**, not Next's default 308 — Google treats them the same but plenty of
 legacy SEO tooling and CDN log analysis only understands 301, so `redirects.json` sets
 `statusCode: 301` explicitly rather than `permanent: true`.
 
 Covered: 257 cut articles/videos, 32 retired marketing URLs, the 5 IA collapses,
 `/resources`, `/change-log` → `/changelog`, and the Squarespace `/home` and `/404-error`.
-Every old marketing URL now resolves. Verified end to end: 298/298 return 301 with the
-right `Location`, and all 34 unique destinations return 200.
+Every old marketing URL now resolves. Verified end to end on staging 2026-09-08: 299 rules, all
+301, 36 distinct destinations, all 33 testable destinations return 200, and 10 sampled sources
+redirect and land on a 200. The heaviest targets are `/topics/program-design-pro-tip` (88 rules)
+and `/articles` (72).
 
 Rows whose `cut_reason` starts with **FLAG** are judgment calls Carl should review —
 mostly lead-magnet pages and the glossary, which had no replacement built.
@@ -200,9 +258,12 @@ correct from markup alone.
 Design files, which are the visual source of truth.
 
 ```
-design/CoachRx Home v7.dc.html  ──scripts/dc-compile.mjs──▶  src/generated/home.ts
-                                                             { html, css, script, data }
+design/Pages/CoachRx Home.dc.html  ──scripts/dc-compile.mjs──▶  src/generated/home.ts
+                                                                { html, css, script, data }
 ```
+
+All thirteen design files live in `design/Pages/`. `src/generated/` is **build output and is
+gitignored.** Never edit it.
 
 `src/app/page.tsx` is a four-line wrapper around `<DcPage />`. **To change these pages,
 edit the design file and re-run `npm run dc`** — never patch the generated output, and
@@ -244,13 +305,17 @@ posts (coach spotlights, the framework explainers), because models weight named
 credentialed humans when deciding who to cite. That is Carl's call and needs real names
 and headshots. Nobody should invent bylines to fill the card.
 
-## Divergence to reconcile
+## Scale claims: all coach-count numbers are banned
 
-`design/CoachRx Home v7.dc.html` in this repo has `8,000+` changed to `10,000+`
-(Carl, 2026-08-21: always 10,000+). **The copy in Claude Design still says 8,000+.**
-Make the same edit there, or the next export will reintroduce it. This is the only known
-divergence between the repo's design files and Claude Design, and it should stay that
-way — the design app is the source of truth.
+Superseded note. There used to be an `8,000+` versus `10,000+` divergence here. **Both are now
+banned claims**, along with `20,000+`. None of them could be substantiated.
+
+The one approved line is:
+
+> Thousands of coaches in 40+ countries.
+
+Do not let any other scale number back onto the site, in copy, in metadata or in a design file.
+If a count is ever added back it has to come from a query someone can re-run, not from memory.
 
 ## The blog is compiled too, with real data injected
 
@@ -297,10 +362,28 @@ every video-only page was cut in the migration.
 Still unresolved and needing Carl: **"Book a demo"** and **"watch the 3-minute demo"** on
 the home page. There is no demo page or video.
 
-## Route groups
+## Route groups: gone, every page is now a design port
 
-Design-ported pages carry their own nav and footer, so they live at the app root:
-`/`, `/features`, `/articles`, `/topics`, 404. Pages still hand-built live in
-`(chrome)/` and get `SiteNav` / `SiteFooter` from its layout: `/pricing`,
-`/why-coachrx`, `/about`, `/changelog`. **Putting a ported page inside `(chrome)` renders
-two navs** — that already happened once with `/articles`.
+The `(chrome)/` route group and `SiteNav` / `SiteFooter` no longer exist. Every route is
+compiled from a design file and carries its own chrome, normalized by the compiler. All 15
+route files in `src/app/` are thin wrappers.
+
+Historical note, because it explains the shape of `normalizeNav()`: ported pages used to sit at
+the app root while hand-built pages sat in `(chrome)/` and inherited nav and footer from its
+layout. Putting a ported page inside `(chrome)` rendered two navs, which happened once with
+`/articles`. That whole category of bug is gone now that nothing is hand-built.
+
+## The chrome contract: design files DO own the nav and footer
+
+This reversed on 2026-09-14 and the old instruction is still in circulation, so be clear about
+it. Design files **should** contain a real header and footer, built to look like the live site.
+
+`normalizeNav()` harvests the logo, links, Log in, Start for free and burger and rebuilds the
+header in canonical order **inheriting the styling from the links in the file**. It only
+synthesises a header from scratch when the file gives it nothing (`ctx.navSynthesised`). So
+handing it an empty `<nav>` makes it invent link styling, which is strictly worse. It also swaps
+the wordmark for the canonical file, builds dropdowns from the route table, injects the mobile
+sheet, and normalizes footer columns.
+
+The build corrects drift. It does not replace the design work. Full statement of this is in
+`../design-briefs/DESIGN-FILE-CONTRACT.md`, which gets pasted into every Claude Design prompt.

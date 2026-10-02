@@ -842,6 +842,39 @@ function stripVersion(file) {
   return file.replace(/\s+v\d+(?:\.\d+)*(?=\.dc\.html$)/i, "");
 }
 
+/**
+ * Recover the canonical design-file name from a decorated export filename.
+ *
+ * WHY. A design file's cross-page links carry whatever the *other* files were called in the
+ * designer's workspace. When those names are unknown to DESIGN_ROUTES the link ships as a raw
+ * href and 404s, which is why every rename so far has needed another hardcoded alias line, and
+ * why DESIGN_ROUTES already carries v2 and v7 aliases years after those versions stopped
+ * existing.
+ *
+ * Kevin's 2026-10 pass arrived as "01 Kevin Refined Home - Desktop.dc.html" with every
+ * cross-page link using that scheme, so all fourteen pages pointed at names the compiler had
+ * never seen and dc-compile halted on the first one. Rather than add fourteen more alias lines
+ * that go stale the moment the files are renumbered, strip the decoration and recover the name.
+ *
+ *   "01 Kevin Refined Home - Desktop.dc.html"              -> "CoachRx Home.dc.html"
+ *   "08 Kevin Refined Changelog Release - Mobile.dc.html"  -> "CoachRx Changelog Entry.dc.html"
+ *
+ * Returns null when nothing matched, so an unresolvable name still errors loudly rather than
+ * being silently swallowed.
+ */
+function canonicalDesignName(file) {
+  const m = file.match(/^\s*\d*\s*(?:[A-Za-z]+\s+)?Refined\s+(.+?)\s*-\s*(?:Desktop|Mobile|Tablet)\.dc\.html$/i);
+  if (!m) return null;
+  const name = `CoachRx ${m[1].trim()}.dc.html`;
+  return DESIGN_NAME_SYNONYMS[name] ?? name;
+}
+
+// Names that differ by more than decoration. Kevin exports the changelog detail page as
+// "Changelog Release"; the repo has always called it "Changelog Entry".
+const DESIGN_NAME_SYNONYMS = {
+  "CoachRx Changelog Release.dc.html": "CoachRx Changelog Entry.dc.html",
+};
+
 const DESIGN_ROUTES = {
   "CoachRx Home.dc.html": "/",
   // Carl renamed the file from "CoachRx Home v7.dc.html" on 2026-08-23. The other nine design
@@ -965,7 +998,9 @@ function fixLinks($, root, ctx) {
     const base = href.split(/[#?]/)[0];
     if (base.endsWith(".dc.html")) {
       const file = base.split("/").pop();
-      const to = DESIGN_ROUTES[file] ?? DESIGN_ROUTES[stripVersion(file)];
+      const to = DESIGN_ROUTES[file] ?? DESIGN_ROUTES[stripVersion(file)]
+        ?? DESIGN_ROUTES[canonicalDesignName(file) ?? ""]
+        ?? DESIGN_ROUTES[stripVersion(canonicalDesignName(file) ?? "")];
       if (to) { $a.attr("href", to + (href.includes("#") ? href.slice(href.indexOf("#")) : "")); }
       else {
         // Shipping a raw ".dc.html" href is always a broken link in production. This has happened

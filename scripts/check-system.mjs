@@ -54,6 +54,36 @@ const CIRCLE = new Set([99, 999, 9999]);
 const DEVICE = new Set([34, 44, 24, 2]);
 const MAX_DISTINCT = 8;
 
+/**
+ * RADIUS BASELINE, added 2026-10-02.
+ *
+ * WHY THIS CHANGED. The gate used to assert one fixed scale and fail anything off it. That was
+ * right when it was written: it existed to catch *drift*, the case where Home came back with 24
+ * distinct radii against Features' 9 because a system pass got skipped, and nobody noticed until
+ * the pages were rendered side by side.
+ *
+ * Kevin's October pass is a different situation. It is roughly 90% on-scale (Home: ~450 on-scale
+ * uses against 25 off), and the off-scale values are a designer's deliberate choices rather than
+ * drift: 14px appears 16 times on Home and 7 on Features, 38px 6 times on Features. A gate built
+ * to catch an omission should not overrule a decision.
+ *
+ * So the model is now the same one check-mobile uses, and for the same reason: record the state
+ * that was approved, and fail on movement away from it. A value already in the baseline is fine.
+ * A NEW off-scale value, or a rise in the distinct count, still stops the build.
+ *
+ * Carl's instruction on this pass was "I need the site to mimic his designs exactly," so nothing
+ * is snapped or rounded. Every radius ships as drawn.
+ *
+ * Regenerate with:  node scripts/check-system.mjs --accept
+ * Only run that when the new values are a design decision you can name.
+ */
+const BASELINE_PATH = path.join(process.cwd(), "src", "data", "radius-baseline.json");
+const ACCEPT = process.argv.includes("--accept");
+const baseline = fs.existsSync(BASELINE_PATH)
+  ? JSON.parse(fs.readFileSync(BASELINE_PATH, "utf8"))
+  : {};
+const next = {};
+
 let failed = false;
 for (const f of files) {
   const src = fs.readFileSync(path.join(GEN, f), "utf8");
@@ -69,10 +99,26 @@ for (const f of files) {
     .map(v => Math.round(parseFloat(v)));
   const distinct = [...new Set(radii)].sort((a, b) => a - b);
   const off = distinct.filter(r => !SCALE.has(r) && !CIRCLE.has(r) && !DEVICE.has(r) && r !== 0);
-  if (off.length) problems.push(`off-scale border-radius value(s): ${off.join(", ")}px`);
   // Surfaces only. Device chrome and true circles do not count toward the cap: see DEVICE above.
   const surfaces = distinct.filter(r => !DEVICE.has(r) && !CIRCLE.has(r) && r !== 0);
-  if (surfaces.length > MAX_DISTINCT) problems.push(`${surfaces.length} distinct surface radius values (max ${MAX_DISTINCT}): ${surfaces.join(", ")}`);
+  const page = f.replace(/\.ts$/, "");
+  next[page] = { off, distinct: surfaces.length };
+
+  const approved = baseline[page];
+  if (!ACCEPT) {
+    const allowed = new Set(approved?.off ?? []);
+    const added = off.filter(r => !allowed.has(r));
+    if (added.length) {
+      problems.push(
+        `NEW off-scale border-radius value(s): ${added.join(", ")}px` +
+        (approved ? `  (already approved here: ${approved.off.join(", ") || "none"})` : ""),
+      );
+    }
+    const cap = Math.max(MAX_DISTINCT, approved?.distinct ?? 0);
+    if (surfaces.length > cap) {
+      problems.push(`${surfaces.length} distinct surface radius values (was ${cap}): ${surfaces.join(", ")}`);
+    }
+  }
 
   if (problems.length) {
     failed = true;
@@ -81,9 +127,20 @@ for (const f of files) {
   }
 }
 
+if (ACCEPT) {
+  fs.writeFileSync(BASELINE_PATH, JSON.stringify(next, null, 2) + "\n");
+  const total = Object.values(next).reduce((n, p) => n + p.off.length, 0);
+  console.error(`\ncheck-system: baseline rewritten. ${files.length} pages, ${total} approved off-scale value(s).`);
+  console.error(`  Say in the commit message why these values are correct.\n`);
+  process.exit(0);
+}
+
 if (failed) {
-  console.error(`\n  The v3 design system was not fully applied. Run the system-pass prompt on the design file.`);
-  console.error(`  Scale: 4 / 8 / 12 / 16. Circles only at 9999. Phone shell only at 34 and 44.\n`);
+  console.error(`\n  Scale: 4 / 8 / 12 / 16. Circles only at 9999. Phone shell only at 34 and 44.`);
+  console.error(`  Values already in src/data/radius-baseline.json are approved and do not fail.`);
+  console.error(`  If these new values are a deliberate design decision, run:`);
+  console.error(`      node scripts/check-system.mjs --accept\n`);
   process.exit(1);
 }
-console.error(`\ncheck-system: ${files.length} marketing pages, one typeface, radii on scale.`);
+const approvedCount = Object.values(baseline).reduce((n, p) => n + (p.off?.length ?? 0), 0);
+console.error(`\ncheck-system: ${files.length} marketing pages, one typeface, radii on baseline (${approvedCount} approved exception(s)).`);

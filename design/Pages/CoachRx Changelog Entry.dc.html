@@ -11,7 +11,29 @@
   <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
   <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
   <style>
-    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    body{margin:0;background:#030409;color:#F8FCFF;overflow-x:hidden}
+    h1,h2,h3{font-family:var(--font-sans);font-weight:700!important;background-image:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 42%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important;text-wrap:balance}
+    .crx-glass{background-color:rgba(13,13,13,.72);background-image:linear-gradient(315deg,rgba(255,255,255,.024) 0%,rgba(255,255,255,.012) 14%,rgba(255,255,255,0) 30%);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 1px 0 0 rgba(255,255,255,.09),inset -1px 0 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(255,255,255,.08),0 3px 8px rgba(0,0,0,.72);backdrop-filter:blur(20px) saturate(110%);-webkit-backdrop-filter:blur(20px) saturate(110%)}
+    .crx-seeglass{background:linear-gradient(155deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.025) 45%,rgba(255,255,255,.01) 100%),linear-gradient(180deg,rgba(10,12,20,.28) 0%,rgba(10,12,20,.12) 100%);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,.09);box-shadow:0 18px 40px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08)}
+    #resDD{display:none}#resDD.is-open{display:block}
+    @media (max-width:980px){.crx-burger{display:flex!important}}
+    #mobileSheet.is-open{opacity:1!important;transform:none!important;pointer-events:auto!important}
+    .crx-burger.is-open [data-bar="1"]{transform:translateY(7px) rotate(45deg)}.crx-burger.is-open [data-bar="2"]{opacity:0}.crx-burger.is-open [data-bar="3"]{transform:translateY(-7px) rotate(-45deg)}
+    .crx-rbadge{display:inline-flex;align-items:center;gap:18px;padding:13px 26px;border:none;background:transparent;transition:opacity .25s}
+    .crx-rbadge:hover{opacity:.75}
+    @media (max-width:760px){.crx-rbadge{padding:11px 14px;gap:12px}}
+    @media (max-width:980px){.crx-navlinks{display:none!important}}
+    @media (max-width:900px){.crx-relbody.crx-glass,.crx-pnwrap{margin-left:48px!important;margin-right:48px!important}}
+    @media (max-width:760px){.crx-relbody.crx-glass,.crx-pnwrap{margin-left:20px!important;margin-right:20px!important}.crx-pnwrap{padding:0!important}}
+    @media (max-width:980px){.crx-burger{display:flex!important}}
+    #mobileSheet.is-open{opacity:1!important;transform:none!important;pointer-events:auto!important}
+    .crx-burger.is-open [data-bar="1"]{transform:translateY(7px) rotate(45deg)}.crx-burger.is-open [data-bar="2"]{opacity:0}.crx-burger.is-open [data-bar="3"]{transform:translateY(-7px) rotate(-45deg)}
+    @media (max-width:900px){footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:repeat(3,minmax(0,1fr))!important;row-gap:36px!important}footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}}
+    @media (max-width:520px){footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+    @media (max-width:760px){.crx-navcta > a:first-child{display:none!important}.crx-dbr{display:none}
+      [data-screen-label] h1{font-size:clamp(40px,11.4vw,48px)!important;line-height:.92!important}
+      [data-screen-label="Closing CTA"] h2{font-size:clamp(38px,10.6vw,46px)!important;line-height:.92!important}
+      [data-screen-label] h1 ~ p,[data-screen-label] h2 + p{font-size:17px!important;line-height:1.5!important}}
     header,section,footer,article{overflow-x:clip}
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
@@ -20,116 +42,139 @@
     .crx-resdd{display:none}
     .crx-reswrap:hover .crx-resdd,.crx-reswrap:focus-within .crx-resdd{display:block}
     @media (max-width:760px){
-      .crx-navlinks,.crx-navcta > a:first-child{display:none!important}
-      .crx-footgrid{grid-template-columns:1fr 1fr!important}
-      .crx-footgrid > div:first-child{grid-column:1/-1}
     }
     /* Rich-text body: styled by descendant selectors so build-time content maps 1:1 */
-    .crx-relbody h2{margin:44px 0 12px;font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-0.015em;color:#F8FCFF}
-    .crx-relbody h3{margin:32px 0 10px;font-size:18px;font-weight:600;line-height:1.35;letter-spacing:-0.01em;color:#F8FCFF}
-    .crx-relbody p{margin:0 0 20px;font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.78)}
+    .crx-relbody h2{margin:48px 0 14px;font-size:32px;line-height:1.05;letter-spacing:-0.04em;padding-bottom:3px}
+    .crx-relbody h3{margin:30px 0 10px;font-size:20px;line-height:1.3;letter-spacing:-0.015em;background:none!important;-webkit-text-fill-color:#58FF7A!important;color:#58FF7A!important}
+    .crx-relbody p{margin:0 0 20px;font-size:18px;line-height:1.65;color:#98A9B9;text-wrap:pretty}
     .crx-relbody ul{margin:0 0 20px;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
-    .crx-relbody li{position:relative;padding-left:20px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.78)}
-    .crx-relbody li::before{content:"";position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:9999px;background:rgba(88,255,122,.6)}
-    .crx-relbody strong{font-weight:600;color:#F8FCFF}
-    .crx-pn{display:flex;flex-direction:column;gap:8px;border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:20px;color:inherit;min-height:44px;transition:border-color .2s,background .2s,transform .2s cubic-bezier(.22,1,.36,1)}
-    .crx-pn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.02);transform:translateY(-2px)}
+    .crx-relbody li{position:relative;padding-left:22px;font-size:17px;line-height:1.6;color:#98A9B9;text-wrap:pretty}
+    .crx-relbody li::before{content:"";position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:9999px;background:#98A9B9}
+    .crx-relbody strong{font-weight:700;color:#FFFFFF}
+    .crx-pn{display:flex;flex-direction:column;gap:8px;border-radius:14px;padding:24px;background-color:rgba(13,13,13,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 1px 0 0 rgba(255,255,255,.09),inset -1px 0 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(255,255,255,.08),0 3px 8px rgba(0,0,0,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:inherit;min-height:44px;transition:border-color .2s,background .2s,transform .2s cubic-bezier(.22,1,.36,1)}
+    .crx-pn:hover{transform:translateY(-2px)}
     @media (max-width:760px){
-      .crx-pad{padding-left:20px!important;padding-right:20px!important}
-      .crx-relbody p{font-size:17px;line-height:1.75}
-      .crx-relbody li{font-size:17px;line-height:1.7}
-      .crx-relbody h2{font-size:22px}
+      .crx-pad{padding-left:28px!important;padding-right:28px!important}
+      .crx-relbody p{font-size:17px;line-height:1.6}
+      .crx-relbody li{font-size:16px;line-height:1.55}
+      .crx-relbody h2{font-size:28px}
     }
     @media (prefers-reduced-motion: reduce){
       *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
     }
   
     @media (max-width:820px){
-      .crx-cta-art{display:none!important}
+      .crx-relbody.crx-glass{padding:4px 24px 24px!important}
       .crx-cta-shell{display:block!important;max-width:720px!important}
       .crx-cta-glow{left:50%!important}
     }
-  </style>
+  
+    /* Headline → body spacing system (tablet + mobile) */
+    @media (min-width:761px) and (max-width:1100px){
+      html body [data-type]{padding-bottom:4px!important}
+      html body [data-type="H1"] + p{margin-top:22px!important}
+      html body [data-type="H2"] + p{margin-top:14px!important}
+      html body [data-type="H3"] + p{margin-top:12px!important}}
+    @media (max-width:760px){
+      html body [data-type]{padding-bottom:2px!important}
+      html body [data-type="H1"] + p{margin-top:12px!important}
+      html body [data-type="H2"] + p{margin-top:10px!important}
+      html body [data-type="H3"] + p{margin-top:8px!important}}
+  
+/* Unified headline→body spacing (all pages) */
+@media (min-width:761px) and (max-width:1100px){html body [data-type="H1"] + p,html body #hero [data-type="H1"] + p[data-hcta]{margin-top:16px!important}html body [data-type="H2"] + p,html body [data-type="H3"] + p{margin-top:14px!important}}
+@media (max-width:760px){html body [data-type="H1"] + p,html body #hero [data-type="H1"] + p[data-hcta]{margin-top:12px!important}html body [data-type="H2"] + p,html body [data-type="H3"] + p{margin-top:10px!important}}
+</style>
 </helmet>
 
-<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+<div style="font-family:var(--font-sans);background-color:#030409;background-image:url(&quot;uploads/BackgroundNoNoise.png&quot;);background-repeat:no-repeat;background-position:top center;background-size:100% auto;min-height:100vh">
 
   <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
-    <a href="CoachRx Home v3.1.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <a href="01 Kevin Refined Home - Desktop.dc.html" style="display:inline-flex"><img decoding="async" width="7568" height="1959" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
     <div class="crx-navlinks" style="display:flex;align-items:center;gap:28px">
-      <a href="CoachRx Features v3.1.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Features</a>
-      <div class="crx-reswrap" style="position:relative;display:flex;align-items:center;height:60px">
-        <span style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.68);font-size:14px;font-weight:500;cursor:default">Resources<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-        <div class="crx-resdd" style="position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px">
+      <a href="02 Kevin Refined Features - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Features</a>
+      <div id="resWrap" style="position:relative;display:flex;align-items:center;height:60px">
+        <button id="resBtn" type="button" aria-haspopup="true" aria-expanded="false" style="display:inline-flex;align-items:center;gap:6px;color:#98A9B9;font-size:14px;font-weight:500;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit">Resources<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div id="resDD" style="position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px">
           <div style="background:#14151A;border-radius:12px;padding:8px;min-width:190px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.6);display:flex;flex-direction:column">
-            <a href="CoachRx Blog Index.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Articles</a>
-            <a href="CoachRx Podcasts v3.1.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72)" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Podcasts</a>
-            <a href="CoachRx Changelog.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:#F8FCFF" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Changelog</a>
+            <a href="11 Kevin Refined Blog Index - Desktop.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:#98A9B9" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Articles</a>
+            <a href="10 Kevin Refined Podcasts - Desktop.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:#98A9B9" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Podcasts</a><a href="07 Kevin Refined Changelog - Desktop.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:#F8FCFF;font-weight:600" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Changelog</a>
           </div>
         </div>
       </div>
-      <a href="CoachRx Roadmap.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Roadmap</a>
-      <a href="CoachRx Pricing v3.1.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Pricing</a>
-      <a href="CoachRx About v3.1.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500" style-hover="color:#F8FCFF">About</a>
+      <a href="06 Kevin Refined Roadmap - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Roadmap</a>
+      <a href="03 Kevin Refined Pricing - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Pricing</a>
+      <a href="05 Kevin Refined About - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">About</a>
     </div>
     <div class="crx-navcta" style="display:flex;align-items:center;gap:20px">
-      <a href="https://dashboard.coachrx.app/login" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500;padding:10px 0;white-space:nowrap;flex:none" style-hover="color:#F8FCFF">Log in</a>
-      <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:8px;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+      <a href="https://dashboard.coachrx.app/login" style="color:#98A9B9;font-size:14px;font-weight:500;padding:10px 0;white-space:nowrap;flex:none" style-hover="color:#F8FCFF">Log in</a>
+      <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:8px;text-transform:uppercase;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+      <button id="navBurger" type="button" aria-expanded="false" aria-controls="mobileSheet" aria-label="Open menu" class="crx-burger" style="display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;padding:0;background:none;border:none;cursor:pointer"><span data-bar="1" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:transform .25s cubic-bezier(.22,1,.36,1)"></span><span data-bar="2" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:opacity .2s"></span><span data-bar="3" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:transform .25s cubic-bezier(.22,1,.36,1)"></span></button>
     </div>
   </nav>
+  <div id="mobileSheet" aria-hidden="true" class="crx-glass" style="position:fixed;top:60px;left:0;right:0;z-index:98;display:flex;flex-direction:column;padding:12px 28px 28px;border-radius:0 0 14px 14px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+    <a href="01 Kevin Refined Home - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Home</a>
+    <a href="02 Kevin Refined Features - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Features</a>
+    <a href="03 Kevin Refined Pricing - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Pricing</a>
+    <a href="06 Kevin Refined Roadmap - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Roadmap</a>
+    <a href="11 Kevin Refined Blog Index - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Articles</a>
+    <a href="10 Kevin Refined Podcasts - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Podcasts</a>
+    <a href="05 Kevin Refined About - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">About</a>
+    <a href="https://dashboard.coachrx.app/login" style="color:#98A9B9;font-size:18px;font-weight:500;padding:14px 0 4px">Log in</a>
+  </div>
 
-  <article data-screen-label="Release" style="padding:140px 0 0">
-    <header class="crx-pad" style="max-width:744px;margin:0 auto;padding:0 32px;box-sizing:border-box">
-      <nav data-reveal="0" aria-label="Breadcrumb" style="display:flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase">
-        <a href="CoachRx Changelog.dc.html" style="color:rgba(255,255,255,.5);padding:10px 0" style-hover="color:#8CFFA4">Changelog</a>
-        <span style="color:rgba(255,255,255,.3)">/</span>
-        <span style="color:rgba(255,255,255,.75)">{{ post.month }}</span>
+  <article data-screen-label="Release" style="padding:180px 0 0">
+    <header class="crx-pad" style="max-width:900px;margin:0 auto;padding:0 32px;box-sizing:border-box;text-align:center;display:flex;flex-direction:column;align-items:center">
+      <nav data-reveal="0" aria-label="Breadcrumb" style="display:flex;align-items:center;gap:10px;font-family:var(--font-sans);font-size:18px;font-weight:700">
+        <a href="07 Kevin Refined Changelog - Desktop.dc.html" style="color:#58FF7A;padding:10px 0" style-hover="color:#8CFFA4">Changelog</a>
+        <span style="color:#98A9B9">/</span>
+        <span style="color:#98A9B9">{{ post.month }}</span>
       </nav>
-      <h1 data-reveal="60" style="margin:22px 0 0;font-size:clamp(34px,4.6vw,52px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#F8FCFF">{{ post.month }}</h1>
-      <span data-reveal="90" style="display:block;margin-top:12px;font-family:var(--font-sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">{{ post.dateLabel }}</span>
-      <p data-reveal="130" style="margin:26px 0 0;font-size:19px;font-weight:400;line-height:1.6;color:rgba(255,255,255,.75);max-width:620px;text-wrap:pretty">{{ post.description }}</p>
+      <h1 data-type="H1" data-reveal="60" style="margin:14px 0 0;font-size:min(8.2vw,66px);line-height:.88;letter-spacing:-0.05em;padding-bottom:6px">{{ post.month }}</h1>
+      <span data-reveal="90" style="display:block;margin-top:14px;font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">{{ post.dateLabel }}</span>
+      <p data-reveal="130" style="margin:14px auto 0;font-size:20px;font-weight:400;line-height:1.5;color:#FFFFFF;max-width:760px;text-wrap:balance">{{ post.description }}</p>
     </header>
 
-    <div data-reveal="0" class="crx-pad crx-relbody" data-slot="body" style="max-width:744px;margin:36px auto 0;padding:0 32px;box-sizing:border-box">
+    <div data-reveal="0" class="crx-pad crx-relbody crx-glass" data-slot="body" style="max-width:820px;margin:64px auto 0;padding:8px 56px 36px;box-sizing:border-box;border-radius:14px">
       <h2>Program library search</h2>
-      <p>Search now spans the CoachRx Index, your own exercise library, and every saved template in a single query. Results are grouped by source, and selecting one drops it straight into the day you are building.</p>
+      <p>Search now spans the CoachRx Index, your own exercise library, and every saved template in a single query. Results are grouped by source, and selecting one drops it straight into the day you&nbsp;are&nbsp;building.</p>
       <ul>
-        <li><strong>One search field</strong> across all three libraries, with keyboard navigation.</li>
-        <li>Filters for equipment, pattern, and the libraries you want included.</li>
-        <li>Recent selections surface first while you are building a program.</li>
+        <li><strong>One search field</strong> across all three libraries, with&nbsp;keyboard&nbsp;navigation.</li>
+        <li>Filters for equipment, pattern, and the libraries you&nbsp;want&nbsp;included.</li>
+        <li>Recent selections surface first while you are building&nbsp;a&nbsp;program.</li>
       </ul>
       <h2>Improvements</h2>
       <h3>Program design</h3>
       <ul>
-        <li>Copying a week now carries attached notes and lifestyle prescriptions.</li>
+        <li>Copying a week now carries attached notes and&nbsp;lifestyle&nbsp;prescriptions.</li>
         <li>Tempo fields accept ranges.</li>
       </ul>
       <h3>Client app</h3>
       <ul>
-        <li>Faster session load on older Android devices.</li>
-        <li>Progress pictures can be captured in-app without leaving the day view.</li>
+        <li>Faster session load on older&nbsp;Android&nbsp;devices.</li>
+        <li>Progress pictures can be captured in-app without leaving the&nbsp;day&nbsp;view.</li>
       </ul>
       <h2>Fixes</h2>
-      <p>Resolved an issue where archived clients still counted toward the weekly communication goal, and a rare case where a rescheduled consult kept its original reminder time.</p>
+      <p>Resolved an issue where archived clients still counted toward the weekly communication goal, and a rare case where a rescheduled consult kept its original&nbsp;reminder&nbsp;time.</p>
     </div>
 
     <!-- PREV / NEXT -->
-    <div data-reveal="0" class="crx-pad" style="max-width:744px;margin:72px auto 0;padding:0 32px;box-sizing:border-box">
+    <div data-reveal="0" class="crx-pnwrap" style="max-width:820px;margin:28px auto 0;padding:0;box-sizing:border-box">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <a href="CoachRx Changelog Entry.dc.html" class="crx-pn">
-          <span style="font-family:var(--font-sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">← Previous</span>
-          <span style="font-size:15.5px;font-weight:600;color:#F8FCFF">{{ prev.month }}</span>
+        <a href="08 Kevin Refined Changelog Release - Desktop.dc.html" class="crx-pn">
+          <span style="font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">← Previous</span>
+          <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em;color:#FFFFFF">{{ prev.month }}</span>
         </a>
         <sc-if value="{{ hasNext }}" hint-placeholder-val="{{ false }}">
-          <a href="CoachRx Changelog Entry.dc.html" class="crx-pn" style="text-align:right;align-items:flex-end">
-            <span style="font-family:var(--font-sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Next →</span>
-            <span style="font-size:15.5px;font-weight:600;color:#F8FCFF">{{ next.month }}</span>
+          <a href="08 Kevin Refined Changelog Release - Desktop.dc.html" class="crx-pn" style="text-align:right;align-items:flex-end">
+            <span style="font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">Next →</span>
+            <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em;color:#FFFFFF">{{ next.month }}</span>
           </a>
         </sc-if>
         <sc-if value="{{ isLatest }}" hint-placeholder-val="{{ true }}">
           <span class="crx-pn" style="text-align:right;align-items:flex-end;opacity:.55">
-            <span style="font-family:var(--font-sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Latest</span>
-            <span style="font-size:15.5px;font-weight:600;color:rgba(255,255,255,.6)">You're on the newest release</span>
+            <span style="font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">Latest</span>
+            <span style="font-size:18px;font-weight:700;color:#98A9B9">You're on the newest release</span>
           </span>
         </sc-if>
       </div>
@@ -137,38 +182,32 @@
   </article>
 
   <!-- CLOSE -->
-  <section data-screen-label="Closing CTA" style="position:relative;margin-top:110px;padding:96px 32px;overflow:hidden;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 45%,#0A0B0F 100%)">
-    <div class="crx-cta-glow" style="position:absolute;top:-80px;left:75%;transform:translateX(-50%);width:900px;height:460px;background:radial-gradient(ellipse closest-side at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,.05) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
-    <div class="crx-cta-shell" style="position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.02fr 1fr;align-items:center;gap:48px">
-      <div class="crx-cta-art" style="min-width:0;display:flex;justify-content:flex-end;margin:0 0 -150px -120px">
-        <img src="assets/screens/closing-cta.png" alt="The CoachRx coach dashboard on a laptop beside a workout being edited on a phone" style="display:block;width:760px;max-width:none;height:auto;-webkit-mask-image:linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);mask-image:linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%)">
-      </div>
-      <div class="crx-cta-copy" style="max-width:720px;margin:0 auto;text-align:center">
-        <h2 data-reveal="0" style="margin:0;font-size:clamp(28px,3.6vw,42px);font-weight:700;line-height:1.1;letter-spacing:-0.025em;text-wrap:balance"><span style="color:#F8FCFF">Deliver the coaching</span> <span style="color:rgba(255,255,255,.55)">you're capable of.</span></h2>
-        <p data-reveal="40" style="margin:18px auto 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.62);max-width:520px;text-wrap:pretty">Try CoachRx free and see what changes when every part of your practice is in the same place.</p>
-        <div data-reveal="80" style="margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:12px">
-          <a href="https://dashboard.coachrx.app/signup" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:14px;font-weight:800;letter-spacing:.06em;padding:15px 32px;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 40px rgba(88,255,122,.32),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 56px rgba(88,255,122,.48),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
-          <span style="font-size:13px;color:rgba(255,255,255,.5)">Full access, free for 14 days. Cancel any time.</span>
-        </div>
+  <section data-screen-label="Closing CTA" class="crx-pad" style="position:relative;padding:170px 32px 150px;text-align:center">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center">
+      <h2 data-type="H1" data-reveal="0" style="margin:0;font-size:min(8.2vw,66px);line-height:.88;letter-spacing:-0.05em;padding-bottom:6px">Deliver the coaching<br>you're capable of.</h2>
+      <p data-reveal="60" style="margin:14px auto 0;font-size:20px;line-height:1.5;color:#FFFFFF;max-width:760px;text-wrap:balance">Try CoachRx free and see what changes when every part of your practice is in the same&nbsp;place.</p>
+      <div data-reveal="120" style="margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:16px">
+        <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#0A0B0F;font-size:15px;font-weight:800;letter-spacing:.06em;padding:16px 36px;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45);color:#0A0B0F">START FOR FREE</a>
+        <span style="font-size:15px;color:#98A9B9">Full access, free for 14 days. Cancel any time.</span>
       </div>
     </div>
   </section>
 
-  <footer data-screen-label="Footer" style="padding:88px 32px 40px;background:linear-gradient(180deg,#08090E 0%,#07080D 45%,#030409 100%);overflow:hidden">
+  <footer data-screen-label="Footer" class="crx-sec" style="padding:88px 32px 40px;background:linear-gradient(180deg,rgba(10,11,15,0) 0%,rgba(7,8,13,.5) 45%,rgba(3,4,9,.8) 100%)">
     <div style="max-width:1200px;margin:0 auto">
-      <div class="crx-footgrid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
         <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
-          <img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
-          <p style="margin:0;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.45);max-width:250px;text-wrap:pretty">The operating system for a professional coaching practice. Built by OPEX Fitness.</p>
-          <a href="https://dashboard.coachrx.app/signup" style="display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(88,255,122,.45);color:#F8FCFF;font-size:13px;font-weight:700;letter-spacing:.05em;padding:12px 22px;border-radius:8px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(88,255,122,.8);background:rgba(88,255,122,.06);color:#F8FCFF">START FOR FREE</a>
+          <img loading="lazy" decoding="async" width="7568" height="1959" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#98A9B9;max-width:250px;text-wrap:pretty">The operating system for a professional coaching practice. Built by OPEX&nbsp;Fitness.</p>
+          <a href="https://dashboard.coachrx.app/signup" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;flex:none;border:1px solid rgba(88,255,122,.45);color:#F8FCFF;font-size:13px;font-weight:700;letter-spacing:.05em;padding:12px 22px;border-radius:8px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(88,255,122,.8);background:rgba(88,255,122,.06);color:#F8FCFF">START FOR FREE</a>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Features</span><a href="/features#assess" style="font-size:13.5px;color:rgba(255,255,255,.6)">Assess</a><a href="/features#consult" style="font-size:13.5px;color:rgba(255,255,255,.6)">Consult</a><a href="/features#design" style="font-size:13.5px;color:rgba(255,255,255,.6)">Design</a><a href="/features#operate" style="font-size:13.5px;color:rgba(255,255,255,.6)">Operate</a><a href="/features#client-experience" style="font-size:13.5px;color:rgba(255,255,255,.6)">Client Experience</a></div>
-        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Resources</span><a href="CoachRx Blog Index.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Articles</a><a href="CoachRx Podcasts v3.1.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Podcasts</a><a href="CoachRx Roadmap.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Roadmap</a><a href="CoachRx Changelog.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Changelog</a></div>
-        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase">Company</span><a href="https://dashboard.coachrx.app/login" style="font-size:13.5px;color:rgba(255,255,255,.6)">Log in</a><a href="CoachRx About v3.1.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">About</a><a href="CoachRx Pricing v3.1.dc.html" style="font-size:13.5px;color:rgba(255,255,255,.6)">Pricing</a><a href="mailto:coachrx@opexfit.com" style="font-size:13.5px;color:rgba(255,255,255,.6)">Contact</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#98A9B9;text-transform:uppercase">Features</span><a href="/features#assess" style="font-size:13.5px;color:#98A9B9">Assess</a><a href="/features#consult" style="font-size:13.5px;color:#98A9B9">Consult</a><a href="/features#design" style="font-size:13.5px;color:#98A9B9">Design</a><a href="/features#operate" style="font-size:13.5px;color:#98A9B9">Operate</a><a href="/features#client-experience" style="font-size:13.5px;color:#98A9B9">Client Experience</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#98A9B9;text-transform:uppercase">Resources</span><a href="11 Kevin Refined Blog Index - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Articles</a><a href="10 Kevin Refined Podcasts - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Podcasts</a><a href="06 Kevin Refined Roadmap - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Roadmap</a><a href="07 Kevin Refined Changelog - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Changelog</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#98A9B9;text-transform:uppercase">Company</span><a href="https://dashboard.coachrx.app/login" style="font-size:13.5px;color:#98A9B9">Log in</a><a href="05 Kevin Refined About - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">About</a><a href="03 Kevin Refined Pricing - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Pricing</a><a href="mailto:coachrx@opexfit.com" style="font-size:13.5px;color:#98A9B9">Contact</a></div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:64px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">
-        <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
-        <span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:rgba(255,255,255,.4)">Terms</a></span>
+        <span style="font-size:12.5px;color:#98A9B9">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+        <span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:#98A9B9">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:#98A9B9">Terms</a></span>
       </div>
     </div>
   </footer>
@@ -191,7 +230,7 @@ class Component extends DCLogic {
       post: {
         month: label(POST.date),
         dateLabel: MONTHS[parseInt(POST.date.slice(5,7),10)-1] + " " + parseInt(POST.date.slice(8,10),10) + ", " + POST.date.slice(0,4),
-        description: POST.description
+        description: (d => { const p = d.split(" "); const k = p.length - 3; return p.slice(0, k).join(" ") + " " + p.slice(k).join("\u00A0"); })(POST.description)
       },
       prev: PREV ? { month: label(PREV.date) } : null,
       next: NEXT ? { month: label(NEXT.date) } : null,
@@ -202,6 +241,22 @@ class Component extends DCLogic {
 
   componentDidMount() {
     const rm = matchMedia("(prefers-reduced-motion: reduce)").matches || (this.props.motion ?? true) === false;
+    setTimeout(() => {
+      const burg = document.getElementById("navBurger"), sheet = document.getElementById("mobileSheet");
+      if (burg && sheet) {
+        const setS = v => { burg.classList.toggle("is-open", v); sheet.classList.toggle("is-open", v); burg.setAttribute("aria-expanded", String(v)); sheet.setAttribute("aria-hidden", String(!v)); };
+        burg.addEventListener("click", () => setS(!sheet.classList.contains("is-open")));
+        sheet.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setS(false)));
+        addEventListener("resize", () => { if (innerWidth > 980) setS(false); });
+      }
+      const wrap = document.getElementById("resWrap"), btn = document.getElementById("resBtn"), dd = document.getElementById("resDD");
+      if (wrap && dd) {
+        const open = v => { dd.classList.toggle("is-open", v); btn.setAttribute("aria-expanded", String(v)); };
+        wrap.addEventListener("mouseenter", () => open(true));
+        wrap.addEventListener("mouseleave", () => open(false));
+        btn.addEventListener("click", () => open(!dd.classList.contains("is-open")));
+      }
+    }, 50);
     if (rm) return;
     setTimeout(() => {
       const io = new IntersectionObserver(es => es.forEach(e => {

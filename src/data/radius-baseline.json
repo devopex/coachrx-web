@@ -1,0 +1,68 @@
+{
+  "about": {
+    "off": [
+      14
+    ],
+    "distinct": 4
+  },
+  "features": {
+    "off": [
+      5,
+      6,
+      7,
+      14,
+      19,
+      30,
+      38,
+      42
+    ],
+    "distinct": 12
+  },
+  "home": {
+    "off": [
+      3,
+      5,
+      6,
+      14,
+      19
+    ],
+    "distinct": 9
+  },
+  "notFound": {
+    "off": [
+      14
+    ],
+    "distinct": 4
+  },
+  "podcasts": {
+    "off": [
+      10,
+      14
+    ],
+    "distinct": 5
+  },
+  "pricing": {
+    "off": [
+      14
+    ],
+    "distinct": 4
+  },
+  "roadmap": {
+    "off": [
+      14
+    ],
+    "distinct": 4
+  },
+  "updates-requests": {
+    "off": [
+      14
+    ],
+    "distinct": 4
+  },
+  "updates-roadmap": {
+    "off": [
+      14
+    ],
+    "distinct": 4
+  }
+}

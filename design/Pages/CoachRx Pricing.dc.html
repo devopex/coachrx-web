@@ -11,21 +11,55 @@
   <link rel="stylesheet" href="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/colors_and_type.css">
   <script src="_ds/opex-coachrx-design-system-af3f65a0-7d92-4177-8979-73c722775327/_ds_bundle.js"></script>
   <style>
-    body{margin:0;background:#0A0B0F;color:#F8FCFF;overflow-x:hidden}
+    body{margin:0;background:#030409;color:#F8FCFF;overflow-x:hidden}
+    h1,h2,h3{font-family:var(--font-sans);font-weight:700!important;background-image:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 42%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important;text-wrap:balance}
+    .crx-glass{background-color:rgba(13,13,13,.72);background-image:linear-gradient(315deg,rgba(255,255,255,.024) 0%,rgba(255,255,255,.012) 14%,rgba(255,255,255,0) 30%);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 1px 0 0 rgba(255,255,255,.09),inset -1px 0 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(255,255,255,.08),0 3px 8px rgba(0,0,0,.72);backdrop-filter:blur(20px) saturate(110%);-webkit-backdrop-filter:blur(20px) saturate(110%)}
+    .crx-seeglass{background:linear-gradient(155deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.025) 45%,rgba(255,255,255,.01) 100%),linear-gradient(180deg,rgba(10,12,20,.28) 0%,rgba(10,12,20,.12) 100%);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,.09);box-shadow:0 18px 40px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08)}
+    #resDD{display:none}#resDD.is-open{display:block}
+    @media (max-width:980px){.crx-burger{display:flex!important}}
+    #mobileSheet.is-open{opacity:1!important;transform:none!important;pointer-events:auto!important}
+    .crx-burger.is-open [data-bar="1"]{transform:translateY(7px) rotate(45deg)}.crx-burger.is-open [data-bar="2"]{opacity:0}.crx-burger.is-open [data-bar="3"]{transform:translateY(-7px) rotate(-45deg)}
+    .crx-rbadge{display:inline-flex;align-items:center;gap:18px;padding:13px 26px;border:none;background:transparent;transition:opacity .25s}
+    .crx-rbadge:hover{opacity:.75}
+    @media (max-width:760px){.crx-rbadge{padding:11px 14px;gap:12px}}
+    @media (max-width:980px){.crx-navlinks{display:none!important}}
+    @media (max-width:900px){footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:repeat(3,minmax(0,1fr))!important;row-gap:36px!important}footer div[style*="1.4fr 1fr 1fr 1fr"] > div:first-child{grid-column:1/-1}}
+    @media (max-width:520px){footer div[style*="1.4fr 1fr 1fr 1fr"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+    @media (max-width:1100px){
+      [data-screen-label] h1,[data-screen-label] h2,[data-screen-label] h1 + p,[data-screen-label] h2 + p{text-align:center!important;margin-left:auto!important;margin-right:auto!important}
+      .crx-pillars-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;row-gap:40px}
+      .crx-pillars-grid > div{border-left:none!important;padding:0 20px!important}
+      .crx-pad{padding-left:48px!important;padding-right:48px!important}
+      .crx-tstrow{flex-direction:column!important;max-width:680px!important}
+      blockquote.crx-seeglass{border-radius:0!important;max-width:680px!important;padding:30px 28px!important;text-align:left}
+      blockquote.crx-seeglass .crx-kyleq{font-size:16px!important;line-height:1.6!important;letter-spacing:0!important;text-wrap:pretty!important}
+      blockquote.crx-seeglass > span{justify-content:flex-start!important;margin-top:22px!important}
+      blockquote.crx-seeglass > span img{width:44px!important;height:44px!important}
+    }
+    @media (max-width:760px){
+      .crx-navcta > a:first-child{display:none!important}
+      .crx-dbr{display:none}
+      .crx-pad{padding-left:28px!important;padding-right:28px!important}
+      [data-screen-label="Header"] h1{font-size:clamp(40px,11.4vw,48px)!important;line-height:.92!important}
+      [data-screen-label] h2{font-size:clamp(32px,9vw,40px)!important;line-height:.98!important;letter-spacing:-0.045em!important}
+      [data-screen-label] h1 + p,[data-screen-label] h2 + p{font-size:17px!important;line-height:1.5!important;margin-top:14px!important}
+      .crx-kyleq{font-size:18px!important}
+      blockquote.crx-seeglass{padding:28px 22px!important}
+    }
     /* Decorative glows extend past section edges; clip at the container (clip keeps sticky working) so the page never overflows horizontally. Same rule as Home/Features. */
     header,section,footer{overflow-x:clip}
     a{color:#58FF7A;text-decoration:none}a:hover{color:#8CFFA4}
     ::selection{background:rgba(88,255,122,.25)}
     @keyframes crxRise{from{opacity:.15;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-    .crx-cta{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:13px 20px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s,background .25s,color .25s,border-color .25s}
-    .crx-cta:hover{color:#F8FCFF;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.04)}
-    .crx-cta.is-fill{color:#0A0B0F;border-color:transparent;background:linear-gradient(180deg,#7BFF96,#58FF7A);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 28px rgba(88,255,122,.24)}
-    .crx-cta.is-fill:hover{color:#0A0B0F;transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 42px rgba(88,255,122,.4)}
-    .crx-seg{font-family:inherit;border:none;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:7px 16px;border-radius:4px;background:transparent;transition:color .25s,background .25s}
-    .crx-save{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);transition:color .25s}
+    .crx-cta{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:16px 36px;border:1px solid rgba(255,255,255,.09);color:#98A9B9;transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s,background .25s,color .25s,border-color .25s}
+    .crx-cta:hover{color:#F8FCFF;border-color:rgba(255,255,255,.09);background:rgba(255,255,255,.04)}
+    .crx-cta.is-fill{color:#0A0B0F;border-color:transparent;background:linear-gradient(180deg,#7BFF96,#58FF7A);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 44px rgba(88,255,122,.35),0 8px 24px rgba(0,0,0,.4)}
+    .crx-cta.is-fill:hover{color:#0A0B0F;transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 64px rgba(88,255,122,.5),0 14px 32px rgba(0,0,0,.45)}
+    .crx-seg{font-family:inherit;border:none;cursor:pointer;font-size:14px;font-weight:500;color:#98A9B9;padding:7px 16px;border-radius:4px;background:transparent;transition:color .25s,background .25s}
+    .crx-save{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9;transition:color .25s}
     .crx-faqbody{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.22,1,.36,1)}
     .crx-hidr,.crx-faqt{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
-    .crx-count{width:84px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);border-radius:8px;color:#F8FCFF;font-size:17px;font-weight:600;text-align:center;padding:11px 8px;outline:none;transition:border-color .2s;-moz-appearance:textfield;appearance:textfield;box-sizing:border-box;min-height:44px}
+    .crx-count{width:84px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;color:#F8FCFF;font-size:17px;font-weight:600;text-align:center;padding:11px 8px;outline:none;transition:border-color .2s;-moz-appearance:textfield;appearance:textfield;box-sizing:border-box;min-height:44px}
     .crx-count::-webkit-outer-spin-button,.crx-count::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     .crx-count:focus{border-color:rgba(88,255,122,.5)}
     .crx-seg{min-height:44px;display:inline-flex;align-items:center;box-sizing:border-box}
@@ -72,7 +106,6 @@
       .crx-panel{padding:20px!important}
     }
     @media (max-width:700px){
-      .crx-pad{padding-left:20px!important;padding-right:20px!important}
       .crx-nav-links{display:none!important}
       .crx-sticky{display:flex}
     }
@@ -88,37 +121,72 @@
       .crx-sign,[data-accsign]{width:16px;text-align:center;flex:none}
       /* Why CoachRx: one column, visuals above text; reassurance row two lines of two */
     }
-  </style>
+  
+    /* Headline → body spacing system (tablet + mobile) */
+    @media (min-width:761px) and (max-width:1100px){
+      html body [data-type]{padding-bottom:4px!important}
+      html body [data-type="H1"] + p{margin-top:22px!important}
+      html body [data-type="H2"] + p{margin-top:14px!important}
+      html body [data-type="H3"] + p{margin-top:12px!important}}
+    @media (max-width:760px){
+      html body [data-type]{padding-bottom:2px!important}
+      html body [data-type="H1"] + p{margin-top:12px!important}
+      html body [data-type="H2"] + p{margin-top:10px!important}
+      html body [data-type="H3"] + p{margin-top:8px!important}}
+  
+/* Unified headline→body spacing (all pages) */
+@media (min-width:761px) and (max-width:1100px){html body [data-type="H1"] + p,html body #hero [data-type="H1"] + p[data-hcta]{margin-top:16px!important}html body [data-type="H2"] + p,html body [data-type="H3"] + p{margin-top:14px!important}}
+@media (max-width:760px){html body [data-type="H1"] + p,html body #hero [data-type="H1"] + p[data-hcta]{margin-top:12px!important}html body [data-type="H2"] + p,html body [data-type="H3"] + p{margin-top:10px!important}}
+</style>
 </helmet>
 
-<div style="font-family:var(--font-sans);background:#0A0B0F;min-height:100vh">
+<div style="font-family:var(--font-sans);background-color:#030409;background-image:url(&quot;uploads/BackgroundNoNoise.png&quot;);background-repeat:no-repeat;background-position:top center;background-size:100% auto;min-height:100vh">
 
   <nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;height:60px;background:rgba(10,11,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
-    <a href="CoachRx Home v7.dc.html" style="display:inline-flex"><img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
-    <div class="crx-nav-links" style="display:flex;align-items:center;gap:28px">
-      <a href="CoachRx Features.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Features</a>
-      <a href="CoachRx Blog Index.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Resources</a>
-      <a href="CoachRx Roadmap.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">Roadmap</a>
-      <a href="CoachRx Pricing.dc.html" style="color:#F8FCFF;font-size:14px;font-weight:600">Pricing</a>
-      <a href="CoachRx About.dc.html" style="color:rgba(255,255,255,.68);font-size:14px;font-weight:500">About</a>
+    <a href="01 Kevin Refined Home - Desktop.dc.html" style="display:inline-flex"><img decoding="async" width="7568" height="1959" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:22px;width:auto"></a>
+    <div class="crx-navlinks" style="display:flex;align-items:center;gap:28px">
+      <a href="02 Kevin Refined Features - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Features</a>
+      <div id="resWrap" style="position:relative;display:flex;align-items:center;height:60px">
+        <button id="resBtn" type="button" aria-haspopup="true" aria-expanded="false" style="display:inline-flex;align-items:center;gap:6px;color:#98A9B9;font-size:14px;font-weight:500;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit">Resources<svg width="9" height="6" viewBox="0 0 9 6" fill="none" style="opacity:.6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div id="resDD" style="position:absolute;top:100%;left:-16px;margin-top:-8px;padding-top:8px">
+          <div style="background:#14151A;border-radius:12px;padding:8px;min-width:190px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 24px 56px rgba(0,0,0,.6);display:flex;flex-direction:column">
+            <a href="11 Kevin Refined Blog Index - Desktop.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:#98A9B9" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Articles</a>
+            <a href="10 Kevin Refined Podcasts - Desktop.dc.html" style="padding:9px 12px;border-radius:8px;font-size:13.5px;color:#98A9B9" style-hover="background:rgba(255,255,255,.05);color:#F8FCFF">Podcasts</a>
+          </div>
+        </div>
+      </div>
+      <a href="06 Kevin Refined Roadmap - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">Roadmap</a>
+      <a href="03 Kevin Refined Pricing - Desktop.dc.html" style="color:#F8FCFF;font-size:14px;font-weight:600">Pricing</a>
+      <a href="05 Kevin Refined About - Desktop.dc.html" style="color:#98A9B9;font-size:14px;font-weight:500" style-hover="color:#F8FCFF">About</a>
     </div>
-    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#F8FCFF;font-size:13px;font-weight:600;letter-spacing:.04em;padding:9px 18px;border-radius:8px;transition:background .2s,border-color .2s" style-hover="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#F8FCFF">Sign in</a>
+    <div class="crx-navcta" style="display:flex;align-items:center;gap:20px">
+      <a href="https://dashboard.coachrx.app/login" style="color:#98A9B9;font-size:14px;font-weight:500;padding:10px 0;white-space:nowrap;flex:none" style-hover="color:#F8FCFF">Log in</a>
+      <a href="https://dashboard.coachrx.app/signup" style="background:linear-gradient(180deg,#7BFF96,#58FF7A);color:#0A0B0F;font-size:13px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:8px;text-transform:uppercase;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(88,255,122,.25);transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s" style-hover="transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 36px rgba(88,255,122,.4);color:#0A0B0F">Start for free</a>
+      <button id="navBurger" type="button" aria-expanded="false" aria-controls="mobileSheet" aria-label="Open menu" class="crx-burger" style="display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;padding:0;background:none;border:none;cursor:pointer"><span data-bar="1" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:transform .25s cubic-bezier(.22,1,.36,1)"></span><span data-bar="2" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:opacity .2s"></span><span data-bar="3" style="display:block;width:20px;height:2px;background:#F8FCFF;border-radius:4px;transition:transform .25s cubic-bezier(.22,1,.36,1)"></span></button>
+    </div>
   </nav>
+  <div id="mobileSheet" aria-hidden="true" class="crx-glass" style="position:fixed;top:60px;left:0;right:0;z-index:98;display:flex;flex-direction:column;padding:12px 28px 28px;border-radius:0 0 14px 14px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .25s cubic-bezier(.22,1,.36,1)">
+    <a href="01 Kevin Refined Home - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Home</a>
+    <a href="02 Kevin Refined Features - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Features</a>
+    <a href="03 Kevin Refined Pricing - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Pricing</a>
+    <a href="06 Kevin Refined Roadmap - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Roadmap</a>
+    <a href="11 Kevin Refined Blog Index - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Articles</a>
+    <a href="10 Kevin Refined Podcasts - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">Podcasts</a>
+    <a href="05 Kevin Refined About - Desktop.dc.html" style="color:#FFFFFF;font-size:20px;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">About</a>
+    <a href="https://dashboard.coachrx.app/login" style="color:#98A9B9;font-size:18px;font-weight:500;padding:14px 0 4px">Log in</a>
+  </div>
 
   <!-- 1 · HEADER -->
-  <header data-screen-label="Header" style="position:relative;overflow:hidden;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px">
-    <div style="position:absolute;top:-60px;left:-140px;width:820px;height:600px;background:radial-gradient(ellipse closest-side at center, rgba(31,148,234,.1) 0%, rgba(31,148,234,.05) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
-    <div style="position:absolute;top:120px;right:-200px;width:700px;height:520px;background:radial-gradient(ellipse closest-side at center, rgba(0,72,146,.09) 0%, rgba(0,72,146,.045) 45%, rgba(0,72,146,0) 100%);pointer-events:none"></div>
-    <div style="position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(10,11,15,0) 0%,#0A0B0F 100%);pointer-events:none"></div>
-    <div class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:190px 32px 0">
-      <h1 data-reveal="0" style="margin:0;font-size:clamp(38px,4.8vw,64px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#F8FCFF;max-width:840px;text-wrap:balance">Every plan includes every feature.</h1>
-      <p data-reveal="60" style="margin:20px 0 0;font-size:17.5px;line-height:1.62;color:rgba(255,255,255,.65);max-width:560px;text-wrap:pretty">Pricing scales with your active clients. Nothing is locked behind a tier.</p>
+  <header data-screen-label="Header" style="position:relative">
+    <div class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:200px 80px 0;text-align:center">
+      <h1 data-type="H1" data-reveal="0" style="margin:0;font-size:min(8.2vw,66px);line-height:.88;letter-spacing:-0.05em;padding-bottom:6px">Every plan includes <br class="crx-dbr">every feature.</h1>
+      <p data-reveal="60" style="margin:14px auto 0;max-width:820px;font-size:20px;line-height:1.5;color:#FFFFFF;text-wrap:balance">Pricing scales with your active clients. Nothing is locked behind a tier.</p>
     </div>
   </header>
 
   <!-- 2 · PLANS + CALCULATOR -->
-  <section data-screen-label="Plans" data-plans="" class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:56px 32px 0">
-    <div data-reveal="60" class="crx-panel crx-calc" style="position:relative;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:36px 40px">
+  <section data-screen-label="Plans" data-plans="" class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:80px 80px 0">
+    <div data-reveal="60" class="crx-panel crx-calc crx-glass" style="position:relative;border-radius:14px;padding:48px 52px">
       <input type="radio" name="pbill" id="bill-m" class="crx-hidr">
       <input type="radio" name="pbill" id="bill-a" class="crx-hidr" defaultChecked="{{ true }}">
       <input type="radio" name="pband" id="band-0" class="crx-hidr crx-bandr">
@@ -127,7 +195,7 @@
       <input type="radio" name="pband" id="band-3" class="crx-hidr crx-bandr">
       <div class="crx-body crx-calcgrid" style="display:grid;grid-template-columns:1.15fr 1px 1fr;gap:0">
         <div class="crx-calcleft" style="padding-right:44px;display:flex;flex-direction:column;justify-content:center">
-          <label for="clientcount" style="font-size:18px;font-weight:600;letter-spacing:-0.01em;color:#F8FCFF">How many active clients do you carry?</label>
+          <label for="clientcount" style="font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:#FFFFFF;text-wrap:balance">How many active clients do you carry?</label>
           <div style="display:flex;align-items:center;gap:20px;margin-top:24px">
             <input type="number" id="clientcount" min="1" max="999" data-count="" class="crx-count" aria-label="Number of active clients">
             <div style="flex:1;min-width:0">
@@ -142,10 +210,10 @@
                 <label for="band-3" class="crx-stop" style="position:absolute;left:75%;top:0;width:25%;height:100%;cursor:pointer;-webkit-tap-highlight-color:transparent"><span style="position:absolute;left:-9999px">150+ clients</span></label>
                 <input type="range" min="0" max="100" step="0.25" data-prange="" class="crx-range" aria-label="Active clients on your roster">
               </div>
-              <div style="position:relative;height:16px;margin-top:4px;font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.4)"><span style="position:absolute;left:0">1</span><span style="position:absolute;left:25%;transform:translateX(-50%)">5</span><span style="position:absolute;left:50%;transform:translateX(-50%)">50</span><span style="position:absolute;left:75%;transform:translateX(-50%)">150</span></div>
+              <div style="position:relative;height:16px;margin-top:4px;font-size:10.5px;letter-spacing:.12em;color:#98A9B9"><span style="position:absolute;left:0">1</span><span style="position:absolute;left:25%;transform:translateX(-50%)">5</span><span style="position:absolute;left:50%;transform:translateX(-50%)">50</span><span style="position:absolute;left:75%;transform:translateX(-50%)">150</span></div>
             </div>
           </div>
-          <p style="margin:28px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.45);text-wrap:pretty">Only active clients count toward your plan. Archive a client and they drop off your bill.</p>
+          <p style="margin:28px 0 0;font-size:13px;line-height:1.55;color:#98A9B9;text-wrap:pretty">Only active clients count toward your plan. Archive a client and they drop off your bill.</p>
         </div>
         <span class="crx-calcdiv" style="background:rgba(255,255,255,.08)"></span>
         <div class="crx-calcright" style="padding-left:44px;display:flex;flex-direction:column;align-items:center;text-align:center">
@@ -158,172 +226,170 @@
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:132px;margin-top:14px">
             <div class="crx-bandout" data-bandout="0">
-              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">1–5 clients</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">1–5 clients</span>
               <span style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:12px">
-                <span style="font-size:clamp(42px,4.6vw,56px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1"><span class="crx-pm">$29</span><span class="crx-pa">$25</span></span>
-                <span style="font-size:15px;color:rgba(255,255,255,.5)">/month</span>
+                <span style="font-size:clamp(48px,5.4vw,72px);font-weight:700;line-height:1;letter-spacing:-0.04em;padding-bottom:4px;font-feature-settings:'tnum' 1;background-image:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 42%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"><span class="crx-pm">$29</span><span class="crx-pa">$25</span></span>
+                <span style="font-size:15px;color:#98A9B9">/month</span>
               </span>
-              <span style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45)"><span class="crx-pm">Billed monthly</span><span class="crx-pa">$300 billed once · save 15%</span></span>
+              <span style="margin-top:12px;font-size:13px;color:#98A9B9"><span class="crx-pm">Billed monthly</span><span class="crx-pa">$300 billed once · save 15%</span></span>
             </div>
             <div class="crx-bandout" data-bandout="1">
-              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">6–50 clients</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">6–50 clients</span>
               <span style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:12px">
-                <span style="font-size:clamp(42px,4.6vw,56px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1"><span class="crx-pm">$79</span><span class="crx-pa">$67</span></span>
-                <span style="font-size:15px;color:rgba(255,255,255,.5)">/month</span>
+                <span style="font-size:clamp(48px,5.4vw,72px);font-weight:700;line-height:1;letter-spacing:-0.04em;padding-bottom:4px;font-feature-settings:'tnum' 1;background-image:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 42%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"><span class="crx-pm">$79</span><span class="crx-pa">$67</span></span>
+                <span style="font-size:15px;color:#98A9B9">/month</span>
               </span>
-              <span style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45)"><span class="crx-pm">Billed monthly</span><span class="crx-pa">$804 billed once · save 15%</span></span>
+              <span style="margin-top:12px;font-size:13px;color:#98A9B9"><span class="crx-pm">Billed monthly</span><span class="crx-pa">$804 billed once · save 15%</span></span>
             </div>
             <div class="crx-bandout" data-bandout="2">
-              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">51–150 clients</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">51–150 clients</span>
               <span style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:12px">
-                <span style="font-size:clamp(42px,4.6vw,56px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1"><span class="crx-pm">$199</span><span class="crx-pa">$169</span></span>
-                <span style="font-size:15px;color:rgba(255,255,255,.5)">/month</span>
+                <span style="font-size:clamp(48px,5.4vw,72px);font-weight:700;line-height:1;letter-spacing:-0.04em;padding-bottom:4px;font-feature-settings:'tnum' 1;background-image:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 42%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"><span class="crx-pm">$199</span><span class="crx-pa">$169</span></span>
+                <span style="font-size:15px;color:#98A9B9">/month</span>
               </span>
-              <span style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45)"><span class="crx-pm">Billed monthly</span><span class="crx-pa">$2,028 billed once · save 15%</span></span>
+              <span style="margin-top:12px;font-size:13px;color:#98A9B9"><span class="crx-pm">Billed monthly</span><span class="crx-pa">$2,028 billed once · save 15%</span></span>
             </div>
             <div class="crx-bandout" data-bandout="3">
-              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">150+ clients</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">150+ clients</span>
               <span style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:12px">
-                <span style="font-size:clamp(42px,4.6vw,56px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#F8FCFF;font-feature-settings:'tnum' 1"><span class="crx-pm">$249</span><span class="crx-pa">$212</span></span>
-                <span style="font-size:15px;color:rgba(255,255,255,.5)">/month</span>
+                <span style="font-size:clamp(48px,5.4vw,72px);font-weight:700;line-height:1;letter-spacing:-0.04em;padding-bottom:4px;font-feature-settings:'tnum' 1;background-image:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 42%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"><span class="crx-pm">$249</span><span class="crx-pa">$212</span></span>
+                <span style="font-size:15px;color:#98A9B9">/month</span>
               </span>
-              <span style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.45)"><span class="crx-pm">+ $1.25 per user / month · billed monthly</span><span class="crx-pa">+ $1.25 per user / month · save 15%</span></span>
+              <span style="margin-top:12px;font-size:13px;color:#98A9B9"><span class="crx-pm">+ $1.25 per user / month · billed monthly</span><span class="crx-pa">+ $1.25 per user / month · save 15%</span></span>
             </div>
           </div>
-          <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill" style="align-self:stretch;box-sizing:border-box;margin-top:20px;padding:16px 40px;font-size:14px">Start for free</a>
-          <span style="margin-top:14px;font-size:13px;letter-spacing:.02em;color:rgba(255,255,255,.5)">Free for 14 days. Cancel any time.</span>
+          <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill" style="margin-top:22px">Start for free</a>
+          <span style="margin-top:14px;font-size:13px;letter-spacing:.02em;color:#98A9B9">Free for 14 days. Cancel any time.</span>
         </div>
       </div>
     </div>
 
-    <p data-reveal="120" style="margin:24px 0 0;font-size:13px;color:rgba(255,255,255,.45);text-align:center">Every feature on every plan. We move your clients and programs across at no cost.</p>
+    <p data-reveal="120" style="margin:28px 0 0;font-size:15px;color:#98A9B9;text-align:center;text-wrap:balance">Every feature on every plan. We move your clients and programs across at no cost.</p>
   </section>
 
   <!-- 3 · INCLUDED ON EVERY PLAN -->
-  <section id="why" data-screen-label="Included" style="position:relative;margin-top:140px;padding:0 32px;scroll-margin-top:80px">
-    <div style="position:absolute;top:-70px;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 64px));height:1px;background:rgba(255,255,255,.06)"></div>
-    <div style="position:absolute;top:-100px;left:-120px;width:760px;height:560px;background:radial-gradient(ellipse closest-side at center, rgba(31,148,234,.07) 0%, rgba(31,148,234,.035) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
-    <div class="crx-pad" style="position:relative;max-width:1200px;margin:0 auto;padding:0">
-      <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#58FF7A">Included on every plan</span>
-      <p data-reveal="60" style="margin:16px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.7);max-width:560px;text-wrap:pretty">Not a single feature is gated. Pick a plan by roster size and get the whole platform.</p>
+  <section id="why" data-screen-label="Included" class="crx-pad" style="position:relative;margin-top:160px;padding:0 80px;scroll-margin-top:80px">
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:0;text-align:center">
+      <h2 data-type="H2" data-reveal="0" style="margin:0;font-size:min(5.6vw,46px);line-height:.92;letter-spacing:-0.05em;padding-bottom:6px">Included on every plan.</h2>
+      <p data-reveal="60" style="margin:14px auto 0;font-size:20px;line-height:1.5;color:#FFFFFF;max-width:760px;text-wrap:balance">Not a single feature is gated. Pick a plan by roster size and get the whole platform.</p>
 
-      <div data-reveal="120" class="crx-pillars-grid" style="display:grid;grid-template-columns:repeat(5,1fr);margin-top:56px">
-      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px 0 0">
-        <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Assess</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Body, Move, Work</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom metric sets</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Structural balance</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Wearable and nutrition sync</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Compliance and trends</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Assessment history</span>
+      <div data-reveal="120" class="crx-pillars-grid crx-glass" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:56px;padding:40px 16px;border-radius:14px;text-align:left">
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px">
+        <span style="font-size:18px;font-weight:700;color:#58FF7A;margin-bottom:6px">Assess</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Body, Move, Work</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Custom metric sets</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Structural balance</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Wearable and nutrition sync</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Compliance and trends</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Assessment history</span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
-        <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Communicate</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Check-ins</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Messaging and voice notes</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Video messages</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Communication goals</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Consultation logging</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client notes</span>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.1)">
+        <span style="font-size:18px;font-weight:700;color:#58FF7A;margin-bottom:6px">Communicate</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Check-ins</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Messaging and voice notes</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Video messages</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Communication goals</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Consultation logging</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Client notes</span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
-        <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Program</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Program calendar</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Macro, meso, micro planning</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Nutrition prescription</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Lifestyle Rx</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Exercise index and templates</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Conditioning Library</span>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.1)">
+        <span style="font-size:18px;font-weight:700;color:#58FF7A;margin-bottom:6px">Program</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Program calendar</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Macro, meso, micro planning</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Nutrition prescription</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Lifestyle Rx</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Exercise index and templates</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Conditioning Library</span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
-        <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Operate</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Payments and subscriptions</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">HSA and FSA via TrueMed</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Reporting</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Team roles</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Contracts and waivers</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Data export</span>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.1)">
+        <span style="font-size:18px;font-weight:700;color:#58FF7A;margin-bottom:6px">Operate</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Payments and subscriptions</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">HSA and FSA via TrueMed</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Reporting</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Team roles</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Contracts and waivers</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Data export</span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.08)">
-        <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Client Experience</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">iOS, Android and web</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom theming</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client reports</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Effort and session logging</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Trends for clients</span>
-        <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Branded experience</span>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px;border-left:1px solid rgba(255,255,255,.1)">
+        <span style="font-size:18px;font-weight:700;color:#58FF7A;margin-bottom:6px">Client Experience</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">iOS, Android and web</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Custom theming</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Client reports</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Effort and session logging</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Trends for clients</span>
+        <span style="font-size:16px;line-height:1.45;color:#98A9B9">Branded experience</span>
       </div>
       </div>
 
-      <div class="crx-pillars-acc" style="margin-top:36px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div class="crx-pillars-acc" style="margin-top:40px;border-bottom:1px solid rgba(255,255,255,.1);text-align:left">
       <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
         <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
-          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Assess</span>
-          <span data-accsign="" style="font-size:15px;color:rgba(255,255,255,.4)">+</span>
+          <span style="font-size:18px;font-weight:700;color:#58FF7A">Assess</span>
+          <span data-accsign="" style="font-size:15px;color:#98A9B9">+</span>
         </span>
         <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Body, Move, Work</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom metric sets</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Structural balance</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Wearable and nutrition sync</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Compliance and trends</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Assessment history</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Body, Move, Work</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Custom metric sets</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Structural balance</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Wearable and nutrition sync</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Compliance and trends</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Assessment history</span>
         </div></div>
       </div>
       <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
         <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
-          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Communicate</span>
-          <span data-accsign="" style="font-size:15px;color:rgba(255,255,255,.4)">+</span>
+          <span style="font-size:18px;font-weight:700;color:#58FF7A">Communicate</span>
+          <span data-accsign="" style="font-size:15px;color:#98A9B9">+</span>
         </span>
         <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Check-ins</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Messaging and voice notes</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Video messages</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Communication goals</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Consultation logging</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client notes</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Check-ins</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Messaging and voice notes</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Video messages</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Communication goals</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Consultation logging</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Client notes</span>
         </div></div>
       </div>
       <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
         <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
-          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Program</span>
-          <span data-accsign="" style="font-size:15px;color:rgba(255,255,255,.4)">+</span>
+          <span style="font-size:18px;font-weight:700;color:#58FF7A">Program</span>
+          <span data-accsign="" style="font-size:15px;color:#98A9B9">+</span>
         </span>
         <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Program calendar</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Macro, meso, micro planning</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Nutrition prescription</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Lifestyle Rx</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Exercise index and templates</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Conditioning library</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Program calendar</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Macro, meso, micro planning</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Nutrition prescription</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Lifestyle Rx</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Exercise index and templates</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Conditioning library</span>
         </div></div>
       </div>
       <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
         <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
-          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Operate</span>
-          <span data-accsign="" style="font-size:15px;color:rgba(255,255,255,.4)">+</span>
+          <span style="font-size:18px;font-weight:700;color:#58FF7A">Operate</span>
+          <span data-accsign="" style="font-size:15px;color:#98A9B9">+</span>
         </span>
         <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Payments and subscriptions</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">HSA and FSA via TrueMed</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Reporting</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Team roles</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Contracts and waivers</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Data export</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Payments and subscriptions</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">HSA and FSA via TrueMed</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Reporting</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Team roles</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Contracts and waivers</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Data export</span>
         </div></div>
       </div>
       <div data-acc="" style="border-top:1px solid rgba(255,255,255,.08)">
         <span data-acchead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;cursor:pointer">
-          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">Client Experience</span>
-          <span data-accsign="" style="font-size:15px;color:rgba(255,255,255,.4)">+</span>
+          <span style="font-size:18px;font-weight:700;color:#58FF7A">Client Experience</span>
+          <span data-accsign="" style="font-size:15px;color:#98A9B9">+</span>
         </span>
         <div class="crx-faqbody"><div style="display:flex;flex-direction:column;gap:10px;padding:0 0 20px">
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">iOS, Android and web</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Custom theming</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Client reports</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Effort and session logging</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Trends for clients</span>
-          <span style="font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.7)">Branded experience</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">iOS, Android and web</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Custom theming</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Client reports</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Effort and session logging</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Trends for clients</span>
+          <span style="font-size:16px;line-height:1.45;color:#98A9B9">Branded experience</span>
         </div></div>
       </div>
       </div>
@@ -331,103 +397,114 @@
   </section>
 
   <!-- 4 · ONE NUMBER -->
-  <section data-screen-label="Social proof" style="position:relative;margin-top:140px;padding:100px 32px;text-align:center;background:linear-gradient(180deg,#0A0B0F 0%,#0C0E14 15%,#0C0E14 85%,#0A0B0F 100%)">
-    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 64px));height:1px;background:rgba(255,255,255,.06)"></div>
-    <div style="position:absolute;top:-80px;right:-120px;width:760px;height:560px;background:radial-gradient(ellipse closest-side at center, rgba(31,148,234,.07) 0%, rgba(31,148,234,.035) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
-    <p data-reveal="0" style="position:relative;margin:0;font-size:19px;color:rgba(255,255,255,.7)">Trusted by <span style="color:#F8FCFF;font-weight:600">thousands of coaches</span> in 40+ countries</p>
-    <blockquote data-reveal="60" style="position:relative;max-width:860px;margin:52px auto 0;padding:0">
-      <p style="margin:0;font-size:clamp(22px,2.7vw,30px);font-weight:600;line-height:1.42;letter-spacing:-0.018em;color:#F8FCFF;text-wrap:pretty">"CoachRx has improved my business drastically by streamlining operations. Not to mention, it's cut down on my expenses. The app has made both front and back of house more robust without added complexity."</p>
-      <span style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:26px"><img src="uploads/Kyle Krancher.png" alt="Kyle Krancher" style="width:52px;height:52px;flex:none;border-radius:9999px;object-fit:cover;border:1px solid rgba(255,255,255,.14)"><span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);text-align:left">Kyle Krancher · Owner, Train &amp; Able</span></span>
+  <section data-screen-label="Social proof" class="crx-pad" style="position:relative;margin-top:160px;padding:0 80px;text-align:center">
+    <h2 data-type="H3" data-reveal="0" style="margin:0 auto;font-size:min(4.2vw,40px);line-height:.95;letter-spacing:-0.05em;padding-bottom:6px">Trusted by thousands of coaches <br class="crx-dbr">in 40+ countries.</h2>
+    <blockquote data-reveal="60" class="crx-seeglass" style="position:relative;max-width:1100px;box-sizing:border-box;margin:56px auto 0;padding:44px 48px;border-radius:14px">
+      <p class="crx-kyleq" style="margin:0;font-size:clamp(22px,2.4vw,28px);font-weight:400;line-height:1.45;letter-spacing:-0.01em;color:#FFFFFF;text-wrap:balance">"CoachRx has improved my business drastically by streamlining operations. Not to mention, it's cut down on my expenses. The app has made both front and back of house more robust without added complexity."</p>
+      <span style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:28px"><img src="uploads/Kyle Krancher.png" alt="Kyle Krancher" style="width:54px;height:54px;flex:none;border-radius:9999px;object-fit:cover"><span style="display:flex;flex-direction:column;gap:4px;text-align:left"><span style="font-size:18px;font-weight:700;background-image:linear-gradient(90deg,#FFFFFF 0%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">Kyle Krancher</span><span style="font-size:10px;letter-spacing:.12em;color:#98A9B9">Owner, Train &amp; Able</span></span></span>
     </blockquote>
-    <div class="crx-tstrow" data-reveal="120" style="position:relative;display:flex;gap:20px;max-width:1100px;margin:64px auto 0;text-align:left">
-      <div style="flex:1 1 0;min-width:0;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:26px;display:flex;flex-direction:column;gap:18px">
-        <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.72);text-wrap:pretty">"CoachRx allows me to deliver my group program design efficiently from the back end, and on the front end my clients get an amazing app experience. It allows for better results and retention due to the ability to have conversations with each client and tweak their program design."</p>
-        <span style="display:flex;align-items:center;gap:12px;margin-top:auto"><img src="uploads/Brandon Wilton.png" alt="Brandon Wilton" style="width:36px;height:36px;flex:none;border-radius:9999px;object-fit:cover;border:1px solid rgba(255,255,255,.12)"><span style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)">Brandon Wilton · Owner, CrossFit South Bend</span></span>
+    <div class="crx-tstrow" data-reveal="120" style="position:relative;display:flex;gap:20px;max-width:1100px;margin:20px auto 0;text-align:left">
+      <div class="crx-seeglass" style="flex:1 1 0;min-width:0;border-radius:0;padding:30px 28px;display:flex;flex-direction:column;gap:22px">
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#FFFFFF;text-wrap:pretty">"CoachRx allows me to deliver my group program design efficiently from the back end, and on the front end my clients get an amazing app experience. It allows for better results and retention due to the ability to have conversations with each client and tweak their program design."</p>
+        <span style="display:flex;align-items:center;gap:12px;margin-top:auto"><img src="uploads/Brandon Wilton.png" alt="Brandon Wilton" style="width:44px;height:44px;flex:none;border-radius:9999px;object-fit:cover"><span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:700;background-image:linear-gradient(90deg,#FFFFFF 0%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">Brandon Wilton</span><span style="font-size:10px;letter-spacing:.12em;color:#98A9B9">Owner, CrossFit South Bend</span></span></span>
       </div>
-      <div style="flex:1 1 0;min-width:0;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:26px;display:flex;flex-direction:column;gap:18px">
-        <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.72);text-wrap:pretty">"Whether it's custom rehab plans or their performance programs, the use of CoachRx has allowed me to get more out of my athletes and coach athletes all over the world."</p>
-        <span style="display:flex;align-items:center;gap:12px;margin-top:auto"><img src="uploads/Austin Schoen.png" alt="Dr. Austin Schoen" style="width:36px;height:36px;flex:none;border-radius:9999px;object-fit:cover;border:1px solid rgba(255,255,255,.12)"><span style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)">Dr. Austin Schoen · Owner, Warrior Sports Wellness</span></span>
+      <div class="crx-seeglass" style="flex:1 1 0;min-width:0;border-radius:0;padding:30px 28px;display:flex;flex-direction:column;gap:22px">
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#FFFFFF;text-wrap:pretty">"Whether it's custom rehab plans or their performance programs, the use of CoachRx has allowed me to get more out of my athletes and coach athletes all over the world."</p>
+        <span style="display:flex;align-items:center;gap:12px;margin-top:auto"><img src="uploads/Austin Schoen.png" alt="Dr. Austin Schoen" style="width:44px;height:44px;flex:none;border-radius:9999px;object-fit:cover"><span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:700;background-image:linear-gradient(90deg,#FFFFFF 0%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">Dr. Austin Schoen</span><span style="font-size:10px;letter-spacing:.12em;color:#98A9B9">Owner, Warrior Sports Wellness</span></span></span>
       </div>
-      <div style="flex:1 1 0;min-width:0;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:26px;display:flex;flex-direction:column;gap:18px">
-        <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(255,255,255,.72);text-wrap:pretty">"We are able to offer not only world-class individual design through CoachRx, but also world-class programs. CoachRx gave us the ability to develop a seamless way of designing our programs and distributing them to our users."</p>
-        <span style="display:flex;align-items:center;gap:12px;margin-top:auto"><img src="uploads/Sam Smith.png" alt="Coach Sam Smith" style="width:36px;height:36px;flex:none;border-radius:9999px;object-fit:cover;border:1px solid rgba(255,255,255,.12)"><span style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)">Coach Sam Smith · Proof3 Coaching</span></span>
+      <div class="crx-seeglass" style="flex:1 1 0;min-width:0;border-radius:0;padding:30px 28px;display:flex;flex-direction:column;gap:22px">
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#FFFFFF;text-wrap:pretty">"We are able to offer not only world-class individual design through CoachRx, but also world-class programs. CoachRx gave us the ability to develop a seamless way of designing our programs and distributing them to our users."</p>
+        <span style="display:flex;align-items:center;gap:12px;margin-top:auto"><img src="uploads/Sam Smith.png" alt="Coach Sam Smith" style="width:44px;height:44px;flex:none;border-radius:9999px;object-fit:cover"><span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:700;background-image:linear-gradient(90deg,#FFFFFF 0%,#98A9B9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">Coach Sam Smith</span><span style="font-size:10px;letter-spacing:.12em;color:#98A9B9">Proof3 Coaching</span></span></span>
       </div>
     </div>
-    <p data-reveal="160" style="position:relative;margin:44px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">G2 4.5 · Capterra 5.0 · GetApp 5.0</p>
+    <div data-reveal="160" style="display:flex;justify-content:center;align-items:center;gap:28px;margin-top:56px;flex-wrap:wrap;padding:0">
+      <a href="https://www.g2.com/products/coachrx/reviews" target="_blank" rel="noopener" aria-label="CoachRx on G2, rated four point seven out of five stars" class="crx-rbadge"><span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;color:#FFFFFF">G2</span><span style="display:inline-flex;gap:7px;align-items:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="crxG2Part" x1="0" y1="0" x2="1" y2="0"><stop offset="50%" stop-color="#FFFFFF" stop-opacity="1"></stop><stop offset="50%" stop-color="#FFFFFF" stop-opacity="0"></stop></linearGradient></defs><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z" fill="url(#crxG2Part)"></path></svg></span></a>
+      <a href="https://www.capterra.com/p/253158/CoachRx/" target="_blank" rel="noopener" aria-label="CoachRx on Capterra, rated five out of five stars" class="crx-rbadge"><span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;color:#FFFFFF">Capterra</span><span style="display:inline-flex;gap:7px;align-items:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg></span></a>
+      <a href="https://www.getapp.com/recreation-wellness-software/a/coachrx/" target="_blank" rel="noopener" aria-label="CoachRx on GetApp, rated five out of five stars" class="crx-rbadge"><span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;color:#FFFFFF">GetApp</span><span style="display:inline-flex;gap:7px;align-items:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.5l-5.6 2.9 1.1-6.2L3 9.8l6.2-.9z"></path></svg></span></a>
+    </div>
   </section>
 
   <!-- 5 · FAQ -->
-  <section data-screen-label="FAQ" class="crx-pad" style="max-width:860px;margin:0 auto;padding:140px 32px 0">
-    <span data-reveal="0" style="display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Before you start</span>
-    <div data-reveal="60" style="margin-top:26px;border-bottom:1px solid rgba(255,255,255,.08)">
-      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+  <section data-screen-label="FAQ" class="crx-pad" style="max-width:960px;margin:0 auto;padding:160px 80px 0">
+    <h2 data-type="H2" data-reveal="0" style="margin:0;text-align:center;font-size:min(5.6vw,46px);line-height:.92;letter-spacing:-0.05em;padding-bottom:6px">Before you start.</h2>
+    <div data-reveal="60" class="crx-glass" style="margin-top:56px;border-radius:14px;padding:8px 36px">
+      <div class="crx-faqrow" style="border-top:none">
         <input type="checkbox" id="pfaq0" class="crx-faqt">
         <label for="pfaq0" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
-          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What counts as a client?</span>
-          <span class="crx-sign" style="flex:none;font-size:16px;font-weight:400;color:rgba(255,255,255,.4);transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
+          <span class="crx-faqq" style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#FFFFFF;transition:color .2s">What counts as a client?</span>
+          <span class="crx-sign" style="flex:none;font-size:22px;font-weight:400;color:#58FF7A;transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
         </label>
-        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">Active clients only. Archiving a client removes them from your count, so you never pay for someone you have stopped coaching.</p></div>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#98A9B9;max-width:700px;text-wrap:pretty">Active clients only. Archiving a client removes them from your count, so you never pay for someone you have stopped coaching.</p></div>
       </div>
-      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.1)">
         <input type="checkbox" id="pfaq1" class="crx-faqt">
         <label for="pfaq1" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
-          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What happens when I outgrow my plan?</span>
-          <span class="crx-sign" style="flex:none;font-size:16px;font-weight:400;color:rgba(255,255,255,.4);transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
+          <span class="crx-faqq" style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#FFFFFF;transition:color .2s">What happens when I outgrow my plan?</span>
+          <span class="crx-sign" style="flex:none;font-size:22px;font-weight:400;color:#58FF7A;transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
         </label>
-        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">You move up when you add the client that crosses the line, prorated. No sales call.</p></div>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#98A9B9;max-width:700px;text-wrap:pretty">You move up when you add the client that crosses the line, prorated. No sales call.</p></div>
       </div>
-      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.1)">
         <input type="checkbox" id="pfaq2" class="crx-faqt">
         <label for="pfaq2" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
-          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What happens after the 14 days?</span>
-          <span class="crx-sign" style="flex:none;font-size:16px;font-weight:400;color:rgba(255,255,255,.4);transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
+          <span class="crx-faqq" style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#FFFFFF;transition:color .2s">What happens after the 14 days?</span>
+          <span class="crx-sign" style="flex:none;font-size:22px;font-weight:400;color:#58FF7A;transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
         </label>
-        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">Your card is charged on day 15 for the plan matching your active client count. Cancel any time before then and you are not charged.</p></div>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#98A9B9;max-width:700px;text-wrap:pretty">Your card is charged on day 15 for the plan matching your active client count. Cancel any time before then and you are not charged.</p></div>
       </div>
-      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.1)">
         <input type="checkbox" id="pfaq3" class="crx-faqt">
         <label for="pfaq3" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
-          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">Is there a contract?</span>
-          <span class="crx-sign" style="flex:none;font-size:16px;font-weight:400;color:rgba(255,255,255,.4);transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
+          <span class="crx-faqq" style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#FFFFFF;transition:color .2s">Is there a contract?</span>
+          <span class="crx-sign" style="flex:none;font-size:22px;font-weight:400;color:#58FF7A;transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
         </label>
-        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">No. Monthly is month to month. Annual is a twelve-month term, paid in full up front, at the lower rate.</p></div>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#98A9B9;max-width:700px;text-wrap:pretty">No. Monthly is month to month. Annual is a twelve-month term, paid in full up front, at the lower rate.</p></div>
       </div>
-      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.08)">
+      <div class="crx-faqrow" style="border-top:1px solid rgba(255,255,255,.1)">
         <input type="checkbox" id="pfaq4" class="crx-faqt">
         <label for="pfaq4" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;cursor:pointer">
-          <span class="crx-faqq" style="font-size:17px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,.88);transition:color .2s">What if it doesn't work out?</span>
-          <span class="crx-sign" style="flex:none;font-size:16px;font-weight:400;color:rgba(255,255,255,.4);transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
+          <span class="crx-faqq" style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:#FFFFFF;transition:color .2s">What if it doesn't work out?</span>
+          <span class="crx-sign" style="flex:none;font-size:22px;font-weight:400;color:#58FF7A;transition:transform .3s cubic-bezier(.22,1,.36,1)">+</span>
         </label>
-        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.62);max-width:640px;text-wrap:pretty">Export your clients, workouts and reporting at any time, or pause the subscription instead of cancelling.</p></div>
+        <div class="crx-faqbody"><p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#98A9B9;max-width:700px;text-wrap:pretty">Export your clients, workouts and reporting at any time, or pause the subscription instead of cancelling.</p></div>
       </div>
     </div>
   </section>
 
   <!-- 6 · CLOSE -->
-  <section data-screen-label="Close" style="position:relative;margin-top:140px;padding:130px 32px 120px;overflow:hidden;text-align:center;background:linear-gradient(180deg,#0A0B0F 0%,#0D1120 60%,#0F1526 100%)">
-    <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:1100px;height:620px;background:radial-gradient(ellipse closest-side at center top, rgba(31,148,234,.1) 0%, rgba(31,148,234,.05) 45%, rgba(31,148,234,0) 100%);pointer-events:none"></div>
-    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.18) 18%,rgba(0,0,0,.6) 36%,#000 52%,#000 76%,rgba(0,0,0,.4) 90%,transparent 100%),radial-gradient(130% 120% at 50% 55%,#000 0%,#000 50%,rgba(0,0,0,.5) 75%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.18) 18%,rgba(0,0,0,.6) 36%,#000 52%,#000 76%,rgba(0,0,0,.4) 90%,transparent 100%),radial-gradient(130% 120% at 50% 55%,#000 0%,#000 50%,rgba(0,0,0,.5) 75%,transparent 100%);mask-composite:intersect"></div>
-    <div style="position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(180deg,rgba(8,9,14,0) 0%,#08090E 100%);pointer-events:none"></div>
-    <div style="position:relative;max-width:1200px;margin:0 auto">
-      <h2 data-reveal="0" style="margin:0;font-size:clamp(34px,4.4vw,58px);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#F8FCFF;text-wrap:balance">Start coaching in CoachRx.</h2>
-      <div data-reveal="40" style="margin-top:34px">
-        <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill" style="padding:17px 40px;font-size:14px">Start for free</a>
+  <section data-screen-label="Close" class="crx-pad" style="position:relative;padding:170px 80px 150px;text-align:center">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center">
+      <h2 data-type="H1" data-reveal="0" style="margin:0;font-size:min(8.2vw,66px);line-height:.88;letter-spacing:-0.05em;padding-bottom:6px">Start coaching <br class="crx-dbr">in CoachRx.</h2>
+      <div data-reveal="60" style="margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:16px">
+        <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill">Start for free</a>
+        <span style="font-size:15px;color:#98A9B9">Free for 14 days. Cancel any time.</span>
       </div>
-      <p data-reveal="80" style="margin:18px auto 0;font-size:13px;letter-spacing:.02em;line-height:1.5;color:rgba(255,255,255,.5)">Free for 14 days. Cancel any time.</p>
     </div>
   </section>
 
-  <footer data-screen-label="Footer" style="border-top:1px solid rgba(255,255,255,.08);padding:56px 32px 32px;background:linear-gradient(180deg,#08090E 0%,#07080D 45%,#030409 100%)">
-    <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
-      <img src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
-      <span style="font-size:12.5px;color:rgba(255,255,255,.35)">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+  <footer data-screen-label="Footer" class="crx-sec" style="padding:88px 32px 40px;background:linear-gradient(180deg,rgba(10,11,15,0) 0%,rgba(7,8,13,.5) 45%,rgba(3,4,9,.8) 100%)">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px">
+        <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <img loading="lazy" decoding="async" width="7568" height="1959" src="assets/coachrx-primary-whiteblue.png" alt="CoachRx" style="height:20px;width:auto">
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#98A9B9;max-width:250px;text-wrap:pretty">The operating system for a professional coaching practice. Built by OPEX&nbsp;Fitness.</p>
+          <a href="https://dashboard.coachrx.app/signup" style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;flex:none;border:1px solid rgba(88,255,122,.45);color:#F8FCFF;font-size:13px;font-weight:700;letter-spacing:.05em;padding:12px 22px;border-radius:8px;transition:border-color .2s,background .2s" style-hover="border-color:rgba(88,255,122,.8);background:rgba(88,255,122,.06);color:#F8FCFF">START FOR FREE</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#98A9B9;text-transform:uppercase">Features</span><a href="/features#assess" style="font-size:13.5px;color:#98A9B9">Assess</a><a href="/features#consult" style="font-size:13.5px;color:#98A9B9">Consult</a><a href="/features#design" style="font-size:13.5px;color:#98A9B9">Design</a><a href="/features#operate" style="font-size:13.5px;color:#98A9B9">Operate</a><a href="/features#client-experience" style="font-size:13.5px;color:#98A9B9">Client Experience</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#98A9B9;text-transform:uppercase">Resources</span><a href="11 Kevin Refined Blog Index - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Articles</a><a href="10 Kevin Refined Podcasts - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Podcasts</a><a href="06 Kevin Refined Roadmap - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Roadmap</a><a href="07 Kevin Refined Changelog - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Changelog</a></div>
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#98A9B9;text-transform:uppercase">Company</span><a href="https://dashboard.coachrx.app/login" style="font-size:13.5px;color:#98A9B9">Log in</a><a href="05 Kevin Refined About - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">About</a><a href="03 Kevin Refined Pricing - Desktop.dc.html" style="font-size:13.5px;color:#98A9B9">Pricing</a><a href="mailto:coachrx@opexfit.com" style="font-size:13.5px;color:#98A9B9">Contact</a></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:64px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)">
+        <span style="font-size:12.5px;color:#98A9B9">© 2026 OPEX Fitness LLC. All rights reserved.</span>
+        <span style="display:flex;gap:20px"><a href="https://www.opexfit.com/privacy-policy/" style="font-size:12.5px;color:#98A9B9">Privacy</a><a href="https://www.opexfit.com/terms-and-conditions/" style="font-size:12.5px;color:#98A9B9">Terms</a></span>
+      </div>
     </div>
   </footer>
 
   <div data-sticky="" class="crx-sticky">
     <span style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)">Plans from</span>
-      <span style="display:flex;align-items:baseline;gap:5px"><span style="font-size:19px;font-weight:700;color:#F8FCFF;font-feature-settings:'tnum' 1">$25</span><span style="font-size:12px;color:rgba(255,255,255,.45)">/month</span></span>
+      <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#98A9B9">Plans from</span>
+      <span style="display:flex;align-items:baseline;gap:5px"><span style="font-size:19px;font-weight:700;color:#F8FCFF;font-feature-settings:'tnum' 1">$25</span><span style="font-size:12px;color:#98A9B9">/month</span></span>
     </span>
     <a href="https://dashboard.coachrx.app/signup" class="crx-cta is-fill" style="padding:13px 20px">Start for free</a>
   </div>
@@ -489,6 +566,20 @@ class Component extends DCLogic {
           io.unobserve(e.target);
         }), { threshold: 0.12 });
         document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+      }
+      const burg = document.getElementById("navBurger"), sheet = document.getElementById("mobileSheet");
+      if (burg && sheet) {
+        const setS = v => { burg.classList.toggle("is-open", v); sheet.classList.toggle("is-open", v); burg.setAttribute("aria-expanded", String(v)); sheet.setAttribute("aria-hidden", String(!v)); };
+        burg.addEventListener("click", () => setS(!sheet.classList.contains("is-open")));
+        sheet.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setS(false)));
+        addEventListener("resize", () => { if (innerWidth > 980) setS(false); });
+      }
+      const wrap = document.getElementById("resWrap"), btn = document.getElementById("resBtn"), dd = document.getElementById("resDD");
+      if (wrap && dd) {
+        const open = v => { dd.classList.toggle("is-open", v); btn.setAttribute("aria-expanded", String(v)); };
+        wrap.addEventListener("mouseenter", () => open(true));
+        wrap.addEventListener("mouseleave", () => open(false));
+        btn.addEventListener("click", () => open(!dd.classList.contains("is-open")));
       }
       const bar = document.querySelector("[data-sticky]");
       const plansEl = document.querySelector("[data-plans]");

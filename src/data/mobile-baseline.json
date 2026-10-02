@@ -1,10 +1,10 @@
 {
  "about": {
-  "mobileBlocks": 4,
-  "tallCollapsed": 2,
+  "mobileBlocks": 7,
+  "tallCollapsed": 0,
   "objectFitImgs": 17,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -15,11 +15,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "blog-index": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 11,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -30,11 +30,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "blog-post": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
-  "objectFitImgs": 2,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
+  "objectFitImgs": 1,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -45,11 +45,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "changelog-entry-latest": {
-  "mobileBlocks": 6,
-  "tallCollapsed": 1,
+  "mobileBlocks": 11,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -60,11 +60,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "changelog-entry": {
-  "mobileBlocks": 6,
-  "tallCollapsed": 1,
+  "mobileBlocks": 11,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -75,11 +75,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "changelog-index": {
-  "mobileBlocks": 6,
-  "tallCollapsed": 2,
+  "mobileBlocks": 7,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -90,11 +90,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "features": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 9,
-  "objectFitImgs": 4,
+  "mobileBlocks": 21,
+  "tallCollapsed": 2,
+  "objectFitImgs": 8,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -105,9 +105,9 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "home": {
-  "mobileBlocks": 9,
-  "tallCollapsed": 15,
-  "objectFitImgs": 63,
+  "mobileBlocks": 14,
+  "tallCollapsed": 14,
+  "objectFitImgs": 72,
   "burger": 1,
   "sheet": 1,
   "burgerJS": 1,
@@ -120,11 +120,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "notFound": {
-  "mobileBlocks": 5,
+  "mobileBlocks": 7,
   "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -135,11 +135,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "podcasts": {
-  "mobileBlocks": 4,
-  "tallCollapsed": 2,
+  "mobileBlocks": 8,
+  "tallCollapsed": 0,
   "objectFitImgs": 22,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -150,11 +150,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "pricing": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 5,
+  "mobileBlocks": 9,
+  "tallCollapsed": 0,
   "objectFitImgs": 4,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -165,11 +165,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "roadmap": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 2,
+  "mobileBlocks": 7,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -180,11 +180,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-ama-challenge": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -195,11 +195,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-case-study": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -210,11 +210,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-coach-spotlight": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -225,11 +225,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-community-call": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -240,11 +240,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-feature-highlight": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -255,11 +255,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-frameworks": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -270,11 +270,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-marketing-for-fitness-coaches": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -285,11 +285,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-program-design-pro-tip": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -300,11 +300,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "topic-program-design": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 10,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -315,11 +315,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "updates-changelog": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 13,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -330,11 +330,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "updates-requests": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 13,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
@@ -345,11 +345,11 @@
   "imgWithIntrinsicOnCrop": 0
  },
  "updates-roadmap": {
-  "mobileBlocks": 5,
-  "tallCollapsed": 1,
+  "mobileBlocks": 13,
+  "tallCollapsed": 0,
   "objectFitImgs": 0,
   "burger": 1,
-  "sheet": 1,
+  "sheet": 0,
   "burgerJS": 1,
   "overflowGuard": 1,
   "marginCrops": 0,
